@@ -57,6 +57,8 @@ if (typeof window !== "undefined" && typeof window.matchMedia === "function") {
 
 const [fontSize, setFontSize] = createSignal(16);
 const [workspacePath, setWorkspacePath] = createSignal<string | null>(null);
+const [zenMode, setZenMode] = createSignal(false);
+const [focusMode, setFocusMode] = createSignal(false);
 
 export {
   theme,
@@ -66,6 +68,10 @@ export {
   setFontSize,
   workspacePath,
   setWorkspacePath,
+  zenMode,
+  setZenMode,
+  focusMode,
+  setFocusMode,
 };
 
 export function cycleTheme() {

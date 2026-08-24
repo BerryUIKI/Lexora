@@ -3,6 +3,7 @@ import { open, save } from "@tauri-apps/plugin-dialog";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { TabBar } from "./components/Tabs/TabBar";
 import { QuickSwitcher } from "./components/QuickSwitcher/QuickSwitcher";
+import { SearchModal } from "./components/SearchModal/SearchModal";
 import { FindReplace } from "./components/FindReplace/FindReplace";
 import { EditorToolbar } from "./components/Toolbar/EditorToolbar";
 import { MarkdownView } from "./components/MarkdownView/MarkdownView";
@@ -25,6 +26,7 @@ import {
   setQuickSwitcherOpen,
   syncCurrentDocumentToTab,
 } from "./store/files";
+import { zenMode, setZenMode, focusMode, setFocusMode } from "./store/settings";
 import {
   openFile,
   saveFile,
@@ -38,6 +40,7 @@ const App: Component = () => {
   const [sidebarWidth, setSidebarWidth] = createSignal(240);
   const [isResizing, setIsResizing] = createSignal(false);
   const [findReplaceOpen, setFindReplaceOpen] = createSignal(false);
+  const [searchModalOpen, setSearchModalOpen] = createSignal(false);
   let unlistenFileChanged: (() => void) | null = null;
   let autoSaveTimer: number | null = null;
 
@@ -185,7 +188,16 @@ const App: Component = () => {
   const handleKeyDown = (e: KeyboardEvent) => {
     const isCmd = e.ctrlKey || e.metaKey;
 
-    if (isCmd && e.key === "o") {
+    if (e.key === "F11" || (isCmd && e.shiftKey && (e.key === "Z" || e.key === "z"))) {
+      e.preventDefault();
+      setZenMode((prev) => !prev);
+    } else if (isCmd && e.shiftKey && (e.key === "F" || e.key === "f")) {
+      e.preventDefault();
+      setSearchModalOpen((prev) => !prev);
+    } else if (isCmd && e.shiftKey && (e.key === "X" || e.key === "x")) {
+      e.preventDefault();
+      setFocusMode((prev) => !prev);
+    } else if (isCmd && e.key === "o") {
       e.preventDefault();
       handleOpenFile();
     } else if (isCmd && e.key === "s") {
@@ -222,11 +234,18 @@ const App: Component = () => {
 
   return (
     <div
-      class="flex flex-col h-screen relative"
+      class={`flex flex-col h-screen relative ${zenMode() ? "zen-mode" : ""} ${focusMode() ? "focus-mode" : ""}`}
       style={{ background: "var(--color-bg-primary)", color: "var(--color-text-primary)" }}
     >
       {/* Quick Switcher Palette (Ctrl+P) */}
       <QuickSwitcher onOpenFileByPath={loadFile} />
+
+      {/* Global Workspace Search Modal (Ctrl+Shift+F) */}
+      <SearchModal
+        isOpen={searchModalOpen()}
+        onClose={() => setSearchModalOpen(false)}
+        onSelectResult={loadFile}
+      />
 
       {/* In-Document Find & Replace Toolbar (Ctrl+F / Ctrl+H) */}
       <FindReplace
@@ -240,7 +259,7 @@ const App: Component = () => {
         style={{ cursor: isResizing() ? "col-resize" : "default" }}
       >
         {/* Workspace & Outline Sidebar */}
-        <Show when={sidebarOpen()}>
+        <Show when={sidebarOpen() && !zenMode()}>
           <div
             class="flex-shrink-0 overflow-hidden flex flex-col no-select"
             style={{
@@ -263,12 +282,12 @@ const App: Component = () => {
         {/* Center Panel (TabBar + Toolbar + Viewport) */}
         <div class="flex-1 flex flex-col overflow-hidden">
           {/* Multi-Document Tab Bar */}
-          <Show when={openTabs().length > 0}>
+          <Show when={openTabs().length > 0 && !zenMode()}>
             <TabBar onNewTab={handleNewDocument} />
           </Show>
 
           {/* Editor Quick Format Toolbar (Writing / Code modes) */}
-          <Show when={hasDocument() && (displayMode() === "writing" || displayMode() === "code")}>
+          <Show when={hasDocument() && (displayMode() === "writing" || displayMode() === "code") && !zenMode()}>
             <EditorToolbar />
           </Show>
 
@@ -313,9 +332,9 @@ const App: Component = () => {
                       <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+O</kbd> Open File</p>
                       <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+N</kbd> New Document</p>
                       <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+P</kbd> Quick Switcher</p>
+                      <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+Shift+F</kbd> Search in Workspace</p>
                       <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+F</kbd> Find & Replace</p>
-                      <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+S</kbd> Save File</p>
-                      <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+/</kbd> Toggle Display Mode</p>
+                      <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">F11 / Ctrl+Shift+Z</kbd> Zen Mode</p>
                     </div>
                   </div>
                 </div>
@@ -343,12 +362,14 @@ const App: Component = () => {
       </div>
 
       {/* Status bar */}
-      <StatusBar
-        sidebarOpen={sidebarOpen()}
-        onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
-        onOpenFile={handleOpenFile}
-        onSaveFile={handleSaveFile}
-      />
+      <Show when={!zenMode()}>
+        <StatusBar
+          sidebarOpen={sidebarOpen()}
+          onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
+          onOpenFile={handleOpenFile}
+          onSaveFile={handleSaveFile}
+        />
+      </Show>
     </div>
   );
 };

@@ -2,7 +2,7 @@ use crate::services::highlighter;
 use crate::state::TocEntry;
 use pulldown_cmark::{CodeBlockKind, Event, HeadingLevel, Options, Parser, Tag, TagEnd, html};
 
-/// Convert a Markdown string to HTML with full GFM support and syntect code highlighting.
+/// Convert a Markdown string to HTML with full GFM support, syntect code highlighting, math, and mermaid diagram wrappers.
 pub fn markdown_to_html(markdown: &str) -> String {
     let options = gfm_options();
     let parser = Parser::new_ext(markdown, options);
@@ -28,39 +28,56 @@ pub fn markdown_to_html(markdown: &str) -> String {
             Event::End(TagEnd::CodeBlock) => {
                 in_code_block = false;
                 let lang = code_lang.trim();
-                let highlighted = if !lang.is_empty() {
-                    highlighter::highlight(&code_buffer, lang).ok()
-                } else {
-                    None
-                };
 
-                let lang_display = if lang.is_empty() { "text" } else { lang };
-                let escaped_code = html_escape(&code_buffer);
-
-                let code_html = if let Some(highlighted_inner) = highlighted {
+                let code_html = if lang == "mermaid" {
                     format!(
-                        r#"<div class="code-block-wrapper relative group my-4 rounded-lg overflow-hidden border border-[var(--color-border)]">
-                            <div class="flex items-center justify-between px-3 py-1.5 bg-[var(--color-bg-secondary)] border-b border-[var(--color-border)] text-xs text-[var(--color-text-secondary)] font-mono select-none">
-                                <span class="uppercase font-semibold tracking-wider">{}</span>
-                                <button class="copy-code-btn px-2 py-0.5 rounded bg-[var(--color-hover)] hover:text-[var(--color-text-primary)] transition-colors text-[11px]" onclick="navigator.clipboard.writeText(this.closest('.code-block-wrapper').querySelector('.code-container, pre').innerText)">Copy</button>
-                            </div>
-                            <div class="code-container p-4 overflow-x-auto text-sm">{}</div>
+                        r#"<div class="mermaid-diagram my-6 p-4 rounded-lg bg-[var(--color-bg-secondary)] border border-[var(--color-border)] text-center overflow-x-auto select-none">
+                            <pre class="mermaid text-sm">{}</pre>
                         </div>"#,
-                        lang_display,
-                        highlighted_inner
+                        html_escape(&code_buffer)
+                    )
+                } else if lang == "math" || lang == "katex" {
+                    format!(
+                        r#"<div class="math-block my-4 p-4 text-center overflow-x-auto text-base font-serif bg-[var(--color-bg-secondary)] rounded-lg border border-[var(--color-border)]">
+                            $${}$$
+                        </div>"#,
+                        html_escape(&code_buffer)
                     )
                 } else {
-                    format!(
-                        r#"<div class="code-block-wrapper relative group my-4 rounded-lg overflow-hidden border border-[var(--color-border)]">
-                            <div class="flex items-center justify-between px-3 py-1.5 bg-[var(--color-bg-secondary)] border-b border-[var(--color-border)] text-xs text-[var(--color-text-secondary)] font-mono select-none">
-                                <span class="uppercase font-semibold tracking-wider">{}</span>
-                                <button class="copy-code-btn px-2 py-0.5 rounded bg-[var(--color-hover)] hover:text-[var(--color-text-primary)] transition-colors text-[11px]" onclick="navigator.clipboard.writeText(this.closest('.code-block-wrapper').querySelector('pre, code').innerText)">Copy</button>
-                            </div>
-                            <pre class="p-4 overflow-x-auto text-sm"><code>{}</code></pre>
-                        </div>"#,
-                        lang_display,
-                        escaped_code
-                    )
+                    let highlighted = if !lang.is_empty() {
+                        highlighter::highlight(&code_buffer, lang).ok()
+                    } else {
+                        None
+                    };
+
+                    let lang_display = if lang.is_empty() { "text" } else { lang };
+                    let escaped_code = html_escape(&code_buffer);
+
+                    if let Some(highlighted_inner) = highlighted {
+                        format!(
+                            r#"<div class="code-block-wrapper relative group my-4 rounded-lg overflow-hidden border border-[var(--color-border)]">
+                                <div class="flex items-center justify-between px-3 py-1.5 bg-[var(--color-bg-secondary)] border-b border-[var(--color-border)] text-xs text-[var(--color-text-secondary)] font-mono select-none">
+                                    <span class="uppercase font-semibold tracking-wider">{}</span>
+                                    <button class="copy-code-btn px-2 py-0.5 rounded bg-[var(--color-hover)] hover:text-[var(--color-text-primary)] transition-colors text-[11px]" onclick="navigator.clipboard.writeText(this.closest('.code-block-wrapper').querySelector('.code-container, pre').innerText)">Copy</button>
+                                </div>
+                                <div class="code-container p-4 overflow-x-auto text-sm">{}</div>
+                            </div>"#,
+                            lang_display,
+                            highlighted_inner
+                        )
+                    } else {
+                        format!(
+                            r#"<div class="code-block-wrapper relative group my-4 rounded-lg overflow-hidden border border-[var(--color-border)]">
+                                <div class="flex items-center justify-between px-3 py-1.5 bg-[var(--color-bg-secondary)] border-b border-[var(--color-border)] text-xs text-[var(--color-text-secondary)] font-mono select-none">
+                                    <span class="uppercase font-semibold tracking-wider">{}</span>
+                                    <button class="copy-code-btn px-2 py-0.5 rounded bg-[var(--color-hover)] hover:text-[var(--color-text-primary)] transition-colors text-[11px]" onclick="navigator.clipboard.writeText(this.closest('.code-block-wrapper').querySelector('pre, code').innerText)">Copy</button>
+                                </div>
+                                <pre class="p-4 overflow-x-auto text-sm"><code>{}</code></pre>
+                            </div>"#,
+                            lang_display,
+                            escaped_code
+                        )
+                    }
                 };
 
                 events.push(Event::Html(code_html.into()));
@@ -204,6 +221,14 @@ mod tests {
         let md = "- [x] Done\n- [ ] Todo";
         let result = markdown_to_html(md);
         assert!(result.contains("checked") || result.contains("checkbox"));
+    }
+
+    #[test]
+    fn test_mermaid_block() {
+        let md = "```mermaid\ngraph TD;\nA-->B;\n```";
+        let result = markdown_to_html(md);
+        assert!(result.contains("mermaid-diagram"));
+        assert!(result.contains("class=\"mermaid"));
     }
 
     #[test]

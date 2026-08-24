@@ -141,4 +141,27 @@ export async function exportDocument(
   });
 }
 
+export interface SearchMatch {
+  file_path: string;
+  file_name: string;
+  line_number: number;
+  line_content: string;
+  match_start: number;
+  match_end: number;
+}
+
+/**
+ * Perform workspace full-text search.
+ */
+export async function searchWorkspace(
+  query: string,
+  rootPath: string
+): Promise<SearchMatch[]> {
+  return invoke<SearchMatch[]>("search_workspace", {
+    query,
+    rootPath,
+  });
+}
+
+
 

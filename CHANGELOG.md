@@ -5,13 +5,18 @@ All notable changes to Lexora will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.2.0] - 2026-08-24
 
-### Planned (Phase 7 — v1.2.0 Advanced Features)
-- Mathematical formula rendering via KaTeX
-- Mermaid.js dynamic diagrams rendering
-- Zen mode and Focus mode distraction-free views
-- Full-text workspace search index
+### Added
+- **Global Workspace Full-Text Search**:
+  - <kbd>Ctrl+Shift+F</kbd> search modal scanning across all Markdown documents in the workspace.
+  - Line-by-line result match previews and instant navigation.
+- **Diagrams & Math Rendering**:
+  - Live Mermaid.js diagram container rendering for `mermaid` fenced code blocks.
+  - Math formula wrappers for KaTeX `$$...$$` blocks.
+- **Distraction-Free Zen & Focus Modes**:
+  - Zen Mode (<kbd>F11</kbd> / <kbd>Ctrl+Shift+Z</kbd>) toggling full-screen editor without sidebars, tab bars, or toolbars.
+  - Focus Mode (<kbd>Ctrl+Shift+X</kbd>).
 
 ---
 
