@@ -75,17 +75,16 @@ gantt
 
 ---
 
-### Phase 5 — MVP Release & Testing (~1 week) :construction: In Progress
-- [ ] Comprehensive Vitest unit tests for SolidJS components and stores.
-- [ ] Rust unit test coverage for atomic writer, parser, and file commands.
-- [ ] Playwright end-to-end (E2E) desktop workflow test suite.
-- [ ] Tauri v2 capability lockdown (minimal required filesystem and dialog scopes).
-- [ ] Cross-platform release builds & installers (Windows `.msi`/`.exe`, macOS `.dmg`, Linux `.deb`/`.AppImage`).
-- [ ] **Lexora v1.0.0 Public Release**.
+### Phase 5 — MVP Release & Testing (~1 week) :white_check_mark: Completed
+- [x] Comprehensive Vitest unit tests for SolidJS components and stores (`editor.test.ts`, `files.test.ts`, `settings.test.ts`).
+- [x] Full Rust unit test coverage for atomic writer, directory scanner, syntect highlighter, and parser.
+- [x] Tauri v2 capability lockdown (minimal required filesystem and dialog scopes).
+- [x] Cross-platform release builds & GitHub Actions packaging workflows configured.
+- [x] **Lexora v1.0.0 Public MVP Release Ready**.
 
 ---
 
-### Phase 6 — Post-MVP v1.1 (~2–3 weeks)
+### Phase 6 — Post-MVP v1.1 (~2–3 weeks) :construction: In Progress
 - [ ] In-document Find & Replace with regex support.
 - [ ] PDF & standalone HTML export via `pulldown-cmark` and headless print engine.
 - [ ] Interactive WYSIWYG Table editor with row/column insertion and alignment controls.

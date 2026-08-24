@@ -3,15 +3,20 @@ import { createSignal, createEffect } from "solid-js";
 export type Theme = "light" | "dark" | "system";
 
 function getSystemTheme(): "light" | "dark" {
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
+  if (typeof window !== "undefined" && typeof window.matchMedia === "function") {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  }
+  return "light";
 }
 
 function getInitialTheme(): Theme {
-  const stored = localStorage.getItem("lexora-theme");
-  if (stored === "light" || stored === "dark" || stored === "system") {
-    return stored;
+  if (typeof localStorage !== "undefined") {
+    const stored = localStorage.getItem("lexora-theme");
+    if (stored === "light" || stored === "dark" || stored === "system") {
+      return stored;
+    }
   }
   return "system";
 }
@@ -24,22 +29,28 @@ const [resolvedTheme, setResolvedTheme] = createSignal<"light" | "dark">(
 // React to theme changes
 createEffect(() => {
   const current = theme();
-  localStorage.setItem("lexora-theme", current);
+  if (typeof localStorage !== "undefined") {
+    localStorage.setItem("lexora-theme", current);
+  }
 
   const resolved = current === "system" ? getSystemTheme() : current;
   setResolvedTheme(resolved);
-  document.documentElement.setAttribute("data-theme", resolved);
+  if (typeof document !== "undefined") {
+    document.documentElement.setAttribute("data-theme", resolved);
+  }
 });
 
 // Listen for OS theme changes
-if (typeof window !== "undefined") {
+if (typeof window !== "undefined" && typeof window.matchMedia === "function") {
   window
     .matchMedia("(prefers-color-scheme: dark)")
     .addEventListener("change", () => {
       if (theme() === "system") {
         const resolved = getSystemTheme();
         setResolvedTheme(resolved);
-        document.documentElement.setAttribute("data-theme", resolved);
+        if (typeof document !== "undefined") {
+          document.documentElement.setAttribute("data-theme", resolved);
+        }
       }
     });
 }
