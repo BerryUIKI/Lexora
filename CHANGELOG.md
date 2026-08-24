@@ -7,11 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Planned (Phase 3 — v0.3.0)
-- Workspace folder open & recursive directory scanner
-- Nested virtualized file tree sidebar with file management actions (create, rename, delete)
-- Multi-document tabs with drag reordering and dirty indicators
-- Quick file switcher palette (<kbd>Ctrl+P</kbd>)
+### Planned (Phase 4 — v0.4.0)
+- `syntect` Rust-powered syntax highlighting for code blocks
+- Code block language tag and copy-to-clipboard action
+- Advanced status bar metrics (cursor line/col, UTF-8 encoding, LF/CRLF line endings)
+
+---
+
+## [0.3.0] - 2026-08-24
+
+### Added
+- **Workspace File Tree**:
+  - "Open Folder" workspace root browser via native dialog.
+  - Recursive directory scanner in Rust (`list_directory_tree`) filtering build artifacts and hidden directories.
+  - Interactive nested File Tree with folder expansion, file icons, and file creation, deletion, and rename actions.
+  - Sidebar mode switcher: 📁 **Workspace** / 📑 **Outline**.
+- **Multi-Document Tabs**:
+  - `TabBar` component with tab switching, dirty indicator dots, and tab close buttons.
+- **Quick Switcher Command Palette**:
+  - <kbd>Ctrl+P</kbd> palette for fast keyboard fuzzy search and document switching.
+- **Enhanced Keyboard Navigation**:
+  - <kbd>Ctrl+B</kbd> to toggle the sidebar.
 
 ---
 
