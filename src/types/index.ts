@@ -14,3 +14,10 @@ export interface SearchResult {
   matchStart: number;
   matchEnd: number;
 }
+
+/** Represents a Table of Contents entry. */
+export interface TocEntry {
+  level: number;
+  text: string;
+  id: string;
+}
