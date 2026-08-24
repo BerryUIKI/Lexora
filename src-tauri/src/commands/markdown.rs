@@ -24,3 +24,13 @@ pub fn render_markdown(markdown: &str) -> RenderResult {
 pub fn highlight_code(code: &str, language: &str) -> Result<String, String> {
     highlighter::highlight(code, language).map_err(|e| e.to_string())
 }
+
+/// Export markdown to standalone HTML/PDF document.
+#[tauri::command]
+pub async fn export_document(
+    markdown: String,
+    title: String,
+    output_path: String,
+) -> Result<(), String> {
+    crate::services::export::export_to_html(&markdown, &title, &output_path).await
+}

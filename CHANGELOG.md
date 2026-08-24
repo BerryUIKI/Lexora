@@ -7,12 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Planned (Phase 6 — v1.1.0 Post-MVP Enhancements)
-- In-document Find & Replace toolbar (<kbd>Ctrl+F</kbd>, <kbd>Ctrl+H</kbd>) with regex support
-- HTML and PDF export engine
-- Interactive table insertion and formatting controls
-- Image asset pasting and auto-saving to local `./assets/` directory
-- Configurable background auto-save timer
+### Planned (Phase 7 — v1.2.0 Advanced Features)
+- Mathematical formula rendering via KaTeX
+- Mermaid.js dynamic diagrams rendering
+- Zen mode and Focus mode distraction-free views
+- Full-text workspace search index
+
+---
+
+## [1.1.0] - 2026-08-24
+
+### Added
+- **Find & Replace Toolbar**:
+  - Full in-document search with regex, case sensitivity, previous/next match jumping, and replace/replace-all (<kbd>Ctrl+F</kbd>, <kbd>Ctrl+H</kbd>).
+- **Standalone Document Export**:
+  - Export document to styled, self-contained HTML/PDF with print typography and responsive layouts via Rust backend (`export_document`).
+- **Editor Quick Format Toolbar**:
+  - Instant insertion buttons for Tables, Images, Quotes, Task Lists, Bullet Lists, and Headings.
+- **Background Auto-Save**:
+  - Periodic background auto-saver for modified open documents.
 
 ---
 
