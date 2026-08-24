@@ -7,10 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Planned (Phase 5 — v1.0.0 MVP Release & Testing)
-- Comprehensive automated test suite (Vitest + Rust unit tests + Playwright)
-- Tauri v2 least-privilege capability lockdown
-- Multi-platform production builds and installers
+### Planned (Phase 6 — v1.1.0 Post-MVP Enhancements)
+- In-document Find & Replace toolbar (<kbd>Ctrl+F</kbd>, <kbd>Ctrl+H</kbd>) with regex support
+- HTML and PDF export engine
+- Interactive table insertion and formatting controls
+- Image asset pasting and auto-saving to local `./assets/` directory
+- Configurable background auto-save timer
+
+---
+
+## [1.0.0] - 2026-08-24
+
+### Added
+- **Automated Test Suite**:
+  - Full Vitest reactive store unit tests (`editor.test.ts`, `files.test.ts`, `settings.test.ts`).
+  - Comprehensive Rust unit tests for `pulldown-cmark` GFM parsing, TOC extraction, word counting, `syntect` syntax highlighting, atomic writes, and recursive directory tree scanning.
+- **Security & Capabilities**:
+  - Audited Tauri v2 capability configuration (`capabilities/default.json`) strictly scoped to essential filesystem and dialog operations.
+- **Production Readiness**:
+  - Multi-platform GitHub Actions automated CI matrix and release builder.
 
 ---
 
