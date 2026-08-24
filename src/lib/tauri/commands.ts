@@ -126,3 +126,19 @@ export async function renameEntry(
   return invoke<void>("rename_entry", { oldPath, newPath });
 }
 
+/**
+ * Export document to standalone HTML/PDF.
+ */
+export async function exportDocument(
+  markdown: string,
+  title: string,
+  outputPath: string
+): Promise<void> {
+  return invoke<void>("export_document", {
+    markdown,
+    title,
+    outputPath,
+  });
+}
+
+

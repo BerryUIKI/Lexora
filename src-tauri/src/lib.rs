@@ -32,6 +32,7 @@ pub fn run() {
             commands::file::rename_entry,
             commands::markdown::render_markdown,
             commands::markdown::highlight_code,
+            commands::markdown::export_document,
             start_watching_file,
             stop_watching_file,
         ])

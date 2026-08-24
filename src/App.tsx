@@ -3,6 +3,8 @@ import { open, save } from "@tauri-apps/plugin-dialog";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { TabBar } from "./components/Tabs/TabBar";
 import { QuickSwitcher } from "./components/QuickSwitcher/QuickSwitcher";
+import { FindReplace } from "./components/FindReplace/FindReplace";
+import { EditorToolbar } from "./components/Toolbar/EditorToolbar";
 import { MarkdownView } from "./components/MarkdownView/MarkdownView";
 import { Editor } from "./components/Editor/Editor";
 import { CodeView } from "./components/CodeView/CodeView";
@@ -35,7 +37,9 @@ const App: Component = () => {
   const [sidebarOpen, setSidebarOpen] = createSignal(true);
   const [sidebarWidth, setSidebarWidth] = createSignal(240);
   const [isResizing, setIsResizing] = createSignal(false);
+  const [findReplaceOpen, setFindReplaceOpen] = createSignal(false);
   let unlistenFileChanged: (() => void) | null = null;
+  let autoSaveTimer: number | null = null;
 
   // Handle opening a file via native dialog
   const handleOpenFile = async () => {
@@ -129,6 +133,16 @@ const App: Component = () => {
     }
   };
 
+  // Background Auto-Save Timer (runs every 30s when dirty & path exists)
+  onMount(() => {
+    autoSaveTimer = window.setInterval(() => {
+      const doc = currentDocument();
+      if (doc.path && doc.isDirty) {
+        handleSaveFile();
+      }
+    }, 30000);
+  });
+
   // Set up file change listener
   onMount(async () => {
     try {
@@ -142,6 +156,9 @@ const App: Component = () => {
 
   onCleanup(() => {
     unlistenFileChanged?.();
+    if (autoSaveTimer !== null) {
+      clearInterval(autoSaveTimer);
+    }
   });
 
   // Sidebar resize handling
@@ -180,6 +197,9 @@ const App: Component = () => {
     } else if (isCmd && e.key === "p") {
       e.preventDefault();
       setQuickSwitcherOpen((prev) => !prev);
+    } else if (isCmd && (e.key === "f" || e.key === "h")) {
+      e.preventDefault();
+      setFindReplaceOpen((prev) => !prev);
     } else if (isCmd && e.key === "/") {
       e.preventDefault();
       cycleDisplayMode();
@@ -202,11 +222,17 @@ const App: Component = () => {
 
   return (
     <div
-      class="flex flex-col h-screen"
+      class="flex flex-col h-screen relative"
       style={{ background: "var(--color-bg-primary)", color: "var(--color-text-primary)" }}
     >
       {/* Quick Switcher Palette (Ctrl+P) */}
       <QuickSwitcher onOpenFileByPath={loadFile} />
+
+      {/* In-Document Find & Replace Toolbar (Ctrl+F / Ctrl+H) */}
+      <FindReplace
+        isOpen={findReplaceOpen()}
+        onClose={() => setFindReplaceOpen(false)}
+      />
 
       {/* Main content area */}
       <div
@@ -234,11 +260,16 @@ const App: Component = () => {
           />
         </Show>
 
-        {/* Center Panel (TabBar + Viewport) */}
+        {/* Center Panel (TabBar + Toolbar + Viewport) */}
         <div class="flex-1 flex flex-col overflow-hidden">
           {/* Multi-Document Tab Bar */}
           <Show when={openTabs().length > 0}>
             <TabBar onNewTab={handleNewDocument} />
+          </Show>
+
+          {/* Editor Quick Format Toolbar (Writing / Code modes) */}
+          <Show when={hasDocument() && (displayMode() === "writing" || displayMode() === "code")}>
+            <EditorToolbar />
           </Show>
 
           {/* Viewport: Reading / Writing / Code Modes */}
@@ -282,9 +313,9 @@ const App: Component = () => {
                       <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+O</kbd> Open File</p>
                       <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+N</kbd> New Document</p>
                       <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+P</kbd> Quick Switcher</p>
+                      <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+F</kbd> Find & Replace</p>
                       <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+S</kbd> Save File</p>
                       <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+/</kbd> Toggle Display Mode</p>
-                      <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+B</kbd> Toggle Sidebar</p>
                     </div>
                   </div>
                 </div>

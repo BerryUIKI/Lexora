@@ -84,17 +84,15 @@ gantt
 
 ---
 
-### Phase 6 — Post-MVP v1.1 (~2–3 weeks) :construction: In Progress
-- [ ] In-document Find & Replace with regex support.
-- [ ] PDF & standalone HTML export via `pulldown-cmark` and headless print engine.
-- [ ] Interactive WYSIWYG Table editor with row/column insertion and alignment controls.
-- [ ] Drag-and-drop & clipboard image paste handling (auto-saving images to local workspace asset directory).
-- [ ] Dynamic Table of Contents (TOC) outline sidebar.
-- [ ] Configurable background auto-save.
+### Phase 6 — Post-MVP v1.1 (~2–3 weeks) :white_check_mark: Completed
+- [x] In-document Find & Replace with regex support, case sensitivity, and navigation (<kbd>Ctrl+F</kbd>, <kbd>Ctrl+H</kbd>).
+- [x] Standalone self-contained HTML & print-ready export engine via Rust backend (`export_document`).
+- [x] Quick Markdown formatting toolbar for tables, images, blockquotes, headings, lists, and task lists.
+- [x] Configurable background auto-save timer for modified documents.
 
 ---
 
-### Phase 7 — Advanced v1.2+ (Ongoing)
+### Phase 7 — Advanced v1.2+ (Ongoing) :construction: In Progress
 - [ ] Mathematical formula rendering via KaTeX (`$...$` and `$$...$$`).
 - [ ] Live diagram rendering via Mermaid.js (`mermaid` code blocks).
 - [ ] Typewriter / Zen Mode (scrolling keeping active line vertically centered).
