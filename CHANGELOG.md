@@ -7,12 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Planned (Phase 2 — v0.2.0)
-- In-place Typora-style WYSIWYG editor powered by Milkdown + ProseMirror
-- Undo / Redo transaction history
-- Keyboard shortcuts for formatting (Bold, Italic, Heading levels, Lists)
-- Atomic file saving (<kbd>Ctrl+S</kbd>) with dirty state indicators
-- Source Mode / WYSIWYG Mode switcher
+### Planned (Phase 3 — v0.3.0)
+- Workspace folder open & recursive directory scanner
+- Nested virtualized file tree sidebar with file management actions (create, rename, delete)
+- Multi-document tabs with drag reordering and dirty indicators
+- Quick file switcher palette (<kbd>Ctrl+P</kbd>)
+
+---
+
+## [0.2.0] - 2026-08-24
+
+### Added
+- **Tri-State Display Modes**:
+  - Seamless toggle between 📖 **Reading Mode** (read-only rendered view), ✍️ **Writing Mode** (Typora-style in-place WYSIWYG editor), and 💻 **Code Mode** (raw Markdown source view with line numbers).
+  - Status bar mode switcher button and global shortcut <kbd>Ctrl+/</kbd>.
+- **In-Place WYSIWYG Editor**:
+  - Milkdown v7 editor integration inside SolidJS component lifecycle.
+  - Live GFM rendering with in-place Markdown formatting.
+  - ProseMirror undo/redo transaction history stack (<kbd>Ctrl+Z</kbd> / <kbd>Ctrl+Y</kbd>).
+- **Code Viewport**:
+  - Monospace raw source editor with dynamically synchronized line number gutter.
+- **Atomic File Saving & Safety**:
+  - Native atomic save (<kbd>Ctrl+S</kbd>) and Save As dialog with `.tmp` rename pattern.
+  - Real-time dirty state tracking (`● unsaved` badge).
+  - New Document creation (<kbd>Ctrl+N</kbd>).
 
 ---
 

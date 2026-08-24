@@ -1,22 +1,27 @@
-import { Component, createSignal, Show } from "solid-js";
-import { open } from "@tauri-apps/plugin-dialog";
+import { Component, createSignal, Show, onMount, onCleanup } from "solid-js";
+import { open, save } from "@tauri-apps/plugin-dialog";
 import { TocSidebar } from "./components/Sidebar/TocSidebar";
 import { MarkdownView } from "./components/MarkdownView/MarkdownView";
+import { Editor } from "./components/Editor/Editor";
+import { CodeView } from "./components/CodeView/CodeView";
 import { StatusBar } from "./components/StatusBar/StatusBar";
 import {
   currentDocument,
   setCurrentDocument,
+  displayMode,
+  setDisplayMode,
+  cycleDisplayMode,
+  markSaved,
   markExternallyModified,
   clearExternallyModified,
 } from "./store/editor";
-import { resolvedTheme } from "./store/settings";
 import {
   openFile,
+  saveFile,
   startWatchingFile,
   stopWatchingFile,
 } from "./lib/tauri/commands";
 import { onFileChanged } from "./lib/tauri/events";
-import { onMount, onCleanup } from "solid-js";
 
 const App: Component = () => {
   const [sidebarOpen, setSidebarOpen] = createSignal(true);
@@ -26,41 +31,71 @@ const App: Component = () => {
 
   // Handle opening a file via native dialog
   const handleOpenFile = async () => {
-    const selected = await open({
-      multiple: false,
-      filters: [
-        { name: "Markdown", extensions: ["md", "markdown", "mdx", "txt"] },
-      ],
-    });
+    try {
+      const selected = await open({
+        multiple: false,
+        filters: [
+          { name: "Markdown", extensions: ["md", "markdown", "mdx", "txt"] },
+        ],
+      });
 
-    if (selected && typeof selected === "string") {
-      await loadFile(selected);
+      if (selected && typeof selected === "string") {
+        await loadFile(selected);
+      }
+    } catch (err) {
+      console.error("Failed to open file dialog:", err);
     }
   };
 
   // Load a file by path
   const loadFile = async (path: string) => {
     try {
-      // Stop watching previous file
       await stopWatchingFile();
-
       const result = await openFile(path);
-      setCurrentDocument({
-        path: result.path,
-        filename: result.filename,
-        content: result.content,
-        html: result.html,
-        toc: result.toc,
-        wordCount: result.word_count,
-        isDirty: false,
-        externallyModified: false,
-      });
-
-      // Start watching the new file
+      markSaved(result);
       await startWatchingFile(path);
     } catch (err) {
       console.error("Failed to open file:", err);
     }
+  };
+
+  // Handle saving the current file (atomic write)
+  const handleSaveFile = async () => {
+    const doc = currentDocument();
+    try {
+      let targetPath = doc.path;
+      if (!targetPath) {
+        const selected = await save({
+          defaultPath: doc.filename || "untitled.md",
+          filters: [
+            { name: "Markdown", extensions: ["md", "markdown", "txt"] },
+          ],
+        });
+        if (!selected || typeof selected !== "string") return;
+        targetPath = selected;
+      }
+
+      const res = await saveFile(targetPath, doc.content);
+      markSaved(res);
+      await startWatchingFile(targetPath);
+    } catch (err) {
+      console.error("Failed to save file:", err);
+    }
+  };
+
+  // Handle creating a new document
+  const handleNewDocument = () => {
+    setCurrentDocument({
+      path: null,
+      filename: "Untitled",
+      content: "# Untitled Document\n\nStart writing in Markdown...",
+      html: "<h1>Untitled Document</h1><p>Start writing in Markdown...</p>",
+      toc: [{ level: 1, text: "Untitled Document", id: "untitled-document" }],
+      wordCount: 5,
+      isDirty: false,
+      externallyModified: false,
+    });
+    setDisplayMode("writing");
   };
 
   // Reload the current file (after external modification)
@@ -74,9 +109,13 @@ const App: Component = () => {
 
   // Set up file change listener
   onMount(async () => {
-    unlistenFileChanged = await onFileChanged((_payload) => {
-      markExternallyModified();
-    });
+    try {
+      unlistenFileChanged = await onFileChanged((_payload) => {
+        markExternallyModified();
+      });
+    } catch (err) {
+      console.warn("File changed listener setup:", err);
+    }
   });
 
   onCleanup(() => {
@@ -103,11 +142,25 @@ const App: Component = () => {
     window.addEventListener("mouseup", onMouseUp);
   };
 
-  // Keyboard shortcuts
+  // Global Keyboard Shortcuts
   const handleKeyDown = (e: KeyboardEvent) => {
-    if ((e.ctrlKey || e.metaKey) && e.key === "o") {
+    const isCmd = e.ctrlKey || e.metaKey;
+
+    if (isCmd && e.key === "o") {
       e.preventDefault();
       handleOpenFile();
+    } else if (isCmd && e.key === "s") {
+      e.preventDefault();
+      handleSaveFile();
+    } else if (isCmd && e.key === "n") {
+      e.preventDefault();
+      handleNewDocument();
+    } else if (isCmd && e.key === "/") {
+      e.preventDefault();
+      cycleDisplayMode();
+    } else if (isCmd && e.key === "b") {
+      e.preventDefault();
+      setSidebarOpen((prev) => !prev);
     }
   };
 
@@ -120,7 +173,7 @@ const App: Component = () => {
   });
 
   const doc = () => currentDocument();
-  const hasDocument = () => doc().path !== null;
+  const hasDocument = () => doc().path !== null || doc().content.length > 0;
 
   return (
     <div
@@ -153,49 +206,69 @@ const App: Component = () => {
           />
         </Show>
 
-        {/* Main markdown view */}
+        {/* Viewport: Reading / Writing / Code Modes */}
         <main class="flex-1 overflow-hidden">
           <Show
             when={hasDocument()}
             fallback={
               <div class="flex items-center justify-center h-full">
-                <div class="text-center">
+                <div class="text-center max-w-md px-6">
                   <h1
-                    class="text-4xl font-bold mb-4"
+                    class="text-4xl font-bold mb-3"
                     style={{ color: "var(--color-accent)" }}
                   >
                     Lexora
                   </h1>
                   <p
-                    class="text-lg mb-6"
+                    class="text-base mb-6"
                     style={{ color: "var(--color-text-secondary)" }}
                   >
-                    A Typora-style Markdown viewer
+                    A Typora-style Markdown reader & editor
                   </p>
-                  <button
-                    class="px-6 py-2.5 rounded-lg text-white font-medium transition-colors"
-                    style={{
-                      background: "var(--color-accent)",
-                    }}
-                    onClick={handleOpenFile}
-                  >
-                    Open Markdown File
-                  </button>
-                  <p
-                    class="mt-3 text-sm"
-                    style={{ color: "var(--color-text-secondary)" }}
-                  >
-                    or press <kbd class="px-1.5 py-0.5 rounded text-xs" style={{ background: "var(--color-code-bg)" }}>Ctrl+O</kbd>
-                  </p>
+
+                  <div class="flex items-center justify-center gap-3 mb-6">
+                    <button
+                      class="px-5 py-2.5 rounded-lg text-white font-medium transition-colors shadow-sm cursor-pointer"
+                      style={{ background: "var(--color-accent)" }}
+                      onClick={handleOpenFile}
+                    >
+                      Open File
+                    </button>
+
+                    <button
+                      class="px-5 py-2.5 rounded-lg font-medium transition-colors cursor-pointer border border-[var(--color-border)] hover:bg-[var(--color-hover)]"
+                      onClick={handleNewDocument}
+                    >
+                      New Document
+                    </button>
+                  </div>
+
+                  <div class="text-xs space-y-1.5 opacity-60">
+                    <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+O</kbd> Open File</p>
+                    <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+N</kbd> New Document</p>
+                    <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+S</kbd> Save File</p>
+                    <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+/</kbd> Toggle Display Mode</p>
+                  </div>
                 </div>
               </div>
             }
           >
-            <MarkdownView
-              html={doc().html}
-              externallyModified={doc().externallyModified}
-              onReload={reloadCurrentFile}
-            />
+            {/* Tri-State Viewport */}
+            <Show when={displayMode() === "reading"}>
+              <MarkdownView
+                html={doc().html}
+                externallyModified={doc().externallyModified}
+                onReload={reloadCurrentFile}
+              />
+            </Show>
+
+            <Show when={displayMode() === "writing"}>
+              <Editor onSave={handleSaveFile} />
+            </Show>
+
+            <Show when={displayMode() === "code"}>
+              <CodeView onSave={handleSaveFile} />
+            </Show>
           </Show>
         </main>
       </div>
@@ -205,6 +278,7 @@ const App: Component = () => {
         sidebarOpen={sidebarOpen()}
         onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
         onOpenFile={handleOpenFile}
+        onSaveFile={handleSaveFile}
       />
     </div>
   );
