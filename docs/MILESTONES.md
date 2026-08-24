@@ -56,16 +56,20 @@ gantt
 
 ---
 
-### Milestone 2: In-Place WYSIWYG Editing (v0.2.0)
+### Milestone 2: In-Place WYSIWYG Editing & Tri-State Display Modes (v0.2.0)
 - **Status**: 🎯 In Progress (Active Milestone)
 - **Target Date**: 2026-09-08
-- **Objective**: Introduce Typora-style seamless inline Markdown editing without split panes.
+- **Objective**: Introduce Typora-style seamless inline Markdown editing and three rapidly toggleable display modes.
 - **Key Deliverables**:
+  - [ ] **Tri-State Display Mode Switcher** (Status bar toggle & shortcut <kbd>Ctrl+/</kbd>):
+    - 📖 **Reading**: Read-only rendering of GFM Markdown text.
+    - ✍️ **Writing**: In-place live WYSIWYG editing (reveal syntax on cursor focus / render on blur).
+    - 💻 **Code**: Raw Markdown source code view with line numbers.
   - [ ] Integrate Milkdown (ProseMirror-based) vanilla core inside SolidJS lifecycle.
   - [ ] Implement node-level "reveal syntax on cursor focus / render on blur" mechanism.
-  - [ ] ProseMirror undo/redo transaction history stack.
+  - [ ] ProseMirror undo/redo transaction history stack (<kbd>Ctrl+Z</kbd> / <kbd>Ctrl+Y</kbd>).
   - [ ] Standard keyboard formatting shortcuts (<kbd>Ctrl+B</kbd>, <kbd>Ctrl+I</kbd>, <kbd>Ctrl+K</kbd>, <kbd>Ctrl+1..6</kbd>).
-  - [ ] Native atomic document saving (`write-to-tmp` + `rename`) to prevent data corruption.
+  - [ ] Native atomic document saving (<kbd>Ctrl+S</kbd>) with `.tmp` rename pattern.
   - [ ] Dirty document state tracking and unsaved changes confirmation dialog.
 
 ---

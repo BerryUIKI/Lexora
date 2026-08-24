@@ -44,9 +44,12 @@ gantt
 
 ---
 
-### Phase 2 — In-Place WYSIWYG Editor (~1–2 weeks) :construction: In Progress
+### Phase 2 — In-Place WYSIWYG & Display Modes (~1–2 weeks) :construction: In Progress
+- [ ] **Three Tri-State Display Modes** (switchable via bottom status bar & shortcuts):
+  1. **Reading Mode** (📖): Read-only view rendering clean GFM Markdown text.
+  2. **Writing Mode** (✍️): Typora-style in-place WYSIWYG editing (reveal syntax on cursor focus, render on blur).
+  3. **Code Mode** (💻): Raw plain-text Markdown source view with monospace font and line numbers.
 - [ ] Milkdown v7 editor integration inside SolidJS lifecycle.
-- [ ] Seamless Typora-style in-place WYSIWYG editing (reveal syntax on cursor focus / render on blur).
 - [ ] Full keyboard shortcut support (<kbd>Ctrl+B</kbd>, <kbd>Ctrl+I</kbd>, <kbd>Ctrl+K</kbd>, <kbd>Ctrl+1..6</kbd>).
 - [ ] Robust Undo / Redo history stack via ProseMirror state (<kbd>Ctrl+Z</kbd> / <kbd>Ctrl+Y</kbd>).
 - [ ] Native atomic file saving (<kbd>Ctrl+S</kbd>) with temporary file rename pattern.

@@ -57,6 +57,7 @@ Built on **Tauri 2** and **Rust** with a fine-grained reactive **SolidJS** front
 | 🛡️ **File Watcher** | Real-time background detection of external file edits via `notify` | ✅ v0.1.0 |
 | 🎨 **Theme Palette** | Tokyo Night-inspired dark mode, clean light mode, and system sync | ✅ v0.1.0 |
 | 📦 **Tiny Footprint** | Complete NSIS installer under **3.4 MB**; launch time under 500 ms | ✅ v0.1.0 |
+| 🔄 **Tri-State Display Modes** | Quickly switch at the bottom: **Reading** (read-only), **Writing** (WYSIWYG), **Code** (raw source) | 🚧 v0.2.0 |
 | ✍️ **In-Place WYSIWYG** | Typora-style inline editing; reveal syntax on focus, render on blur | 🚧 v0.2.0 |
 | 💾 **Atomic File I/O** | Crash-safe atomic saving (`write to .tmp -> rename`) with dirty state | 🚧 v0.2.0 |
 | 📂 **Workspace & Tabs** | Multi-document tabs, recursive file tree, and quick switcher (<kbd>Ctrl+P</kbd>) | ⏳ v0.3.0 |
