@@ -1,6 +1,8 @@
 import { Component, createSignal, Show, onMount, onCleanup } from "solid-js";
 import { open, save } from "@tauri-apps/plugin-dialog";
-import { TocSidebar } from "./components/Sidebar/TocSidebar";
+import { Sidebar } from "./components/Sidebar/Sidebar";
+import { TabBar } from "./components/Tabs/TabBar";
+import { QuickSwitcher } from "./components/QuickSwitcher/QuickSwitcher";
 import { MarkdownView } from "./components/MarkdownView/MarkdownView";
 import { Editor } from "./components/Editor/Editor";
 import { CodeView } from "./components/CodeView/CodeView";
@@ -15,6 +17,12 @@ import {
   markExternallyModified,
   clearExternallyModified,
 } from "./store/editor";
+import {
+  addOrSwitchTab,
+  openTabs,
+  setQuickSwitcherOpen,
+  syncCurrentDocumentToTab,
+} from "./store/files";
 import {
   openFile,
   saveFile,
@@ -52,7 +60,18 @@ const App: Component = () => {
     try {
       await stopWatchingFile();
       const result = await openFile(path);
+      const docState = {
+        path: result.path,
+        filename: result.filename,
+        content: result.content,
+        html: result.html,
+        toc: result.toc,
+        wordCount: result.word_count,
+        isDirty: false,
+        externallyModified: false,
+      };
       markSaved(result);
+      addOrSwitchTab(docState);
       await startWatchingFile(path);
     } catch (err) {
       console.error("Failed to open file:", err);
@@ -77,6 +96,7 @@ const App: Component = () => {
 
       const res = await saveFile(targetPath, doc.content);
       markSaved(res);
+      syncCurrentDocumentToTab();
       await startWatchingFile(targetPath);
     } catch (err) {
       console.error("Failed to save file:", err);
@@ -85,16 +105,18 @@ const App: Component = () => {
 
   // Handle creating a new document
   const handleNewDocument = () => {
-    setCurrentDocument({
+    const newDoc = {
       path: null,
-      filename: "Untitled",
-      content: "# Untitled Document\n\nStart writing in Markdown...",
-      html: "<h1>Untitled Document</h1><p>Start writing in Markdown...</p>",
-      toc: [{ level: 1, text: "Untitled Document", id: "untitled-document" }],
-      wordCount: 5,
+      filename: `Untitled-${openTabs().length + 1}`,
+      content: "# New Document\n\nStart writing in Markdown...",
+      html: "<h1>New Document</h1><p>Start writing in Markdown...</p>",
+      toc: [{ level: 1, text: "New Document", id: "new-document" }],
+      wordCount: 4,
       isDirty: false,
       externallyModified: false,
-    });
+    };
+    setCurrentDocument(newDoc);
+    addOrSwitchTab(newDoc);
     setDisplayMode("writing");
   };
 
@@ -155,6 +177,9 @@ const App: Component = () => {
     } else if (isCmd && e.key === "n") {
       e.preventDefault();
       handleNewDocument();
+    } else if (isCmd && e.key === "p") {
+      e.preventDefault();
+      setQuickSwitcherOpen((prev) => !prev);
     } else if (isCmd && e.key === "/") {
       e.preventDefault();
       cycleDisplayMode();
@@ -173,21 +198,24 @@ const App: Component = () => {
   });
 
   const doc = () => currentDocument();
-  const hasDocument = () => doc().path !== null || doc().content.length > 0;
+  const hasDocument = () => doc().path !== null || doc().content.length > 0 || openTabs().length > 0;
 
   return (
     <div
       class="flex flex-col h-screen"
       style={{ background: "var(--color-bg-primary)", color: "var(--color-text-primary)" }}
     >
+      {/* Quick Switcher Palette (Ctrl+P) */}
+      <QuickSwitcher onOpenFileByPath={loadFile} />
+
       {/* Main content area */}
       <div
         class="flex flex-1 overflow-hidden"
         style={{ cursor: isResizing() ? "col-resize" : "default" }}
       >
-        {/* TOC Sidebar */}
-        <Show when={sidebarOpen() && hasDocument()}>
-          <aside
+        {/* Workspace & Outline Sidebar */}
+        <Show when={sidebarOpen()}>
+          <div
             class="flex-shrink-0 overflow-hidden flex flex-col no-select"
             style={{
               width: `${sidebarWidth()}px`,
@@ -195,8 +223,8 @@ const App: Component = () => {
               "border-right": "1px solid var(--color-border)",
             }}
           >
-            <TocSidebar toc={doc().toc} />
-          </aside>
+            <Sidebar onSelectFile={loadFile} />
+          </div>
 
           {/* Resize handle */}
           <div
@@ -206,71 +234,81 @@ const App: Component = () => {
           />
         </Show>
 
-        {/* Viewport: Reading / Writing / Code Modes */}
-        <main class="flex-1 overflow-hidden">
-          <Show
-            when={hasDocument()}
-            fallback={
-              <div class="flex items-center justify-center h-full">
-                <div class="text-center max-w-md px-6">
-                  <h1
-                    class="text-4xl font-bold mb-3"
-                    style={{ color: "var(--color-accent)" }}
-                  >
-                    Lexora
-                  </h1>
-                  <p
-                    class="text-base mb-6"
-                    style={{ color: "var(--color-text-secondary)" }}
-                  >
-                    A Typora-style Markdown reader & editor
-                  </p>
+        {/* Center Panel (TabBar + Viewport) */}
+        <div class="flex-1 flex flex-col overflow-hidden">
+          {/* Multi-Document Tab Bar */}
+          <Show when={openTabs().length > 0}>
+            <TabBar onNewTab={handleNewDocument} />
+          </Show>
 
-                  <div class="flex items-center justify-center gap-3 mb-6">
-                    <button
-                      class="px-5 py-2.5 rounded-lg text-white font-medium transition-colors shadow-sm cursor-pointer"
-                      style={{ background: "var(--color-accent)" }}
-                      onClick={handleOpenFile}
+          {/* Viewport: Reading / Writing / Code Modes */}
+          <main class="flex-1 overflow-hidden">
+            <Show
+              when={hasDocument()}
+              fallback={
+                <div class="flex items-center justify-center h-full">
+                  <div class="text-center max-w-md px-6">
+                    <h1
+                      class="text-4xl font-bold mb-3"
+                      style={{ color: "var(--color-accent)" }}
                     >
-                      Open File
-                    </button>
-
-                    <button
-                      class="px-5 py-2.5 rounded-lg font-medium transition-colors cursor-pointer border border-[var(--color-border)] hover:bg-[var(--color-hover)]"
-                      onClick={handleNewDocument}
+                      Lexora
+                    </h1>
+                    <p
+                      class="text-base mb-6"
+                      style={{ color: "var(--color-text-secondary)" }}
                     >
-                      New Document
-                    </button>
-                  </div>
+                      A Typora-style Markdown reader & editor
+                    </p>
 
-                  <div class="text-xs space-y-1.5 opacity-60">
-                    <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+O</kbd> Open File</p>
-                    <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+N</kbd> New Document</p>
-                    <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+S</kbd> Save File</p>
-                    <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+/</kbd> Toggle Display Mode</p>
+                    <div class="flex items-center justify-center gap-3 mb-6">
+                      <button
+                        class="px-5 py-2.5 rounded-lg text-white font-medium transition-colors shadow-sm cursor-pointer"
+                        style={{ background: "var(--color-accent)" }}
+                        onClick={handleOpenFile}
+                      >
+                        Open File
+                      </button>
+
+                      <button
+                        class="px-5 py-2.5 rounded-lg font-medium transition-colors cursor-pointer border border-[var(--color-border)] hover:bg-[var(--color-hover)]"
+                        onClick={handleNewDocument}
+                      >
+                        New Document
+                      </button>
+                    </div>
+
+                    <div class="text-xs space-y-1.5 opacity-60">
+                      <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+O</kbd> Open File</p>
+                      <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+N</kbd> New Document</p>
+                      <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+P</kbd> Quick Switcher</p>
+                      <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+S</kbd> Save File</p>
+                      <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+/</kbd> Toggle Display Mode</p>
+                      <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+B</kbd> Toggle Sidebar</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            }
-          >
-            {/* Tri-State Viewport */}
-            <Show when={displayMode() === "reading"}>
-              <MarkdownView
-                html={doc().html}
-                externallyModified={doc().externallyModified}
-                onReload={reloadCurrentFile}
-              />
-            </Show>
+              }
+            >
+              {/* Tri-State Viewport */}
+              <Show when={displayMode() === "reading"}>
+                <MarkdownView
+                  html={doc().html}
+                  externallyModified={doc().externallyModified}
+                  onReload={reloadCurrentFile}
+                />
+              </Show>
 
-            <Show when={displayMode() === "writing"}>
-              <Editor onSave={handleSaveFile} />
-            </Show>
+              <Show when={displayMode() === "writing"}>
+                <Editor onSave={handleSaveFile} />
+              </Show>
 
-            <Show when={displayMode() === "code"}>
-              <CodeView onSave={handleSaveFile} />
+              <Show when={displayMode() === "code"}>
+                <CodeView onSave={handleSaveFile} />
+              </Show>
             </Show>
-          </Show>
-        </main>
+          </main>
+        </div>
       </div>
 
       {/* Status bar */}

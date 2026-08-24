@@ -57,16 +57,17 @@ gantt
 
 ---
 
-### Phase 3 — File Tree & Navigation (~1 week) :construction: In Progress
-- [ ] Open Workspace Folder capability.
-- [ ] Recursive directory scanner and structured file tree model in Rust.
-- [ ] SolidJS virtualized / nested File Tree sidebar component.
-- [ ] Collapsible sidebar with toggle shortcut (`Ctrl/Cmd+B` or `Ctrl/Cmd+\`).
-- [ ] File creation, rename, and delete actions directly from the tree sidebar.
+### Phase 3 — File Tree & Navigation (~1 week) :white_check_mark: Completed
+- [x] Open Workspace Folder capability via native dialog.
+- [x] Recursive directory scanner and structured file tree model in Rust (`list_directory_tree`).
+- [x] SolidJS nested File Tree sidebar component with expandable folders and file creation, rename, and delete actions.
+- [x] Multi-document tab bar (`TabBar`) with tab switching, dirty indicators, and close actions.
+- [x] Quick file switcher command palette (<kbd>Ctrl+P</kbd>).
+- [x] Collapsible sidebar toggle (<kbd>Ctrl+B</kbd>).
 
 ---
 
-### Phase 4 — Code Highlighting & Polish (~1 week)
+### Phase 4 — Code Highlighting & Polish (~1 week) :construction: In Progress
 - [ ] Rust-side `syntect` integration for server-rendered syntax highlighting.
 - [ ] Client-side code block syntax highlighting for standard languages (JS, TS, Rust, Python, Go, JSON, YAML, etc.).
 - [ ] Code block language selector and copy-code action.

@@ -111,3 +111,44 @@ pub fn get_active_document(state: State<'_, AppState>) -> Result<Option<OpenFile
         word_count: d.word_count,
     }))
 }
+
+/// Recursively list a workspace directory tree.
+#[tauri::command]
+pub async fn list_directory_tree(
+    path: String,
+    state: State<'_, AppState>,
+) -> Result<crate::models::document::FileEntry, String> {
+    let tree = fs_service::read_dir_tree(&path)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    if let Ok(mut ws) = state.workspace_root.lock() {
+        *ws = Some(path);
+    }
+
+    Ok(tree)
+}
+
+/// Create a new file or directory in workspace.
+#[tauri::command]
+pub async fn create_entry(path: String, is_directory: bool) -> Result<(), String> {
+    fs_service::create_file_entry(&path, is_directory)
+        .await
+        .map_err(|e| e.to_string())
+}
+
+/// Delete a file or directory.
+#[tauri::command]
+pub async fn delete_entry(path: String) -> Result<(), String> {
+    fs_service::delete_file_entry(&path)
+        .await
+        .map_err(|e| e.to_string())
+}
+
+/// Rename a file or directory.
+#[tauri::command]
+pub async fn rename_entry(old_path: String, new_path: String) -> Result<(), String> {
+    fs_service::rename_file_entry(&old_path, &new_path)
+        .await
+        .map_err(|e| e.to_string())
+}
