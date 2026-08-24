@@ -34,8 +34,8 @@ export async function openFile(path: string): Promise<OpenFileResponse> {
 export async function saveFile(
   path: string,
   content: string
-): Promise<void> {
-  return invoke<void>("save_file", { path, content });
+): Promise<OpenFileResponse> {
+  return invoke<OpenFileResponse>("save_file", { path, content });
 }
 
 /**
@@ -84,3 +84,84 @@ export async function stopWatchingFile(): Promise<void> {
 export async function greet(name: string): Promise<string> {
   return invoke<string>("greet", { name });
 }
+
+export interface FileEntry {
+  name: string;
+  path: string;
+  is_directory: boolean;
+  children?: FileEntry[];
+}
+
+/**
+ * List a workspace directory recursively.
+ */
+export async function listDirectoryTree(path: string): Promise<FileEntry> {
+  return invoke<FileEntry>("list_directory_tree", { path });
+}
+
+/**
+ * Create a new file or folder.
+ */
+export async function createEntry(
+  path: string,
+  isDirectory: boolean
+): Promise<void> {
+  return invoke<void>("create_entry", { path, isDirectory });
+}
+
+/**
+ * Delete a file or folder.
+ */
+export async function deleteEntry(path: string): Promise<void> {
+  return invoke<void>("delete_entry", { path });
+}
+
+/**
+ * Rename a file or folder.
+ */
+export async function renameEntry(
+  oldPath: string,
+  newPath: string
+): Promise<void> {
+  return invoke<void>("rename_entry", { oldPath, newPath });
+}
+
+/**
+ * Export document to standalone HTML/PDF.
+ */
+export async function exportDocument(
+  markdown: string,
+  title: string,
+  outputPath: string
+): Promise<void> {
+  return invoke<void>("export_document", {
+    markdown,
+    title,
+    outputPath,
+  });
+}
+
+export interface SearchMatch {
+  file_path: string;
+  file_name: string;
+  line_number: number;
+  line_content: string;
+  match_start: number;
+  match_end: number;
+}
+
+/**
+ * Perform workspace full-text search.
+ */
+export async function searchWorkspace(
+  query: string,
+  rootPath: string
+): Promise<SearchMatch[]> {
+  return invoke<SearchMatch[]>("search_workspace", {
+    query,
+    rootPath,
+  });
+}
+
+
+

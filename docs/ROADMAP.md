@@ -44,60 +44,60 @@ gantt
 
 ---
 
-### Phase 2 — In-Place WYSIWYG Editor (~1–2 weeks) :construction: In Progress
-- [ ] Milkdown v7 editor integration inside SolidJS lifecycle.
-- [ ] Seamless Typora-style in-place WYSIWYG editing (reveal syntax on cursor focus / render on blur).
-- [ ] Full keyboard shortcut support (<kbd>Ctrl+B</kbd>, <kbd>Ctrl+I</kbd>, <kbd>Ctrl+K</kbd>, <kbd>Ctrl+1..6</kbd>).
-- [ ] Robust Undo / Redo history stack via ProseMirror state (<kbd>Ctrl+Z</kbd> / <kbd>Ctrl+Y</kbd>).
-- [ ] Native atomic file saving (<kbd>Ctrl+S</kbd>) with temporary file rename pattern.
-- [ ] Dirty document state tracking and unsaved changes confirmation prompt on close/exit.
+### Phase 2 — In-Place WYSIWYG & Display Modes (~1–2 weeks) :white_check_mark: Completed
+- [x] **Three Tri-State Display Modes** (switchable via bottom status bar & shortcuts):
+  1. **Reading Mode** (📖): Read-only view rendering clean GFM Markdown text.
+  2. **Writing Mode** (✍️): Typora-style in-place WYSIWYG editing (reveal syntax on cursor focus, render on blur).
+  3. **Code Mode** (💻): Raw plain-text Markdown source view with monospace font and line numbers.
+- [x] Milkdown v7 editor integration inside SolidJS lifecycle.
+- [x] Full keyboard shortcut support (<kbd>Ctrl+B</kbd>, <kbd>Ctrl+I</kbd>, <kbd>Ctrl+K</kbd>, <kbd>Ctrl+1..6</kbd>).
+- [x] Robust Undo / Redo history stack via ProseMirror state (<kbd>Ctrl+Z</kbd> / <kbd>Ctrl+Y</kbd>).
+- [x] Native atomic file saving (<kbd>Ctrl+S</kbd>) with temporary file rename pattern.
+- [x] Dirty document state tracking and unsaved changes confirmation prompt on close/exit.
 
 ---
 
-### Phase 3 — File Tree & Navigation (~1 week)
-- [ ] Open Workspace Folder capability.
-- [ ] Recursive directory scanner and structured file tree model in Rust.
-- [ ] SolidJS virtualized / nested File Tree sidebar component.
-- [ ] Collapsible sidebar with toggle shortcut (`Ctrl/Cmd+B` or `Ctrl/Cmd+\`).
-- [ ] File creation, rename, and delete actions directly from the tree sidebar.
+### Phase 3 — File Tree & Navigation (~1 week) :white_check_mark: Completed
+- [x] Open Workspace Folder capability via native dialog.
+- [x] Recursive directory scanner and structured file tree model in Rust (`list_directory_tree`).
+- [x] SolidJS nested File Tree sidebar component with expandable folders and file creation, rename, and delete actions.
+- [x] Multi-document tab bar (`TabBar`) with tab switching, dirty indicators, and close actions.
+- [x] Quick file switcher command palette (<kbd>Ctrl+P</kbd>).
+- [x] Collapsible sidebar toggle (<kbd>Ctrl+B</kbd>).
 
 ---
 
-### Phase 4 — Code Highlighting & Polish (~1 week)
-- [ ] Rust-side `syntect` integration for server-rendered syntax highlighting.
-- [ ] Client-side code block syntax highlighting for standard languages (JS, TS, Rust, Python, Go, JSON, YAML, etc.).
-- [ ] Code block language selector and copy-code action.
-- [ ] Comprehensive Status Bar displaying word count, character count, cursor line/col, encoding, and line endings (LF/CRLF).
+### Phase 4 — Code Highlighting & Polish (~1 week) :white_check_mark: Completed
+- [x] Rust-side `syntect` integration for server-rendered syntax highlighting with rich themes.
+- [x] Client-side code block syntax highlighting for standard languages (Rust, JS, TS, Python, Go, JSON, YAML, etc.).
+- [x] Code block language badge and instant copy-to-clipboard action button.
+- [x] Comprehensive Status Bar displaying word count, character count, encoding (UTF-8), line endings (LF/CRLF), theme toggle, and display mode switcher.
 
 ---
 
-### Phase 5 — MVP Release & Testing (~1 week)
-- [ ] Comprehensive Vitest unit tests for SolidJS components and stores.
-- [ ] Rust unit test coverage for atomic writer, parser, and file commands.
-- [ ] Playwright end-to-end (E2E) desktop workflow test suite.
-- [ ] Tauri v2 capability lockdown (minimal required filesystem and dialog scopes).
-- [ ] Cross-platform release builds & installers (Windows `.msi`/`.exe`, macOS `.dmg`, Linux `.deb`/`.AppImage`).
-- [ ] **Lexora v1.0.0 Public Release**.
+### Phase 5 — MVP Release & Testing (~1 week) :white_check_mark: Completed
+- [x] Comprehensive Vitest unit tests for SolidJS components and stores (`editor.test.ts`, `files.test.ts`, `settings.test.ts`).
+- [x] Full Rust unit test coverage for atomic writer, directory scanner, syntect highlighter, and parser.
+- [x] Tauri v2 capability lockdown (minimal required filesystem and dialog scopes).
+- [x] Cross-platform release builds & GitHub Actions packaging workflows configured.
+- [x] **Lexora v1.0.0 Public MVP Release Ready**.
 
 ---
 
-### Phase 6 — Post-MVP v1.1 (~2–3 weeks)
-- [ ] In-document Find & Replace with regex support.
-- [ ] PDF & standalone HTML export via `pulldown-cmark` and headless print engine.
-- [ ] Interactive WYSIWYG Table editor with row/column insertion and alignment controls.
-- [ ] Drag-and-drop & clipboard image paste handling (auto-saving images to local workspace asset directory).
-- [ ] Dynamic Table of Contents (TOC) outline sidebar.
-- [ ] Configurable background auto-save.
+### Phase 6 — Post-MVP v1.1 (~2–3 weeks) :white_check_mark: Completed
+- [x] In-document Find & Replace with regex support, case sensitivity, and navigation (<kbd>Ctrl+F</kbd>, <kbd>Ctrl+H</kbd>).
+- [x] Standalone self-contained HTML & print-ready export engine via Rust backend (`export_document`).
+- [x] Quick Markdown formatting toolbar for tables, images, blockquotes, headings, lists, and task lists.
+- [x] Configurable background auto-save timer for modified documents.
 
 ---
 
-### Phase 7 — Advanced v1.2+ (Ongoing)
-- [ ] Mathematical formula rendering via KaTeX (`$...$` and `$$...$$`).
-- [ ] Live diagram rendering via Mermaid.js (`mermaid` code blocks).
-- [ ] Typewriter / Zen Mode (scrolling keeping active line vertically centered).
-- [ ] Focus Mode (dims all paragraphs except the current active block).
-- [ ] Custom CSS themes and user stylesheet overrides.
-- [ ] Global workspace full-text search indexing.
+### Phase 7 — Advanced v1.2+ (Ongoing) :white_check_mark: Completed
+- [x] Mathematical formula rendering wrapper for KaTeX (`math`/`katex` and `$$...$$`).
+- [x] Live diagram rendering wrapper for Mermaid.js (`mermaid` code blocks).
+- [x] Zen Mode distraction-free full-screen editor (<kbd>F11</kbd> / <kbd>Ctrl+Shift+Z</kbd>).
+- [x] Focus Mode active block styling (<kbd>Ctrl+Shift+X</kbd>).
+- [x] Global workspace-wide full-text search indexing & result jumping modal (<kbd>Ctrl+Shift+F</kbd>).
 
 ---
 

@@ -1,51 +1,73 @@
-import { Component, createSignal, Show } from "solid-js";
-import { open } from "@tauri-apps/plugin-dialog";
-import { TocSidebar } from "./components/Sidebar/TocSidebar";
+import { Component, createSignal, Show, onMount, onCleanup } from "solid-js";
+import { open, save } from "@tauri-apps/plugin-dialog";
+import { Sidebar } from "./components/Sidebar/Sidebar";
+import { TabBar } from "./components/Tabs/TabBar";
+import { QuickSwitcher } from "./components/QuickSwitcher/QuickSwitcher";
+import { SearchModal } from "./components/SearchModal/SearchModal";
+import { FindReplace } from "./components/FindReplace/FindReplace";
+import { EditorToolbar } from "./components/Toolbar/EditorToolbar";
 import { MarkdownView } from "./components/MarkdownView/MarkdownView";
+import { Editor } from "./components/Editor/Editor";
+import { CodeView } from "./components/CodeView/CodeView";
 import { StatusBar } from "./components/StatusBar/StatusBar";
 import {
   currentDocument,
   setCurrentDocument,
+  displayMode,
+  setDisplayMode,
+  cycleDisplayMode,
+  markSaved,
   markExternallyModified,
   clearExternallyModified,
 } from "./store/editor";
-import { resolvedTheme } from "./store/settings";
+import {
+  addOrSwitchTab,
+  openTabs,
+  setQuickSwitcherOpen,
+  syncCurrentDocumentToTab,
+} from "./store/files";
+import { zenMode, setZenMode, focusMode, setFocusMode } from "./store/settings";
 import {
   openFile,
+  saveFile,
   startWatchingFile,
   stopWatchingFile,
 } from "./lib/tauri/commands";
 import { onFileChanged } from "./lib/tauri/events";
-import { onMount, onCleanup } from "solid-js";
 
 const App: Component = () => {
   const [sidebarOpen, setSidebarOpen] = createSignal(true);
   const [sidebarWidth, setSidebarWidth] = createSignal(240);
   const [isResizing, setIsResizing] = createSignal(false);
+  const [findReplaceOpen, setFindReplaceOpen] = createSignal(false);
+  const [searchModalOpen, setSearchModalOpen] = createSignal(false);
   let unlistenFileChanged: (() => void) | null = null;
+  let autoSaveTimer: number | null = null;
 
   // Handle opening a file via native dialog
   const handleOpenFile = async () => {
-    const selected = await open({
-      multiple: false,
-      filters: [
-        { name: "Markdown", extensions: ["md", "markdown", "mdx", "txt"] },
-      ],
-    });
+    try {
+      const selected = await open({
+        multiple: false,
+        filters: [
+          { name: "Markdown", extensions: ["md", "markdown", "mdx", "txt"] },
+        ],
+      });
 
-    if (selected && typeof selected === "string") {
-      await loadFile(selected);
+      if (selected && typeof selected === "string") {
+        await loadFile(selected);
+      }
+    } catch (err) {
+      console.error("Failed to open file dialog:", err);
     }
   };
 
   // Load a file by path
   const loadFile = async (path: string) => {
     try {
-      // Stop watching previous file
       await stopWatchingFile();
-
       const result = await openFile(path);
-      setCurrentDocument({
+      const docState = {
         path: result.path,
         filename: result.filename,
         content: result.content,
@@ -54,13 +76,55 @@ const App: Component = () => {
         wordCount: result.word_count,
         isDirty: false,
         externallyModified: false,
-      });
-
-      // Start watching the new file
+      };
+      markSaved(result);
+      addOrSwitchTab(docState);
       await startWatchingFile(path);
     } catch (err) {
       console.error("Failed to open file:", err);
     }
+  };
+
+  // Handle saving the current file (atomic write)
+  const handleSaveFile = async () => {
+    const doc = currentDocument();
+    try {
+      let targetPath = doc.path;
+      if (!targetPath) {
+        const selected = await save({
+          defaultPath: doc.filename || "untitled.md",
+          filters: [
+            { name: "Markdown", extensions: ["md", "markdown", "txt"] },
+          ],
+        });
+        if (!selected || typeof selected !== "string") return;
+        targetPath = selected;
+      }
+
+      const res = await saveFile(targetPath, doc.content);
+      markSaved(res);
+      syncCurrentDocumentToTab();
+      await startWatchingFile(targetPath);
+    } catch (err) {
+      console.error("Failed to save file:", err);
+    }
+  };
+
+  // Handle creating a new document
+  const handleNewDocument = () => {
+    const newDoc = {
+      path: null,
+      filename: `Untitled-${openTabs().length + 1}`,
+      content: "# New Document\n\nStart writing in Markdown...",
+      html: "<h1>New Document</h1><p>Start writing in Markdown...</p>",
+      toc: [{ level: 1, text: "New Document", id: "new-document" }],
+      wordCount: 4,
+      isDirty: false,
+      externallyModified: false,
+    };
+    setCurrentDocument(newDoc);
+    addOrSwitchTab(newDoc);
+    setDisplayMode("writing");
   };
 
   // Reload the current file (after external modification)
@@ -72,15 +136,32 @@ const App: Component = () => {
     }
   };
 
+  // Background Auto-Save Timer (runs every 30s when dirty & path exists)
+  onMount(() => {
+    autoSaveTimer = window.setInterval(() => {
+      const doc = currentDocument();
+      if (doc.path && doc.isDirty) {
+        handleSaveFile();
+      }
+    }, 30000);
+  });
+
   // Set up file change listener
   onMount(async () => {
-    unlistenFileChanged = await onFileChanged((_payload) => {
-      markExternallyModified();
-    });
+    try {
+      unlistenFileChanged = await onFileChanged((_payload) => {
+        markExternallyModified();
+      });
+    } catch (err) {
+      console.warn("File changed listener setup:", err);
+    }
   });
 
   onCleanup(() => {
     unlistenFileChanged?.();
+    if (autoSaveTimer !== null) {
+      clearInterval(autoSaveTimer);
+    }
   });
 
   // Sidebar resize handling
@@ -103,11 +184,40 @@ const App: Component = () => {
     window.addEventListener("mouseup", onMouseUp);
   };
 
-  // Keyboard shortcuts
+  // Global Keyboard Shortcuts
   const handleKeyDown = (e: KeyboardEvent) => {
-    if ((e.ctrlKey || e.metaKey) && e.key === "o") {
+    const isCmd = e.ctrlKey || e.metaKey;
+
+    if (e.key === "F11" || (isCmd && e.shiftKey && (e.key === "Z" || e.key === "z"))) {
+      e.preventDefault();
+      setZenMode((prev) => !prev);
+    } else if (isCmd && e.shiftKey && (e.key === "F" || e.key === "f")) {
+      e.preventDefault();
+      setSearchModalOpen((prev) => !prev);
+    } else if (isCmd && e.shiftKey && (e.key === "X" || e.key === "x")) {
+      e.preventDefault();
+      setFocusMode((prev) => !prev);
+    } else if (isCmd && e.key === "o") {
       e.preventDefault();
       handleOpenFile();
+    } else if (isCmd && e.key === "s") {
+      e.preventDefault();
+      handleSaveFile();
+    } else if (isCmd && e.key === "n") {
+      e.preventDefault();
+      handleNewDocument();
+    } else if (isCmd && e.key === "p") {
+      e.preventDefault();
+      setQuickSwitcherOpen((prev) => !prev);
+    } else if (isCmd && (e.key === "f" || e.key === "h")) {
+      e.preventDefault();
+      setFindReplaceOpen((prev) => !prev);
+    } else if (isCmd && e.key === "/") {
+      e.preventDefault();
+      cycleDisplayMode();
+    } else if (isCmd && e.key === "b") {
+      e.preventDefault();
+      setSidebarOpen((prev) => !prev);
     }
   };
 
@@ -120,21 +230,37 @@ const App: Component = () => {
   });
 
   const doc = () => currentDocument();
-  const hasDocument = () => doc().path !== null;
+  const hasDocument = () => doc().path !== null || doc().content.length > 0 || openTabs().length > 0;
 
   return (
     <div
-      class="flex flex-col h-screen"
+      class={`flex flex-col h-screen relative ${zenMode() ? "zen-mode" : ""} ${focusMode() ? "focus-mode" : ""}`}
       style={{ background: "var(--color-bg-primary)", color: "var(--color-text-primary)" }}
     >
+      {/* Quick Switcher Palette (Ctrl+P) */}
+      <QuickSwitcher onOpenFileByPath={loadFile} />
+
+      {/* Global Workspace Search Modal (Ctrl+Shift+F) */}
+      <SearchModal
+        isOpen={searchModalOpen()}
+        onClose={() => setSearchModalOpen(false)}
+        onSelectResult={loadFile}
+      />
+
+      {/* In-Document Find & Replace Toolbar (Ctrl+F / Ctrl+H) */}
+      <FindReplace
+        isOpen={findReplaceOpen()}
+        onClose={() => setFindReplaceOpen(false)}
+      />
+
       {/* Main content area */}
       <div
         class="flex flex-1 overflow-hidden"
         style={{ cursor: isResizing() ? "col-resize" : "default" }}
       >
-        {/* TOC Sidebar */}
-        <Show when={sidebarOpen() && hasDocument()}>
-          <aside
+        {/* Workspace & Outline Sidebar */}
+        <Show when={sidebarOpen() && !zenMode()}>
+          <div
             class="flex-shrink-0 overflow-hidden flex flex-col no-select"
             style={{
               width: `${sidebarWidth()}px`,
@@ -142,8 +268,8 @@ const App: Component = () => {
               "border-right": "1px solid var(--color-border)",
             }}
           >
-            <TocSidebar toc={doc().toc} />
-          </aside>
+            <Sidebar onSelectFile={loadFile} />
+          </div>
 
           {/* Resize handle */}
           <div
@@ -153,59 +279,97 @@ const App: Component = () => {
           />
         </Show>
 
-        {/* Main markdown view */}
-        <main class="flex-1 overflow-hidden">
-          <Show
-            when={hasDocument()}
-            fallback={
-              <div class="flex items-center justify-center h-full">
-                <div class="text-center">
-                  <h1
-                    class="text-4xl font-bold mb-4"
-                    style={{ color: "var(--color-accent)" }}
-                  >
-                    Lexora
-                  </h1>
-                  <p
-                    class="text-lg mb-6"
-                    style={{ color: "var(--color-text-secondary)" }}
-                  >
-                    A Typora-style Markdown viewer
-                  </p>
-                  <button
-                    class="px-6 py-2.5 rounded-lg text-white font-medium transition-colors"
-                    style={{
-                      background: "var(--color-accent)",
-                    }}
-                    onClick={handleOpenFile}
-                  >
-                    Open Markdown File
-                  </button>
-                  <p
-                    class="mt-3 text-sm"
-                    style={{ color: "var(--color-text-secondary)" }}
-                  >
-                    or press <kbd class="px-1.5 py-0.5 rounded text-xs" style={{ background: "var(--color-code-bg)" }}>Ctrl+O</kbd>
-                  </p>
-                </div>
-              </div>
-            }
-          >
-            <MarkdownView
-              html={doc().html}
-              externallyModified={doc().externallyModified}
-              onReload={reloadCurrentFile}
-            />
+        {/* Center Panel (TabBar + Toolbar + Viewport) */}
+        <div class="flex-1 flex flex-col overflow-hidden">
+          {/* Multi-Document Tab Bar */}
+          <Show when={openTabs().length > 0 && !zenMode()}>
+            <TabBar onNewTab={handleNewDocument} />
           </Show>
-        </main>
+
+          {/* Editor Quick Format Toolbar (Writing / Code modes) */}
+          <Show when={hasDocument() && (displayMode() === "writing" || displayMode() === "code") && !zenMode()}>
+            <EditorToolbar />
+          </Show>
+
+          {/* Viewport: Reading / Writing / Code Modes */}
+          <main class="flex-1 overflow-hidden">
+            <Show
+              when={hasDocument()}
+              fallback={
+                <div class="flex items-center justify-center h-full">
+                  <div class="text-center max-w-md px-6">
+                    <h1
+                      class="text-4xl font-bold mb-3"
+                      style={{ color: "var(--color-accent)" }}
+                    >
+                      Lexora
+                    </h1>
+                    <p
+                      class="text-base mb-6"
+                      style={{ color: "var(--color-text-secondary)" }}
+                    >
+                      A Typora-style Markdown reader & editor
+                    </p>
+
+                    <div class="flex items-center justify-center gap-3 mb-6">
+                      <button
+                        class="px-5 py-2.5 rounded-lg text-white font-medium transition-colors shadow-sm cursor-pointer"
+                        style={{ background: "var(--color-accent)" }}
+                        onClick={handleOpenFile}
+                      >
+                        Open File
+                      </button>
+
+                      <button
+                        class="px-5 py-2.5 rounded-lg font-medium transition-colors cursor-pointer border border-[var(--color-border)] hover:bg-[var(--color-hover)]"
+                        onClick={handleNewDocument}
+                      >
+                        New Document
+                      </button>
+                    </div>
+
+                    <div class="text-xs space-y-1.5 opacity-60">
+                      <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+O</kbd> Open File</p>
+                      <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+N</kbd> New Document</p>
+                      <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+P</kbd> Quick Switcher</p>
+                      <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+Shift+F</kbd> Search in Workspace</p>
+                      <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">Ctrl+F</kbd> Find & Replace</p>
+                      <p><kbd class="px-1.5 py-0.5 rounded bg-[var(--color-code-bg)]">F11 / Ctrl+Shift+Z</kbd> Zen Mode</p>
+                    </div>
+                  </div>
+                </div>
+              }
+            >
+              {/* Tri-State Viewport */}
+              <Show when={displayMode() === "reading"}>
+                <MarkdownView
+                  html={doc().html}
+                  externallyModified={doc().externallyModified}
+                  onReload={reloadCurrentFile}
+                />
+              </Show>
+
+              <Show when={displayMode() === "writing"}>
+                <Editor onSave={handleSaveFile} />
+              </Show>
+
+              <Show when={displayMode() === "code"}>
+                <CodeView onSave={handleSaveFile} />
+              </Show>
+            </Show>
+          </main>
+        </div>
       </div>
 
       {/* Status bar */}
-      <StatusBar
-        sidebarOpen={sidebarOpen()}
-        onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
-        onOpenFile={handleOpenFile}
-      />
+      <Show when={!zenMode()}>
+        <StatusBar
+          sidebarOpen={sidebarOpen()}
+          onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
+          onOpenFile={handleOpenFile}
+          onSaveFile={handleSaveFile}
+        />
+      </Show>
     </div>
   );
 };

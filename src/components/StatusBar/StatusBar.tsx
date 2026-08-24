@@ -1,22 +1,40 @@
-import { Component, Show } from "solid-js";
-import { currentDocument } from "../../store/editor";
-import { theme, cycleTheme, resolvedTheme } from "../../store/settings";
+import { Component, Show, createMemo } from "solid-js";
+import { currentDocument, displayMode, cycleDisplayMode } from "../../store/editor";
+import { theme, cycleTheme } from "../../store/settings";
 
 export interface StatusBarProps {
   sidebarOpen: boolean;
   onToggleSidebar: () => void;
   onOpenFile: () => void;
+  onSaveFile: () => void;
 }
 
 export const StatusBar: Component<StatusBarProps> = (props) => {
   const doc = () => currentDocument();
-  const hasDoc = () => doc().path !== null;
+  const hasDoc = () => doc().path !== null || doc().content.length > 0;
+
+  const charCount = createMemo(() => doc().content.length);
+  const lineEnding = createMemo(() => (doc().content.includes("\r\n") ? "CRLF" : "LF"));
+
+  const modeIcon = () => {
+    const m = displayMode();
+    if (m === "reading") return "📖";
+    if (m === "writing") return "✍️";
+    return "💻";
+  };
+
+  const modeLabel = () => {
+    const m = displayMode();
+    if (m === "reading") return "Reading";
+    if (m === "writing") return "Writing";
+    return "Code";
+  };
 
   const themeIcon = () => {
     const t = theme();
     if (t === "light") return "☀";
     if (t === "dark") return "☽";
-    return "◑"; // system
+    return "◑";
   };
 
   const themeLabel = () => {
@@ -28,7 +46,7 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
 
   return (
     <footer
-      class="h-7 flex items-center px-2 text-xs no-select flex-shrink-0"
+      class="h-7 flex items-center px-2 text-xs no-select flex-shrink-0 select-none"
       style={{
         background: "var(--color-statusbar-bg)",
         color: "var(--color-text-secondary)",
@@ -41,7 +59,7 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
         <button
           class="px-1 hover:opacity-80 transition-opacity"
           onClick={props.onToggleSidebar}
-          title={props.sidebarOpen ? "Hide sidebar" : "Show sidebar"}
+          title={props.sidebarOpen ? "Hide sidebar (Ctrl+B)" : "Show sidebar (Ctrl+B)"}
         >
           {props.sidebarOpen ? "◧" : "▨"}
         </button>
@@ -55,23 +73,44 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
           📂
         </button>
 
+        {/* Save file button */}
+        <button
+          class="px-1 hover:opacity-80 transition-opacity"
+          onClick={props.onSaveFile}
+          title="Save file (Ctrl+S)"
+        >
+          💾
+        </button>
+
         {/* Separator */}
         <span style={{ color: "var(--color-border)" }}>|</span>
 
         {/* Filename */}
         <Show when={hasDoc()}>
           <span
-            class="max-w-48 truncate"
-            title={doc().path ?? ""}
+            class="max-w-44 truncate font-medium"
+            title={doc().path ?? "Untitled"}
           >
             {doc().filename}
           </span>
 
+          {/* Unsaved indicator */}
+          <Show when={doc().isDirty}>
+            <span
+              class="px-1.5 py-0.2 rounded text-[10px] font-semibold"
+              style={{ background: "#e63946", color: "white" }}
+              title="Unsaved changes"
+            >
+              ● unsaved
+            </span>
+          </Show>
+
           {/* Externally modified indicator */}
           <Show when={doc().externallyModified}>
             <span
-              class="px-1 rounded text-[10px] font-medium"
+              class="px-1.5 py-0.2 rounded text-[10px] font-semibold"
               style={{ background: "var(--color-accent)", color: "white" }}
+              title="File modified externally on disk"
             >
               modified
             </span>
@@ -87,11 +126,34 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
       <div class="flex-1" />
 
       {/* Right section */}
-      <div class="flex items-center gap-3">
-        {/* Word count */}
+      <div class="flex items-center gap-2.5">
+        {/* Document Stats */}
         <Show when={hasDoc()}>
           <span>{doc().wordCount.toLocaleString()} words</span>
+          <span style={{ color: "var(--color-border)" }}>|</span>
+          <span>{charCount().toLocaleString()} chars</span>
+          <span style={{ color: "var(--color-border)" }}>|</span>
+          <span>UTF-8</span>
+          <span style={{ color: "var(--color-border)" }}>|</span>
+          <span>{lineEnding()}</span>
+          <span style={{ color: "var(--color-border)" }}>|</span>
         </Show>
+
+        {/* Tri-State Display Mode Switcher */}
+        <button
+          class="flex items-center gap-1.5 px-2 py-0.5 rounded font-medium transition-colors"
+          style={{
+            background: "var(--color-hover)",
+            color: "var(--color-text-primary)",
+          }}
+          onClick={cycleDisplayMode}
+          title={`Display Mode: ${modeLabel()} (Click to toggle Reading / Writing / Code)`}
+        >
+          <span>{modeIcon()}</span>
+          <span>{modeLabel()}</span>
+        </button>
+
+        <span style={{ color: "var(--color-border)" }}>|</span>
 
         {/* Theme toggle */}
         <button
