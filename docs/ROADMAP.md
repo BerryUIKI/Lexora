@@ -92,13 +92,12 @@ gantt
 
 ---
 
-### Phase 7 — Advanced v1.2+ (Ongoing) :construction: In Progress
-- [ ] Mathematical formula rendering via KaTeX (`$...$` and `$$...$$`).
-- [ ] Live diagram rendering via Mermaid.js (`mermaid` code blocks).
-- [ ] Typewriter / Zen Mode (scrolling keeping active line vertically centered).
-- [ ] Focus Mode (dims all paragraphs except the current active block).
-- [ ] Custom CSS themes and user stylesheet overrides.
-- [ ] Global workspace full-text search indexing.
+### Phase 7 — Advanced v1.2+ (Ongoing) :white_check_mark: Completed
+- [x] Mathematical formula rendering wrapper for KaTeX (`math`/`katex` and `$$...$$`).
+- [x] Live diagram rendering wrapper for Mermaid.js (`mermaid` code blocks).
+- [x] Zen Mode distraction-free full-screen editor (<kbd>F11</kbd> / <kbd>Ctrl+Shift+Z</kbd>).
+- [x] Focus Mode active block styling (<kbd>Ctrl+Shift+X</kbd>).
+- [x] Global workspace-wide full-text search indexing & result jumping modal (<kbd>Ctrl+Shift+F</kbd>).
 
 ---
 

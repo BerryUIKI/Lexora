@@ -33,6 +33,7 @@ pub fn run() {
             commands::markdown::render_markdown,
             commands::markdown::highlight_code,
             commands::markdown::export_document,
+            commands::search::search_workspace,
             start_watching_file,
             stop_watching_file,
         ])
