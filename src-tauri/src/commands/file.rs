@@ -60,25 +60,39 @@ pub async fn save_file(
     path: String,
     content: String,
     state: State<'_, AppState>,
-) -> Result<(), String> {
+) -> Result<OpenFileResponse, String> {
     fs_service::write_file_atomic(&path, &content)
         .await
         .map_err(|e| e.to_string())?;
 
+    let html = parser::markdown_to_html(&content);
+    let toc = parser::extract_toc(&content);
+    let word_count = parser::count_words(&content);
+    let filename = std::path::Path::new(&path)
+        .file_name()
+        .map(|n| n.to_string_lossy().to_string())
+        .unwrap_or_else(|| "Unknown".to_string());
+
     // Update cached state
     if let Ok(mut doc) = state.active_document.lock() {
-        if let Some(ref mut d) = *doc {
-            if d.path == path {
-                d.content = content.clone();
-                d.html = parser::markdown_to_html(&content);
-                d.toc = parser::extract_toc(&content);
-                d.word_count = parser::count_words(&content);
-                d.externally_modified = false;
-            }
-        }
+        *doc = Some(ActiveDocument {
+            path: path.clone(),
+            content: content.clone(),
+            html: html.clone(),
+            toc: toc.clone(),
+            word_count,
+            externally_modified: false,
+        });
     }
 
-    Ok(())
+    Ok(OpenFileResponse {
+        path,
+        filename,
+        content,
+        html,
+        toc,
+        word_count,
+    })
 }
 
 /// Get the current active document state.

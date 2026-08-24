@@ -34,8 +34,8 @@ export async function openFile(path: string): Promise<OpenFileResponse> {
 export async function saveFile(
   path: string,
   content: string
-): Promise<void> {
-  return invoke<void>("save_file", { path, content });
+): Promise<OpenFileResponse> {
+  return invoke<OpenFileResponse>("save_file", { path, content });
 }
 
 /**
