@@ -1,4 +1,4 @@
-import { Component, Show } from "solid-js";
+import { Component, Show, createMemo } from "solid-js";
 import { currentDocument, displayMode, cycleDisplayMode } from "../../store/editor";
 import { theme, cycleTheme } from "../../store/settings";
 
@@ -12,6 +12,9 @@ export interface StatusBarProps {
 export const StatusBar: Component<StatusBarProps> = (props) => {
   const doc = () => currentDocument();
   const hasDoc = () => doc().path !== null || doc().content.length > 0;
+
+  const charCount = createMemo(() => doc().content.length);
+  const lineEnding = createMemo(() => (doc().content.includes("\r\n") ? "CRLF" : "LF"));
 
   const modeIcon = () => {
     const m = displayMode();
@@ -43,7 +46,7 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
 
   return (
     <footer
-      class="h-7 flex items-center px-2 text-xs no-select flex-shrink-0"
+      class="h-7 flex items-center px-2 text-xs no-select flex-shrink-0 select-none"
       style={{
         background: "var(--color-statusbar-bg)",
         color: "var(--color-text-secondary)",
@@ -85,7 +88,7 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
         {/* Filename */}
         <Show when={hasDoc()}>
           <span
-            class="max-w-48 truncate font-medium"
+            class="max-w-44 truncate font-medium"
             title={doc().path ?? "Untitled"}
           >
             {doc().filename}
@@ -123,10 +126,16 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
       <div class="flex-1" />
 
       {/* Right section */}
-      <div class="flex items-center gap-2">
-        {/* Word count */}
+      <div class="flex items-center gap-2.5">
+        {/* Document Stats */}
         <Show when={hasDoc()}>
           <span>{doc().wordCount.toLocaleString()} words</span>
+          <span style={{ color: "var(--color-border)" }}>|</span>
+          <span>{charCount().toLocaleString()} chars</span>
+          <span style={{ color: "var(--color-border)" }}>|</span>
+          <span>UTF-8</span>
+          <span style={{ color: "var(--color-border)" }}>|</span>
+          <span>{lineEnding()}</span>
           <span style={{ color: "var(--color-border)" }}>|</span>
         </Show>
 

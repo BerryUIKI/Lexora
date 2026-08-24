@@ -67,15 +67,15 @@ gantt
 
 ---
 
-### Phase 4 — Code Highlighting & Polish (~1 week) :construction: In Progress
-- [ ] Rust-side `syntect` integration for server-rendered syntax highlighting.
-- [ ] Client-side code block syntax highlighting for standard languages (JS, TS, Rust, Python, Go, JSON, YAML, etc.).
-- [ ] Code block language selector and copy-code action.
-- [ ] Comprehensive Status Bar displaying word count, character count, cursor line/col, encoding, and line endings (LF/CRLF).
+### Phase 4 — Code Highlighting & Polish (~1 week) :white_check_mark: Completed
+- [x] Rust-side `syntect` integration for server-rendered syntax highlighting with rich themes.
+- [x] Client-side code block syntax highlighting for standard languages (Rust, JS, TS, Python, Go, JSON, YAML, etc.).
+- [x] Code block language badge and instant copy-to-clipboard action button.
+- [x] Comprehensive Status Bar displaying word count, character count, encoding (UTF-8), line endings (LF/CRLF), theme toggle, and display mode switcher.
 
 ---
 
-### Phase 5 — MVP Release & Testing (~1 week)
+### Phase 5 — MVP Release & Testing (~1 week) :construction: In Progress
 - [ ] Comprehensive Vitest unit tests for SolidJS components and stores.
 - [ ] Rust unit test coverage for atomic writer, parser, and file commands.
 - [ ] Playwright end-to-end (E2E) desktop workflow test suite.

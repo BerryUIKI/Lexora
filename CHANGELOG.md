@@ -7,10 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Planned (Phase 4 — v0.4.0)
-- `syntect` Rust-powered syntax highlighting for code blocks
-- Code block language tag and copy-to-clipboard action
-- Advanced status bar metrics (cursor line/col, UTF-8 encoding, LF/CRLF line endings)
+### Planned (Phase 5 — v1.0.0 MVP Release & Testing)
+- Comprehensive automated test suite (Vitest + Rust unit tests + Playwright)
+- Tauri v2 least-privilege capability lockdown
+- Multi-platform production builds and installers
+
+---
+
+## [0.4.0] - 2026-08-24
+
+### Added
+- **Server-Side Code Highlighting (`syntect`)**:
+  - Direct integration into AST parser for fenced code blocks with Ocean Dark theme.
+  - Automatic language badge on code block header.
+  - One-click copy-to-clipboard button on every code snippet.
+- **Advanced Status Bar**:
+  - Real-time word count & character count display.
+  - Encoding (UTF-8) and line-ending detector (LF / CRLF).
+  - Quick-switch toggle buttons for themes and display modes.
 
 ---
 
