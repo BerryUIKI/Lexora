@@ -33,21 +33,24 @@ gantt
 
 ---
 
-### Phase 1 — Core Editor (~1–2 weeks) :construction: In Progress
-- [ ] Milkdown v7 editor integration inside SolidJS lifecycle.
-- [ ] Seamless Typora-style WYSIWYG Markdown rendering (headers, bold, italics, lists, blockquotes, code spans).
-- [ ] Full keyboard shortcut support (Ctrl/Cmd+B, Ctrl/Cmd+I, Ctrl/Cmd+K, etc.).
-- [ ] Robust Undo / Redo history stack via ProseMirror state.
-- [ ] Dark / Light theme styling with CSS custom properties and system theme synchronization.
+### Phase 1 — Core Reader MVP (~1–2 weeks) :white_check_mark: Completed
+- [x] Resizable three-part layout (TOC sidebar on left, main markdown render view in center, status bar footer).
+- [x] Local `.md`, `.markdown`, `.mdx`, `.txt` file open dialog via native dialog plugin.
+- [x] High-performance GFM Markdown parsing and TOC extraction in Rust via `pulldown-cmark`.
+- [x] Background file watcher service (`notify`) with live external modification alert banner.
+- [x] Dark / Light / System theme toggle using CSS variables with OS preference auto-detection.
+- [x] Status bar showing filename, word count, theme toggle, and external modification badge.
+- [x] Standalone executable and Windows installers (NSIS 3.38 MB, WiX MSI 4.92 MB).
 
 ---
 
-### Phase 2 — File Operations (~1 week)
-- [ ] Native file dialogs for Open File, Save As, and Select Folder.
-- [ ] Atomic file write service in Rust (write to temporary buffer `.tmp.lexora` followed by atomic rename).
-- [ ] Tabbed document management (multiple open documents).
-- [ ] Document dirty state tracking and unsaved changes confirmation prompt on close/exit.
-- [ ] File reload detection on external modification.
+### Phase 2 — In-Place WYSIWYG Editor (~1–2 weeks) :construction: In Progress
+- [ ] Milkdown v7 editor integration inside SolidJS lifecycle.
+- [ ] Seamless Typora-style in-place WYSIWYG editing (reveal syntax on cursor focus / render on blur).
+- [ ] Full keyboard shortcut support (<kbd>Ctrl+B</kbd>, <kbd>Ctrl+I</kbd>, <kbd>Ctrl+K</kbd>, <kbd>Ctrl+1..6</kbd>).
+- [ ] Robust Undo / Redo history stack via ProseMirror state (<kbd>Ctrl+Z</kbd> / <kbd>Ctrl+Y</kbd>).
+- [ ] Native atomic file saving (<kbd>Ctrl+S</kbd>) with temporary file rename pattern.
+- [ ] Dirty document state tracking and unsaved changes confirmation prompt on close/exit.
 
 ---
 
