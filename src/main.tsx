@@ -2,6 +2,9 @@ import { render } from "solid-js/web";
 import App from "./App";
 import "./styles/global.css";
 
+// Initialize theme from settings store (side-effect import)
+import "./store/settings";
+
 const root = document.getElementById("root");
 
 if (!root) {

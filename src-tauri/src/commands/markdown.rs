@@ -1,9 +1,22 @@
 use crate::services::{highlighter, parser};
+use crate::state::TocEntry;
 
-/// Parse Markdown to HTML.
+/// Response from rendering markdown.
+#[derive(serde::Serialize)]
+pub struct RenderResult {
+    pub html: String,
+    pub toc: Vec<TocEntry>,
+    pub word_count: usize,
+}
+
+/// Render Markdown string to HTML with TOC and word count.
 #[tauri::command]
-pub fn parse_markdown(markdown: &str) -> String {
-    parser::markdown_to_html(markdown)
+pub fn render_markdown(markdown: &str) -> RenderResult {
+    RenderResult {
+        html: parser::markdown_to_html(markdown),
+        toc: parser::extract_toc(markdown),
+        word_count: parser::count_words(markdown),
+    }
 }
 
 /// Highlight a code block and return styled HTML.

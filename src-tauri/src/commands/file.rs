@@ -1,23 +1,57 @@
-use crate::services::fs_service;
-use crate::state::AppState;
+use crate::services::{fs_service, parser};
+use crate::state::{ActiveDocument, AppState};
 use tauri::State;
 
-/// Open a file and return its contents.
+/// Response returned when a file is successfully opened.
+#[derive(serde::Serialize)]
+pub struct OpenFileResponse {
+    pub path: String,
+    pub filename: String,
+    pub content: String,
+    pub html: String,
+    pub toc: Vec<crate::state::TocEntry>,
+    pub word_count: usize,
+}
+
+/// Open a file by path: read, parse, cache, and return full render data.
 #[tauri::command]
 pub async fn open_file(
     path: String,
     state: State<'_, AppState>,
-) -> Result<String, String> {
+) -> Result<OpenFileResponse, String> {
     let content = fs_service::read_file(&path)
         .await
         .map_err(|e| e.to_string())?;
 
-    // Cache the document in app state
-    if let Ok(mut docs) = state.open_documents.lock() {
-        docs.insert(path, content.clone());
+    let html = parser::markdown_to_html(&content);
+    let toc = parser::extract_toc(&content);
+    let word_count = parser::count_words(&content);
+
+    let filename = std::path::Path::new(&path)
+        .file_name()
+        .map(|n| n.to_string_lossy().to_string())
+        .unwrap_or_else(|| "Unknown".to_string());
+
+    // Store active document in state
+    if let Ok(mut doc) = state.active_document.lock() {
+        *doc = Some(ActiveDocument {
+            path: path.clone(),
+            content: content.clone(),
+            html: html.clone(),
+            toc: toc.clone(),
+            word_count,
+            externally_modified: false,
+        });
     }
 
-    Ok(content)
+    Ok(OpenFileResponse {
+        path,
+        filename,
+        content,
+        html,
+        toc,
+        word_count,
+    })
 }
 
 /// Save content to a file using atomic write.
@@ -32,9 +66,34 @@ pub async fn save_file(
         .map_err(|e| e.to_string())?;
 
     // Update cached state
-    if let Ok(mut docs) = state.open_documents.lock() {
-        docs.insert(path, content);
+    if let Ok(mut doc) = state.active_document.lock() {
+        if let Some(ref mut d) = *doc {
+            if d.path == path {
+                d.content = content.clone();
+                d.html = parser::markdown_to_html(&content);
+                d.toc = parser::extract_toc(&content);
+                d.word_count = parser::count_words(&content);
+                d.externally_modified = false;
+            }
+        }
     }
 
     Ok(())
+}
+
+/// Get the current active document state.
+#[tauri::command]
+pub fn get_active_document(state: State<'_, AppState>) -> Result<Option<OpenFileResponse>, String> {
+    let doc = state.active_document.lock().map_err(|e| e.to_string())?;
+    Ok(doc.as_ref().map(|d| OpenFileResponse {
+        path: d.path.clone(),
+        filename: std::path::Path::new(&d.path)
+            .file_name()
+            .map(|n| n.to_string_lossy().to_string())
+            .unwrap_or_else(|| "Unknown".to_string()),
+        content: d.content.clone(),
+        html: d.html.clone(),
+        toc: d.toc.clone(),
+        word_count: d.word_count,
+    }))
 }
