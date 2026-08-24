@@ -1,0 +1,11 @@
+/* Dark theme overrides — applied via class="theme-dark" on <html> */
+:root.theme-dark {
+  --color-bg-primary: #1a1a2e;
+  --color-bg-secondary: #16213e;
+  --color-text-primary: #e0e0e0;
+  --color-text-secondary: #a0a0a0;
+  --color-accent: #4cc9f0;
+  --color-border: #2a2a4a;
+  --color-editor-bg: #1a1a2e;
+  --color-sidebar-bg: #16213e;
+}

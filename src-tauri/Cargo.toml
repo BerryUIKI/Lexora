@@ -1,0 +1,26 @@
+[package]
+name = "lexora"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+description = "A Typora-style Markdown reader-editor"
+license = "MIT"
+
+[lib]
+name = "lexora_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-dialog = "2"
+tauri-plugin-fs = "2"
+tauri-plugin-shell = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+pulldown-cmark = { version = "0.13", features = ["simd"] }
+syntect = "5"
+thiserror = "2"
+tokio = { version = "1", features = ["full"] }

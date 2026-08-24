@@ -1,0 +1,11 @@
+/* Light theme overrides — applied via class="theme-light" on <html> */
+:root.theme-light {
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8f9fa;
+  --color-text-primary: #1a1a2e;
+  --color-text-secondary: #6c757d;
+  --color-accent: #4361ee;
+  --color-border: #dee2e6;
+  --color-editor-bg: #ffffff;
+  --color-sidebar-bg: #f8f9fa;
+}

@@ -1,0 +1,108 @@
+# Lexora Project Roadmap
+
+This document outlines the phased development roadmap and milestone deliverables for Lexora, from the initial scaffold through the production MVP and post-MVP releases.
+
+---
+
+## 1. Phased Development Plan
+
+```mermaid
+gantt
+    title Lexora Development Timeline
+    dateFormat  YYYY-MM-DD
+    section MVP
+    Phase 0 - Scaffold             :done, p0, 2026-08-01, 1d
+    Phase 1 - Core Editor          :active, p1, after p0, 14d
+    Phase 2 - File Operations      :p2, after p1, 7d
+    Phase 3 - File Tree & Nav      :p3, after p2, 7d
+    Phase 4 - Code & Polish        :p4, after p3, 7d
+    Phase 5 - MVP Release & Tests  :p5, after p4, 7d
+    section Post-MVP
+    Phase 6 - v1.1 Enhancements    :p6, after p5, 21d
+    Phase 7 - v1.2+ Advanced       :p7, after p6, 30d
+```
+
+---
+
+### Phase 0 — Project Scaffold (~1 day) :white_check_mark: Completed
+- [x] Initialize Tauri 2 + SolidJS + Vite 6 project base.
+- [x] Configure TypeScript strict mode and Tailwind CSS 4.
+- [x] Establish Rust backend architecture (`commands`, `models`, `services`, `state`).
+- [x] Implement initial IPC hello world ping-pong command.
+- [x] Configure repository documentation, formatting, and linting standards.
+
+---
+
+### Phase 1 — Core Editor (~1–2 weeks) :construction: In Progress
+- [ ] Milkdown v7 editor integration inside SolidJS lifecycle.
+- [ ] Seamless Typora-style WYSIWYG Markdown rendering (headers, bold, italics, lists, blockquotes, code spans).
+- [ ] Full keyboard shortcut support (Ctrl/Cmd+B, Ctrl/Cmd+I, Ctrl/Cmd+K, etc.).
+- [ ] Robust Undo / Redo history stack via ProseMirror state.
+- [ ] Dark / Light theme styling with CSS custom properties and system theme synchronization.
+
+---
+
+### Phase 2 — File Operations (~1 week)
+- [ ] Native file dialogs for Open File, Save As, and Select Folder.
+- [ ] Atomic file write service in Rust (write to temporary buffer `.tmp.lexora` followed by atomic rename).
+- [ ] Tabbed document management (multiple open documents).
+- [ ] Document dirty state tracking and unsaved changes confirmation prompt on close/exit.
+- [ ] File reload detection on external modification.
+
+---
+
+### Phase 3 — File Tree & Navigation (~1 week)
+- [ ] Open Workspace Folder capability.
+- [ ] Recursive directory scanner and structured file tree model in Rust.
+- [ ] SolidJS virtualized / nested File Tree sidebar component.
+- [ ] Collapsible sidebar with toggle shortcut (`Ctrl/Cmd+B` or `Ctrl/Cmd+\`).
+- [ ] File creation, rename, and delete actions directly from the tree sidebar.
+
+---
+
+### Phase 4 — Code Highlighting & Polish (~1 week)
+- [ ] Rust-side `syntect` integration for server-rendered syntax highlighting.
+- [ ] Client-side code block syntax highlighting for standard languages (JS, TS, Rust, Python, Go, JSON, YAML, etc.).
+- [ ] Code block language selector and copy-code action.
+- [ ] Comprehensive Status Bar displaying word count, character count, cursor line/col, encoding, and line endings (LF/CRLF).
+
+---
+
+### Phase 5 — MVP Release & Testing (~1 week)
+- [ ] Comprehensive Vitest unit tests for SolidJS components and stores.
+- [ ] Rust unit test coverage for atomic writer, parser, and file commands.
+- [ ] Playwright end-to-end (E2E) desktop workflow test suite.
+- [ ] Tauri v2 capability lockdown (minimal required filesystem and dialog scopes).
+- [ ] Cross-platform release builds & installers (Windows `.msi`/`.exe`, macOS `.dmg`, Linux `.deb`/`.AppImage`).
+- [ ] **Lexora v1.0.0 Public Release**.
+
+---
+
+### Phase 6 — Post-MVP v1.1 (~2–3 weeks)
+- [ ] In-document Find & Replace with regex support.
+- [ ] PDF & standalone HTML export via `pulldown-cmark` and headless print engine.
+- [ ] Interactive WYSIWYG Table editor with row/column insertion and alignment controls.
+- [ ] Drag-and-drop & clipboard image paste handling (auto-saving images to local workspace asset directory).
+- [ ] Dynamic Table of Contents (TOC) outline sidebar.
+- [ ] Configurable background auto-save.
+
+---
+
+### Phase 7 — Advanced v1.2+ (Ongoing)
+- [ ] Mathematical formula rendering via KaTeX (`$...$` and `$$...$$`).
+- [ ] Live diagram rendering via Mermaid.js (`mermaid` code blocks).
+- [ ] Typewriter / Zen Mode (scrolling keeping active line vertically centered).
+- [ ] Focus Mode (dims all paragraphs except the current active block).
+- [ ] Custom CSS themes and user stylesheet overrides.
+- [ ] Global workspace full-text search indexing.
+
+---
+
+## 2. Feature Priority Matrix (MoSCoW)
+
+| Category | Features | Target Phase |
+| :--- | :--- | :--- |
+| **Must Have**<br>*(Critical for MVP)* | - Typora-style WYSIWYG editor via Milkdown<br>- Atomic file open / save operations<br>- Tabbed interface & dirty state tracking<br>- Workspace folder navigation & file tree<br>- Dark / Light mode switching<br>- Status bar (word count, line/column)<br>- Strict security capabilities & local-only storage | Phase 0–5 |
+| **Should Have**<br>*(Important for v1.1)* | - Find and Replace toolbar<br>- HTML & PDF export<br>- Interactive table editor<br>- Clipboard image paste / local asset management<br>- Document outline / TOC sidebar<br>- Auto-save timer | Phase 6 |
+| **Could Have**<br>*(Desirable for v1.2+)* | - KaTeX math rendering<br>- Mermaid diagram rendering<br>- Typewriter mode & Zen mode<br>- Custom user themes & CSS overrides<br>- Global workspace full-text search<br>- Vim keybinding mode | Phase 7 |
+| **Won't Have**<br>*(Out of Scope)* | - Cloud sync backend / proprietary account login (Lexora remains 100% local-first)<br>- Multi-user real-time collaborative editing (CRDTs)<br>- Heavy IDE extensions / LSP debugging | Out of Scope |
