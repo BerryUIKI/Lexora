@@ -1,10 +1,11 @@
 import { createSignal } from "solid-js";
 import { open as openUrl } from "@tauri-apps/plugin-shell";
 
-export const CURRENT_VERSION = "0.1.0";
+export const CURRENT_VERSION = "0.1.1";
 export const GITHUB_REPO = "BerryUIKI/Lexora";
 export const REPO_RELEASES_URL = `https://github.com/${GITHUB_REPO}/releases`;
 export const REPO_API_URL = `https://api.github.com/repos/${GITHUB_REPO}/releases/latest`;
+export const REPO_ALL_RELEASES_API = `https://api.github.com/repos/${GITHUB_REPO}/releases`;
 
 export interface ReleaseAsset {
   name: string;
@@ -32,9 +33,9 @@ export { updateModalOpen, setUpdateModalOpen, updateInfo, isCheckingUpdate };
 
 /**
  * Compare two semver-like version strings.
- * Returns true if remote is newer than local.
+ * Returns true if remote is strictly newer than local.
  */
-function isNewerVersion(remoteTag: string, localVersion: string): boolean {
+export function isNewerVersion(remoteTag: string, localVersion: string): boolean {
   const cleanRemote = remoteTag.replace(/^v/, "").trim();
   const cleanLocal = localVersion.replace(/^v/, "").trim();
 
@@ -58,21 +59,47 @@ export async function checkForUpdates(manual = false): Promise<void> {
   if (isCheckingUpdate()) return;
   setIsCheckingUpdate(true);
 
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000);
+
   try {
-    const res = await fetch(REPO_API_URL, {
+    let res = await fetch(REPO_API_URL, {
+      signal: controller.signal,
       headers: {
         Accept: "application/vnd.github.v3+json",
       },
     });
 
-    if (!res.ok) {
+    let data: any = null;
+
+    if (res.ok) {
+      data = await res.json();
+    } else {
+      // Fallback: Fetch all releases and pick first published release
+      const allRes = await fetch(REPO_ALL_RELEASES_API, {
+        signal: controller.signal,
+        headers: {
+          Accept: "application/vnd.github.v3+json",
+        },
+      });
+      if (allRes.ok) {
+        const list = await allRes.json();
+        if (Array.isArray(list) && list.length > 0) {
+          data = list[0];
+        }
+      }
+    }
+
+    clearTimeout(timeoutId);
+
+    if (!data || !data.tag_name) {
       if (manual) {
         setUpdateInfo({
           hasUpdate: false,
           currentVersion: CURRENT_VERSION,
           latestVersion: CURRENT_VERSION,
-          releaseTitle: "Up to Date",
-          releaseNotes: "Could not retrieve release information from GitHub. You can check the releases page directly.",
+          releaseTitle: "Lexora v" + CURRENT_VERSION,
+          releaseNotes: "Current version is up to date. You can also view all releases directly on GitHub.",
           publishedAt: new Date().toISOString(),
           releaseUrl: REPO_RELEASES_URL,
           assets: [],
@@ -83,7 +110,6 @@ export async function checkForUpdates(manual = false): Promise<void> {
       return;
     }
 
-    const data = await res.json();
     const latestTag = data.tag_name || `v${CURRENT_VERSION}`;
     const hasUpdate = isNewerVersion(latestTag, CURRENT_VERSION);
 
@@ -104,7 +130,8 @@ export async function checkForUpdates(manual = false): Promise<void> {
       });
       setUpdateModalOpen(true);
     }
-  } catch (err) {
+  } catch (err: any) {
+    clearTimeout(timeoutId);
     console.warn("Update check failed:", err);
     if (manual) {
       setUpdateInfo({
@@ -112,7 +139,7 @@ export async function checkForUpdates(manual = false): Promise<void> {
         currentVersion: CURRENT_VERSION,
         latestVersion: CURRENT_VERSION,
         releaseTitle: "Network Error",
-        releaseNotes: "Unable to connect to GitHub. Please check your internet connection.",
+        releaseNotes: "Unable to connect to GitHub. Please check your internet connection or try again later.",
         publishedAt: new Date().toISOString(),
         releaseUrl: REPO_RELEASES_URL,
         assets: [],
