@@ -14,8 +14,10 @@ export const es: TranslationDictionary = {
     view: "Ver",
     window: "Ventana",
     help: "Ayuda",
-    language: "Idioma / Language",
+    language: "Idioma (Language)",
+    languageSubtitle: "Seleccionar el idioma de la interfaz",
     autoLanguage: "Automático (seguir sistema)",
+    autoLanguageDesc: "Detección automática del sistema (Actual: {current})",
   },
   file: {
     newDocument: "Nuevo documento",

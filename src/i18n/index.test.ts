@@ -46,6 +46,8 @@ describe("i18n Internationalization Engine", () => {
       expect(d.menu.window).toBeTruthy();
       expect(d.menu.help).toBeTruthy();
       expect(d.menu.language).toBeTruthy();
+      expect(d.menu.languageSubtitle).toBeTruthy();
+      expect(d.menu.autoLanguageDesc).toBeTruthy();
       expect(d.file.newDocument).toBeTruthy();
       expect(d.file.openFile).toBeTruthy();
       expect(d.file.save).toBeTruthy();

@@ -14,8 +14,10 @@ export const zhTW: TranslationDictionary = {
     view: "檢視",
     window: "視窗",
     help: "說明",
-    language: "語言 / Language",
-    autoLanguage: "自動 (跟隨系統)",
+    language: "語言 (Language)",
+    languageSubtitle: "選擇介面顯示語言",
+    autoLanguage: "跟隨系統 (Auto)",
+    autoLanguageDesc: "自動跟隨系統語言設定 (目前: {current})",
   },
   file: {
     newDocument: "新增文件",

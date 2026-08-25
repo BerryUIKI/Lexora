@@ -30,7 +30,9 @@ export interface TranslationDictionary {
     window: string;
     help: string;
     language: string;
+    languageSubtitle: string;
     autoLanguage: string;
+    autoLanguageDesc: string;
   };
   file: {
     newDocument: string;

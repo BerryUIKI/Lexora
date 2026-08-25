@@ -14,8 +14,10 @@ export const ja: TranslationDictionary = {
     view: "表示",
     window: "ウィンドウ",
     help: "ヘルプ",
-    language: "言語 / Language",
+    language: "言語 (Language)",
+    languageSubtitle: "インターフェース表示言語を選択",
     autoLanguage: "自動 (システム設定に従う)",
+    autoLanguageDesc: "システム言語設定に自動追従 (現在: {current})",
   },
   file: {
     newDocument: "新規ドキュメント",

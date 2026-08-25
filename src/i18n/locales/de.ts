@@ -14,8 +14,10 @@ export const de: TranslationDictionary = {
     view: "Ansicht",
     window: "Fenster",
     help: "Hilfe",
-    language: "Sprache / Language",
+    language: "Sprache (Language)",
+    languageSubtitle: "Oberflächensprache auswählen",
     autoLanguage: "Automatisch (Systemstandard)",
+    autoLanguageDesc: "Systemsprache automatisch erkennen (Aktuell: {current})",
   },
   file: {
     newDocument: "Neues Dokument",

@@ -14,8 +14,10 @@ export const zhCN: TranslationDictionary = {
     view: "视图",
     window: "窗口",
     help: "帮助",
-    language: "语言 / Language",
-    autoLanguage: "自动 (跟随系统)",
+    language: "语言 (Language)",
+    languageSubtitle: "选择界面显示语言",
+    autoLanguage: "跟随系统 (Auto)",
+    autoLanguageDesc: "自动跟随系统语言设置 (当前: {current})",
   },
   file: {
     newDocument: "新建文档",

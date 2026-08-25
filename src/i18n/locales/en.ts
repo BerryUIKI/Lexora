@@ -15,7 +15,9 @@ export const en: TranslationDictionary = {
     window: "Window",
     help: "Help",
     language: "Language",
+    languageSubtitle: "Select interface display language",
     autoLanguage: "Auto (Follow System)",
+    autoLanguageDesc: "Auto-detect from OS setting (Current: {current})",
   },
   file: {
     newDocument: "New Document",

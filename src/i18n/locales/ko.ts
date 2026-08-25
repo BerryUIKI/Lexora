@@ -14,8 +14,10 @@ export const ko: TranslationDictionary = {
     view: "보기",
     window: "창",
     help: "도움말",
-    language: "언어 / Language",
+    language: "언어 (Language)",
+    languageSubtitle: "인터페이스 표시 언어 선택",
     autoLanguage: "자동 (시스템 설정 따름)",
+    autoLanguageDesc: "시스템 언어 설정 자동 감지 (현재: {current})",
   },
   file: {
     newDocument: "새 문서",

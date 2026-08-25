@@ -14,8 +14,10 @@ export const ru: TranslationDictionary = {
     view: "Вид",
     window: "Окно",
     help: "Справка",
-    language: "Язык / Language",
+    language: "Язык (Language)",
+    languageSubtitle: "Выберите язык интерфейса",
     autoLanguage: "Автоматически (как в системе)",
+    autoLanguageDesc: "Следовать языку системы (Текущий: {current})",
   },
   file: {
     newDocument: "Новый документ",

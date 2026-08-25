@@ -63,7 +63,7 @@ export const LanguageModal: Component<LanguageModalProps> = (props) => {
                   {t("menu.language")}
                 </h3>
                 <p class="text-xs text-[var(--color-text-secondary)]">
-                  Select interface language / 选择界面显示语言
+                  {t("menu.languageSubtitle")}
                 </p>
               </div>
             </div>
@@ -95,7 +95,7 @@ export const LanguageModal: Component<LanguageModalProps> = (props) => {
                   {t("menu.autoLanguage")}
                 </div>
                 <div class="text-[10px] text-[var(--color-text-secondary)]">
-                  Auto-detect from OS setting (Current: {currentLocale()})
+                  {t("menu.autoLanguageDesc", { current: currentLocale() })}
                 </div>
               </div>
             </div>
