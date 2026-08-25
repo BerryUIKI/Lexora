@@ -34,11 +34,24 @@ pub fn run() {
             commands::markdown::highlight_code,
             commands::markdown::export_document,
             commands::search::search_workspace,
+            get_cli_args,
             start_watching_file,
             stop_watching_file,
         ])
         .run(tauri::generate_context!())
         .expect("error while running Lexora");
+}
+
+/// Retrieve command line file arguments passed when opening files from Windows Explorer.
+#[tauri::command]
+fn get_cli_args() -> Vec<String> {
+    std::env::args()
+        .skip(1)
+        .filter(|arg| {
+            let p = std::path::Path::new(arg);
+            p.exists() && p.is_file()
+        })
+        .collect()
 }
 
 /// Start watching a file for external changes.

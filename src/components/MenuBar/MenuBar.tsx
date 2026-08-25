@@ -1,0 +1,568 @@
+import { Component, createSignal, Show, onMount, onCleanup, For } from "solid-js";
+import { open as openUrl } from "@tauri-apps/plugin-shell";
+import {
+  currentDocument,
+  displayMode,
+  setDisplayMode,
+  cycleDisplayMode,
+} from "../../store/editor";
+import { theme, setTheme, cycleTheme, zenMode, setZenMode, focusMode, setFocusMode } from "../../store/settings";
+import { recentFiles, openTabs, closeTab, activeTabId } from "../../store/files";
+import { dispatchFormat, type FormatAction } from "../../lib/formatter";
+import { AboutModal } from "./AboutModal";
+
+export interface MenuBarProps {
+  onNewDocument: () => void;
+  onOpenFile: () => void;
+  onOpenFolder: () => void;
+  onSaveFile: () => void;
+  onExport: () => void;
+  onToggleSidebar: () => void;
+  onOpenQuickSwitcher: () => void;
+  onOpenSearchModal: () => void;
+  onOpenFindReplace: () => void;
+  onOpenRecent: (path: string) => void;
+}
+
+export type MenuId = "file" | "edit" | "view" | "window" | "help" | null;
+
+export const MenuBar: Component<MenuBarProps> = (props) => {
+  const [activeMenu, setActiveMenu] = createSignal<MenuId>(null);
+  const [aboutOpen, setAboutOpen] = createSignal(false);
+
+  const doc = () => currentDocument();
+  const hasDoc = () => doc().path !== null || doc().content.length > 0;
+
+  const closeMenus = () => setActiveMenu(null);
+
+  const toggleMenu = (menu: MenuId) => {
+    setActiveMenu((prev) => (prev === menu ? null : menu));
+  };
+
+  const handleMouseEnter = (menu: MenuId) => {
+    if (activeMenu() !== null) {
+      setActiveMenu(menu);
+    }
+  };
+
+  // Close menus on outside click or Escape key
+  const handleGlobalClick = (e: MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (!target.closest(".menu-bar-container")) {
+      closeMenus();
+    }
+  };
+
+  const handleGlobalKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      closeMenus();
+    }
+  };
+
+  onMount(() => {
+    window.addEventListener("click", handleGlobalClick);
+    window.addEventListener("keydown", handleGlobalKeyDown);
+  });
+
+  onCleanup(() => {
+    window.removeEventListener("click", handleGlobalClick);
+    window.removeEventListener("keydown", handleGlobalKeyDown);
+  });
+
+  const handleOpenLink = async (url: string) => {
+    closeMenus();
+    try {
+      await openUrl(url);
+    } catch {
+      window.open(url, "_blank");
+    }
+  };
+
+  const handleCloseActiveTab = () => {
+    closeMenus();
+    const id = activeTabId();
+    if (id) closeTab(id);
+  };
+
+  return (
+    <>
+      <header
+        class="h-8 flex items-center justify-between px-2 text-xs no-select select-none border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)] flex-shrink-0 z-40 relative menu-bar-container"
+        style={{ color: "var(--color-text-secondary)" }}
+      >
+        {/* Left: App Logo & Top-Level Menus */}
+        <div class="flex items-center gap-1">
+          {/* App Icon Mark */}
+          <div
+            class="flex items-center gap-1.5 px-2 py-1 text-[var(--color-accent)] font-semibold cursor-pointer hover:opacity-80 transition-opacity"
+            onClick={() => setAboutOpen(true)}
+            title="About Lexora"
+          >
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+            </svg>
+            <span class="text-xs font-bold tracking-tight text-[var(--color-text-primary)]">Lexora</span>
+          </div>
+
+          {/* Menu: File */}
+          <div class="relative">
+            <button
+              class={`px-2.5 py-1 rounded text-xs transition-colors ${
+                activeMenu() === "file"
+                  ? "bg-[var(--color-hover)] text-[var(--color-text-primary)]"
+                  : "hover:bg-[var(--color-hover)] hover:text-[var(--color-text-primary)]"
+              }`}
+              onClick={() => toggleMenu("file")}
+              onMouseEnter={() => handleMouseEnter("file")}
+            >
+              File
+            </button>
+
+            <Show when={activeMenu() === "file"}>
+              <div class="absolute left-0 top-full mt-1 w-56 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-1 shadow-xl text-[var(--color-text-primary)] text-xs z-50 animate-in fade-in zoom-in-95 duration-100">
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); props.onNewDocument(); }}
+                >
+                  <span>New Document</span>
+                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+N</kbd>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); props.onOpenFile(); }}
+                >
+                  <span>Open File...</span>
+                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+O</kbd>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); props.onOpenFolder(); }}
+                >
+                  <span>Open Workspace Folder...</span>
+                </button>
+
+                <Show when={recentFiles().length > 0}>
+                  <div class="my-1 border-t border-[var(--color-border)]" />
+                  <div class="px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-text-secondary)]">
+                    Recent Files
+                  </div>
+                  <For each={recentFiles().slice(0, 5)}>
+                    {(file) => (
+                      <button
+                        class="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-[var(--color-hover)] transition-colors text-left truncate"
+                        onClick={() => { closeMenus(); props.onOpenRecent(file.path); }}
+                        title={file.path}
+                      >
+                        <span class="truncate">{file.filename}</span>
+                      </button>
+                    )}
+                  </For>
+                </Show>
+
+                <div class="my-1 border-t border-[var(--color-border)]" />
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); props.onSaveFile(); }}
+                >
+                  <span>Save</span>
+                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+S</kbd>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); props.onExport(); }}
+                >
+                  <span>Export as HTML...</span>
+                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+E</kbd>
+                </button>
+
+                <div class="my-1 border-t border-[var(--color-border)]" />
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left disabled:opacity-40"
+                  disabled={openTabs().length === 0}
+                  onClick={handleCloseActiveTab}
+                >
+                  <span>Close Tab</span>
+                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+W</kbd>
+                </button>
+              </div>
+            </Show>
+          </div>
+
+          {/* Menu: Edit */}
+          <div class="relative">
+            <button
+              class={`px-2.5 py-1 rounded text-xs transition-colors ${
+                activeMenu() === "edit"
+                  ? "bg-[var(--color-hover)] text-[var(--color-text-primary)]"
+                  : "hover:bg-[var(--color-hover)] hover:text-[var(--color-text-primary)]"
+              }`}
+              onClick={() => toggleMenu("edit")}
+              onMouseEnter={() => handleMouseEnter("edit")}
+            >
+              Edit
+            </button>
+
+            <Show when={activeMenu() === "edit"}>
+              <div class="absolute left-0 top-full mt-1 w-56 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-1 shadow-xl text-[var(--color-text-primary)] text-xs z-50 animate-in fade-in zoom-in-95 duration-100">
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); props.onOpenFindReplace(); }}
+                >
+                  <span>Find in Document</span>
+                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+F</kbd>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); props.onOpenFindReplace(); }}
+                >
+                  <span>Replace in Document</span>
+                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+H</kbd>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); props.onOpenSearchModal(); }}
+                >
+                  <span>Search in Workspace</span>
+                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+Shift+F</kbd>
+                </button>
+
+                <div class="my-1 border-t border-[var(--color-border)]" />
+
+                <div class="px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-text-secondary)]">
+                  Typography & Formatting
+                </div>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); dispatchFormat("bold"); }}
+                >
+                  <span class="font-bold">Bold</span>
+                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+B</kbd>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); dispatchFormat("italic"); }}
+                >
+                  <span class="italic font-serif">Italic</span>
+                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+I</kbd>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); dispatchFormat("strikethrough"); }}
+                >
+                  <span class="line-through">Strikethrough</span>
+                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+Shift+X</kbd>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); dispatchFormat("code_inline"); }}
+                >
+                  <span class="font-mono text-[11px]">Inline Code</span>
+                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+`</kbd>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); dispatchFormat("paragraph"); }}
+                >
+                  <span>Paragraph / Normal Text</span>
+                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+0</kbd>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); dispatchFormat("h1"); }}
+                >
+                  <span class="font-semibold">Heading 1</span>
+                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+1</kbd>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); dispatchFormat("h2"); }}
+                >
+                  <span class="font-semibold">Heading 2</span>
+                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+2</kbd>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); dispatchFormat("table"); }}
+                >
+                  <span>Insert Table</span>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); dispatchFormat("link"); }}
+                >
+                  <span>Insert Link</span>
+                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+K</kbd>
+                </button>
+              </div>
+            </Show>
+          </div>
+
+          {/* Menu: View */}
+          <div class="relative">
+            <button
+              class={`px-2.5 py-1 rounded text-xs transition-colors ${
+                activeMenu() === "view"
+                  ? "bg-[var(--color-hover)] text-[var(--color-text-primary)]"
+                  : "hover:bg-[var(--color-hover)] hover:text-[var(--color-text-primary)]"
+              }`}
+              onClick={() => toggleMenu("view")}
+              onMouseEnter={() => handleMouseEnter("view")}
+            >
+              View
+            </button>
+
+            <Show when={activeMenu() === "view"}>
+              <div class="absolute left-0 top-full mt-1 w-56 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-1 shadow-xl text-[var(--color-text-primary)] text-xs z-50 animate-in fade-in zoom-in-95 duration-100">
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); setDisplayMode("reading"); }}
+                >
+                  <span class={displayMode() === "reading" ? "font-semibold text-[var(--color-accent)]" : ""}>
+                    {displayMode() === "reading" ? "✓ Reading Mode" : "  Reading Mode"}
+                  </span>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); setDisplayMode("writing"); }}
+                >
+                  <span class={displayMode() === "writing" ? "font-semibold text-[var(--color-accent)]" : ""}>
+                    {displayMode() === "writing" ? "✓ Writing Mode" : "  Writing Mode"}
+                  </span>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); setDisplayMode("code"); }}
+                >
+                  <span class={displayMode() === "code" ? "font-semibold text-[var(--color-accent)]" : ""}>
+                    {displayMode() === "code" ? "✓ Code Mode" : "  Code Mode"}
+                  </span>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); cycleDisplayMode(); }}
+                >
+                  <span>Cycle Display Mode</span>
+                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+/</kbd>
+                </button>
+
+                <div class="my-1 border-t border-[var(--color-border)]" />
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); props.onToggleSidebar(); }}
+                >
+                  <span>Toggle Outline Sidebar</span>
+                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+Shift+B</kbd>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); setZenMode((prev) => !prev); }}
+                >
+                  <span>{zenMode() ? "Exit Zen Mode" : "Zen Mode (Fullscreen)"}</span>
+                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">F11</kbd>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); setFocusMode((prev) => !prev); }}
+                >
+                  <span>{focusMode() ? "Exit Focus Mode" : "Focus Mode"}</span>
+                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+Shift+D</kbd>
+                </button>
+
+                <div class="my-1 border-t border-[var(--color-border)]" />
+
+                <div class="px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-text-secondary)]">
+                  Theme
+                </div>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); setTheme("light"); }}
+                >
+                  <span class={theme() === "light" ? "font-semibold text-[var(--color-accent)]" : ""}>
+                    {theme() === "light" ? "✓ Light" : "  Light"}
+                  </span>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); setTheme("dark"); }}
+                >
+                  <span class={theme() === "dark" ? "font-semibold text-[var(--color-accent)]" : ""}>
+                    {theme() === "dark" ? "✓ Dark" : "  Dark"}
+                  </span>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); setTheme("system"); }}
+                >
+                  <span class={theme() === "system" ? "font-semibold text-[var(--color-accent)]" : ""}>
+                    {theme() === "system" ? "✓ System Default" : "  System Default"}
+                  </span>
+                </button>
+              </div>
+            </Show>
+          </div>
+
+          {/* Menu: Window */}
+          <div class="relative">
+            <button
+              class={`px-2.5 py-1 rounded text-xs transition-colors ${
+                activeMenu() === "window"
+                  ? "bg-[var(--color-hover)] text-[var(--color-text-primary)]"
+                  : "hover:bg-[var(--color-hover)] hover:text-[var(--color-text-primary)]"
+              }`}
+              onClick={() => toggleMenu("window")}
+              onMouseEnter={() => handleMouseEnter("window")}
+            >
+              Window
+            </button>
+
+            <Show when={activeMenu() === "window"}>
+              <div class="absolute left-0 top-full mt-1 w-52 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-1 shadow-xl text-[var(--color-text-primary)] text-xs z-50 animate-in fade-in zoom-in-95 duration-100">
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); props.onOpenQuickSwitcher(); }}
+                >
+                  <span>Quick File Switcher</span>
+                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+P</kbd>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); props.onToggleSidebar(); }}
+                >
+                  <span>Toggle Sidebar</span>
+                </button>
+              </div>
+            </Show>
+          </div>
+
+          {/* Menu: Help */}
+          <div class="relative">
+            <button
+              class={`px-2.5 py-1 rounded text-xs transition-colors ${
+                activeMenu() === "help"
+                  ? "bg-[var(--color-hover)] text-[var(--color-text-primary)]"
+                  : "hover:bg-[var(--color-hover)] hover:text-[var(--color-text-primary)]"
+              }`}
+              onClick={() => toggleMenu("help")}
+              onMouseEnter={() => handleMouseEnter("help")}
+            >
+              Help
+            </button>
+
+            <Show when={activeMenu() === "help"}>
+              <div class="absolute left-0 top-full mt-1 w-56 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-1 shadow-xl text-[var(--color-text-primary)] text-xs z-50 animate-in fade-in zoom-in-95 duration-100">
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left font-medium"
+                  onClick={() => handleOpenLink("https://github.com/BerryUIKI/Lexora")}
+                >
+                  <span class="flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                    </svg>
+                    <span>GitHub Repository</span>
+                  </span>
+                  <svg class="w-3 h-3 text-[var(--color-text-secondary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => handleOpenLink("https://github.com/BerryUIKI/Lexora#readme")}
+                >
+                  <span>Documentation</span>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => handleOpenLink("https://github.com/BerryUIKI/Lexora/issues")}
+                >
+                  <span>Report an Issue</span>
+                </button>
+
+                <div class="my-1 border-t border-[var(--color-border)]" />
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); setAboutOpen(true); }}
+                >
+                  <span>About Lexora</span>
+                </button>
+              </div>
+            </Show>
+          </div>
+        </div>
+
+        {/* Center: Document Title Breadcrumb */}
+        <div class="hidden sm:flex items-center gap-1.5 text-xs text-[var(--color-text-secondary)] font-medium max-w-sm truncate">
+          <Show
+            when={hasDoc()}
+            fallback={<span class="opacity-60 font-normal">Lexora — Typora-style Markdown Editor</span>}
+          >
+            <span class="text-[var(--color-text-primary)] font-semibold truncate">
+              {doc().filename}
+            </span>
+            <Show when={doc().isDirty}>
+              <span class="text-[10px] text-[var(--color-accent)] font-bold">●</span>
+            </Show>
+            <span class="opacity-40 text-[10px]">&bull;</span>
+            <span class="text-[11px] capitalize opacity-80">{displayMode()}</span>
+          </Show>
+        </div>
+
+        {/* Right: Quick Action Icons (GitHub, Search, Theme) */}
+        <div class="flex items-center gap-1">
+          {/* Quick Search Palette */}
+          <button
+            class="p-1 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+            onClick={props.onOpenQuickSwitcher}
+            title="Quick File Switcher (Ctrl+P)"
+          >
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </button>
+
+          {/* GitHub Repository Link Button */}
+          <button
+            class="p-1 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+            onClick={() => handleOpenLink("https://github.com/BerryUIKI/Lexora")}
+            title="Open GitHub Repository (BerryUIKI/Lexora)"
+          >
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      {/* About Modal */}
+      <AboutModal isOpen={aboutOpen()} onClose={() => setAboutOpen(false)} />
+    </>
+  );
+};

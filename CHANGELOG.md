@@ -5,6 +5,24 @@ All notable changes to Lexora will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-08-25
+
+### Added
+- **VS Code-Style In-App Top Menu Bar**:
+  - Custom themed top Menu Bar (`File`, `Edit`, `View`, `Window`, `Help`) with smooth hover switching, keyboard navigation, and shortcut indicators.
+  - Centered document name badge with modified indicator dot.
+  - Direct quick action controls for file palette, theme switching, and GitHub repository access.
+- **Windows `.md` Shell File Associations & CLI Startup Resolver**:
+  - Configured installer bundle file associations registering `.md`, `.markdown`, `.mdx`, and `.txt` with the Windows shell.
+  - Implemented `get_cli_args` command in Rust backend and initial startup resolver to automatically open documents when double-clicked in Windows Explorer.
+- **Official GitHub Repository Integration**:
+  - Integrated [BerryUIKI/Lexora](https://github.com/BerryUIKI/Lexora) repository links in the Help menu, Top Menu Bar, Welcome Hub, and About dialog.
+  - Added About Lexora dialog detailing version, open-source MIT license, author contributors, and technology stack.
+- **Multi-Language Internationalization (i18n) Roadmap**:
+  - Added Phase 8 / Milestone 8 roadmap plan to support English, Simplified Chinese, Traditional Chinese, Japanese, German, French, and Spanish.
+
+---
+
 ## [1.4.0] - 2026-08-25
 
 ### Added
