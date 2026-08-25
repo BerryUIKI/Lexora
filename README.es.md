@@ -25,33 +25,14 @@
 
 ## 📥 Descargas directas
 
-¡No requiere experiencia previa con GitHub! Haga clic en su sistema operativo para descargar el instalador:
+Elija su sistema y paquete:
 
-### 🪟 Windows (10 / 11)
+- **Windows x86_64:** [Instalador (`.exe`)](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Windows_x86_64.exe) · [MSI](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Windows_x86_64.msi)
+- **macOS Apple Silicon:** [DMG](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_aarch64.dmg)
+- **macOS Intel:** [DMG](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_x86_64.dmg)
+- **Linux x86_64:** [AppImage](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.AppImage) · [Debian/Ubuntu (`.deb`)](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.deb) · [Fedora/RHEL (`.rpm`)](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.rpm)
 
-| Tipo de paquete | Arquitectura | Tamaño | Enlace de descarga directa | Descripción |
-|---|---|---|---|---|
-| **⭐ Instalador estándar (Recomendado)** | `x64` (64 bits) | **~3.6 MB** | [⬇️ **Descargar instalador de Windows (`.exe`)**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_x64-setup.exe) | Instalación guiada con asociación automática de archivos `.md` y `.txt` |
-| **🏢 MSI para empresas** | `x64` (64 bits) | **~5.2 MB** | [⬇️ **Descargar paquete MSI de Windows (`.msi`)**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_x64_en-US.msi) | Paquete Windows Installer para despliegues empresariales |
-
----
-
-### 🍎 macOS (macOS 11+)
-
-| Tipo de paquete | Arquitectura | Tamaño | Enlace de descarga directa | Descripción |
-|---|---|---|---|---|
-| **⭐ Apple Silicon (Recomendado)** | `M1 / M2 / M3 / M4` | **~5.0 MB** | [⬇️ **Descargar DMG para Apple Silicon**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Apple-Silicon.dmg) | DMG nativo optimizado para procesadores Apple Silicon |
-| **Mac Intel** | `x64` (Intel) | **~5.3 MB** | [⬇️ **Descargar DMG para Mac Intel**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_x64.dmg) | DMG nativo para Mac con procesadores Intel |
-
----
-
-### 🐧 Linux (Ubuntu / Debian / Fedora / Arch)
-
-| Tipo de paquete | Arquitectura | Tamaño | Enlace de descarga directa | Descripción |
-|---|---|---|---|---|
-| **⭐ AppImage (Universal)** | `x86_64` (64 bits) | **~65 MB** | [⬇️ **Descargar AppImage universal**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_amd64.AppImage) | Portable, listo para ejecutar en cualquier distribución Linux |
-| **Paquete Debian / Ubuntu** | `amd64` (64 bits) | **~5.1 MB** | [⬇️ **Descargar paquete Debian/Ubuntu (`.deb`)**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_amd64.deb) | Para Debian, Ubuntu, Linux Mint, etc. |
-| **Paquete RedHat / Fedora** | `x86_64` (64 bits) | **~5.0 MB** | [⬇️ **Descargar paquete Fedora/RHEL (`.rpm`)**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora-x86_64.rpm) | Para Fedora, RHEL, openSUSE, etc. |
+[Ver todas las versiones y archivos de código fuente](https://github.com/BerryUIKI/Lexora/releases/latest).
 
 ---
 

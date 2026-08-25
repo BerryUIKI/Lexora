@@ -25,35 +25,14 @@
 
 ## 📥 一鍵直接下載
 
-完全無需 GitHub 使用經驗！點擊對應作業系統一鍵直接下載最新安裝包：
+選擇作業系統和安裝包：
 
-### 🪟 Windows (10 / 11)
+- **Windows x86_64：** [安裝程式 (`.exe`)](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Windows_x86_64.exe) · [MSI](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Windows_x86_64.msi)
+- **macOS Apple Silicon：** [DMG](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_aarch64.dmg)
+- **macOS Intel：** [DMG](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_x86_64.dmg)
+- **Linux x86_64：** [AppImage](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.AppImage) · [Debian/Ubuntu (`.deb`)](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.deb) · [Fedora/RHEL (`.rpm`)](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.rpm)
 
-| 安裝包類型 | 系統架構 | 體積 | 一鍵直鏈下載 | 說明 |
-|---|---|---|---|---|
-| **⭐ 標準安裝包 (推薦)** | `x64` (64 位元) | **~3.6 MB** | [⬇️ **下載最新 Windows 安裝包 (`.exe`)**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_x64-setup.exe) | 自動安裝精靈，支援 `.md`、`.txt` 檔案按兩下直接關聯開啟 |
-| **🏢 企業級 MSI** | `x64` (64 位元) | **~5.2 MB** | [⬇️ **下載最新 Windows 企業包 (`.msi`)**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_x64_en-US.msi) | Windows Installer 標準封裝，適合企業 IT 部署 |
-
----
-
-### 🍎 macOS (macOS 11+)
-
-| 安裝包類型 | 系統架構 | 體積 | 一鍵直鏈下載 | 說明 |
-|---|---|---|---|---|
-| **⭐ Apple Silicon (推薦)** | `M1 / M2 / M3 / M4` | **~5.0 MB** | [⬇️ **下載最新 Apple Silicon 映像檔 (`.dmg`)**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Apple-Silicon.dmg) | 專為 Apple M 系列晶片最佳化的原生 DMG 映像檔 |
-| **Intel Mac** | `x64` (Intel) | **~5.3 MB** | [⬇️ **下載最新 Intel Mac 映像檔 (`.dmg`)**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_x64.dmg) | 適用於 Intel 處理器的 Mac 原生 DMG |
-
----
-
-### 🐧 Linux (Ubuntu / Debian / Fedora / Arch)
-
-| 安裝包類型 | 系統架構 | 體積 | 一鍵直鏈下載 | 說明 |
-|---|---|---|---|---|
-| **⭐ AppImage (通用)** | `x86_64` (64 位元) | **~65 MB** | [⬇️ **下載最新通用 AppImage**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_amd64.AppImage) | 便攜免安裝，支援各大主流 Linux 發行版 |
-| **Debian / Ubuntu 套件** | `amd64` (64 位元) | **~5.1 MB** | [⬇️ **下載最新 Debian/Ubuntu 套件 (`.deb`)**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_amd64.deb) | 適用於 Debian、Ubuntu、Linux Mint 等 |
-| **RedHat / Fedora 套件** | `x86_64` (64 位元) | **~5.0 MB** | [⬇️ **下載最新 Fedora/RHEL 套件 (`.rpm`)**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora-x86_64.rpm) | 適用於 Fedora、RHEL、openSUSE 等 |
-
-> 💡 *如需查看歷史版本、校驗碼或原始碼歸檔，請造訪 [**GitHub Releases 發行頁面**](https://github.com/BerryUIKI/Lexora/releases/latest)。*
+[查看全部發行版和原始碼歸檔](https://github.com/BerryUIKI/Lexora/releases/latest)。
 
 ---
 

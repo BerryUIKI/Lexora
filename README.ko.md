@@ -25,35 +25,14 @@
 
 ## 📥 원클릭 다운로드
 
-GitHub 사용 경험이 없어도 괜찮습니다! 사용 중인 운영체제를 클릭하여 최신 설치 파일을 바로 다운로드하세요:
+운영체제와 패키지를 선택하세요:
 
-### 🪟 Windows (10 / 11)
+- **Windows x86_64:** [설치 프로그램 (`.exe`)](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Windows_x86_64.exe) · [MSI](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Windows_x86_64.msi)
+- **macOS Apple Silicon:** [DMG](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_aarch64.dmg)
+- **macOS Intel:** [DMG](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_x86_64.dmg)
+- **Linux x86_64:** [AppImage](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.AppImage) · [Debian/Ubuntu (`.deb`)](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.deb) · [Fedora/RHEL (`.rpm`)](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.rpm)
 
-| 패키지 유형 | 아키텍처 | 크기 | 다운로드 링크 | 설명 |
-|---|---|---|---|---|
-| **⭐ 표준 설치 프로그램 (권장)** | `x64` (64비트) | **~3.6 MB** | [⬇️ **최신 Windows 설치 프로그램 (`.exe`) 다운로드**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_x64-setup.exe) | 자동 설치 마법사, `.md` 및 `.txt` 파일 더블클릭 연결 지원 |
-| **🏢 기업용 MSI** | `x64` (64비트) | **~5.2 MB** | [⬇️ **최신 Windows MSI (`.msi`) 다운로드**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_x64_en-US.msi) | Windows Installer 표준 패키지, 기업 IT 배포에 적합 |
-
----
-
-### 🍎 macOS (macOS 11+)
-
-| 패키지 유형 | 아키텍처 | 크기 | 다운로드 링크 | 설명 |
-|---|---|---|---|---|
-| **⭐ Apple Silicon (권장)** | `M1 / M2 / M3 / M4` | **~5.0 MB** | [⬇️ **최신 Apple Silicon DMG 다운로드**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Apple-Silicon.dmg) | Apple M 시리즈 칩에 최적화된 네이티브 DMG |
-| **Intel Mac** | `x64` (Intel) | **~5.3 MB** | [⬇️ **최신 Intel Mac DMG 다운로드**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_x64.dmg) | Intel 프로세서 Mac용 네이티브 DMG |
-
----
-
-### 🐧 Linux (Ubuntu / Debian / Fedora / Arch)
-
-| 패키지 유형 | 아키텍처 | 크기 | 다운로드 링크 | 설명 |
-|---|---|---|---|---|
-| **⭐ AppImage (범용)** | `x86_64` (64비트) | **~65 MB** | [⬇️ **최신 AppImage 다운로드**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_amd64.AppImage) | 무설치 포터블, 모든 주요 Linux 배포판에서 바로 실행 가능 |
-| **Debian / Ubuntu 패키지** | `amd64` (64비트) | **~5.1 MB** | [⬇️ **최신 Debian/Ubuntu 패키지 (`.deb`) 다운로드**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_amd64.deb) | Debian, Ubuntu, Linux Mint 등 지원 |
-| **RedHat / Fedora 패키지** | `x86_64` (64비트) | **~5.0 MB** | [⬇️ **최신 Fedora/RHEL 패키지 (`.rpm`) 다운로드**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora-x86_64.rpm) | Fedora, RHEL, openSUSE 등 지원 |
-
-> 💡 *이전 릴리스 및 소스코드는 [**GitHub Releases 페이지**](https://github.com/BerryUIKI/Lexora/releases/latest)를 참조하세요.*
+[모든 릴리스와 소스 아카이브 보기](https://github.com/BerryUIKI/Lexora/releases/latest).
 
 ---
 
