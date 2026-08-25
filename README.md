@@ -54,6 +54,7 @@ Built on **Tauri 2** and **Rust** with a fine-grained reactive **SolidJS** front
 | Feature | Description | Status |
 |---|---|:---:|
 | 🔄 **Tri-State Display Modes** | Quickly switch at the bottom: **Reading** (read-only), **Writing** (WYSIWYG), **Code** (raw source) | ✅ Complete |
+| 📥 **Intelligent Drag & Drop** | Drag file to window to open; drag onto tab bar for new tab; drag onto editor to insert Markdown links | ✅ Complete |
 | ✍️ **In-Place WYSIWYG** | Typora-style inline editing with Milkdown v7 & ProseMirror undo/redo history | ✅ Complete |
 | 💾 **Atomic File I/O** | Crash-safe atomic saving (`write to .tmp -> rename`) with dirty state tracking | ✅ Complete |
 | 📂 **Workspace Tree & Tabs** | Multi-document tabs, recursive file tree CRUD, and quick switcher (<kbd>Ctrl+P</kbd>) | ✅ Complete |

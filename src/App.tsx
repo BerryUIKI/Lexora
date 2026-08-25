@@ -1,5 +1,6 @@
 import { Component, createSignal, Show, onMount, onCleanup } from "solid-js";
 import { open, save } from "@tauri-apps/plugin-dialog";
+import { getCurrentWebview } from "@tauri-apps/api/webview";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { TabBar } from "./components/Tabs/TabBar";
 import { QuickSwitcher } from "./components/QuickSwitcher/QuickSwitcher";
@@ -13,6 +14,7 @@ import { StatusBar } from "./components/StatusBar/StatusBar";
 import {
   currentDocument,
   setCurrentDocument,
+  updateDocumentContent,
   displayMode,
   setDisplayMode,
   cycleDisplayMode,
@@ -34,6 +36,7 @@ import {
   stopWatchingFile,
 } from "./lib/tauri/commands";
 import { onFileChanged } from "./lib/tauri/events";
+import { isDropOverTabBar, processFileDrop } from "./lib/dnd";
 
 const App: Component = () => {
   const [sidebarOpen, setSidebarOpen] = createSignal(true);
@@ -41,7 +44,13 @@ const App: Component = () => {
   const [isResizing, setIsResizing] = createSignal(false);
   const [findReplaceOpen, setFindReplaceOpen] = createSignal(false);
   const [searchModalOpen, setSearchModalOpen] = createSignal(false);
+  const [dragHoverTarget, setDragHoverTarget] = createSignal<
+    "window" | "tabbar" | "editor" | null
+  >(null);
+
+  let tabBarElement: HTMLDivElement | undefined;
   let unlistenFileChanged: (() => void) | null = null;
+  let unlistenDragDrop: (() => void) | null = null;
   let autoSaveTimer: number | null = null;
 
   // Handle opening a file via native dialog
@@ -146,7 +155,7 @@ const App: Component = () => {
     }, 30000);
   });
 
-  // Set up file change listener
+  // Set up file change listener and Drag & Drop listener
   onMount(async () => {
     try {
       unlistenFileChanged = await onFileChanged((_payload) => {
@@ -155,10 +164,59 @@ const App: Component = () => {
     } catch (err) {
       console.warn("File changed listener setup:", err);
     }
+
+    try {
+      unlistenDragDrop = await getCurrentWebview().onDragDropEvent(
+        async (event) => {
+          const payload = event.payload;
+          const hasDoc = hasDocument();
+
+          if (payload.type === "enter" || payload.type === "over") {
+            if (!hasDoc) {
+              setDragHoverTarget("window");
+            } else {
+              const isTabBar = isDropOverTabBar(
+                payload.position,
+                tabBarElement || null,
+                window.devicePixelRatio || 1
+              );
+              setDragHoverTarget(isTabBar ? "tabbar" : "editor");
+            }
+          } else if (payload.type === "leave") {
+            setDragHoverTarget(null);
+          } else if (payload.type === "drop") {
+            const isTabBar = isDropOverTabBar(
+              payload.position,
+              tabBarElement || null,
+              window.devicePixelRatio || 1
+            );
+
+            await processFileDrop({
+              paths: payload.paths,
+              isTabBar,
+              hasOpenDocument: hasDoc,
+              onOpenFile: loadFile,
+              onInsertLinks: (markdownLinks) => {
+                const doc = currentDocument();
+                const newContent = doc.content.trim()
+                  ? `${doc.content}\n\n${markdownLinks}\n`
+                  : `${markdownLinks}\n`;
+                updateDocumentContent(newContent);
+              },
+            });
+
+            setDragHoverTarget(null);
+          }
+        }
+      );
+    } catch (err) {
+      console.warn("Drag and drop listener setup:", err);
+    }
   });
 
   onCleanup(() => {
     unlistenFileChanged?.();
+    unlistenDragDrop?.();
     if (autoSaveTimer !== null) {
       clearInterval(autoSaveTimer);
     }
@@ -230,13 +288,27 @@ const App: Component = () => {
   });
 
   const doc = () => currentDocument();
-  const hasDocument = () => doc().path !== null || doc().content.length > 0 || openTabs().length > 0;
+  const hasDocument = () =>
+    doc().path !== null || doc().content.length > 0 || openTabs().length > 0;
 
   return (
     <div
       class={`flex flex-col h-screen relative ${zenMode() ? "zen-mode" : ""} ${focusMode() ? "focus-mode" : ""}`}
       style={{ background: "var(--color-bg-primary)", color: "var(--color-text-primary)" }}
     >
+      {/* Full-window drop overlay when no file is open */}
+      <Show when={dragHoverTarget() === "window"}>
+        <div class="fixed inset-0 z-50 bg-[var(--color-bg-primary)]/85 backdrop-blur-xs flex items-center justify-center border-4 border-dashed border-[var(--color-accent)] m-4 rounded-2xl pointer-events-none transition-all animate-in fade-in">
+          <div class="text-center">
+            <div class="text-5xl mb-3 animate-bounce">📂</div>
+            <p class="text-lg font-bold text-[var(--color-accent)]">
+              Drop Markdown file here to open directly
+            </p>
+            <p class="text-xs opacity-60 mt-1">Supports .md, .markdown, .txt, .mdx</p>
+          </div>
+        </div>
+      </Show>
+
       {/* Quick Switcher Palette (Ctrl+P) */}
       <QuickSwitcher onOpenFileByPath={loadFile} />
 
@@ -280,19 +352,42 @@ const App: Component = () => {
         </Show>
 
         {/* Center Panel (TabBar + Toolbar + Viewport) */}
-        <div class="flex-1 flex flex-col overflow-hidden">
+        <div class="flex-1 flex flex-col overflow-hidden relative">
           {/* Multi-Document Tab Bar */}
           <Show when={openTabs().length > 0 && !zenMode()}>
-            <TabBar onNewTab={handleNewDocument} />
+            <TabBar
+              ref={(el) => (tabBarElement = el)}
+              isDragOver={dragHoverTarget() === "tabbar"}
+              onNewTab={handleNewDocument}
+            />
           </Show>
 
           {/* Editor Quick Format Toolbar (Writing / Code modes) */}
-          <Show when={hasDocument() && (displayMode() === "writing" || displayMode() === "code") && !zenMode()}>
+          <Show
+            when={
+              hasDocument() &&
+              (displayMode() === "writing" || displayMode() === "code") &&
+              !zenMode()
+            }
+          >
             <EditorToolbar />
           </Show>
 
           {/* Viewport: Reading / Writing / Code Modes */}
-          <main class="flex-1 overflow-hidden">
+          <main class="flex-1 overflow-hidden relative">
+            {/* Editor drop overlay to insert link */}
+            <Show when={dragHoverTarget() === "editor"}>
+              <div class="absolute inset-0 z-40 bg-[var(--color-bg-primary)]/80 backdrop-blur-xs flex items-center justify-center border-3 border-dashed border-[var(--color-accent)] m-3 rounded-xl pointer-events-none animate-in fade-in">
+                <div class="text-center">
+                  <div class="text-4xl mb-2 animate-bounce">🔗</div>
+                  <p class="text-sm font-bold text-[var(--color-accent)]">
+                    Drop file here to insert link
+                  </p>
+                  <p class="text-xs opacity-60 mt-0.5">Images render as ![](...) and docs as [](..)</p>
+                </div>
+              </div>
+            </Show>
+
             <Show
               when={hasDocument()}
               fallback={

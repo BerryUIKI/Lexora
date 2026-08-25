@@ -5,6 +5,18 @@ All notable changes to Lexora will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-08-25
+
+### Added
+- **Intelligent Drag & Drop File Integration**:
+  - Dragging files into the window when no document is open opens the document directly.
+  - Dragging files onto the top Tab Bar when a document is open opens the file in a new tab.
+  - Dragging files onto the active Editor / Text Area automatically inserts Markdown links (image files insert as `![name](path)`, documents and other files insert as `[name](path)`).
+  - Real-time animated drop hint overlays for window, tab bar, and editor targets.
+  - Comprehensive unit test suite for drag-and-drop parsing and routing logic.
+
+---
+
 ## [1.2.0] - 2026-08-24
 
 ### Added

@@ -4,6 +4,8 @@ import { setCurrentDocument } from "../../store/editor";
 
 export interface TabBarProps {
   onNewTab: () => void;
+  isDragOver?: boolean;
+  ref?: HTMLDivElement | ((el: HTMLDivElement) => void);
 }
 
 export const TabBar: Component<TabBarProps> = (props) => {
@@ -17,7 +19,16 @@ export const TabBar: Component<TabBarProps> = (props) => {
 
   return (
     <div
-      class="h-9 flex items-center bg-[var(--color-bg-secondary)] border-b border-[var(--color-border)] overflow-x-auto select-none no-select flex-shrink-0"
+      ref={props.ref}
+      data-tab-bar="true"
+      class="h-9 flex items-center bg-[var(--color-bg-secondary)] border-b border-[var(--color-border)] overflow-x-auto select-none no-select flex-shrink-0 transition-colors relative"
+      style={{
+        "background-color": props.isDragOver
+          ? "color-mix(in srgb, var(--color-accent) 15%, var(--color-bg-secondary))"
+          : "var(--color-bg-secondary)",
+        "outline": props.isDragOver ? "2px dashed var(--color-accent)" : "none",
+        "outline-offset": "-2px",
+      }}
     >
       <For each={openTabs()}>
         {(tab) => {
@@ -63,6 +74,13 @@ export const TabBar: Component<TabBarProps> = (props) => {
       >
         +
       </button>
+
+      {/* Drop hint when dragging over TabBar */}
+      <Show when={props.isDragOver}>
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none bg-[var(--color-accent)]/15 text-[var(--color-accent)] font-semibold text-xs animate-pulse">
+          📂 Drop here to open file in a new tab
+        </div>
+      </Show>
     </div>
   );
 };
