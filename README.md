@@ -91,7 +91,7 @@ Built on **Tauri 2** and **Rust** with a fine-grained reactive **SolidJS** front
 | Feature | Highlights | Status |
 |---|---|:---:|
 | 🌐 **9-Language i18n System** | Native support for **English**, **简体中文**, **繁體中文**, **日本語**, **한국어**, **Deutsch**, **Français**, **Español**, and **Русский** with OS auto-detection | ✅ Complete |
-| 🪟 **VS Code-Style Custom Titlebar** | Frameless window with custom draggable titlebar, theme-matched menus (`File`, `Edit`, `View`, `Window`, `Help`), and min/max/close controls | ✅ Complete |
+| 🪟 **Platform-Native Window Chrome** | Theme-matched menus with compact custom controls on Windows/Linux and native traffic-light window controls on macOS | ✅ Complete |
 | 🏷️ **Windows `.md` File Association** | Automatically associates `.md`, `.markdown`, `.mdx`, and `.txt` files; double-click in Windows Explorer to open directly | ✅ Complete |
 | 🔄 **Tri-State Display Modes** | Quickly switch between **Reading** (read-only), **Writing** (Typora-style WYSIWYG), and **Code** (source code with line sync) | ✅ Complete |
 | 📥 **Intelligent Drag & Drop** | Drag file into window to open; drag onto tab bar for new tabs; drag into text to insert formatted Markdown links | ✅ Complete |
