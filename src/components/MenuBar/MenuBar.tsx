@@ -158,10 +158,14 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
       >
         {/* Left: App Logo & Top-Level Menus (No drag on buttons) */}
         <div class="flex items-center gap-0.5 pointer-events-auto" data-tauri-drag-region="false">
-          {/* App Icon Mark */}
-          <div
-            class="flex items-center gap-1.5 px-2 py-1 text-[var(--color-accent)] font-semibold cursor-pointer hover:opacity-80 transition-opacity"
-            onClick={() => setAboutOpen(true)}
+          {/* App Icon Mark Button */}
+          <button
+            class="flex items-center gap-1.5 px-2 py-1 text-[var(--color-accent)] font-semibold rounded hover:bg-[var(--color-hover)] transition-colors no-drag cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              closeMenus();
+              setAboutOpen(true);
+            }}
             title="About Lexora"
           >
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -169,7 +173,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
               <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
             </svg>
             <span class="text-xs font-bold tracking-tight text-[var(--color-text-primary)]">Lexora</span>
-          </div>
+          </button>
 
           {/* Menu: File */}
           <div class="relative">
@@ -598,22 +602,22 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
         {/* Center: Draggable Region with Document Title Breadcrumb */}
         <div
           data-tauri-drag-region
-          class="flex-1 flex items-center justify-center h-full px-4 text-xs text-[var(--color-text-secondary)] font-medium truncate cursor-default"
+          class="flex-1 flex items-center justify-center h-full px-4 text-xs text-[var(--color-text-secondary)] font-medium truncate cursor-default select-none"
           onMouseDown={handleStartDrag}
         >
-          <div class="flex items-center gap-1.5 truncate pointer-events-none" data-tauri-drag-region>
+          <div class="flex items-center gap-1.5 truncate" data-tauri-drag-region>
             <Show
               when={hasDoc()}
-              fallback={<span class="opacity-60 font-normal">Lexora</span>}
+              fallback={<span class="opacity-60 font-normal" data-tauri-drag-region>Lexora</span>}
             >
-              <span class="text-[var(--color-text-primary)] font-semibold truncate">
+              <span class="text-[var(--color-text-primary)] font-semibold truncate" data-tauri-drag-region>
                 {doc().filename}
               </span>
               <Show when={doc().isDirty}>
-                <span class="text-[10px] text-[var(--color-accent)] font-bold">●</span>
+                <span class="text-[10px] text-[var(--color-accent)] font-bold" data-tauri-drag-region>●</span>
               </Show>
-              <span class="opacity-40 text-[10px]">&bull;</span>
-              <span class="text-[11px] capitalize opacity-80">{displayMode()}</span>
+              <span class="opacity-40 text-[10px]" data-tauri-drag-region>&bull;</span>
+              <span class="text-[11px] capitalize opacity-80" data-tauri-drag-region>{displayMode()}</span>
             </Show>
           </div>
         </div>
