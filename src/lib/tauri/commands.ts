@@ -1,4 +1,5 @@
 import { invoke } from "@tauri-apps/api/core";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 
 export interface TocEntry {
   level: number;
@@ -89,35 +90,55 @@ export async function getCliArgs(): Promise<string[]> {
  * Minimize the application window.
  */
 export async function minimizeWindow(): Promise<void> {
-  return invoke<void>("minimize_window");
+  try {
+    await getCurrentWindow().minimize();
+  } catch {
+    await invoke<void>("minimize_window");
+  }
 }
 
 /**
  * Toggle maximize / restore for the application window.
  */
 export async function toggleMaximizeWindow(): Promise<void> {
-  return invoke<void>("toggle_maximize_window");
+  try {
+    await getCurrentWindow().toggleMaximize();
+  } catch {
+    await invoke<void>("toggle_maximize_window");
+  }
 }
 
 /**
  * Close the application window.
  */
 export async function closeWindow(): Promise<void> {
-  return invoke<void>("close_window");
+  try {
+    await getCurrentWindow().close();
+  } catch {
+    await invoke<void>("close_window");
+  }
 }
 
 /**
  * Check if the application window is currently maximized.
  */
 export async function isWindowMaximized(): Promise<boolean> {
-  return invoke<boolean>("is_window_maximized");
+  try {
+    return await getCurrentWindow().isMaximized();
+  } catch {
+    return await invoke<boolean>("is_window_maximized");
+  }
 }
 
 /**
  * Start dragging the application window.
  */
 export async function startDrag(): Promise<void> {
-  return invoke<void>("start_drag");
+  try {
+    await getCurrentWindow().startDragging();
+  } catch {
+    await invoke<void>("start_drag");
+  }
 }
 
 /**
