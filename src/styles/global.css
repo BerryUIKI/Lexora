@@ -198,3 +198,39 @@ body,
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-text-secondary);
 }
+
+/* ===== Milkdown / ProseMirror Editor Theme Adaptations ===== */
+.milkdown-container {
+  color: var(--color-text-primary);
+}
+
+.milkdown-container .ProseMirror {
+  min-height: 500px;
+  color: var(--color-text-primary);
+  outline: none;
+  font-family: inherit;
+}
+
+.milkdown-container .ProseMirror p {
+  color: var(--color-text-primary);
+}
+
+.milkdown-container .ProseMirror h1,
+.milkdown-container .ProseMirror h2,
+.milkdown-container .ProseMirror h3,
+.milkdown-container .ProseMirror h4,
+.milkdown-container .ProseMirror h5,
+.milkdown-container .ProseMirror h6 {
+  color: var(--color-text-primary);
+}
+
+[data-theme="dark"] .milkdown-container .ProseMirror pre {
+  background-color: var(--color-code-bg);
+  color: var(--color-text-primary);
+}
+
+[data-theme="dark"] .milkdown-container .ProseMirror code {
+  background-color: var(--color-code-bg);
+  color: var(--color-accent);
+}
+
