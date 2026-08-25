@@ -7,15 +7,31 @@ import {
   editorViewCtx,
   parserCtx,
   serializerCtx,
+  commandsCtx,
 } from "@milkdown/core";
 import type { Ctx } from "@milkdown/ctx";
-import { commonmark } from "@milkdown/preset-commonmark";
-import { gfm } from "@milkdown/preset-gfm";
+import {
+  commonmark,
+  toggleStrongCommand,
+  toggleEmphasisCommand,
+  toggleInlineCodeCommand,
+  wrapInHeadingCommand,
+  turnIntoTextCommand,
+  wrapInBlockquoteCommand,
+  wrapInBulletListCommand,
+  wrapInOrderedListCommand,
+} from "@milkdown/preset-commonmark";
+import {
+  gfm,
+  toggleStrikethroughCommand,
+  insertTableCommand,
+} from "@milkdown/preset-gfm";
 import { history } from "@milkdown/plugin-history";
 import { listener, listenerCtx } from "@milkdown/plugin-listener";
 import { nord } from "@milkdown/theme-nord";
 import "@milkdown/theme-nord/style.css";
 import { currentDocument, updateDocumentContent } from "../../store/editor";
+import { registerWritingFormatter, type FormatAction } from "../../lib/formatter";
 
 export interface EditorProps {
   onSave?: () => void;
@@ -25,7 +41,67 @@ export const Editor: Component<EditorProps> = (props) => {
   let containerRef!: HTMLDivElement;
   let editorInstance: MilkdownEditor | null = null;
 
+  const executeFormat = (action: FormatAction) => {
+    if (!editorInstance) return;
+    try {
+      editorInstance.action((ctx) => {
+        const commands = ctx.get(commandsCtx);
+        switch (action) {
+          case "bold":
+            commands.call(toggleStrongCommand.key);
+            break;
+          case "italic":
+            commands.call(toggleEmphasisCommand.key);
+            break;
+          case "strikethrough":
+            commands.call(toggleStrikethroughCommand.key);
+            break;
+          case "code_inline":
+            commands.call(toggleInlineCodeCommand.key);
+            break;
+          case "h1":
+            commands.call(wrapInHeadingCommand.key, 1);
+            break;
+          case "h2":
+            commands.call(wrapInHeadingCommand.key, 2);
+            break;
+          case "h3":
+            commands.call(wrapInHeadingCommand.key, 3);
+            break;
+          case "h4":
+            commands.call(wrapInHeadingCommand.key, 4);
+            break;
+          case "h5":
+            commands.call(wrapInHeadingCommand.key, 5);
+            break;
+          case "h6":
+            commands.call(wrapInHeadingCommand.key, 6);
+            break;
+          case "paragraph":
+            commands.call(turnIntoTextCommand.key);
+            break;
+          case "blockquote":
+            commands.call(wrapInBlockquoteCommand.key);
+            break;
+          case "bullet_list":
+            commands.call(wrapInBulletListCommand.key);
+            break;
+          case "ordered_list":
+            commands.call(wrapInOrderedListCommand.key);
+            break;
+          case "table":
+            commands.call(insertTableCommand.key);
+            break;
+        }
+      });
+    } catch (err) {
+      console.warn("Writing format execution error:", err);
+    }
+  };
+
   onMount(async () => {
+    registerWritingFormatter(executeFormat);
+
     try {
       editorInstance = await MilkdownEditor.make()
         .config((ctx: Ctx) => {
@@ -88,6 +164,7 @@ export const Editor: Component<EditorProps> = (props) => {
   });
 
   onCleanup(async () => {
+    registerWritingFormatter(null);
     if (editorInstance) {
       try {
         await editorInstance.destroy();

@@ -121,7 +121,7 @@ mod tests {
         let html_content = read_back.unwrap();
         assert!(html_content.contains("<!DOCTYPE html>"));
         assert!(html_content.contains("<title>Export Title</title>"));
-        assert!(html_content.contains("<h1>Export Title</h1>"));
+        assert!(html_content.contains("<h1 id=\"export-title\">Export Title</h1>"));
 
         let _ = fs::remove_file(&target).await;
     }

@@ -5,6 +5,31 @@ All notable changes to Lexora will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-08-25
+
+### Added
+- **Content-Focused Shortcut Architecture**:
+  - Restored <kbd>Ctrl+B</kbd> to standard text bolding across Writing and Code modes.
+  - Added <kbd>Ctrl+0</kbd> shortcut for normal paragraph / text formatting, and <kbd>Ctrl+1~6</kbd> for H1~H6 headings.
+  - Added <kbd>Ctrl+I</kbd> (Italic), <kbd>Ctrl+K</kbd> (Link), <kbd>Ctrl+`</kbd> (Inline Code), <kbd>Ctrl+Shift+X</kbd> (Strikethrough).
+  - Migrated sidebar toggle shortcut to <kbd>Ctrl+Shift+B</kbd>.
+- **Monochrome Vector Iconography**:
+  - Completely removed colorful emojis from the status bar, format toolbar, and sidebar mode switcher.
+  - Standardized on minimalist, clean vector line SVG icons using `stroke="currentColor"` that adapt to any theme.
+- **In-Place Formatting & Selection Support**:
+  - Refactored Writing Mode (Milkdown) and Code Mode format execution to transform active selection or current block in-place.
+  - Added Paragraph (`¶ Text`) block format option in the editor toolbar.
+- **Outline-First Sidebar & Cross-Mode Smooth Scrolling**:
+  - Sidebar defaults to document Outline (TOC), allowing immediate navigation.
+  - Rust parser generates explicit `id="{slug}"` anchor attributes on heading HTML tags.
+  - Seamless smooth scrolling to heading anchors in Reading, Writing, and Code modes.
+- **Code Mode Line Numbers Synchronized Scrolling**:
+  - Synchronized line numbers gutter scroll position directly with textarea scrolling.
+- **Welcome Hub / Home Workspace**:
+  - Integrated modern Welcome Hub shown when no document is open, featuring quick creation/opening, recent file history, keyboard shortcuts cheat sheet, and drop hints.
+
+---
+
 ## [1.3.0] - 2026-08-25
 
 ### Added
