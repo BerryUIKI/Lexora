@@ -8,11 +8,37 @@ export interface Tab {
   document: DocumentState;
 }
 
+export interface RecentFile {
+  path: string;
+  filename: string;
+  lastOpened: number;
+}
+
+const STORAGE_KEY_RECENT = "lexora_recent_files";
+
+function loadRecentFiles(): RecentFile[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY_RECENT);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveRecentFiles(files: RecentFile[]) {
+  try {
+    localStorage.setItem(STORAGE_KEY_RECENT, JSON.stringify(files.slice(0, 15)));
+  } catch {
+    // ignore
+  }
+}
+
 const [openTabs, setOpenTabs] = createSignal<Tab[]>([]);
 const [activeTabId, setActiveTabId] = createSignal<string | null>(null);
 const [workspaceTree, setWorkspaceTree] = createSignal<FileEntry | null>(null);
 const [quickSwitcherOpen, setQuickSwitcherOpen] = createSignal(false);
-const [sidebarMode, setSidebarMode] = createSignal<"toc" | "files">("files");
+const [sidebarMode, setSidebarMode] = createSignal<"toc" | "files">("toc");
+const [recentFiles, setRecentFiles] = createSignal<RecentFile[]>(loadRecentFiles());
 
 export {
   openTabs,
@@ -25,9 +51,24 @@ export {
   setQuickSwitcherOpen,
   sidebarMode,
   setSidebarMode,
+  recentFiles,
+  setRecentFiles,
 };
 
+export function addRecentFile(path: string, filename: string) {
+  setRecentFiles((prev) => {
+    const filtered = prev.filter((f) => f.path !== path);
+    const updated = [{ path, filename, lastOpened: Date.now() }, ...filtered].slice(0, 15);
+    saveRecentFiles(updated);
+    return updated;
+  });
+}
+
 export function addOrSwitchTab(doc: DocumentState) {
+  if (doc.path) {
+    addRecentFile(doc.path, doc.filename);
+  }
+
   const tabs = openTabs();
   const existing = tabs.find((t) => (t.document.path && t.document.path === doc.path) || (t.id === doc.path));
 

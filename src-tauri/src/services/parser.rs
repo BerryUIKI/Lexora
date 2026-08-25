@@ -2,7 +2,7 @@ use crate::services::highlighter;
 use crate::state::TocEntry;
 use pulldown_cmark::{CodeBlockKind, Event, HeadingLevel, Options, Parser, Tag, TagEnd, html};
 
-/// Convert a Markdown string to HTML with full GFM support, syntect code highlighting, math, and mermaid diagram wrappers.
+/// Convert a Markdown string to HTML with full GFM support, syntect code highlighting, math, mermaid diagrams, and anchor IDs for TOC.
 pub fn markdown_to_html(markdown: &str) -> String {
     let options = gfm_options();
     let parser = Parser::new_ext(markdown, options);
@@ -11,6 +11,11 @@ pub fn markdown_to_html(markdown: &str) -> String {
     let mut in_code_block = false;
     let mut code_lang = String::new();
     let mut code_buffer = String::new();
+
+    let mut in_heading = false;
+    let mut current_heading_level: u8 = 1;
+    let mut heading_text_buffer = String::new();
+    let mut heading_events: Vec<Event<'static>> = Vec::new();
 
     for event in parser {
         match event {
@@ -81,6 +86,64 @@ pub fn markdown_to_html(markdown: &str) -> String {
                 };
 
                 events.push(Event::Html(code_html.into()));
+            }
+            Event::Start(Tag::Heading { level, .. }) => {
+                in_heading = true;
+                current_heading_level = heading_level_to_u8(level);
+                heading_text_buffer.clear();
+                heading_events.clear();
+            }
+            Event::End(TagEnd::Heading(_)) => {
+                in_heading = false;
+                let slug = slugify(&heading_text_buffer);
+                let mut inner_html = String::new();
+                html::push_html(&mut inner_html, heading_events.drain(..));
+                let heading_html = format!(
+                    r#"<h{} id="{}">{}</h{}>"#,
+                    current_heading_level, slug, inner_html, current_heading_level
+                );
+                events.push(Event::Html(heading_html.into()));
+            }
+            event_item if in_heading => {
+                match &event_item {
+                    Event::Text(t) => heading_text_buffer.push_str(t),
+                    Event::Code(c) => heading_text_buffer.push_str(c),
+                    _ => {}
+                }
+                // Clone event to static for HTML rendering
+                let static_ev = match event_item {
+                    Event::Start(tag) => match tag {
+                        Tag::Emphasis => Event::Start(Tag::Emphasis),
+                        Tag::Strong => Event::Start(Tag::Strong),
+                        Tag::Strikethrough => Event::Start(Tag::Strikethrough),
+                        Tag::Link { link_type, dest_url, title, id } => Event::Start(Tag::Link {
+                            link_type,
+                            dest_url: dest_url.to_string().into(),
+                            title: title.to_string().into(),
+                            id: id.to_string().into(),
+                        }),
+                        Tag::Image { link_type, dest_url, title, id } => Event::Start(Tag::Image {
+                            link_type,
+                            dest_url: dest_url.to_string().into(),
+                            title: title.to_string().into(),
+                            id: id.to_string().into(),
+                        }),
+                        _ => Event::Html("".into()),
+                    },
+                    Event::End(tag_end) => match tag_end {
+                        TagEnd::Emphasis => Event::End(TagEnd::Emphasis),
+                        TagEnd::Strong => Event::End(TagEnd::Strong),
+                        TagEnd::Strikethrough => Event::End(TagEnd::Strikethrough),
+                        TagEnd::Link => Event::End(TagEnd::Link),
+                        TagEnd::Image => Event::End(TagEnd::Image),
+                        _ => Event::Html("".into()),
+                    },
+                    Event::Text(t) => Event::Text(t.to_string().into()),
+                    Event::Code(c) => Event::Code(c.to_string().into()),
+                    Event::Html(h) => Event::Html(h.to_string().into()),
+                    _ => Event::Html("".into()),
+                };
+                heading_events.push(static_ev);
             }
             _ if !in_code_block => {
                 events.push(event);
@@ -199,7 +262,8 @@ mod tests {
     #[test]
     fn test_heading() {
         let result = markdown_to_html("# Hello");
-        assert!(result.contains("<h1>"));
+        assert!(result.contains("<h1"));
+        assert!(result.contains("id=\"hello\""));
         assert!(result.contains("Hello"));
     }
 
