@@ -86,4 +86,4 @@ jobs:
           releaseDraft: false
           prerelease: false
           args: ${{ matrix.args }}
-          releaseAssetNamePattern: ${{ matrix.asset_name }}
+          assetNamePattern: ${{ matrix.asset_name }}
