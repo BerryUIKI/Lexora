@@ -28,3 +28,9 @@ pub fn close_window(window: Window) -> Result<(), String> {
 pub fn is_window_maximized(window: Window) -> Result<bool, String> {
     window.is_maximized().map_err(|e| e.to_string())
 }
+
+/// Start dragging the window.
+#[tauri::command]
+pub fn start_drag(window: Window) -> Result<(), String> {
+    window.start_dragging().map_err(|e| e.to_string())
+}

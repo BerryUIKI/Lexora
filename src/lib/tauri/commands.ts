@@ -114,6 +114,13 @@ export async function isWindowMaximized(): Promise<boolean> {
 }
 
 /**
+ * Start dragging the application window.
+ */
+export async function startDrag(): Promise<void> {
+  return invoke<void>("start_drag");
+}
+
+/**
  * Greet command — used to verify IPC round-trip works.
  */
 export async function greet(name: string): Promise<string> {
