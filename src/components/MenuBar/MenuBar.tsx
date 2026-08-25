@@ -15,6 +15,7 @@ import {
   toggleMaximizeWindow,
   closeWindow,
   isWindowMaximized,
+  startDrag,
 } from "../../lib/tauri/commands";
 import { AboutModal } from "./AboutModal";
 
@@ -131,12 +132,28 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
     }
   };
 
+  const handleStartDrag = async (e: MouseEvent) => {
+    // Only drag on primary left click (button 0)
+    if (e.button !== 0) return;
+    // Don't drag if clicking buttons, menu dropdowns, links, or inputs
+    const target = e.target as HTMLElement;
+    if (target.closest("button, [role='button'], input, textarea, a, select, .no-drag, .menu-dropdown")) {
+      return;
+    }
+    try {
+      await startDrag();
+    } catch (err) {
+      console.warn("startDrag error:", err);
+    }
+  };
+
   return (
     <>
       <header
         data-tauri-drag-region
         class="h-8 flex items-center justify-between pl-1.5 pr-0 text-xs no-select select-none border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)] flex-shrink-0 z-40 relative menu-bar-container cursor-default"
         style={{ color: "var(--color-text-secondary)" }}
+        onMouseDown={handleStartDrag}
         onDblClick={handleToggleMaximize}
       >
         {/* Left: App Logo & Top-Level Menus (No drag on buttons) */}
@@ -582,6 +599,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
         <div
           data-tauri-drag-region
           class="flex-1 flex items-center justify-center h-full px-4 text-xs text-[var(--color-text-secondary)] font-medium truncate cursor-default"
+          onMouseDown={handleStartDrag}
         >
           <div class="flex items-center gap-1.5 truncate pointer-events-none" data-tauri-drag-region>
             <Show

@@ -38,6 +38,7 @@ pub fn run() {
             commands::window::toggle_maximize_window,
             commands::window::close_window,
             commands::window::is_window_maximized,
+            commands::window::start_drag,
             get_cli_args,
             start_watching_file,
             stop_watching_file,
