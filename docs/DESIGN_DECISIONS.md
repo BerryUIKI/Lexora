@@ -106,18 +106,22 @@ Utilize **Tauri v2's Capability-Based Security System** with least-privilege per
 
 ---
 
-## ADR-006: Native Title Bar for MVP
+## ADR-006: Platform-Appropriate Window Chrome
 
 ### Context
 Modern desktop apps often choose between standard OS-provided window decorations (native title bar) and custom client-side window frames (frameless window with custom close/minimize buttons and embedded menu bars).
 
 ### Decision
-Use the **Native Operating System Title Bar** for the v1.0 MVP release.
+Use platform-appropriate window chrome. Windows and Linux retain Lexora's
+frameless, theme-matched title bar. macOS uses native window decorations with
+an overlay title bar, native traffic-light controls, and spacing in the in-app
+menu row that respects those controls.
 
 ### Rationale
-- **OS Consistency & Accessibility**: Native title bars automatically respect OS window management features (Windows Snap Layouts, macOS double-click zoom, Linux window managers, high-contrast themes).
-- **Implementation Velocity**: Eliminates edge cases involving drag regions, double-click behaviors, window snapping bugs, and cross-platform styling quirks.
-- **Clean Separation**: Keeps the initial codebase focused on editor performance and stability.
+- **macOS Consistency & Accessibility**: Native traffic-light controls preserve familiar window management and accessibility behavior.
+- **Cross-Platform Fit**: Windows and Linux keep the compact custom controls designed for Lexora's menu bar.
+- **Maintainability**: Tauri's macOS-specific configuration owns the native window behavior while the frontend only adjusts layout and control visibility.
 
 ### Consequences & Trade-offs
-- Custom integrated menu bars and title-bar-embedded search inputs are deferred to post-MVP releases (v1.2+).
+- Platform chrome changes must be verified against both the base Tauri configuration and `tauri.macos.conf.json`.
+- The menu bar must reserve enough leading space for macOS traffic-light controls.

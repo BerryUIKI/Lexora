@@ -25,35 +25,14 @@
 
 ## 📥 一键直接下载
 
-完全无需 GitHub 使用经验！点击对应操作系统一键直接下载最新安装包：
+选择操作系统和安装包：
 
-### 🪟 Windows (10 / 11)
+- **Windows x86_64：** [安装程序 (`.exe`)](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Windows_x86_64.exe) · [MSI](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Windows_x86_64.msi)
+- **macOS Apple Silicon：** [DMG](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_aarch64.dmg)
+- **macOS Intel：** [DMG](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_x86_64.dmg)
+- **Linux x86_64：** [AppImage](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.AppImage) · [Debian/Ubuntu (`.deb`)](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.deb) · [Fedora/RHEL (`.rpm`)](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.rpm)
 
-| 安装包类型 | 系统架构 | 体积 | 一键直链下载 | 说明 |
-|---|---|---|---|---|
-| **⭐ 标准安装包 (推荐)** | `x64` (64 位) | **~3.6 MB** | [⬇️ **下载最新 Windows 安装包 (`.exe`)**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_x64-setup.exe) | 自动安装向导，支持 `.md`、`.txt` 文件双击直接关联打开 |
-| **🏢 企业级 MSI** | `x64` (64 位) | **~5.2 MB** | [⬇️ **下载最新 Windows 企业包 (`.msi`)**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_x64_en-US.msi) | Windows Installer 标准打包，适合企业 IT 静默部署 |
-
----
-
-### 🍎 macOS (macOS 11+)
-
-| 安装包类型 | 系统架构 | 体积 | 一键直链下载 | 说明 |
-|---|---|---|---|---|
-| **⭐ Apple Silicon (推荐)** | `M1 / M2 / M3 / M4` | **~5.0 MB** | [⬇️ **下载最新 Apple Silicon 镜像 (`.dmg`)**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Apple-Silicon.dmg) | 专为苹果 M 系列芯片优化的原生 DMG 镜像 |
-| **Intel Mac** | `x64` (Intel) | **~5.3 MB** | [⬇️ **下载最新 Intel Mac 镜像 (`.dmg`)**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_x64.dmg) | 适用于老款 Intel 处理器的 Mac 原生 DMG |
-
----
-
-### 🐧 Linux (Ubuntu / Debian / Fedora / Arch)
-
-| 安装包类型 | 系统架构 | 体积 | 一键直链下载 | 说明 |
-|---|---|---|---|---|
-| **⭐ AppImage (通用)** | `x86_64` (64 位) | **~65 MB** | [⬇️ **下载最新通用 AppImage**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_amd64.AppImage) | 便携免安装，支持全系列主流 Linux 发行版 |
-| **Debian / Ubuntu 软件包** | `amd64` (64 位) | **~5.1 MB** | [⬇️ **下载最新 Debian/Ubuntu 包 (`.deb`)**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_amd64.deb) | 适用于 Debian、Ubuntu、Deepin、Linux Mint 等 |
-| **RedHat / Fedora 软件包** | `x86_64` (64 位) | **~5.0 MB** | [⬇️ **下载最新 Fedora/RHEL 包 (`.rpm`)**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora-x86_64.rpm) | 适用于 Fedora、RHEL、openSUSE 等 |
-
-> 💡 *如需查看历史版本、校验和或源码归档，请访问 [**GitHub Releases 发行页面**](https://github.com/BerryUIKI/Lexora/releases/latest)。*
+[查看全部发行版和源码归档](https://github.com/BerryUIKI/Lexora/releases/latest)。
 
 ---
 
@@ -70,7 +49,7 @@
 | 功能分类 | 特性说明 | 状态 |
 |---|---|:---:|
 | 🌐 **9 语言国际化** | 原生支持 **简体中文**、**繁體中文**、**English**、**日本語**、**한국어**、**Deutsch**、**Français**、**Español**、**Русский**，自动识别系统语言 | ✅ 已就绪 |
-| 🪟 **VS Code 风格标题栏** | 无边框设计，自定义可拖拽标题栏、跟随主题配色的顶级菜单与标准窗口控制按钮 | ✅ 已就绪 |
+| 🪟 **平台原生窗口外观** | Windows/Linux 使用紧凑的自定义控件，macOS 保留原生“红黄绿”窗口按钮 | ✅ 已就绪 |
 | 🏷️ **Windows `.md` 关联** | 自动注册关联 `.md`、`.markdown`、`.mdx` 与 `.txt`，在资源管理器中双击即刻打开 | ✅ 已就绪 |
 | 🔄 **三态显示模式** | 一键无缝切换：**阅读模式** (只读渲染)、**写作模式** (所见即所得) 与 **源码模式** (行号同步) | ✅ 已就绪 |
 | 📥 **智能拖拽** | 拖拽文件即开、拖到标签栏开启新标签页、拖到文本内自动插入格式化链接 | ✅ 已就绪 |
