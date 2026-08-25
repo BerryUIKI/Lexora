@@ -146,6 +146,7 @@ body,
   border-collapse: collapse;
   width: 100%;
   margin: 1em 0;
+  background-color: transparent;
 }
 
 .markdown-body th,
@@ -153,15 +154,15 @@ body,
   border: 1px solid var(--color-border);
   padding: 0.5em 0.75em;
   text-align: left;
+  background-color: transparent;
 }
 
 .markdown-body th {
-  background: var(--color-bg-secondary);
   font-weight: 600;
 }
 
-.markdown-body tr:nth-child(even) {
-  background: var(--color-hover);
+.markdown-body tr {
+  background-color: transparent;
 }
 
 .markdown-body hr {
@@ -224,6 +225,14 @@ body,
   color: var(--color-text-primary);
 }
 
+/* Keep table cells unfilled in every OS color scheme. Milkdown's Nord theme
+   otherwise applies a dark fill based on the WebView's system preference. */
+.milkdown-theme-nord.prose table,
+.milkdown-theme-nord.prose tr,
+.milkdown-theme-nord.prose :where(th, td) {
+  background-color: transparent !important;
+}
+
 [data-theme="dark"] .milkdown-container .ProseMirror pre {
   background-color: var(--color-code-bg);
   color: var(--color-text-primary);
@@ -233,4 +242,3 @@ body,
   background-color: var(--color-code-bg);
   color: var(--color-accent);
 }
-

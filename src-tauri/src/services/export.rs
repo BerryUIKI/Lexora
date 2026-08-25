@@ -52,9 +52,9 @@ pub async fn export_to_html(markdown: &str, title: &str, output_path: &str) -> R
       border: 1px solid #cbd5e1;
       padding: 0.5rem 0.75rem;
       text-align: left;
+      background: transparent;
     }}
     th {{
-      background: #f1f5f9;
       font-weight: 600;
     }}
     code {{
