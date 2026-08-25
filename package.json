@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "A Typora-style Markdown reader-editor built on Tauri + Rust",
   "type": "module",
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

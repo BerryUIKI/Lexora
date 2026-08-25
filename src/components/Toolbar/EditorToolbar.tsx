@@ -3,6 +3,7 @@ import { currentDocument } from "../../store/editor";
 import { exportDocument } from "../../lib/tauri/commands";
 import { save } from "@tauri-apps/plugin-dialog";
 import { dispatchFormat } from "../../lib/formatter";
+import { t } from "../../i18n";
 
 export const EditorToolbar: Component = () => {
   const doc = () => currentDocument();
@@ -31,15 +32,15 @@ export const EditorToolbar: Component = () => {
       <button
         class="px-2 py-0.5 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] font-medium text-[11px] transition-colors"
         onClick={() => dispatchFormat("paragraph")}
-        title="Normal Text / Paragraph (Ctrl+0)"
+        title={`${t("edit.paragraph")} (Ctrl+0)`}
       >
-        ¶ Text
+        ¶ {t("edit.paragraph").split("/")[0].trim()}
       </button>
 
       <button
         class="px-1.5 py-0.5 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] font-bold text-[11px] transition-colors"
         onClick={() => dispatchFormat("h1")}
-        title="Heading 1 (Ctrl+1)"
+        title={`${t("edit.heading1")} (Ctrl+1)`}
       >
         H1
       </button>
@@ -47,7 +48,7 @@ export const EditorToolbar: Component = () => {
       <button
         class="px-1.5 py-0.5 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] font-semibold text-[11px] transition-colors"
         onClick={() => dispatchFormat("h2")}
-        title="Heading 2 (Ctrl+2)"
+        title={`${t("edit.heading2")} (Ctrl+2)`}
       >
         H2
       </button>
@@ -55,7 +56,7 @@ export const EditorToolbar: Component = () => {
       <button
         class="px-1.5 py-0.5 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] font-semibold text-[11px] transition-colors"
         onClick={() => dispatchFormat("h3")}
-        title="Heading 3 (Ctrl+3)"
+        title={`${t("edit.heading3")} (Ctrl+3)`}
       >
         H3
       </button>
@@ -66,7 +67,7 @@ export const EditorToolbar: Component = () => {
       <button
         class="w-6 h-6 flex items-center justify-center rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] font-bold transition-colors"
         onClick={() => dispatchFormat("bold")}
-        title="Bold (Ctrl+B)"
+        title={`${t("edit.bold")} (Ctrl+B)`}
       >
         B
       </button>
@@ -74,7 +75,7 @@ export const EditorToolbar: Component = () => {
       <button
         class="w-6 h-6 flex items-center justify-center rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] italic transition-colors font-serif"
         onClick={() => dispatchFormat("italic")}
-        title="Italic (Ctrl+I)"
+        title={`${t("edit.italic")} (Ctrl+I)`}
       >
         I
       </button>
@@ -82,7 +83,7 @@ export const EditorToolbar: Component = () => {
       <button
         class="w-6 h-6 flex items-center justify-center rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] line-through transition-colors"
         onClick={() => dispatchFormat("strikethrough")}
-        title="Strikethrough (Ctrl+Shift+X)"
+        title={`${t("edit.strikethrough")} (Ctrl+Shift+X)`}
       >
         S
       </button>
@@ -90,7 +91,7 @@ export const EditorToolbar: Component = () => {
       <button
         class="px-1.5 h-6 flex items-center justify-center rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] font-mono text-[11px] transition-colors"
         onClick={() => dispatchFormat("code_inline")}
-        title="Inline Code (Ctrl+`)"
+        title={`${t("edit.codeBlock")} (Ctrl+\`)`}
       >
         &lt;/&gt;
       </button>
@@ -101,7 +102,7 @@ export const EditorToolbar: Component = () => {
       <button
         class="w-6 h-6 flex items-center justify-center rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
         onClick={() => dispatchFormat("bullet_list")}
-        title="Bullet List"
+        title={t("edit.bulletList")}
       >
         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="8" y1="6" x2="21" y2="6" />
@@ -116,7 +117,7 @@ export const EditorToolbar: Component = () => {
       <button
         class="w-6 h-6 flex items-center justify-center rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
         onClick={() => dispatchFormat("ordered_list")}
-        title="Numbered List"
+        title={t("edit.numberedList")}
       >
         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="10" y1="6" x2="21" y2="6" />
@@ -129,7 +130,7 @@ export const EditorToolbar: Component = () => {
       <button
         class="w-6 h-6 flex items-center justify-center rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
         onClick={() => dispatchFormat("task_list")}
-        title="Task List"
+        title={t("edit.taskList")}
       >
         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="9 11 12 14 22 4" />
@@ -140,7 +141,7 @@ export const EditorToolbar: Component = () => {
       <button
         class="w-6 h-6 flex items-center justify-center rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
         onClick={() => dispatchFormat("blockquote")}
-        title="Blockquote"
+        title={t("edit.blockquote")}
       >
         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2 1 0 1 0 1 1 0 2-2 4-2 7z" />
@@ -151,7 +152,7 @@ export const EditorToolbar: Component = () => {
       <button
         class="w-6 h-6 flex items-center justify-center rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
         onClick={() => dispatchFormat("table")}
-        title="Insert Markdown Table"
+        title={t("edit.table")}
       >
         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="3" width="18" height="18" rx="2" />
@@ -168,7 +169,7 @@ export const EditorToolbar: Component = () => {
       <button
         class="w-6 h-6 flex items-center justify-center rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
         onClick={() => dispatchFormat("link")}
-        title="Insert Link (Ctrl+K)"
+        title={`${t("edit.link")} (Ctrl+K)`}
       >
         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
@@ -179,7 +180,7 @@ export const EditorToolbar: Component = () => {
       <button
         class="w-6 h-6 flex items-center justify-center rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
         onClick={() => dispatchFormat("image")}
-        title="Insert Image"
+        title={t("edit.image")}
       >
         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
@@ -190,18 +191,18 @@ export const EditorToolbar: Component = () => {
 
       <div class="flex-1" />
 
-      {/* Export Button (Monochrome) */}
+      {/* Export Button */}
       <button
         class="px-2 py-0.5 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors flex items-center gap-1.5 font-medium text-[11px]"
         onClick={handleExport}
-        title="Export to standalone HTML"
+        title={t("file.exportHtml")}
       >
         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
           <polyline points="17 8 12 3 7 8" />
           <line x1="12" y1="3" x2="12" y2="15" />
         </svg>
-        <span>Export</span>
+        <span>{t("file.exportAs")}</span>
       </button>
     </div>
   );

@@ -1,6 +1,7 @@
 import { Component, createSignal, For, Show } from "solid-js";
 import type { FileEntry } from "../../lib/tauri/commands";
 import { createEntry, deleteEntry, renameEntry } from "../../lib/tauri/commands";
+import { t } from "../../i18n";
 
 export interface FileTreeProps {
   tree: FileEntry;
@@ -54,7 +55,7 @@ const TreeItem: Component<TreeItemProps> = (props) => {
 
   const handleDelete = async (e: MouseEvent) => {
     e.stopPropagation();
-    if (confirm(`Delete ${props.entry.name}?`)) {
+    if (confirm(`${t("sidebar.confirmDelete")} (${props.entry.name})`)) {
       try {
         await deleteEntry(props.entry.path);
         props.onRefresh();
@@ -110,14 +111,14 @@ const TreeItem: Component<TreeItemProps> = (props) => {
               e.stopPropagation();
               setIsEditing(true);
             }}
-            title="Rename"
+            title={t("sidebar.rename")}
           >
             ✏️
           </button>
           <button
             class="hover:opacity-100 p-0.5 text-red-500"
             onClick={handleDelete}
-            title="Delete"
+            title={t("sidebar.delete")}
           >
             🗑️
           </button>
@@ -184,14 +185,14 @@ export const FileTree: Component<FileTreeProps> = (props) => {
           <button
             class="p-1 rounded hover:bg-[var(--color-hover)]"
             onClick={handleNewFile}
-            title="New File"
+            title={t("sidebar.newFile")}
           >
             📄+
           </button>
           <button
             class="p-1 rounded hover:bg-[var(--color-hover)]"
             onClick={handleNewFolder}
-            title="New Folder"
+            title={t("sidebar.newFolder")}
           >
             📁+
           </button>

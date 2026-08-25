@@ -1,5 +1,6 @@
 import { Component, For, Show } from "solid-js";
 import { type TocEntry, displayMode } from "../../store/editor";
+import { t } from "../../i18n";
 
 export interface TocSidebarProps {
   toc: TocEntry[];
@@ -10,7 +11,6 @@ export const TocSidebar: Component<TocSidebarProps> = (props) => {
     const mode = displayMode();
 
     if (mode === "reading") {
-      // Direct element ID anchor scroll in rendered HTML
       const element = document.getElementById(entry.id);
       if (element) {
         element.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -19,7 +19,6 @@ export const TocSidebar: Component<TocSidebarProps> = (props) => {
     }
 
     if (mode === "writing") {
-      // In Milkdown WYSIWYG, find heading by tag and matching text
       const headingElements = Array.from(
         document.querySelectorAll(
           `.milkdown-container h1, .milkdown-container h2, .milkdown-container h3, .milkdown-container h4, .milkdown-container h5, .milkdown-container h6`
@@ -38,7 +37,6 @@ export const TocSidebar: Component<TocSidebarProps> = (props) => {
     }
 
     if (mode === "code") {
-      // In Code mode, locate line in textarea and scroll
       const textarea = document.querySelector("textarea");
       if (textarea) {
         const text = textarea.value;
@@ -49,8 +47,7 @@ export const TocSidebar: Component<TocSidebarProps> = (props) => {
           if (line.includes(entry.text)) {
             textarea.focus();
             textarea.setSelectionRange(charIndex, charIndex + line.length);
-            // Calculate approximate scroll top
-            const lineHeight = 24; // leading-6 is 24px
+            const lineHeight = 24;
             textarea.scrollTop = Math.max(0, i * lineHeight - 60);
             return;
           }
@@ -59,7 +56,6 @@ export const TocSidebar: Component<TocSidebarProps> = (props) => {
       }
     }
 
-    // Fallback: try document.getElementById
     const fallbackEl = document.getElementById(entry.id);
     if (fallbackEl) {
       fallbackEl.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -82,10 +78,10 @@ export const TocSidebar: Component<TocSidebarProps> = (props) => {
             <line x1="3" y1="12" x2="3.01" y2="12" />
             <line x1="3" y1="18" x2="3.01" y2="18" />
           </svg>
-          <span>Outline</span>
+          <span>{t("sidebar.outline")}</span>
         </div>
         <span class="text-[11px] text-[var(--color-text-secondary)] font-medium">
-          {props.toc.length} sections
+          {props.toc.length} {t("sidebar.sectionsCount")}
         </span>
       </div>
 
@@ -95,7 +91,7 @@ export const TocSidebar: Component<TocSidebarProps> = (props) => {
           when={props.toc.length > 0}
           fallback={
             <div class="px-3 py-6 text-center text-xs text-[var(--color-text-secondary)] italic">
-              No headings in current document.
+              {t("sidebar.noHeadings")}
             </div>
           }
         >

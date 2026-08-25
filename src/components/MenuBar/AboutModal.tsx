@@ -1,6 +1,7 @@
 import { Component, Show } from "solid-js";
 import { open as openUrl } from "@tauri-apps/plugin-shell";
 import { checkForUpdates } from "../../lib/updater";
+import { t } from "../../i18n";
 
 export interface AboutModalProps {
   isOpen: boolean;
@@ -48,7 +49,7 @@ export const AboutModal: Component<AboutModalProps> = (props) => {
           </div>
 
           <p class="text-xs text-[var(--color-text-secondary)] leading-relaxed px-2">
-            A minimalist Typora-style Markdown reader & in-place WYSIWYG editor built on Tauri 2, Rust, and SolidJS.
+            {t("app.description")}
           </p>
 
           {/* Action Row: Check for Updates & Links */}
@@ -60,7 +61,7 @@ export const AboutModal: Component<AboutModalProps> = (props) => {
               <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
               </svg>
-              <span>Check for Updates</span>
+              <span>{t("help.checkForUpdates")}</span>
             </button>
 
             <button
@@ -70,7 +71,7 @@ export const AboutModal: Component<AboutModalProps> = (props) => {
               <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
               </svg>
-              <span>GitHub</span>
+              <span>{t("welcome.github")}</span>
             </button>
 
             <button
@@ -81,13 +82,13 @@ export const AboutModal: Component<AboutModalProps> = (props) => {
                 <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
                 <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
               </svg>
-              <span>Documentation</span>
+              <span>{t("help.documentation")}</span>
             </button>
           </div>
 
-          {/* Tech Stack Meta */}
+          {/* Tech Stack Meta & AGPL-3.0 Notice */}
           <div class="pt-3 border-t border-[var(--color-border)] text-[11px] text-[var(--color-text-secondary)] space-y-1">
-            <p>MIT License &bull; Copyright &copy; 2026 Lexora Contributors</p>
+            <p>{t("app.licenseNotice")} &bull; {t("app.copyright")}</p>
             <p class="opacity-60 font-mono text-[10px]">Tauri 2 &bull; Rust &bull; SolidJS &bull; Milkdown &bull; pulldown-cmark</p>
           </div>
 
@@ -97,7 +98,7 @@ export const AboutModal: Component<AboutModalProps> = (props) => {
               class="w-full py-2 rounded-xl bg-[var(--color-accent)] text-white text-xs font-semibold hover:opacity-90 transition-opacity active:scale-98"
               onClick={props.onClose}
             >
-              Close
+              {t("dialogs.close")}
             </button>
           </div>
         </div>

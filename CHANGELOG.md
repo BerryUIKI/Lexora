@@ -5,6 +5,33 @@ All notable changes to Lexora will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2026-08-25
+
+### Added
+- **9-Language Internationalization (i18n) Engine**:
+  - Full native localization support for 9 languages:
+    - English (`en-US` - Primary default fallback)
+    - Simplified Chinese (`zh-CN` - 简体中文)
+    - Traditional Chinese (`zh-TW` - 繁體中文)
+    - Japanese (`ja-JP` - 日本語)
+    - Korean (`ko-KR` - 한국어)
+    - German (`de-DE` - Deutsch)
+    - French (`fr-FR` - Français)
+    - Spanish (`es-ES` - Español)
+    - Russian (`ru-RU` - Русский)
+  - Automatic system language detection on initial launch (`navigator.language`) with English fallback.
+  - Persistent user preference stored in `localStorage` under `lexora_locale_setting`.
+  - Type-safe reactive translation function `t(key, params)` providing seamless, instant UI updates without page reload.
+- **Top MenuBar Language Switcher (`Help -> Language`)**:
+  - Added dedicated `Language (语言)` submenu under the `Help` menu with native language labels and active checkmark indicators.
+  - Includes an `Auto (Follow System)` option to dynamically adapt to OS language changes.
+
+### Changed
+- **Open-Source License Migration**:
+  - Migrated repository license from MIT to **GNU Affero General Public License v3.0 (AGPL-3.0)** across `LICENSE`, `package.json`, `Cargo.toml`, `README.md`, and the About dialog.
+
+---
+
 ## [1.5.0] - 2026-08-25
 
 ### Added
