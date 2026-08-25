@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.3] - 2026-08-26
+
 ### Changed
 - macOS now uses native traffic-light window controls and overlay title-bar styling while Windows and Linux retain Lexora's custom window controls.
 - Release assets now use stable `Lexora_<OS>_<architecture>` names without embedded app versions, and README download lists have been simplified.
