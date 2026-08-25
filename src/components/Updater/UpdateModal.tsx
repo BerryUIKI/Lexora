@@ -5,6 +5,7 @@ import {
   updateInfo,
   openReleaseDownload,
 } from "../../lib/updater";
+import { t } from "../../i18n";
 
 export const UpdateModal: Component = () => {
   const info = () => updateInfo();
@@ -47,12 +48,12 @@ export const UpdateModal: Component = () => {
 
               <div>
                 <h3 class="text-base font-bold tracking-tight">
-                  {info()?.hasUpdate ? "New Version Available" : "Lexora is Up to Date"}
+                  {info()?.hasUpdate ? t("update.updateAvailable") : t("update.upToDate")}
                 </h3>
                 <p class="text-xs text-[var(--color-text-secondary)]">
                   {info()?.hasUpdate
-                    ? `A new update (${info()?.latestVersion}) is ready to download.`
-                    : `You are currently running the latest version (${info()?.currentVersion}).`}
+                    ? `v${info()?.latestVersion}`
+                    : t("update.upToDateDesc")}
                 </p>
               </div>
             </div>
@@ -71,12 +72,12 @@ export const UpdateModal: Component = () => {
           {/* Version Comparison Tag */}
           <div class="flex items-center gap-3 py-2 px-3 rounded-xl bg-[var(--color-bg-secondary)] border border-[var(--color-border)] text-xs">
             <div>
-              <span class="text-[var(--color-text-secondary)]">Current: </span>
+              <span class="text-[var(--color-text-secondary)]">{t("update.currentVersion")}: </span>
               <span class="font-mono font-semibold">v{info()?.currentVersion}</span>
             </div>
             <span class="text-[var(--color-border)]">&bull;</span>
             <div>
-              <span class="text-[var(--color-text-secondary)]">Latest: </span>
+              <span class="text-[var(--color-text-secondary)]">{t("update.latestVersion")}: </span>
               <span class="font-mono font-semibold text-[var(--color-accent)]">
                 v{info()?.latestVersion}
               </span>
@@ -87,7 +88,7 @@ export const UpdateModal: Component = () => {
           <Show when={info()?.releaseNotes}>
             <div class="space-y-1.5">
               <label class="text-[11px] font-semibold uppercase tracking-wider text-[var(--color-text-secondary)]">
-                Release Highlights
+                {t("update.releaseNotes")}
               </label>
               <div class="max-h-48 overflow-y-auto rounded-xl p-3.5 bg-[var(--color-bg-secondary)] border border-[var(--color-border)] text-xs text-[var(--color-text-primary)] font-mono leading-relaxed whitespace-pre-wrap select-text">
                 {info()?.releaseNotes}
@@ -101,7 +102,7 @@ export const UpdateModal: Component = () => {
               class="px-3.5 py-2 rounded-xl text-xs font-semibold hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
               onClick={() => setUpdateModalOpen(false)}
             >
-              {info()?.hasUpdate ? "Remind Me Later" : "Close"}
+              {info()?.hasUpdate ? t("update.remindLater") : t("dialogs.close")}
             </button>
 
             <Show when={info()?.hasUpdate}>
@@ -119,7 +120,7 @@ export const UpdateModal: Component = () => {
                   <polyline points="7 10 12 15 17 10" />
                   <line x1="12" y1="15" x2="12" y2="3" />
                 </svg>
-                <span>Download Update</span>
+                <span>{t("update.downloadUpdate")}</span>
               </button>
             </Show>
           </div>

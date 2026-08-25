@@ -1,6 +1,7 @@
 import { Component, Show, createMemo } from "solid-js";
 import { currentDocument, displayMode, setDisplayMode } from "../../store/editor";
 import { theme, cycleTheme } from "../../store/settings";
+import { t } from "../../i18n";
 
 export interface StatusBarProps {
   sidebarOpen: boolean;
@@ -17,10 +18,10 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
   const lineEnding = createMemo(() => (doc().content.includes("\r\n") ? "CRLF" : "LF"));
 
   const themeLabel = () => {
-    const t = theme();
-    if (t === "light") return "Light";
-    if (t === "dark") return "Dark";
-    return "System";
+    const th = theme();
+    if (th === "light") return t("view.lightTheme");
+    if (th === "dark") return t("view.darkTheme");
+    return t("view.systemTheme");
   };
 
   return (
@@ -38,7 +39,7 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
         <button
           class="p-1 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
           onClick={props.onToggleSidebar}
-          title={props.sidebarOpen ? "Hide sidebar (Ctrl+Shift+B)" : "Show sidebar (Ctrl+Shift+B)"}
+          title={`${t("view.toggleSidebar")} (Ctrl+Shift+B)`}
         >
           <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="3" width="18" height="18" rx="2" />
@@ -50,7 +51,7 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
         <button
           class="p-1 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
           onClick={props.onOpenFile}
-          title="Open file (Ctrl+O)"
+          title={`${t("file.openFile")} (Ctrl+O)`}
         >
           <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
@@ -61,7 +62,7 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
         <button
           class="p-1 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
           onClick={props.onSaveFile}
-          title="Save file (Ctrl+S)"
+          title={`${t("file.save")} (Ctrl+S)`}
         >
           <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
@@ -115,7 +116,7 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
       <div class="flex items-center gap-2">
         {/* Document Stats */}
         <Show when={hasDoc()}>
-          <span>{doc().wordCount.toLocaleString()} words</span>
+          <span>{doc().wordCount.toLocaleString()} {t("statusBar.wordsCount")}</span>
           <span class="text-[var(--color-border)]">|</span>
           <span>{charCount().toLocaleString()} chars</span>
           <span class="text-[var(--color-border)]">|</span>
@@ -143,13 +144,13 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
               "box-shadow": displayMode() === "reading" ? "0 1px 2px rgba(0,0,0,0.06)" : "none",
             }}
             onClick={() => setDisplayMode("reading")}
-            title="Reading Mode (Preview Markdown)"
+            title={`${t("view.readingMode")} (Preview)`}
           >
             <svg class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
               <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
             </svg>
-            <span>Reading</span>
+            <span>{t("statusBar.reading")}</span>
           </button>
 
           <button
@@ -160,13 +161,13 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
               "box-shadow": displayMode() === "writing" ? "0 1px 2px rgba(0,0,0,0.06)" : "none",
             }}
             onClick={() => setDisplayMode("writing")}
-            title="Writing Mode (Typora-style WYSIWYG)"
+            title={`${t("view.writingMode")} (Typora-style WYSIWYG)`}
           >
             <svg class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 20h9" />
               <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
             </svg>
-            <span>Writing</span>
+            <span>{t("statusBar.writing")}</span>
           </button>
 
           <button
@@ -177,24 +178,24 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
               "box-shadow": displayMode() === "code" ? "0 1px 2px rgba(0,0,0,0.06)" : "none",
             }}
             onClick={() => setDisplayMode("code")}
-            title="Code Mode (Markdown Source)"
+            title={`${t("view.codeMode")} (Markdown Source)`}
           >
             <svg class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="7 8 3 12 7 16" />
               <line x1="14" y1="4" x2="10" y2="20" />
               <polyline points="17 8 21 12 17 16" />
             </svg>
-            <span>Code</span>
+            <span>{t("statusBar.code")}</span>
           </button>
         </div>
 
         <span class="text-[var(--color-border)]">|</span>
 
-        {/* Theme toggle (Monochrome SVG) */}
+        {/* Theme toggle */}
         <button
           class="flex items-center gap-1.5 px-1.5 py-0.5 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
           onClick={cycleTheme}
-          title={`Theme: ${themeLabel()} (click to cycle)`}
+          title={`${t("statusBar.toggleTheme")}: ${themeLabel()}`}
         >
           <Show when={theme() === "light"}>
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

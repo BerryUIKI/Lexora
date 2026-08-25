@@ -8,7 +8,7 @@ import {
 } from "../../store/editor";
 import { theme, setTheme, zenMode, setZenMode, focusMode, setFocusMode } from "../../store/settings";
 import { recentFiles, openTabs, closeTab, activeTabId } from "../../store/files";
-import { dispatchFormat, type FormatAction } from "../../lib/formatter";
+import { dispatchFormat } from "../../lib/formatter";
 import { checkForUpdates } from "../../lib/updater";
 import {
   minimizeWindow,
@@ -17,6 +17,7 @@ import {
   isWindowMaximized,
   startDrag,
 } from "../../lib/tauri/commands";
+import { t, SUPPORTED_LOCALES, localeSetting, setLocale } from "../../i18n";
 import { AboutModal } from "./AboutModal";
 
 export interface MenuBarProps {
@@ -38,11 +39,15 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
   const [activeMenu, setActiveMenu] = createSignal<MenuId>(null);
   const [aboutOpen, setAboutOpen] = createSignal(false);
   const [isMaximized, setIsMaximized] = createSignal(false);
+  const [langMenuOpen, setLangMenuOpen] = createSignal(false);
 
   const doc = () => currentDocument();
   const hasDoc = () => doc().path !== null || doc().content.length > 0;
 
-  const closeMenus = () => setActiveMenu(null);
+  const closeMenus = () => {
+    setActiveMenu(null);
+    setLangMenuOpen(false);
+  };
 
   const toggleMenu = (menu: MenuId) => {
     setActiveMenu((prev) => (prev === menu ? null : menu));
@@ -74,7 +79,6 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
       const max = await isWindowMaximized();
       setIsMaximized(max);
     } catch {
-      // Fallback in web/test environment
       setIsMaximized(false);
     }
   };
@@ -132,7 +136,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
     }
   };
 
-  const handleStartDrag = async (e: MouseEvent) => {
+  const handleStartDrag = (e: MouseEvent) => {
     // Only drag on primary left click (button 0)
     if (e.button !== 0) return;
     // Don't drag if clicking buttons, menu dropdowns, links, or inputs
@@ -140,11 +144,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
     if (target.closest("button, [role='button'], input, textarea, a, select, .no-drag, .menu-dropdown")) {
       return;
     }
-    try {
-      await startDrag();
-    } catch (err) {
-      console.warn("startDrag error:", err);
-    }
+    startDrag().catch((err) => console.warn("startDrag error:", err));
   };
 
   return (
@@ -166,7 +166,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
               closeMenus();
               setAboutOpen(true);
             }}
-            title="About Lexora"
+            title={t("help.about")}
           >
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
@@ -186,7 +186,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
               onClick={() => toggleMenu("file")}
               onMouseEnter={() => handleMouseEnter("file")}
             >
-              File
+              {t("menu.file")}
             </button>
 
             <Show when={activeMenu() === "file"}>
@@ -195,7 +195,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => { closeMenus(); props.onNewDocument(); }}
                 >
-                  <span>New Document</span>
+                  <span>{t("file.newDocument")}</span>
                   <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+N</kbd>
                 </button>
 
@@ -203,7 +203,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => { closeMenus(); props.onOpenFile(); }}
                 >
-                  <span>Open File...</span>
+                  <span>{t("file.openFile")}</span>
                   <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+O</kbd>
                 </button>
 
@@ -211,13 +211,13 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => { closeMenus(); props.onOpenFolder(); }}
                 >
-                  <span>Open Workspace Folder...</span>
+                  <span>{t("file.openFolder")}</span>
                 </button>
 
                 <Show when={recentFiles().length > 0}>
                   <div class="my-1 border-t border-[var(--color-border)]" />
                   <div class="px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-text-secondary)]">
-                    Recent Files
+                    {t("welcome.recentFiles")}
                   </div>
                   <For each={recentFiles().slice(0, 5)}>
                     {(file) => (
@@ -238,7 +238,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => { closeMenus(); props.onSaveFile(); }}
                 >
-                  <span>Save</span>
+                  <span>{t("file.save")}</span>
                   <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+S</kbd>
                 </button>
 
@@ -246,7 +246,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => { closeMenus(); props.onExport(); }}
                 >
-                  <span>Export as HTML...</span>
+                  <span>{t("file.exportHtml")}</span>
                   <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+E</kbd>
                 </button>
 
@@ -257,7 +257,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   disabled={openTabs().length === 0}
                   onClick={handleCloseActiveTab}
                 >
-                  <span>Close Tab</span>
+                  <span>{t("file.closeTab")}</span>
                   <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+W</kbd>
                 </button>
               </div>
@@ -275,7 +275,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
               onClick={() => toggleMenu("edit")}
               onMouseEnter={() => handleMouseEnter("edit")}
             >
-              Edit
+              {t("menu.edit")}
             </button>
 
             <Show when={activeMenu() === "edit"}>
@@ -284,37 +284,25 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => { closeMenus(); props.onOpenFindReplace(); }}
                 >
-                  <span>Find in Document</span>
+                  <span>{t("edit.findReplace")}</span>
                   <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+F</kbd>
-                </button>
-
-                <button
-                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
-                  onClick={() => { closeMenus(); props.onOpenFindReplace(); }}
-                >
-                  <span>Replace in Document</span>
-                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+H</kbd>
                 </button>
 
                 <button
                   class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => { closeMenus(); props.onOpenSearchModal(); }}
                 >
-                  <span>Search in Workspace</span>
+                  <span>{t("sidebar.searchFiles")}</span>
                   <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+Shift+F</kbd>
                 </button>
 
                 <div class="my-1 border-t border-[var(--color-border)]" />
 
-                <div class="px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-text-secondary)]">
-                  Typography & Formatting
-                </div>
-
                 <button
                   class="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => { closeMenus(); dispatchFormat("bold"); }}
                 >
-                  <span class="font-bold">Bold</span>
+                  <span class="font-bold">{t("edit.bold")}</span>
                   <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+B</kbd>
                 </button>
 
@@ -322,7 +310,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   class="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => { closeMenus(); dispatchFormat("italic"); }}
                 >
-                  <span class="italic font-serif">Italic</span>
+                  <span class="italic font-serif">{t("edit.italic")}</span>
                   <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+I</kbd>
                 </button>
 
@@ -330,7 +318,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   class="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => { closeMenus(); dispatchFormat("strikethrough"); }}
                 >
-                  <span class="line-through">Strikethrough</span>
+                  <span class="line-through">{t("edit.strikethrough")}</span>
                   <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+Shift+X</kbd>
                 </button>
 
@@ -338,7 +326,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   class="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => { closeMenus(); dispatchFormat("code_inline"); }}
                 >
-                  <span class="font-mono text-[11px]">Inline Code</span>
+                  <span class="font-mono text-[11px]">{t("edit.codeBlock")}</span>
                   <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+`</kbd>
                 </button>
 
@@ -346,7 +334,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   class="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => { closeMenus(); dispatchFormat("paragraph"); }}
                 >
-                  <span>Paragraph / Normal Text</span>
+                  <span>{t("edit.paragraph")}</span>
                   <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+0</kbd>
                 </button>
 
@@ -354,7 +342,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   class="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => { closeMenus(); dispatchFormat("h1"); }}
                 >
-                  <span class="font-semibold">Heading 1</span>
+                  <span class="font-semibold">{t("edit.heading1")}</span>
                   <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+1</kbd>
                 </button>
 
@@ -362,7 +350,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   class="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => { closeMenus(); dispatchFormat("h2"); }}
                 >
-                  <span class="font-semibold">Heading 2</span>
+                  <span class="font-semibold">{t("edit.heading2")}</span>
                   <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+2</kbd>
                 </button>
 
@@ -370,14 +358,14 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   class="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => { closeMenus(); dispatchFormat("table"); }}
                 >
-                  <span>Insert Table</span>
+                  <span>{t("edit.table")}</span>
                 </button>
 
                 <button
                   class="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => { closeMenus(); dispatchFormat("link"); }}
                 >
-                  <span>Insert Link</span>
+                  <span>{t("edit.link")}</span>
                   <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+K</kbd>
                 </button>
               </div>
@@ -395,7 +383,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
               onClick={() => toggleMenu("view")}
               onMouseEnter={() => handleMouseEnter("view")}
             >
-              View
+              {t("menu.view")}
             </button>
 
             <Show when={activeMenu() === "view"}>
@@ -405,7 +393,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   onClick={() => { closeMenus(); setDisplayMode("reading"); }}
                 >
                   <span class={displayMode() === "reading" ? "font-semibold text-[var(--color-accent)]" : ""}>
-                    {displayMode() === "reading" ? "✓ Reading Mode" : "  Reading Mode"}
+                    {displayMode() === "reading" ? `✓ ${t("view.readingMode")}` : `  ${t("view.readingMode")}`}
                   </span>
                 </button>
 
@@ -414,7 +402,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   onClick={() => { closeMenus(); setDisplayMode("writing"); }}
                 >
                   <span class={displayMode() === "writing" ? "font-semibold text-[var(--color-accent)]" : ""}>
-                    {displayMode() === "writing" ? "✓ Writing Mode" : "  Writing Mode"}
+                    {displayMode() === "writing" ? `✓ ${t("view.writingMode")}` : `  ${t("view.writingMode")}`}
                   </span>
                 </button>
 
@@ -423,16 +411,8 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   onClick={() => { closeMenus(); setDisplayMode("code"); }}
                 >
                   <span class={displayMode() === "code" ? "font-semibold text-[var(--color-accent)]" : ""}>
-                    {displayMode() === "code" ? "✓ Code Mode" : "  Code Mode"}
+                    {displayMode() === "code" ? `✓ ${t("view.codeMode")}` : `  ${t("view.codeMode")}`}
                   </span>
-                </button>
-
-                <button
-                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
-                  onClick={() => { closeMenus(); cycleDisplayMode(); }}
-                >
-                  <span>Cycle Display Mode</span>
-                  <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+/</kbd>
                 </button>
 
                 <div class="my-1 border-t border-[var(--color-border)]" />
@@ -441,7 +421,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => { closeMenus(); props.onToggleSidebar(); }}
                 >
-                  <span>Toggle Outline Sidebar</span>
+                  <span>{t("view.toggleOutline")}</span>
                   <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+Shift+B</kbd>
                 </button>
 
@@ -464,7 +444,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                 <div class="my-1 border-t border-[var(--color-border)]" />
 
                 <div class="px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-text-secondary)]">
-                  Theme
+                  {t("statusBar.toggleTheme")}
                 </div>
 
                 <button
@@ -472,7 +452,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   onClick={() => { closeMenus(); setTheme("light"); }}
                 >
                   <span class={theme() === "light" ? "font-semibold text-[var(--color-accent)]" : ""}>
-                    {theme() === "light" ? "✓ Light" : "  Light"}
+                    {theme() === "light" ? `✓ ${t("view.lightTheme")}` : `  ${t("view.lightTheme")}`}
                   </span>
                 </button>
 
@@ -481,7 +461,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   onClick={() => { closeMenus(); setTheme("dark"); }}
                 >
                   <span class={theme() === "dark" ? "font-semibold text-[var(--color-accent)]" : ""}>
-                    {theme() === "dark" ? "✓ Dark" : "  Dark"}
+                    {theme() === "dark" ? `✓ ${t("view.darkTheme")}` : `  ${t("view.darkTheme")}`}
                   </span>
                 </button>
 
@@ -490,7 +470,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   onClick={() => { closeMenus(); setTheme("system"); }}
                 >
                   <span class={theme() === "system" ? "font-semibold text-[var(--color-accent)]" : ""}>
-                    {theme() === "system" ? "✓ System Default" : "  System Default"}
+                    {theme() === "system" ? `✓ ${t("view.systemTheme")}` : `  ${t("view.systemTheme")}`}
                   </span>
                 </button>
               </div>
@@ -508,7 +488,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
               onClick={() => toggleMenu("window")}
               onMouseEnter={() => handleMouseEnter("window")}
             >
-              Window
+              {t("menu.window")}
             </button>
 
             <Show when={activeMenu() === "window"}>
@@ -517,7 +497,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => { closeMenus(); props.onOpenQuickSwitcher(); }}
                 >
-                  <span>Quick File Switcher</span>
+                  <span>{t("view.quickSwitcher")}</span>
                   <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+P</kbd>
                 </button>
 
@@ -525,7 +505,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => { closeMenus(); props.onToggleSidebar(); }}
                 >
-                  <span>Toggle Sidebar</span>
+                  <span>{t("view.toggleSidebar")}</span>
                 </button>
               </div>
             </Show>
@@ -542,11 +522,11 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
               onClick={() => toggleMenu("help")}
               onMouseEnter={() => handleMouseEnter("help")}
             >
-              Help
+              {t("menu.help")}
             </button>
 
             <Show when={activeMenu() === "help"}>
-              <div class="absolute left-0 top-full mt-1 w-56 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-1 shadow-xl text-[var(--color-text-primary)] text-xs z-50 animate-in fade-in zoom-in-95 duration-100">
+              <div class="absolute left-0 top-full mt-1 w-64 max-h-[80vh] overflow-y-auto rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-1 shadow-xl text-[var(--color-text-primary)] text-xs z-50 animate-in fade-in zoom-in-95 duration-100">
                 <button
                   class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left font-medium"
                   onClick={() => handleOpenLink("https://github.com/BerryUIKI/Lexora")}
@@ -555,7 +535,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                     <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
                     </svg>
-                    <span>GitHub Repository</span>
+                    <span>{t("help.github")}</span>
                   </span>
                   <svg class="w-3 h-3 text-[var(--color-text-secondary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
                 </button>
@@ -564,7 +544,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => handleOpenLink("https://github.com/BerryUIKI/Lexora#readme")}
                 >
-                  <span>Documentation</span>
+                  <span>{t("help.documentation")}</span>
                 </button>
 
                 <button
@@ -572,10 +552,10 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   onClick={() => { closeMenus(); checkForUpdates(true); }}
                 >
                   <span class="flex items-center gap-1.5">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-3.5 h-3.5 text-[var(--color-accent)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
                     </svg>
-                    <span>Check for Updates...</span>
+                    <span>{t("help.checkForUpdates")}</span>
                   </span>
                 </button>
 
@@ -583,8 +563,53 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => handleOpenLink("https://github.com/BerryUIKI/Lexora/issues")}
                 >
-                  <span>Report an Issue</span>
+                  <span>{t("help.reportIssue")}</span>
                 </button>
+
+                <div class="my-1 border-t border-[var(--color-border)]" />
+
+                {/* Language Switcher Submenu under Help */}
+                <div class="py-1">
+                  <div
+                    class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left cursor-pointer font-medium"
+                    onClick={() => setLangMenuOpen((prev) => !prev)}
+                  >
+                    <span class="flex items-center gap-1.5">
+                      <svg class="w-3.5 h-3.5 text-[var(--color-accent)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="2" y1="12" x2="22" y2="12" />
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                      </svg>
+                      <span>{t("menu.language")}</span>
+                    </span>
+                    <span class="text-[10px] text-[var(--color-text-secondary)] font-mono">{langMenuOpen() ? "▼" : "▶"}</span>
+                  </div>
+
+                  <Show when={langMenuOpen()}>
+                    <div class="my-1 pl-2 border-l-2 border-[var(--color-accent)]/40 space-y-0.5 animate-in fade-in duration-100">
+                      <button
+                        class="w-full flex items-center justify-between px-2 py-1 rounded hover:bg-[var(--color-hover)] text-xs text-left"
+                        onClick={() => { setLocale("auto"); closeMenus(); }}
+                      >
+                        <span class={localeSetting() === "auto" ? "font-bold text-[var(--color-accent)]" : ""}>
+                          {localeSetting() === "auto" ? "✓ " : "  "}{t("menu.autoLanguage")}
+                        </span>
+                      </button>
+                      <For each={SUPPORTED_LOCALES}>
+                        {(loc) => (
+                          <button
+                            class="w-full flex items-center justify-between px-2 py-1 rounded hover:bg-[var(--color-hover)] text-xs text-left"
+                            onClick={() => { setLocale(loc.code); closeMenus(); }}
+                          >
+                            <span class={localeSetting() === loc.code ? "font-bold text-[var(--color-accent)]" : ""}>
+                              {localeSetting() === loc.code ? "✓ " : "  "}{loc.nativeName} ({loc.name})
+                            </span>
+                          </button>
+                        )}
+                      </For>
+                    </div>
+                  </Show>
+                </div>
 
                 <div class="my-1 border-t border-[var(--color-border)]" />
 
@@ -592,7 +617,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => { closeMenus(); setAboutOpen(true); }}
                 >
-                  <span>About Lexora</span>
+                  <span>{t("help.about")}</span>
                 </button>
               </div>
             </Show>
@@ -628,7 +653,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
           <button
             class="p-1.5 mr-0.5 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
             onClick={props.onOpenQuickSwitcher}
-            title="Quick File Switcher (Ctrl+P)"
+            title={`${t("view.quickSwitcher")} (Ctrl+P)`}
           >
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="8" />
@@ -653,7 +678,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
             <button
               class="w-11 h-full flex items-center justify-center hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
               onClick={handleMinimize}
-              title="Minimize"
+              title={t("window.minimize")}
               data-tauri-drag-region="false"
             >
               <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -665,7 +690,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
             <button
               class="w-11 h-full flex items-center justify-center hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
               onClick={handleToggleMaximize}
-              title={isMaximized() ? "Restore" : "Maximize"}
+              title={isMaximized() ? t("window.restore") : t("window.maximize")}
               data-tauri-drag-region="false"
             >
               <Show
@@ -687,7 +712,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
             <button
               class="w-11 h-full flex items-center justify-center hover:bg-[#e81123] text-[var(--color-text-secondary)] hover:text-white transition-colors"
               onClick={handleClose}
-              title="Close"
+              title={t("window.close")}
               data-tauri-drag-region="false"
             >
               <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
