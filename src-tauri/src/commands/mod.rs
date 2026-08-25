@@ -1,6 +1,7 @@
 pub mod file;
 pub mod markdown;
 pub mod search;
+pub mod window;
 
 /// A simple greet command to verify IPC round-trip.
 #[tauri::command]

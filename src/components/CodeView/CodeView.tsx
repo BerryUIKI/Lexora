@@ -9,11 +9,21 @@ export interface CodeViewProps {
 export const CodeView: Component<CodeViewProps> = (props) => {
   let textareaRef!: HTMLTextAreaElement;
   let lineGutterRef!: HTMLDivElement;
+  let isComposing = false;
 
   const content = () => currentDocument().content;
   const lines = createMemo(() => content().split("\n"));
 
   const handleInput = (e: InputEvent & { currentTarget: HTMLTextAreaElement }) => {
+    updateDocumentContent(e.currentTarget.value);
+  };
+
+  const handleCompositionStart = () => {
+    isComposing = true;
+  };
+
+  const handleCompositionEnd = (e: CompositionEvent & { currentTarget: HTMLTextAreaElement }) => {
+    isComposing = false;
     updateDocumentContent(e.currentTarget.value);
   };
 
@@ -135,6 +145,8 @@ export const CodeView: Component<CodeViewProps> = (props) => {
   });
 
   const handleKeyDown = (e: KeyboardEvent) => {
+    if (isComposing) return;
+
     const isCmd = e.ctrlKey || e.metaKey;
 
     if (isCmd && e.key === "s") {
@@ -180,21 +192,36 @@ export const CodeView: Component<CodeViewProps> = (props) => {
         aria-hidden="true"
       >
         {lines().map((_, i) => (
-          <div class="leading-6">{i + 1}</div>
+          <div style={{ height: "24px", "line-height": "24px" }}>{i + 1}</div>
         ))}
       </div>
 
-      {/* Code Textarea Area */}
+      {/* Code Textarea Area with Windows IME Caret Alignment */}
       <div class="flex-1 relative h-full overflow-hidden">
         <textarea
           ref={textareaRef}
-          class="w-full h-full p-6 outline-none resize-none bg-transparent leading-6 font-mono text-sm focus:ring-0 border-0 overflow-y-auto"
+          class="w-full h-full p-6 outline-none resize-none bg-transparent font-mono text-sm border-0 overflow-y-auto block select-text focus:ring-0"
+          style={{
+            "box-sizing": "border-box",
+            "line-height": "24px",
+            "font-size": "14px",
+            "font-family": "Consolas, 'Cascadia Code', 'Fira Code', Menlo, Monaco, 'Courier New', monospace",
+            "white-space": "pre-wrap",
+            "word-break": "break-word",
+            "tab-size": "2",
+            "caret-color": "var(--color-accent)",
+          }}
           value={content()}
           onInput={handleInput}
+          onCompositionStart={handleCompositionStart}
+          onCompositionEnd={handleCompositionEnd}
           onScroll={handleScroll}
           onKeyDown={handleKeyDown}
           placeholder="Type raw Markdown here..."
           spellcheck={false}
+          autocapitalize="off"
+          autocomplete="off"
+          autocorrect="off"
         />
       </div>
     </div>
