@@ -13,6 +13,8 @@ import { Editor } from "./components/Editor/Editor";
 import { CodeView } from "./components/CodeView/CodeView";
 import { StatusBar } from "./components/StatusBar/StatusBar";
 import { WelcomeHub } from "./components/Home/WelcomeHub";
+import { UpdateModal } from "./components/Updater/UpdateModal";
+import { checkWeeklyUpdate } from "./lib/updater";
 import {
   currentDocument,
   setCurrentDocument,
@@ -208,7 +210,7 @@ const App: Component = () => {
     }
   };
 
-  // Check for CLI startup file arguments (Windows file association opening)
+  // Check for CLI startup file arguments (Windows file association opening) & Weekly Update
   onMount(async () => {
     try {
       const cliArgs = await getCliArgs();
@@ -218,6 +220,9 @@ const App: Component = () => {
     } catch (e) {
       console.warn("CLI args check error:", e);
     }
+
+    // Weekly background update check
+    checkWeeklyUpdate();
   });
 
   // Set up auto-save interval (every 30 seconds for dirty files with path)
@@ -557,6 +562,9 @@ const App: Component = () => {
         onOpenFile={handleOpenFile}
         onSaveFile={handleSaveFile}
       />
+
+      {/* GitHub Releases Update Modal */}
+      <UpdateModal />
     </div>
   );
 };

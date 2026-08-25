@@ -6,9 +6,16 @@ import {
   setDisplayMode,
   cycleDisplayMode,
 } from "../../store/editor";
-import { theme, setTheme, cycleTheme, zenMode, setZenMode, focusMode, setFocusMode } from "../../store/settings";
+import { theme, setTheme, zenMode, setZenMode, focusMode, setFocusMode } from "../../store/settings";
 import { recentFiles, openTabs, closeTab, activeTabId } from "../../store/files";
 import { dispatchFormat, type FormatAction } from "../../lib/formatter";
+import { checkForUpdates } from "../../lib/updater";
+import {
+  minimizeWindow,
+  toggleMaximizeWindow,
+  closeWindow,
+  isWindowMaximized,
+} from "../../lib/tauri/commands";
 import { AboutModal } from "./AboutModal";
 
 export interface MenuBarProps {
@@ -29,6 +36,7 @@ export type MenuId = "file" | "edit" | "view" | "window" | "help" | null;
 export const MenuBar: Component<MenuBarProps> = (props) => {
   const [activeMenu, setActiveMenu] = createSignal<MenuId>(null);
   const [aboutOpen, setAboutOpen] = createSignal(false);
+  const [isMaximized, setIsMaximized] = createSignal(false);
 
   const doc = () => currentDocument();
   const hasDoc = () => doc().path !== null || doc().content.length > 0;
@@ -59,14 +67,28 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
     }
   };
 
+  // Check window maximized state periodically and on resize
+  const updateMaximizedStatus = async () => {
+    try {
+      const max = await isWindowMaximized();
+      setIsMaximized(max);
+    } catch {
+      // Fallback in web/test environment
+      setIsMaximized(false);
+    }
+  };
+
   onMount(() => {
     window.addEventListener("click", handleGlobalClick);
     window.addEventListener("keydown", handleGlobalKeyDown);
+    window.addEventListener("resize", updateMaximizedStatus);
+    updateMaximizedStatus();
   });
 
   onCleanup(() => {
     window.removeEventListener("click", handleGlobalClick);
     window.removeEventListener("keydown", handleGlobalKeyDown);
+    window.removeEventListener("resize", updateMaximizedStatus);
   });
 
   const handleOpenLink = async (url: string) => {
@@ -84,14 +106,41 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
     if (id) closeTab(id);
   };
 
+  const handleMinimize = async () => {
+    try {
+      await minimizeWindow();
+    } catch (e) {
+      console.warn("Minimize error:", e);
+    }
+  };
+
+  const handleToggleMaximize = async () => {
+    try {
+      await toggleMaximizeWindow();
+      await updateMaximizedStatus();
+    } catch (e) {
+      console.warn("Maximize toggle error:", e);
+    }
+  };
+
+  const handleClose = async () => {
+    try {
+      await closeWindow();
+    } catch (e) {
+      console.warn("Close window error:", e);
+    }
+  };
+
   return (
     <>
       <header
-        class="h-8 flex items-center justify-between px-2 text-xs no-select select-none border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)] flex-shrink-0 z-40 relative menu-bar-container"
+        data-tauri-drag-region
+        class="h-8 flex items-center justify-between pl-1.5 pr-0 text-xs no-select select-none border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)] flex-shrink-0 z-40 relative menu-bar-container cursor-default"
         style={{ color: "var(--color-text-secondary)" }}
+        onDblClick={handleToggleMaximize}
       >
-        {/* Left: App Logo & Top-Level Menus */}
-        <div class="flex items-center gap-1">
+        {/* Left: App Logo & Top-Level Menus (No drag on buttons) */}
+        <div class="flex items-center gap-0.5 pointer-events-auto" data-tauri-drag-region="false">
           {/* App Icon Mark */}
           <div
             class="flex items-center gap-1.5 px-2 py-1 text-[var(--color-accent)] font-semibold cursor-pointer hover:opacity-80 transition-opacity"
@@ -108,7 +157,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
           {/* Menu: File */}
           <div class="relative">
             <button
-              class={`px-2.5 py-1 rounded text-xs transition-colors ${
+              class={`px-2 py-1 rounded text-xs transition-colors ${
                 activeMenu() === "file"
                   ? "bg-[var(--color-hover)] text-[var(--color-text-primary)]"
                   : "hover:bg-[var(--color-hover)] hover:text-[var(--color-text-primary)]"
@@ -197,7 +246,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
           {/* Menu: Edit */}
           <div class="relative">
             <button
-              class={`px-2.5 py-1 rounded text-xs transition-colors ${
+              class={`px-2 py-1 rounded text-xs transition-colors ${
                 activeMenu() === "edit"
                   ? "bg-[var(--color-hover)] text-[var(--color-text-primary)]"
                   : "hover:bg-[var(--color-hover)] hover:text-[var(--color-text-primary)]"
@@ -317,7 +366,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
           {/* Menu: View */}
           <div class="relative">
             <button
-              class={`px-2.5 py-1 rounded text-xs transition-colors ${
+              class={`px-2 py-1 rounded text-xs transition-colors ${
                 activeMenu() === "view"
                   ? "bg-[var(--color-hover)] text-[var(--color-text-primary)]"
                   : "hover:bg-[var(--color-hover)] hover:text-[var(--color-text-primary)]"
@@ -430,7 +479,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
           {/* Menu: Window */}
           <div class="relative">
             <button
-              class={`px-2.5 py-1 rounded text-xs transition-colors ${
+              class={`px-2 py-1 rounded text-xs transition-colors ${
                 activeMenu() === "window"
                   ? "bg-[var(--color-hover)] text-[var(--color-text-primary)]"
                   : "hover:bg-[var(--color-hover)] hover:text-[var(--color-text-primary)]"
@@ -464,7 +513,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
           {/* Menu: Help */}
           <div class="relative">
             <button
-              class={`px-2.5 py-1 rounded text-xs transition-colors ${
+              class={`px-2 py-1 rounded text-xs transition-colors ${
                 activeMenu() === "help"
                   ? "bg-[var(--color-hover)] text-[var(--color-text-primary)]"
                   : "hover:bg-[var(--color-hover)] hover:text-[var(--color-text-primary)]"
@@ -499,6 +548,18 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
 
                 <button
                   class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); checkForUpdates(true); }}
+                >
+                  <span class="flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+                    </svg>
+                    <span>Check for Updates...</span>
+                  </span>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => handleOpenLink("https://github.com/BerryUIKI/Lexora/issues")}
                 >
                   <span>Report an Issue</span>
@@ -517,28 +578,33 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
           </div>
         </div>
 
-        {/* Center: Document Title Breadcrumb */}
-        <div class="hidden sm:flex items-center gap-1.5 text-xs text-[var(--color-text-secondary)] font-medium max-w-sm truncate">
-          <Show
-            when={hasDoc()}
-            fallback={<span class="opacity-60 font-normal">Lexora — Typora-style Markdown Editor</span>}
-          >
-            <span class="text-[var(--color-text-primary)] font-semibold truncate">
-              {doc().filename}
-            </span>
-            <Show when={doc().isDirty}>
-              <span class="text-[10px] text-[var(--color-accent)] font-bold">●</span>
+        {/* Center: Draggable Region with Document Title Breadcrumb */}
+        <div
+          data-tauri-drag-region
+          class="flex-1 flex items-center justify-center h-full px-4 text-xs text-[var(--color-text-secondary)] font-medium truncate cursor-default"
+        >
+          <div class="flex items-center gap-1.5 truncate pointer-events-none" data-tauri-drag-region>
+            <Show
+              when={hasDoc()}
+              fallback={<span class="opacity-60 font-normal">Lexora</span>}
+            >
+              <span class="text-[var(--color-text-primary)] font-semibold truncate">
+                {doc().filename}
+              </span>
+              <Show when={doc().isDirty}>
+                <span class="text-[10px] text-[var(--color-accent)] font-bold">●</span>
+              </Show>
+              <span class="opacity-40 text-[10px]">&bull;</span>
+              <span class="text-[11px] capitalize opacity-80">{displayMode()}</span>
             </Show>
-            <span class="opacity-40 text-[10px]">&bull;</span>
-            <span class="text-[11px] capitalize opacity-80">{displayMode()}</span>
-          </Show>
+          </div>
         </div>
 
-        {/* Right: Quick Action Icons (GitHub, Search, Theme) */}
-        <div class="flex items-center gap-1">
+        {/* Right: Quick Action Icons + Window Control Buttons (Non-draggable) */}
+        <div class="flex items-center h-full pointer-events-auto flex-shrink-0" data-tauri-drag-region="false">
           {/* Quick Search Palette */}
           <button
-            class="p-1 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+            class="p-1.5 mr-0.5 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
             onClick={props.onOpenQuickSwitcher}
             title="Quick File Switcher (Ctrl+P)"
           >
@@ -550,7 +616,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
 
           {/* GitHub Repository Link Button */}
           <button
-            class="p-1 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+            class="p-1.5 mr-1.5 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
             onClick={() => handleOpenLink("https://github.com/BerryUIKI/Lexora")}
             title="Open GitHub Repository (BerryUIKI/Lexora)"
           >
@@ -558,6 +624,56 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
               <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
             </svg>
           </button>
+
+          {/* Window Control Buttons (Minimize / Maximize / Close) */}
+          <div class="flex items-center h-full">
+            {/* Minimize */}
+            <button
+              class="w-11 h-full flex items-center justify-center hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+              onClick={handleMinimize}
+              title="Minimize"
+              data-tauri-drag-region="false"
+            >
+              <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <line x1="2" y1="8" x2="14" y2="8" />
+              </svg>
+            </button>
+
+            {/* Maximize / Restore */}
+            <button
+              class="w-11 h-full flex items-center justify-center hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+              onClick={handleToggleMaximize}
+              title={isMaximized() ? "Restore" : "Maximize"}
+              data-tauri-drag-region="false"
+            >
+              <Show
+                when={isMaximized()}
+                fallback={
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="2.5" y="2.5" width="11" height="11" rx="0.5" />
+                  </svg>
+                }
+              >
+                <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M5 3.5h7.5v7.5" />
+                  <rect x="3.5" y="5" width="7.5" height="7.5" rx="0.5" />
+                </svg>
+              </Show>
+            </button>
+
+            {/* Close */}
+            <button
+              class="w-11 h-full flex items-center justify-center hover:bg-[#e81123] text-[var(--color-text-secondary)] hover:text-white transition-colors"
+              onClick={handleClose}
+              title="Close"
+              data-tauri-drag-region="false"
+            >
+              <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <line x1="3.5" y1="3.5" x2="12.5" y2="12.5" />
+                <line x1="12.5" y1="3.5" x2="3.5" y2="12.5" />
+              </svg>
+            </button>
+          </div>
         </div>
       </header>
 
