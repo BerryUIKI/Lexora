@@ -16,13 +16,6 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
   const charCount = createMemo(() => doc().content.length);
   const lineEnding = createMemo(() => (doc().content.includes("\r\n") ? "CRLF" : "LF"));
 
-  const themeIcon = () => {
-    const t = theme();
-    if (t === "light") return "☀";
-    if (t === "dark") return "☽";
-    return "◑";
-  };
-
   const themeLabel = () => {
     const t = theme();
     if (t === "light") return "Light";
@@ -32,7 +25,7 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
 
   return (
     <footer
-      class="h-7 flex items-center px-2 text-xs no-select flex-shrink-0 select-none"
+      class="h-7 flex items-center px-2.5 text-xs no-select flex-shrink-0 select-none"
       style={{
         background: "var(--color-statusbar-bg)",
         color: "var(--color-text-secondary)",
@@ -40,41 +33,50 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
       }}
     >
       {/* Left section */}
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-1.5">
         {/* Sidebar toggle */}
         <button
-          class="px-1 hover:opacity-80 transition-opacity"
+          class="p-1 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
           onClick={props.onToggleSidebar}
-          title={props.sidebarOpen ? "Hide sidebar (Ctrl+B)" : "Show sidebar (Ctrl+B)"}
+          title={props.sidebarOpen ? "Hide sidebar (Ctrl+Shift+B)" : "Show sidebar (Ctrl+Shift+B)"}
         >
-          {props.sidebarOpen ? "◧" : "▨"}
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <line x1="9" y1="3" x2="9" y2="21" />
+          </svg>
         </button>
 
         {/* Open file button */}
         <button
-          class="px-1 hover:opacity-80 transition-opacity"
+          class="p-1 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
           onClick={props.onOpenFile}
           title="Open file (Ctrl+O)"
         >
-          📂
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+          </svg>
         </button>
 
         {/* Save file button */}
         <button
-          class="px-1 hover:opacity-80 transition-opacity"
+          class="p-1 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
           onClick={props.onSaveFile}
           title="Save file (Ctrl+S)"
         >
-          💾
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+            <polyline points="17 21 17 13 7 13 7 21" />
+            <polyline points="7 3 7 8 15 8" />
+          </svg>
         </button>
 
         {/* Separator */}
-        <span style={{ color: "var(--color-border)" }}>|</span>
+        <span class="text-[var(--color-border)] mx-0.5">|</span>
 
         {/* Filename */}
         <Show when={hasDoc()}>
           <span
-            class="max-w-44 truncate font-medium"
+            class="max-w-44 truncate font-medium text-[var(--color-text-primary)]"
             title={doc().path ?? "Untitled"}
           >
             {doc().filename}
@@ -83,8 +85,7 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
           {/* Unsaved indicator */}
           <Show when={doc().isDirty}>
             <span
-              class="px-1.5 py-0.2 rounded text-[10px] font-semibold"
-              style={{ background: "#e63946", color: "white" }}
+              class="px-1.5 py-0.2 rounded text-[10px] font-medium border border-[var(--color-border)] bg-[var(--color-hover)] text-[var(--color-text-primary)]"
               title="Unsaved changes"
             >
               ● unsaved
@@ -94,8 +95,7 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
           {/* Externally modified indicator */}
           <Show when={doc().externallyModified}>
             <span
-              class="px-1.5 py-0.2 rounded text-[10px] font-semibold"
-              style={{ background: "var(--color-accent)", color: "white" }}
+              class="px-1.5 py-0.2 rounded text-[10px] font-medium border border-[var(--color-border)] bg-[var(--color-hover)] text-[var(--color-text-primary)]"
               title="File modified externally on disk"
             >
               modified
@@ -104,7 +104,7 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
         </Show>
 
         <Show when={!hasDoc()}>
-          <span class="italic">No file open</span>
+          <span class="italic text-[var(--color-text-secondary)]">No file open</span>
         </Show>
       </div>
 
@@ -112,17 +112,17 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
       <div class="flex-1" />
 
       {/* Right section */}
-      <div class="flex items-center gap-2.5">
+      <div class="flex items-center gap-2">
         {/* Document Stats */}
         <Show when={hasDoc()}>
           <span>{doc().wordCount.toLocaleString()} words</span>
-          <span style={{ color: "var(--color-border)" }}>|</span>
+          <span class="text-[var(--color-border)]">|</span>
           <span>{charCount().toLocaleString()} chars</span>
-          <span style={{ color: "var(--color-border)" }}>|</span>
+          <span class="text-[var(--color-border)]">|</span>
           <span>UTF-8</span>
-          <span style={{ color: "var(--color-border)" }}>|</span>
+          <span class="text-[var(--color-border)]">|</span>
           <span>{lineEnding()}</span>
-          <span style={{ color: "var(--color-border)" }}>|</span>
+          <span class="text-[var(--color-border)]">|</span>
         </Show>
 
         {/* Tri-State Display Mode Segmented Switcher */}
@@ -188,17 +188,39 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
           </button>
         </div>
 
-        <span style={{ color: "var(--color-border)" }}>|</span>
+        <span class="text-[var(--color-border)]">|</span>
 
-        {/* Theme toggle */}
+        {/* Theme toggle (Monochrome SVG) */}
         <button
-          class="flex items-center gap-1 px-1.5 py-0.5 rounded transition-colors"
-          style={{ background: "var(--color-hover)" }}
+          class="flex items-center gap-1.5 px-1.5 py-0.5 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
           onClick={cycleTheme}
           title={`Theme: ${themeLabel()} (click to cycle)`}
         >
-          <span>{themeIcon()}</span>
-          <span class="hidden sm:inline">{themeLabel()}</span>
+          <Show when={theme() === "light"}>
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5" />
+              <line x1="12" y1="1" x2="12" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="23" />
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+              <line x1="1" y1="12" x2="3" y2="12" />
+              <line x1="21" y1="12" x2="23" y2="12" />
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </svg>
+          </Show>
+          <Show when={theme() === "dark"}>
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </Show>
+          <Show when={theme() === "system"}>
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" opacity="0.3" />
+            </svg>
+          </Show>
+          <span class="hidden sm:inline text-[11px] font-medium">{themeLabel()}</span>
         </button>
       </div>
     </footer>
