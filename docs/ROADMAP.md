@@ -1,6 +1,6 @@
 # Lexora Project Roadmap
 
-This document outlines the phased development roadmap and milestone deliverables for Lexora, from the initial scaffold through the production MVP and post-MVP releases.
+This document outlines the phased development roadmap and milestone deliverables for Lexora, from the initial scaffold through the production MVP and future internationalized releases.
 
 ---
 
@@ -12,14 +12,16 @@ gantt
     dateFormat  YYYY-MM-DD
     section MVP
     Phase 0 - Scaffold             :done, p0, 2026-08-01, 1d
-    Phase 1 - Core Editor          :active, p1, after p0, 14d
-    Phase 2 - File Operations      :p2, after p1, 7d
-    Phase 3 - File Tree & Nav      :p3, after p2, 7d
-    Phase 4 - Code & Polish        :p4, after p3, 7d
-    Phase 5 - MVP Release & Tests  :p5, after p4, 7d
-    section Post-MVP
-    Phase 6 - v1.1 Enhancements    :p6, after p5, 21d
-    Phase 7 - v1.2+ Advanced       :p7, after p6, 30d
+    Phase 1 - Core Editor          :done, p1, after p0, 14d
+    Phase 2 - File Operations      :done, p2, after p1, 7d
+    Phase 3 - File Tree & Nav      :done, p3, after p2, 7d
+    Phase 4 - Code & Polish        :done, p4, after p3, 7d
+    Phase 5 - MVP Release & Tests  :done, p5, after p4, 7d
+    section Enhancements
+    Phase 6 - v1.1 Enhancements    :done, p6, after p5, 21d
+    Phase 7 - v1.2+ Advanced       :done, p7, after p6, 30d
+    section Localization & i18n
+    Phase 8 - Multi-Language i18n  :active, p8, after p7, 21d
 ```
 
 ---
@@ -63,7 +65,7 @@ gantt
 - [x] SolidJS nested File Tree sidebar component with expandable folders and file creation, rename, and delete actions.
 - [x] Multi-document tab bar (`TabBar`) with tab switching, dirty indicators, and close actions.
 - [x] Quick file switcher command palette (<kbd>Ctrl+P</kbd>).
-- [x] Collapsible sidebar toggle (<kbd>Ctrl+B</kbd>).
+- [x] Collapsible sidebar toggle (<kbd>Ctrl+Shift+B</kbd>).
 
 ---
 
@@ -76,7 +78,7 @@ gantt
 ---
 
 ### Phase 5 — MVP Release & Testing (~1 week) :white_check_mark: Completed
-- [x] Comprehensive Vitest unit tests for SolidJS components and stores (`editor.test.ts`, `files.test.ts`, `settings.test.ts`).
+- [x] Comprehensive Vitest unit tests for SolidJS components and stores (`editor.test.ts`, `files.test.ts`, `settings.test.ts`, `formatter.test.ts`, `dnd.test.ts`).
 - [x] Full Rust unit test coverage for atomic writer, directory scanner, syntect highlighter, and parser.
 - [x] Tauri v2 capability lockdown (minimal required filesystem and dialog scopes).
 - [x] Cross-platform release builds & GitHub Actions packaging workflows configured.
@@ -96,8 +98,26 @@ gantt
 - [x] Mathematical formula rendering wrapper for KaTeX (`math`/`katex` and `$$...$$`).
 - [x] Live diagram rendering wrapper for Mermaid.js (`mermaid` code blocks).
 - [x] Zen Mode distraction-free full-screen editor (<kbd>F11</kbd> / <kbd>Ctrl+Shift+Z</kbd>).
-- [x] Focus Mode active block styling (<kbd>Ctrl+Shift+X</kbd>).
+- [x] Focus Mode active block styling (<kbd>Ctrl+Shift+D</kbd>).
 - [x] Global workspace-wide full-text search indexing & result jumping modal (<kbd>Ctrl+Shift+F</kbd>).
+- [x] VS Code-style top in-app Menu Bar with full File, Edit, View, Window, Help menus.
+- [x] Windows default `.md` file associations and CLI startup document loading.
+- [x] Official GitHub repository integration ([BerryUIKI/Lexora](https://github.com/BerryUIKI/Lexora)).
+
+---
+
+### Phase 8 — Multi-Language Internationalization (i18n) & Localization (~2–3 weeks) :arrows_counterclockwise: In Progress
+- [ ] **Reactive i18n Translation Engine**: Lightweight, zero-dependency translation dictionary store integrated into SolidJS signals.
+- [ ] **Supported Language Locales**:
+  - `en` (English - Default)
+  - `zh-CN` (Simplified Chinese / 简体中文)
+  - `zh-TW` (Traditional Chinese / 繁體中文)
+  - `ja` (Japanese / 日本語)
+  - `de` (German / Deutsch)
+  - `fr` (French / Français)
+  - `es` (Spanish / Español)
+- [ ] **Language Selection UI**: Settings menu language picker with automatic OS system locale detection and persistent `localStorage` preference.
+- [ ] **Full UI Translation Coverage**: Menu bar items, tooltips, status bar metadata, search modals, find & replace dialog, welcome hub, and about screen.
 
 ---
 
@@ -105,7 +125,7 @@ gantt
 
 | Category | Features | Target Phase |
 | :--- | :--- | :--- |
-| **Must Have**<br>*(Critical for MVP)* | - Typora-style WYSIWYG editor via Milkdown<br>- Atomic file open / save operations<br>- Tabbed interface & dirty state tracking<br>- Workspace folder navigation & file tree<br>- Dark / Light mode switching<br>- Status bar (word count, line/column)<br>- Strict security capabilities & local-only storage | Phase 0–5 |
-| **Should Have**<br>*(Important for v1.1)* | - Find and Replace toolbar<br>- HTML & PDF export<br>- Interactive table editor<br>- Clipboard image paste / local asset management<br>- Document outline / TOC sidebar<br>- Auto-save timer | Phase 6 |
+| **Must Have**<br>*(Critical for MVP)* | - Typora-style WYSIWYG editor via Milkdown<br>- Atomic file open / save operations<br>- Tabbed interface & dirty state tracking<br>- Workspace folder navigation & file tree<br>- Dark / Light mode switching<br>- Status bar (word count, line/column)<br>- Strict security capabilities & local-only storage<br>- Custom top Menu Bar (VS Code style)<br>- Windows `.md` default file associations | Phase 0–5 |
+| **Should Have**<br>*(Important for v1.1)* | - Find and Replace toolbar<br>- HTML export engine<br>- Interactive table insertion<br>- Document outline / TOC sidebar with smooth scrolling<br>- Auto-save timer<br>- Multi-language i18n localization | Phase 6, 8 |
 | **Could Have**<br>*(Desirable for v1.2+)* | - KaTeX math rendering<br>- Mermaid diagram rendering<br>- Typewriter mode & Zen mode<br>- Custom user themes & CSS overrides<br>- Global workspace full-text search<br>- Vim keybinding mode | Phase 7 |
 | **Won't Have**<br>*(Out of Scope)* | - Cloud sync backend / proprietary account login (Lexora remains 100% local-first)<br>- Multi-user real-time collaborative editing (CRDTs)<br>- Heavy IDE extensions / LSP debugging | Out of Scope |

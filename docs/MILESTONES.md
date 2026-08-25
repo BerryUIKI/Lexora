@@ -21,7 +21,9 @@ gantt
     M5 - Testing & v1.0.0 Release  :done, m5, 2026-08-24, 2026-08-24
     M6 - Export & Find/Replace     :done, m6, 2026-08-24, 2026-08-24
     section Advanced Features
-    M7 - Search, Math & Zen Mode   :done, m7, 2026-08-24, 2026-08-24
+    M7 - Search, Math & MenuBar    :done, m7, 2026-08-24, 2026-08-25
+    section Localization & i18n
+    M8 - Multi-Language i18n       :active, m8, 2026-08-25, 2026-09-15
 ```
 
 ---
@@ -99,46 +101,45 @@ gantt
 - **Target Date**: 2026-08-24
 - **Objective**: Comprehensive automated test suites and capability security audit.
 - **Key Deliverables**:
-  - [x] Vitest reactive store unit tests (`editor.test.ts`, `files.test.ts`, `settings.test.ts`).
-  - [x] Rust backend test suite covering parser, syntect highlighter, atomic file I/O, and directory scanner.
-  - [x] Tauri v2 least-privilege capability lockdown.
+  - [x] End-to-end and unit test matrix covering Rust and SolidJS layers (Vitest + `cargo test`).
+  - [x] Tauri v2 capabilities security review.
+  - [x] Automated GitHub Actions multi-platform release CI/CD workflow.
 
 ---
 
-### Milestone 6: Rich Content & Export Engine (v1.1.0)
+### Milestone 6: Productivity & Search Utilities (v1.1.0)
 - **Status**: ✅ Completed
 - **Target Date**: 2026-08-24
-- **Objective**: In-document search, standalone export engine, and formatting toolbar.
+- **Objective**: In-document Find & Replace, document export, and background auto-save.
 - **Key Deliverables**:
-  - [x] In-document Find & Replace with Regex and match navigation (<kbd>Ctrl+F</kbd>, <kbd>Ctrl+H</kbd>).
-  - [x] Standalone self-contained HTML and print export engine via Rust (`export_document`).
-  - [x] Quick Markdown formatting toolbar for tables, images, blockquotes, headings, and lists.
-  - [x] Background auto-save timer for modified documents.
+  - [x] In-document Find & Replace (<kbd>Ctrl+F</kbd>, <kbd>Ctrl+H</kbd>).
+  - [x] Standalone HTML document export engine (`export_document`).
+  - [x] Formatting toolbar for tables, blockquotes, headings, lists, and links.
+  - [x] Background auto-save timer for active dirty files.
 
 ---
 
-### Milestone 7: Advanced Features (v1.2.0)
+### Milestone 7: Advanced Rendering, MenuBar & Navigation (v1.2.0)
 - **Status**: ✅ Completed
-- **Target Date**: 2026-08-24
-- **Objective**: Full-text workspace search, live diagrams, math formulas, and Zen mode.
+- **Target Date**: 2026-08-25
+- **Objective**: Visual diagram support, mathematical expressions, VS Code-style MenuBar, and Windows shell integration.
 - **Key Deliverables**:
-  - [x] Global workspace-wide full-text search modal (<kbd>Ctrl+Shift+F</kbd>).
-  - [x] Live Mermaid.js diagram container rendering for `mermaid` code blocks.
-  - [x] KaTeX math formula block wrappers for `$$...$$`.
-  - [x] Zen Mode distraction-free editor (<kbd>F11</kbd> / <kbd>Ctrl+Shift+Z</kbd>).
-  - [x] Focus Mode active block styling (<kbd>Ctrl+Shift+X</kbd>).
+  - [x] KaTeX mathematical formula rendering for `$$...$$` blocks.
+  - [x] Mermaid.js live diagram rendering container.
+  - [x] Zen Mode (<kbd>F11</kbd>) and Focus Mode (<kbd>Ctrl+Shift+D</kbd>).
+  - [x] Global workspace full-text search (<kbd>Ctrl+Shift+F</kbd>).
+  - [x] VS Code-style top in-app Menu Bar with File, Edit, View, Window, Help menus.
+  - [x] Windows default `.md` file associations and CLI startup argument opening.
+  - [x] Official GitHub repository integration ([BerryUIKI/Lexora](https://github.com/BerryUIKI/Lexora)).
 
 ---
 
-## 📊 Milestone Tracking Matrix
-
-| Milestone | Version | Core Focus | Target Platform | Test Coverage Target | Status |
-|---|---|---|---|---|---|
-| **M0** | `v0.0.1` | Scaffolding & CI | Windows, macOS, Linux | N/A (Scaffold) | ✅ Done |
-| **M1** | `v0.1.0` | Reader MVP | Windows (x64) | > 85% Backend | ✅ Done |
-| **M2** | `v0.2.0` | WYSIWYG & Display Modes | Windows, macOS, Linux | > 80% Full Stack | ✅ Done |
-| **M3** | `v0.3.0` | Multi-Tab & Workspace | Windows, macOS, Linux | > 80% Full Stack | ✅ Done |
-| **M4** | `v0.4.0` | Syntax & Status Bar | Windows, macOS, Linux | > 85% Full Stack | ✅ Done |
-| **M5** | `v1.0.0` | MVP Testing & Lockdown | Windows, macOS, Linux | > 90% Full Stack | ✅ Done |
-| **M6** | `v1.1.0` | Export & Find/Replace | Windows, macOS, Linux | > 90% Full Stack | ✅ Done |
-| **M7** | `v1.2.0` | Search, Diagrams & Zen | Windows, macOS, Linux | > 90% Full Stack | ✅ Done |
+### Milestone 8: Multi-Language Internationalization (i18n) (v1.3.0)
+- **Status**: 🔄 In Progress
+- **Target Date**: 2026-09-15
+- **Objective**: Provide comprehensive multi-lingual UI localization for global users.
+- **Key Deliverables**:
+  - [ ] SolidJS reactive i18n locale store with auto-detection and persistence.
+  - [ ] Complete language dictionaries for English (`en`), Simplified Chinese (`zh-CN`), Traditional Chinese (`zh-TW`), Japanese (`ja`), German (`de`), French (`fr`), and Spanish (`es`).
+  - [ ] In-app language switcher accessible via top Menu Bar and Settings.
+  - [ ] Localized shortcut tooltips, dialogs, error messages, and documentation references.
