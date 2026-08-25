@@ -119,8 +119,11 @@ export const de: TranslationDictionary = {
   },
   update: {
     checking: "Suche nach Updates...",
-    upToDate: "Sie sind auf dem neuesten Stand!",
-    upToDateDesc: "Sie verwenden die neueste Version von Lexora.",
+    upToDate: "Sie verwenden die neueste stabile Version",
+    upToDateDesc: "Ihre Version ist die aktuellste stabile Veröffentlichung.",
+    aheadTitle: "🌟 Dem offiziellen Release voraus",
+    aheadDesc: "Die lokale Version {current} ist der neuesten öffentlichen Version {latest} voraus.",
+    aheadBadge: "Vorschau-Build",
     updateAvailable: "Neue Version verfügbar!",
     latestVersion: "Neueste Version",
     currentVersion: "Aktuelle Version",

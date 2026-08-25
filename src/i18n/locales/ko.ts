@@ -119,8 +119,11 @@ export const ko: TranslationDictionary = {
   },
   update: {
     checking: "업데이트 확인 중...",
-    upToDate: "최신 버전입니다!",
-    upToDateDesc: "현재 Lexora 최신 버전을 사용 중입니다.",
+    upToDate: "현재 최신 안정 버전입니다",
+    upToDateDesc: "현재 버전은 공식 최신 안정 릴리스입니다.",
+    aheadTitle: "🌟 공식 릴리스보다 앞선 버전",
+    aheadDesc: "로컬 버전은 {current}이며, 공식 최신 공개 버전은 {latest}입니다.",
+    aheadBadge: "프리뷰 빌드",
     updateAvailable: "새 버전 사용 가능!",
     latestVersion: "최신 버전",
     currentVersion: "현재 버전",

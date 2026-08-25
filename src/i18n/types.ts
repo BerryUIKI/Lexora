@@ -136,6 +136,9 @@ export interface TranslationDictionary {
     checking: string;
     upToDate: string;
     upToDateDesc: string;
+    aheadTitle: string;
+    aheadDesc: string;
+    aheadBadge: string;
     updateAvailable: string;
     latestVersion: string;
     currentVersion: string;

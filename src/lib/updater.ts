@@ -7,6 +7,12 @@ export const REPO_RELEASES_URL = `https://github.com/${GITHUB_REPO}/releases`;
 export const REPO_API_URL = `https://api.github.com/repos/${GITHUB_REPO}/releases/latest`;
 export const REPO_ALL_RELEASES_API = `https://api.github.com/repos/${GITHUB_REPO}/releases`;
 
+export type UpdateStatus =
+  | "update_available"
+  | "up_to_date"
+  | "ahead_of_release"
+  | "error";
+
 export interface ReleaseAsset {
   name: string;
   size: number;
@@ -14,6 +20,7 @@ export interface ReleaseAsset {
 }
 
 export interface UpdateInfo {
+  status: UpdateStatus;
   hasUpdate: boolean;
   currentVersion: string;
   latestVersion: string;
@@ -33,9 +40,12 @@ export { updateModalOpen, setUpdateModalOpen, updateInfo, isCheckingUpdate };
 
 /**
  * Compare two semver-like version strings.
- * Returns true if remote is strictly newer than local.
+ * Returns:
+ *   1  if remote is newer than local (update available)
+ *  -1  if local is newer than remote (ahead of public release)
+ *   0  if both are identical (up to date)
  */
-export function isNewerVersion(remoteTag: string, localVersion: string): boolean {
+export function compareVersions(remoteTag: string, localVersion: string): number {
   const cleanRemote = remoteTag.replace(/^v/, "").trim();
   const cleanLocal = localVersion.replace(/^v/, "").trim();
 
@@ -45,10 +55,10 @@ export function isNewerVersion(remoteTag: string, localVersion: string): boolean
   for (let i = 0; i < Math.max(rParts.length, lParts.length); i++) {
     const r = rParts[i] || 0;
     const l = lParts[i] || 0;
-    if (r > l) return true;
-    if (r < l) return false;
+    if (r > l) return 1;
+    if (r < l) return -1;
   }
-  return false;
+  return 0;
 }
 
 /**
@@ -95,11 +105,12 @@ export async function checkForUpdates(manual = false): Promise<void> {
     if (!data || !data.tag_name) {
       if (manual) {
         setUpdateInfo({
+          status: "up_to_date",
           hasUpdate: false,
           currentVersion: CURRENT_VERSION,
           latestVersion: CURRENT_VERSION,
           releaseTitle: "Lexora v" + CURRENT_VERSION,
-          releaseNotes: "Current version is up to date. You can also view all releases directly on GitHub.",
+          releaseNotes: "",
           publishedAt: new Date().toISOString(),
           releaseUrl: REPO_RELEASES_URL,
           assets: [],
@@ -111,18 +122,29 @@ export async function checkForUpdates(manual = false): Promise<void> {
     }
 
     const latestTag = data.tag_name || `v${CURRENT_VERSION}`;
-    const hasUpdate = isNewerVersion(latestTag, CURRENT_VERSION);
+    const latestClean = latestTag.replace(/^v/, "");
+    const cmp = compareVersions(latestTag, CURRENT_VERSION);
 
     // Save timestamp of last check
     localStorage.setItem("lexora_last_update_check", Date.now().toString());
 
-    if (hasUpdate || manual) {
+    let status: UpdateStatus = "up_to_date";
+    if (cmp > 0) {
+      status = "update_available";
+    } else if (cmp < 0) {
+      status = "ahead_of_release";
+    } else {
+      status = "up_to_date";
+    }
+
+    if (status === "update_available" || manual) {
       setUpdateInfo({
-        hasUpdate,
+        status,
+        hasUpdate: status === "update_available",
         currentVersion: CURRENT_VERSION,
-        latestVersion: latestTag.replace(/^v/, ""),
+        latestVersion: latestClean,
         releaseTitle: data.name || latestTag,
-        releaseNotes: data.body || "No release notes provided.",
+        releaseNotes: data.body || "",
         publishedAt: data.published_at || new Date().toISOString(),
         releaseUrl: data.html_url || REPO_RELEASES_URL,
         assets: data.assets || [],
@@ -135,6 +157,7 @@ export async function checkForUpdates(manual = false): Promise<void> {
     console.warn("Update check failed:", err);
     if (manual) {
       setUpdateInfo({
+        status: "error",
         hasUpdate: false,
         currentVersion: CURRENT_VERSION,
         latestVersion: CURRENT_VERSION,

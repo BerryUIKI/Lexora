@@ -119,8 +119,11 @@ export const ja: TranslationDictionary = {
   },
   update: {
     checking: "アップデートを確認中...",
-    upToDate: "最新バージョンです！",
-    upToDateDesc: "お使いのLexoraは最新です。",
+    upToDate: "現在最新の安定版です",
+    upToDateDesc: "お使いのバージョンは最新の安定リリースです。",
+    aheadTitle: "🌟 公式リリースより新しいバージョン",
+    aheadDesc: "検出されたローカルバージョンは {current} で、公式の最新公開バージョンは {latest} です。",
+    aheadBadge: "先行ビルド",
     updateAvailable: "新しいバージョンが利用可能です！",
     latestVersion: "最新バージョン",
     currentVersion: "現在のバージョン",
