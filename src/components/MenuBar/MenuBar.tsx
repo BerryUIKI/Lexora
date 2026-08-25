@@ -10,6 +10,7 @@ import { theme, setTheme, zenMode, setZenMode, focusMode, setFocusMode } from ".
 import { recentFiles, openTabs, closeTab, activeTabId } from "../../store/files";
 import { dispatchFormat } from "../../lib/formatter";
 import { checkForUpdates } from "../../lib/updater";
+import { isMacOS } from "../../lib/platform";
 import {
   minimizeWindow,
   toggleMaximizeWindow,
@@ -86,14 +87,18 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
   onMount(() => {
     window.addEventListener("click", handleGlobalClick);
     window.addEventListener("keydown", handleGlobalKeyDown);
-    window.addEventListener("resize", updateMaximizedStatus);
-    updateMaximizedStatus();
+    if (!isMacOS) {
+      window.addEventListener("resize", updateMaximizedStatus);
+      updateMaximizedStatus();
+    }
   });
 
   onCleanup(() => {
     window.removeEventListener("click", handleGlobalClick);
     window.removeEventListener("keydown", handleGlobalKeyDown);
-    window.removeEventListener("resize", updateMaximizedStatus);
+    if (!isMacOS) {
+      window.removeEventListener("resize", updateMaximizedStatus);
+    }
   });
 
   const handleOpenLink = async (url: string) => {
@@ -151,10 +156,12 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
     <>
       <header
         data-tauri-drag-region
-        class="h-8 flex items-center justify-between pl-1.5 pr-0 text-xs no-select select-none border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)] flex-shrink-0 z-40 relative menu-bar-container cursor-default"
+        class={`flex items-center justify-between pr-0 text-xs no-select select-none border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)] flex-shrink-0 z-40 relative menu-bar-container cursor-default ${
+          isMacOS ? "h-9 pl-[78px]" : "h-8 pl-1.5"
+        }`}
         style={{ color: "var(--color-text-secondary)" }}
         onMouseDown={handleStartDrag}
-        onDblClick={handleToggleMaximize}
+        onDblClick={isMacOS ? undefined : handleToggleMaximize}
       >
         {/* Left: App Logo & Top-Level Menus (No drag on buttons) */}
         <div class="flex items-center gap-0.5 pointer-events-auto" data-tauri-drag-region="false">
@@ -647,22 +654,23 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
             </svg>
           </button>
 
-          {/* Window Control Buttons (Minimize / Maximize / Close) */}
-          <div class="flex items-center h-full">
-            {/* Minimize */}
-            <button
-              class="w-11 h-full flex items-center justify-center hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
-              onClick={handleMinimize}
-              title={t("window.minimize")}
-              data-tauri-drag-region="false"
-            >
-              <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-                <line x1="2" y1="8" x2="14" y2="8" />
-              </svg>
-            </button>
+          {/* macOS supplies native traffic-light controls in the overlay title bar. */}
+          <Show when={!isMacOS}>
+            <div class="flex items-center h-full">
+              {/* Minimize */}
+              <button
+                class="w-11 h-full flex items-center justify-center hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+                onClick={handleMinimize}
+                title={t("window.minimize")}
+                data-tauri-drag-region="false"
+              >
+                <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <line x1="2" y1="8" x2="14" y2="8" />
+                </svg>
+              </button>
 
-            {/* Maximize / Restore */}
-            <button
+              {/* Maximize / Restore */}
+              <button
               class="w-11 h-full flex items-center justify-center hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
               onClick={handleToggleMaximize}
               title={isMaximized() ? t("window.restore") : t("window.maximize")}
@@ -681,10 +689,10 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   <rect x="3.5" y="5" width="7.5" height="7.5" rx="0.5" />
                 </svg>
               </Show>
-            </button>
+              </button>
 
-            {/* Close */}
-            <button
+              {/* Close */}
+              <button
               class="w-11 h-full flex items-center justify-center hover:bg-[#e81123] text-[var(--color-text-secondary)] hover:text-white transition-colors"
               onClick={handleClose}
               title={t("window.close")}
@@ -694,8 +702,9 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                 <line x1="3.5" y1="3.5" x2="12.5" y2="12.5" />
                 <line x1="12.5" y1="3.5" x2="3.5" y2="12.5" />
               </svg>
-            </button>
-          </div>
+              </button>
+            </div>
+          </Show>
         </div>
       </header>
 

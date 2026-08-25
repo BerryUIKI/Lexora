@@ -5,6 +5,12 @@ All notable changes to Lexora will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+- macOS now uses native traffic-light window controls and overlay title-bar styling while Windows and Linux retain Lexora's custom window controls.
+- Release assets now use stable `Lexora_<OS>_<architecture>` names without embedded app versions, and README download lists have been simplified.
+
 ## [0.1.2] - 2026-08-25
 
 ### Added

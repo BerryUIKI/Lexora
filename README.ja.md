@@ -25,42 +25,21 @@
 
 ## 📥 ダイレクトダウンロード
 
-GitHub の操作知識は不要です！お使いの OS をクリックして最新インストーラーをダウンロードできます：
+OS とパッケージを選択してください：
 
-### 🪟 Windows (10 / 11)
+- **Windows x86_64:** [インストーラー (`.exe`)](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Windows_x86_64.exe) · [MSI](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Windows_x86_64.msi)
+- **macOS Apple Silicon:** [DMG](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_aarch64.dmg)
+- **macOS Intel:** [DMG](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_x86_64.dmg)
+- **Linux x86_64:** [AppImage](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.AppImage) · [Debian/Ubuntu (`.deb`)](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.deb) · [Fedora/RHEL (`.rpm`)](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.rpm)
 
-| パッケージ | アーキテクチャ | サイズ | ダウンロードリンク | 説明 |
-|---|---|---|---|---|
-| **⭐ 標準インストーラー (推奨)** | `x64` (64ビット) | **~3.6 MB** | [⬇️ **最新 Windows インストーラー (`.exe`) をダウンロード**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_x64-setup.exe) | 自動インストール、`.md` と `.txt` のダブルクリック関連付け対応 |
-| **🏢 企業向け MSI** | `x64` (64ビット) | **~5.2 MB** | [⬇️ **最新 Windows MSI (`.msi`) をダウンロード**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_x64_en-US.msi) | Windows Installer 形式、企業の一括展開に最適 |
-
----
-
-### 🍎 macOS (macOS 11+)
-
-| パッケージ | アーキテクチャ | サイズ | ダウンロードリンク | 説明 |
-|---|---|---|---|---|
-| **⭐ Apple Silicon (推奨)** | `M1 / M2 / M3 / M4` | **~5.0 MB** | [⬇️ **最新 Apple Silicon DMG をダウンロード**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Apple-Silicon.dmg) | Apple M シリーズチップに最適化されたネイティブ DMG |
-| **Intel Mac** | `x64` (Intel) | **~5.3 MB** | [⬇️ **最新 Intel Mac DMG をダウンロード**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_x64.dmg) | Intel プロセッサ搭載 Mac 用 DMG |
-
----
-
-### 🐧 Linux (Ubuntu / Debian / Fedora / Arch)
-
-| パッケージ | アーキテクチャ | サイズ | ダウンロードリンク | 説明 |
-|---|---|---|---|---|
-| **⭐ AppImage (汎用)** | `x86_64` (64ビット) | **~65 MB** | [⬇️ **最新 AppImage をダウンロード**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_amd64.AppImage) | ポータブル、主要な Linux ディストリビューションで即座に実行可能 |
-| **Debian / Ubuntu パッケージ** | `amd64` (64ビット) | **~5.1 MB** | [⬇️ **最新 Debian/Ubuntu パッケージ (`.deb`) をダウンロード**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_amd64.deb) | Debian、Ubuntu、Linux Mint 等に対応 |
-| **RedHat / Fedora パッケージ** | `x86_64` (64ビット) | **~5.0 MB** | [⬇️ **最新 Fedora/RHEL パッケージ (`.rpm`) をダウンロード**](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora-x86_64.rpm) | Fedora、RHEL、openSUSE 等に対応 |
-
-> 💡 *過去のリリースやソースコードは [**GitHub Releases ページ**](https://github.com/BerryUIKI/Lexora/releases/latest) をご覧ください。*
+[すべてのリリースとソースアーカイブを表示](https://github.com/BerryUIKI/Lexora/releases/latest)。
 
 ---
 
 ## 🌟 主な機能
 
 * 🌐 **9言語マルチリンガル**: 日本語、英語、簡体字中国語、繁体字中国語、韓国語、ドイツ語、フランス語、スペイン語、ロシア語をネイティブサポート。
-* 🪟 **VS Code 風カスタムタイトルバー**: フレームレスウィンドウ、ドラッグ対応タイトルバー、テーマ適応メニュー。
+* 🪟 **OS に適したウィンドウクローム**: Windows/Linux ではカスタム操作ボタン、macOS ではネイティブのトラフィックライトを使用。
 * 🏷️ **Windows `.md` 関連付け**: `.md` ファイルのダブルクリックで直接起動。
 * 🔄 **3つの表示モード**: リーディングモード (閲覧)、ライティングモード (WYSIWYG)、コードモード (行番号同期)。
 * 💾 **クラッシュ防止アトミック保存**: 一時ファイル書き込み + アトミックリネームでデータ損失をゼロに。
