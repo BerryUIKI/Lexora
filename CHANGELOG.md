@@ -5,6 +5,26 @@ All notable changes to Lexora will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.2] - 2026-08-25
+
+### Added
+- **Dedicated Language Selection Modal (`LanguageModal`)**:
+  - Independent, full-featured language picker dialog supporting all 9 languages with flags and `Auto (Follow System)` toggle.
+  - Replaced nested dropdown hover trigger to eliminate menu collision and hover-closing glitches.
+  - Fully localized subtitle and description dynamically following active language.
+- **Rust Native GitHub Update Detection (`check_github_update`)**:
+  - Implemented high-performance native HTTPS client in Rust (`reqwest` + `tokio`), completely bypassing browser WebView CSP and CORS restrictions.
+  - Three-state version comparison (`UpdateStatus`): Update Available, Up to Date, and Ahead of Release (Preview Build).
+  - Explicit rate-limit detection (HTTP 403 / 429), strict repository format validation, and draft/prerelease release filtering.
+  - Added "🌟 领先于官方发行版 (Ahead of Public Release)" state with full 9-language localization.
+- **Apple Silicon Native Artifact Naming & Permanent Latest Aliases**:
+  - Automated aliasing in CI to generate `Lexora_Apple-Silicon.dmg`, `Lexora_x64-setup.exe`, `Lexora_amd64.AppImage`, etc.
+- **9-Language Localized READMEs & Instant Direct Downloads**:
+  - Added dedicated READMEs for all 9 supported languages with top navigation switcher.
+  - Embedded permanent 1-click latest direct download matrix (`/releases/latest/download/...`).
+
+---
+
 ## [0.1.1] - 2026-08-25
 
 ### Added

@@ -15,7 +15,9 @@ export const en: TranslationDictionary = {
     window: "Window",
     help: "Help",
     language: "Language",
+    languageSubtitle: "Select interface display language",
     autoLanguage: "Auto (Follow System)",
+    autoLanguageDesc: "Auto-detect from OS setting (Current: {current})",
   },
   file: {
     newDocument: "New Document",
@@ -119,8 +121,11 @@ export const en: TranslationDictionary = {
   },
   update: {
     checking: "Checking for updates...",
-    upToDate: "You're up to date!",
-    upToDateDesc: "You are running the latest version of Lexora.",
+    upToDate: "You're on the latest version",
+    upToDateDesc: "You are running the latest stable release of Lexora.",
+    aheadTitle: "🌟 Ahead of Public Release",
+    aheadDesc: "Local version {current} is ahead of the latest public release {latest}.",
+    aheadBadge: "Preview Build",
     updateAvailable: "New Version Available!",
     latestVersion: "Latest Version",
     currentVersion: "Current Version",

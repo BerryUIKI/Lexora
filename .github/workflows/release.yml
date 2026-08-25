@@ -7,16 +7,16 @@ on:
   workflow_dispatch:
     inputs:
       tag_name:
-        description: 'Release tag name (e.g. v0.1.0)'
-        required: false
-        default: 'v0.1.0'
+        description: 'Tag name (e.g. v0.1.2)'
+        required: true
+        default: 'v0.1.2'
       release_name:
         description: 'Release title'
         required: false
-        default: 'Lexora v0.1.0'
+        default: 'Lexora v0.1.2'
 
 jobs:
-  release:
+  build-tauri:
     permissions:
       contents: write
     strategy:
@@ -34,44 +34,38 @@ jobs:
 
     runs-on: ${{ matrix.platform }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 20
 
-      - name: Setup pnpm
+      - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10
+          version: 9
 
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
         with:
           targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
 
-      - name: Rust cache
-        uses: swatinem/rust-cache@v2
-        with:
-          workspaces: './src-tauri -> target'
-
-      - name: Install Linux dependencies (Ubuntu only)
+      - name: Install Linux system dependencies
         if: matrix.platform == 'ubuntu-22.04'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf libssl-dev
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf libssl-dev libayatana-appindicator3-dev
 
       - name: Install frontend dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
-      - name: Build and Package with Tauri Action
+      - name: Build Tauri Package & Create GitHub Release
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: ${{ github.ref_name || inputs.tag_name || 'v0.1.1' }}
+          tagName: ${{ github.ref_name || inputs.tag_name || 'v0.1.2' }}
           releaseName: ${{ inputs.release_name || format('Lexora {0}', github.ref_name) }}
           releaseBody: |
             # Lexora Release
@@ -96,3 +90,61 @@ jobs:
           releaseDraft: false
           prerelease: false
           args: ${{ matrix.args }}
+
+      - name: Upload Permanent Latest Aliases (All Platforms)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          TAG="${{ github.ref_name || inputs.tag_name || 'v0.1.2' }}"
+          
+          # Upload macOS Apple Silicon Alias
+          if [[ "${{ matrix.platform }}" == "macos-latest" && "${{ matrix.args }}" == *"aarch64"* ]]; then
+            DMG=$(find src-tauri/target/aarch64-apple-darwin/release/bundle/dmg -name "*.dmg" 2>/dev/null | head -n 1)
+            if [ -f "$DMG" ]; then
+              cp "$DMG" "Lexora_Apple-Silicon.dmg"
+              gh release upload "$TAG" "Lexora_Apple-Silicon.dmg" --clobber || true
+            fi
+          fi
+
+          # Upload macOS Intel Alias
+          if [[ "${{ matrix.platform }}" == "macos-latest" && "${{ matrix.args }}" == *"x86_64"* ]]; then
+            DMG=$(find src-tauri/target/x86_64-apple-darwin/release/bundle/dmg -name "*.dmg" 2>/dev/null | head -n 1)
+            if [ -f "$DMG" ]; then
+              cp "$DMG" "Lexora_x64.dmg"
+              gh release upload "$TAG" "Lexora_x64.dmg" --clobber || true
+            fi
+          fi
+
+          # Upload Windows Setup and MSI Aliases
+          if [[ "${{ matrix.platform }}" == "windows-latest" ]]; then
+            EXE=$(find src-tauri/target/release/bundle/nsis -name "*setup.exe" 2>/dev/null | head -n 1)
+            MSI=$(find src-tauri/target/release/bundle/msi -name "*.msi" 2>/dev/null | head -n 1)
+            if [ -f "$EXE" ]; then
+              cp "$EXE" "Lexora_x64-setup.exe"
+              gh release upload "$TAG" "Lexora_x64-setup.exe" --clobber || true
+            fi
+            if [ -f "$MSI" ]; then
+              cp "$MSI" "Lexora_x64_en-US.msi"
+              gh release upload "$TAG" "Lexora_x64_en-US.msi" --clobber || true
+            fi
+          fi
+
+          # Upload Linux Aliases
+          if [[ "${{ matrix.platform }}" == "ubuntu-22.04" ]]; then
+            APPIMG=$(find src-tauri/target/release/bundle/appimage -name "*.AppImage" 2>/dev/null | head -n 1)
+            DEB=$(find src-tauri/target/release/bundle/deb -name "*.deb" 2>/dev/null | head -n 1)
+            RPM=$(find src-tauri/target/release/bundle/rpm -name "*.rpm" 2>/dev/null | head -n 1)
+            if [ -f "$APPIMG" ]; then
+              cp "$APPIMG" "Lexora_amd64.AppImage"
+              gh release upload "$TAG" "Lexora_amd64.AppImage" --clobber || true
+            fi
+            if [ -f "$DEB" ]; then
+              cp "$DEB" "Lexora_amd64.deb"
+              gh release upload "$TAG" "Lexora_amd64.deb" --clobber || true
+            fi
+            if [ -f "$RPM" ]; then
+              cp "$RPM" "Lexora-x86_64.rpm"
+              gh release upload "$TAG" "Lexora-x86_64.rpm" --clobber || true
+            fi
+          fi
