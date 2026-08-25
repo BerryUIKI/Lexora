@@ -7,13 +7,13 @@ on:
   workflow_dispatch:
     inputs:
       tag_name:
-        description: 'Tag name (e.g. v0.1.2)'
+        description: 'Tag name (e.g. v0.1.3)'
         required: true
-        default: 'v0.1.2'
+        default: 'v0.1.3'
       release_name:
         description: 'Release title'
         required: false
-        default: 'Lexora v0.1.2'
+        default: 'Lexora v0.1.3'
 
 jobs:
   build-tauri:
@@ -43,12 +43,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 10
 
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
@@ -59,7 +59,7 @@ jobs:
         if: matrix.platform == 'ubuntu-22.04'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf libssl-dev libayatana-appindicator3-dev
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf libssl-dev
 
       - name: Install frontend dependencies
         run: pnpm install
@@ -69,29 +69,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: ${{ github.ref_name || inputs.tag_name || 'v0.1.2' }}
+          tagName: ${{ github.ref_name || inputs.tag_name || 'v0.1.3' }}
           releaseName: ${{ inputs.release_name || format('Lexora {0}', github.ref_name) }}
           releaseBody: |
             # Lexora Release
 
             **A Typora-style, high-performance Markdown reader & in-place editor built with Tauri 2 + Rust + SolidJS.**
 
-            ### ✨ Highlights in this Release:
-            - **9-Language Internationalization (i18n)**: Native localization support for English, 简体中文, 繁體中文, 日本語, 한국어, Deutsch, Français, Español, and Русский with automatic system language detection and instant live switching.
-            - **Top MenuBar Language Switcher**: Added dedicated `Help -> Language (语言)` submenu with native language names and `Auto (Follow System)` option.
-            - **Open-Source License Migration**: Migrated repository license to **GNU Affero General Public License v3.0 (AGPL-3.0)**.
-            - **Platform-Appropriate Window Chrome**: Native traffic-light controls on macOS, compact custom controls on Windows/Linux, and theme-matched `File`, `Edit`, `View`, `Window`, `Help` menus.
-            - **Windows `.md` Shell File Associations**: Auto-registers `.md`, `.markdown`, `.mdx`, and `.txt` file types; opens documents directly on double-click in Windows Explorer.
-            - **Tri-State Display Modes**: Instantly toggle between **Reading Mode** (read-only rendered HTML), **Writing Mode** (Typora-style in-place WYSIWYG), and **Code Mode** (source code with synchronized line numbers).
-            - **Monochrome Vector UI**: Pure theme-adaptive vector iconography (`stroke="currentColor"`) across status bar, toolbar, tabs, and outline sidebar.
-            - **In-Place Formatting & Paragraph Format**: Format selected text directly (<kbd>Ctrl+B</kbd> for bold, <kbd>Ctrl+0</kbd> for paragraph, <kbd>Ctrl+1~6</kbd> for headings, etc.).
-            - **Outline-First Sidebar**: Layered Table of Contents sidebar with smooth anchor scrolling across all display modes.
-            - **Intelligent Drag & Drop**: Drop files into window to open, drop onto tab bar for new tabs, or drop into text area to insert Markdown links.
-            - **Crash-Safe Atomic Saving**: Never lose work with atomic writes (`.tmp` -> atomic rename).
-            - **Global Workspace Search & Utilities**: Full-text ripgrep-grade search (<kbd>Ctrl+Shift+F</kbd>), in-document Find & Replace (<kbd>Ctrl+F</kbd>/<kbd>Ctrl+H</kbd>), standalone HTML export (<kbd>Ctrl+E</kbd>), Mermaid diagrams, and KaTeX math.
+            ### ✨ Highlights in v0.1.3
+            - **Native macOS Window Chrome**: macOS now retains native traffic-light controls and overlay title-bar behavior, while Windows and Linux keep Lexora's compact custom controls.
+            - **Improved Markdown Table Contrast**: Removed table header, row, and column fills across Reading mode, Writing mode, and exported HTML.
+            - **Stable Release Asset Names**: Installers now use `Lexora_<OS>_<architecture>` names without embedded version numbers.
+            - **Simplified Instant Downloads**: All nine localized READMEs now provide concise, stable links to the latest platform packages.
 
             See [CHANGELOG.md](https://github.com/BerryUIKI/Lexora/blob/main/CHANGELOG.md) for full release details.
           releaseDraft: false
           prerelease: false
           args: ${{ matrix.args }}
-          releaseAssetNamePattern: ${{ matrix.asset_name }}
+          assetNamePattern: ${{ matrix.asset_name }}
