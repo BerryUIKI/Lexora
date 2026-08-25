@@ -11,12 +11,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Dedicated Language Selection Modal (`LanguageModal`)**:
   - Independent, full-featured language picker dialog supporting all 9 languages with flags and `Auto (Follow System)` toggle.
   - Replaced nested dropdown hover trigger to eliminate menu collision and hover-closing glitches.
-- **Robust Update Checker**:
-  - Enhanced GitHub Releases fetch with timeout handling, multi-level fallbacks, and clear user dialogs.
-- **Apple Silicon Native Artifact Naming**:
-  - Automated aliasing in CI to generate `Lexora_0.1.2_Apple-Silicon.dmg`.
-- **Beautified Documentation & Direct Downloads**:
-  - Added 1-click platform download matrix table to `README.md`.
+  - Fully localized subtitle and description dynamically following active language.
+- **Rust Native GitHub Update Detection (`check_github_update`)**:
+  - Implemented high-performance native HTTPS client in Rust (`reqwest` + `tokio`), completely bypassing browser WebView CSP and CORS restrictions.
+  - Three-state version comparison (`UpdateStatus`): Update Available, Up to Date, and Ahead of Release (Preview Build).
+  - Explicit rate-limit detection (HTTP 403 / 429), strict repository format validation, and draft/prerelease release filtering.
+  - Added "🌟 领先于官方发行版 (Ahead of Public Release)" state with full 9-language localization.
+- **Apple Silicon Native Artifact Naming & Permanent Latest Aliases**:
+  - Automated aliasing in CI to generate `Lexora_Apple-Silicon.dmg`, `Lexora_x64-setup.exe`, `Lexora_amd64.AppImage`, etc.
+- **9-Language Localized READMEs & Instant Direct Downloads**:
+  - Added dedicated READMEs for all 9 supported languages with top navigation switcher.
+  - Embedded permanent 1-click latest direct download matrix (`/releases/latest/download/...`).
 
 ---
 
