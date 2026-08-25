@@ -19,6 +19,7 @@ import {
 } from "../../lib/tauri/commands";
 import { t, SUPPORTED_LOCALES, localeSetting, setLocale } from "../../i18n";
 import { AboutModal } from "./AboutModal";
+import { LanguageModal } from "./LanguageModal";
 
 export interface MenuBarProps {
   onNewDocument: () => void;
@@ -39,14 +40,13 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
   const [activeMenu, setActiveMenu] = createSignal<MenuId>(null);
   const [aboutOpen, setAboutOpen] = createSignal(false);
   const [isMaximized, setIsMaximized] = createSignal(false);
-  const [langMenuOpen, setLangMenuOpen] = createSignal(false);
+  const [langModalOpen, setLangModalOpen] = createSignal(false);
 
   const doc = () => currentDocument();
   const hasDoc = () => doc().path !== null || doc().content.length > 0;
 
   const closeMenus = () => {
     setActiveMenu(null);
-    setLangMenuOpen(false);
   };
 
   const toggleMenu = (menu: MenuId) => {
@@ -568,48 +568,23 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
 
                 <div class="my-1 border-t border-[var(--color-border)]" />
 
-                {/* Language Switcher Submenu under Help */}
-                <div class="py-1">
-                  <div
-                    class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left cursor-pointer font-medium"
-                    onClick={() => setLangMenuOpen((prev) => !prev)}
-                  >
-                    <span class="flex items-center gap-1.5">
-                      <svg class="w-3.5 h-3.5 text-[var(--color-accent)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10" />
-                        <line x1="2" y1="12" x2="22" y2="12" />
-                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                      </svg>
-                      <span>{t("menu.language")}</span>
-                    </span>
-                    <span class="text-[10px] text-[var(--color-text-secondary)] font-mono">{langMenuOpen() ? "▼" : "▶"}</span>
-                  </div>
-
-                  <Show when={langMenuOpen()}>
-                    <div class="my-1 pl-2 border-l-2 border-[var(--color-accent)]/40 space-y-0.5 animate-in fade-in duration-100">
-                      <button
-                        class="w-full flex items-center justify-between px-2 py-1 rounded hover:bg-[var(--color-hover)] text-xs text-left"
-                        onClick={() => { setLocale("auto"); closeMenus(); }}
-                      >
-                        <span class={localeSetting() === "auto" ? "font-bold text-[var(--color-accent)]" : ""}>
-                          {localeSetting() === "auto" ? "✓ " : "  "}{t("menu.autoLanguage")}
-                        </span>
-                      </button>
-                      <For each={SUPPORTED_LOCALES}>
-                        {(loc) => (
-                          <button
-                            class="w-full flex items-center justify-between px-2 py-1 rounded hover:bg-[var(--color-hover)] text-xs text-left"
-                            onClick={() => { setLocale(loc.code); closeMenus(); }}
-                          >
-                            <span class={localeSetting() === loc.code ? "font-bold text-[var(--color-accent)]" : ""}>
-                              {localeSetting() === loc.code ? "✓ " : "  "}{loc.nativeName} ({loc.name})
-                            </span>
-                          </button>
-                        )}
-                      </For>
-                    </div>
-                  </Show>
-                </div>
+                {/* Language Switcher Modal trigger under Help */}
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left font-medium"
+                  onClick={() => { closeMenus(); setLangModalOpen(true); }}
+                >
+                  <span class="flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-[var(--color-accent)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="2" y1="12" x2="22" y2="12" />
+                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                    </svg>
+                    <span>{t("menu.language")}...</span>
+                  </span>
+                  <span class="text-[10px] text-[var(--color-text-secondary)] font-mono bg-[var(--color-hover)] px-1.5 py-0.5 rounded border border-[var(--color-border)]">
+                    {localeSetting() === "auto" ? "Auto" : localeSetting()}
+                  </span>
+                </button>
 
                 <div class="my-1 border-t border-[var(--color-border)]" />
 
@@ -726,6 +701,9 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
 
       {/* About Modal */}
       <AboutModal isOpen={aboutOpen()} onClose={() => setAboutOpen(false)} />
+
+      {/* Language Selection Modal */}
+      <LanguageModal isOpen={langModalOpen()} onClose={() => setLangModalOpen(false)} />
     </>
   );
 };

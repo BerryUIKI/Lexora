@@ -213,6 +213,35 @@ export interface SearchMatch {
   match_end: number;
 }
 
+export interface GithubReleaseData {
+  tag_name: string;
+  name?: string | null;
+  body?: string | null;
+  published_at?: string | null;
+  html_url: string;
+  draft?: boolean;
+  prerelease?: boolean;
+  assets?: Array<{
+    name: string;
+    size: number;
+    browser_download_url: string;
+  }>;
+}
+
+/**
+ * Check latest release from GitHub API directly via native HTTPS in Rust backend.
+ */
+export async function checkGithubUpdate(): Promise<GithubReleaseData> {
+  return invoke<GithubReleaseData>("check_github_update");
+}
+
+/**
+ * Get runtime application version from Cargo.toml.
+ */
+export async function getAppVersion(): Promise<string> {
+  return invoke<string>("get_app_version");
+}
+
 /**
  * Perform workspace full-text search.
  */
@@ -225,6 +254,3 @@ export async function searchWorkspace(
     rootPath,
   });
 }
-
-
-

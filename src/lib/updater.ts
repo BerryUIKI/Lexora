@@ -1,10 +1,18 @@
 import { createSignal } from "solid-js";
 import { open as openUrl } from "@tauri-apps/plugin-shell";
+import { checkGithubUpdate, getAppVersion } from "./tauri/commands";
 
-export const CURRENT_VERSION = "0.1.0";
+export const CURRENT_VERSION = "0.1.2";
 export const GITHUB_REPO = "BerryUIKI/Lexora";
 export const REPO_RELEASES_URL = `https://github.com/${GITHUB_REPO}/releases`;
 export const REPO_API_URL = `https://api.github.com/repos/${GITHUB_REPO}/releases/latest`;
+export const REPO_ALL_RELEASES_API = `https://api.github.com/repos/${GITHUB_REPO}/releases`;
+
+export type UpdateStatus =
+  | "update_available"
+  | "up_to_date"
+  | "ahead_of_release"
+  | "error";
 
 export interface ReleaseAsset {
   name: string;
@@ -13,6 +21,7 @@ export interface ReleaseAsset {
 }
 
 export interface UpdateInfo {
+  status: UpdateStatus;
   hasUpdate: boolean;
   currentVersion: string;
   latestVersion: string;
@@ -32,9 +41,12 @@ export { updateModalOpen, setUpdateModalOpen, updateInfo, isCheckingUpdate };
 
 /**
  * Compare two semver-like version strings.
- * Returns true if remote is newer than local.
+ * Returns:
+ *   1  if remote is newer than local (update available)
+ *  -1  if local is newer than remote (ahead of public release)
+ *   0  if both are identical (up to date)
  */
-function isNewerVersion(remoteTag: string, localVersion: string): boolean {
+export function compareVersions(remoteTag: string, localVersion: string): number {
   const cleanRemote = remoteTag.replace(/^v/, "").trim();
   const cleanLocal = localVersion.replace(/^v/, "").trim();
 
@@ -44,35 +56,82 @@ function isNewerVersion(remoteTag: string, localVersion: string): boolean {
   for (let i = 0; i < Math.max(rParts.length, lParts.length); i++) {
     const r = rParts[i] || 0;
     const l = lParts[i] || 0;
-    if (r > l) return true;
-    if (r < l) return false;
+    if (r > l) return 1;
+    if (r < l) return -1;
   }
-  return false;
+  return 0;
 }
 
 /**
  * Check GitHub Releases for newer version.
+ * First tries native Rust HTTPS check_github_update command, then falls back to fetch.
  * @param manual Whether this check was explicitly triggered by the user
  */
 export async function checkForUpdates(manual = false): Promise<void> {
   if (isCheckingUpdate()) return;
   setIsCheckingUpdate(true);
 
+  let appVersion = CURRENT_VERSION;
   try {
-    const res = await fetch(REPO_API_URL, {
-      headers: {
-        Accept: "application/vnd.github.v3+json",
-      },
-    });
+    const v = await getAppVersion();
+    if (v) appVersion = v;
+  } catch {
+    // Ignore when running in non-Tauri test environments
+  }
 
-    if (!res.ok) {
+  let data: any = null;
+
+  try {
+    // Primary: Native Rust backend HTTPS request (bypasses WebView CORS & CSP completely)
+    try {
+      data = await checkGithubUpdate();
+    } catch (ipcErr) {
+      console.warn("Rust check_github_update error, attempting fetch fallback:", ipcErr);
+
+      // Fallback: Webview fetch (if IPC unavailable)
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+      try {
+        const res = await fetch(REPO_API_URL, {
+          signal: controller.signal,
+          headers: {
+            Accept: "application/vnd.github.v3+json",
+            "User-Agent": `Lexora-App/${appVersion}`,
+          },
+        });
+
+        if (res.ok) {
+          data = await res.json();
+        } else if (res.status === 404) {
+          const allRes = await fetch(`${REPO_ALL_RELEASES_API}?per_page=5`, {
+            signal: controller.signal,
+            headers: {
+              Accept: "application/vnd.github.v3+json",
+              "User-Agent": `Lexora-App/${appVersion}`,
+            },
+          });
+          if (allRes.ok) {
+            const list = await allRes.json();
+            if (Array.isArray(list)) {
+              data = list.find((r: any) => !r.draft && !r.prerelease) || null;
+            }
+          }
+        }
+      } finally {
+        clearTimeout(timeoutId);
+      }
+    }
+
+    if (!data || !data.tag_name) {
       if (manual) {
         setUpdateInfo({
+          status: "up_to_date",
           hasUpdate: false,
-          currentVersion: CURRENT_VERSION,
-          latestVersion: CURRENT_VERSION,
-          releaseTitle: "Up to Date",
-          releaseNotes: "Could not retrieve release information from GitHub. You can check the releases page directly.",
+          currentVersion: appVersion,
+          latestVersion: appVersion,
+          releaseTitle: `Lexora v${appVersion}`,
+          releaseNotes: "",
           publishedAt: new Date().toISOString(),
           releaseUrl: REPO_RELEASES_URL,
           assets: [],
@@ -83,20 +142,30 @@ export async function checkForUpdates(manual = false): Promise<void> {
       return;
     }
 
-    const data = await res.json();
-    const latestTag = data.tag_name || `v${CURRENT_VERSION}`;
-    const hasUpdate = isNewerVersion(latestTag, CURRENT_VERSION);
+    const latestTag = data.tag_name || `v${appVersion}`;
+    const latestClean = latestTag.replace(/^v/, "");
+    const cmp = compareVersions(latestTag, appVersion);
 
     // Save timestamp of last check
     localStorage.setItem("lexora_last_update_check", Date.now().toString());
 
-    if (hasUpdate || manual) {
+    let status: UpdateStatus = "up_to_date";
+    if (cmp > 0) {
+      status = "update_available";
+    } else if (cmp < 0) {
+      status = "ahead_of_release";
+    } else {
+      status = "up_to_date";
+    }
+
+    if (status === "update_available" || manual) {
       setUpdateInfo({
-        hasUpdate,
-        currentVersion: CURRENT_VERSION,
-        latestVersion: latestTag.replace(/^v/, ""),
+        status,
+        hasUpdate: status === "update_available",
+        currentVersion: appVersion,
+        latestVersion: latestClean,
         releaseTitle: data.name || latestTag,
-        releaseNotes: data.body || "No release notes provided.",
+        releaseNotes: data.body || "",
         publishedAt: data.published_at || new Date().toISOString(),
         releaseUrl: data.html_url || REPO_RELEASES_URL,
         assets: data.assets || [],
@@ -104,15 +173,16 @@ export async function checkForUpdates(manual = false): Promise<void> {
       });
       setUpdateModalOpen(true);
     }
-  } catch (err) {
+  } catch (err: any) {
     console.warn("Update check failed:", err);
     if (manual) {
       setUpdateInfo({
+        status: "error",
         hasUpdate: false,
-        currentVersion: CURRENT_VERSION,
-        latestVersion: CURRENT_VERSION,
+        currentVersion: appVersion,
+        latestVersion: appVersion,
         releaseTitle: "Network Error",
-        releaseNotes: "Unable to connect to GitHub. Please check your internet connection.",
+        releaseNotes: "Unable to connect to GitHub. Please check your internet connection or try again later.",
         publishedAt: new Date().toISOString(),
         releaseUrl: REPO_RELEASES_URL,
         assets: [],

@@ -71,7 +71,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: ${{ github.ref_name || inputs.tag_name || 'v0.1.1' }}
+          tagName: ${{ github.ref_name || inputs.tag_name || 'v0.1.2' }}
           releaseName: ${{ inputs.release_name || format('Lexora {0}', github.ref_name) }}
           releaseBody: |
             # Lexora Release
@@ -96,3 +96,16 @@ jobs:
           releaseDraft: false
           prerelease: false
           args: ${{ matrix.args }}
+
+      - name: Upload Apple Silicon Aliased Assets (macOS aarch64 only)
+        if: matrix.platform == 'macos-latest' && contains(matrix.args, 'aarch64')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ github.ref_name || inputs.tag_name || 'v0.1.1' }}"
+          DMG=$(find src-tauri/target/aarch64-apple-darwin/release/bundle/dmg -name "*.dmg" 2>/dev/null | head -n 1)
+          if [ -f "$DMG" ]; then
+            AS_NAME="$(basename "$DMG" | sed 's/aarch64/Apple-Silicon/g')"
+            cp "$DMG" "$AS_NAME"
+            gh release upload "$TAG" "$AS_NAME" --clobber || true
+          fi
