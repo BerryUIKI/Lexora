@@ -5,6 +5,21 @@ All notable changes to Lexora will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.2] - 2026-08-25
+
+### Added
+- **Dedicated Language Selection Modal (`LanguageModal`)**:
+  - Independent, full-featured language picker dialog supporting all 9 languages with flags and `Auto (Follow System)` toggle.
+  - Replaced nested dropdown hover trigger to eliminate menu collision and hover-closing glitches.
+- **Robust Update Checker**:
+  - Enhanced GitHub Releases fetch with timeout handling, multi-level fallbacks, and clear user dialogs.
+- **Apple Silicon Native Artifact Naming**:
+  - Automated aliasing in CI to generate `Lexora_0.1.2_Apple-Silicon.dmg`.
+- **Beautified Documentation & Direct Downloads**:
+  - Added 1-click platform download matrix table to `README.md`.
+
+---
+
 ## [0.1.1] - 2026-08-25
 
 ### Added

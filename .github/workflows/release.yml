@@ -71,7 +71,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: ${{ github.ref_name || inputs.tag_name || 'v0.1.1' }}
+          tagName: ${{ github.ref_name || inputs.tag_name || 'v0.1.2' }}
           releaseName: ${{ inputs.release_name || format('Lexora {0}', github.ref_name) }}
           releaseBody: |
             # Lexora Release

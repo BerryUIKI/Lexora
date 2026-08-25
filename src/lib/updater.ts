@@ -1,7 +1,7 @@
 import { createSignal } from "solid-js";
 import { open as openUrl } from "@tauri-apps/plugin-shell";
 
-export const CURRENT_VERSION = "0.1.1";
+export const CURRENT_VERSION = "0.1.2";
 export const GITHUB_REPO = "BerryUIKI/Lexora";
 export const REPO_RELEASES_URL = `https://github.com/${GITHUB_REPO}/releases`;
 export const REPO_API_URL = `https://api.github.com/repos/${GITHUB_REPO}/releases/latest`;
