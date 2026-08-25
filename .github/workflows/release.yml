@@ -71,7 +71,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: ${{ github.ref_name || inputs.tag_name || 'v0.1.0' }}
+          tagName: ${{ github.ref_name || inputs.tag_name || 'v0.1.1' }}
           releaseName: ${{ inputs.release_name || format('Lexora {0}', github.ref_name) }}
           releaseBody: |
             # Lexora Release
@@ -79,7 +79,10 @@ jobs:
             **A Typora-style, high-performance Markdown reader & in-place editor built with Tauri 2 + Rust + SolidJS.**
 
             ### ✨ Highlights in this Release:
-            - **VS Code-Style Top Menu Bar**: Clean, theme-integrated `File`, `Edit`, `View`, `Window`, and `Help` menus with full keyboard shortcuts and breadcrumbs.
+            - **9-Language Internationalization (i18n)**: Native localization support for English, 简体中文, 繁體中文, 日本語, 한국어, Deutsch, Français, Español, and Русский with automatic system language detection and instant live switching.
+            - **Top MenuBar Language Switcher**: Added dedicated `Help -> Language (语言)` submenu with native language names and `Auto (Follow System)` option.
+            - **Open-Source License Migration**: Migrated repository license to **GNU Affero General Public License v3.0 (AGPL-3.0)**.
+            - **VS Code-Style Custom Title & Menu Bar**: Frameless window with custom draggable titlebar, min/max/close controls, and `File`, `Edit`, `View`, `Window`, `Help` menus.
             - **Windows `.md` Shell File Associations**: Auto-registers `.md`, `.markdown`, `.mdx`, and `.txt` file types; opens documents directly on double-click in Windows Explorer.
             - **Tri-State Display Modes**: Instantly toggle between **Reading Mode** (read-only rendered HTML), **Writing Mode** (Typora-style in-place WYSIWYG), and **Code Mode** (source code with synchronized line numbers).
             - **Monochrome Vector UI**: Pure theme-adaptive vector iconography (`stroke="currentColor"`) across status bar, toolbar, tabs, and outline sidebar.

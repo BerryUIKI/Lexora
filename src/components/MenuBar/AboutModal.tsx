@@ -43,7 +43,7 @@ export const AboutModal: Component<AboutModalProps> = (props) => {
             <div>
               <h2 class="text-2xl font-bold tracking-tight">Lexora</h2>
               <p class="text-xs text-[var(--color-text-secondary)] font-mono mt-0.5">
-                Version 0.1.0 (Production Release)
+                Version 0.1.1 (Production Release)
               </p>
             </div>
           </div>

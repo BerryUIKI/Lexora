@@ -1,6 +1,6 @@
 {
   "name": "lexora",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A Typora-style Markdown reader-editor built on Tauri + Rust",
   "type": "module",
   "license": "AGPL-3.0-only",

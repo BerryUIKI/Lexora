@@ -4,7 +4,7 @@
 
 **A Typora-style, high-performance Markdown reader & editor built with Tauri 2 + Rust + SolidJS.**
 
-[![Release](https://img.shields.io/badge/release-v1.5.0-4361ee.svg?style=flat-square)](https://github.com/BerryUIKI/Lexora/releases)
+[![Release](https://img.shields.io/badge/release-v0.1.1-4361ee.svg?style=flat-square)](https://github.com/BerryUIKI/Lexora/releases)
 [![License: AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-blue.svg?style=flat-square)](LICENSE)
 [![Tauri 2](https://img.shields.io/badge/Tauri-2.0-FFC131?style=flat-square&logo=tauri&logoColor=white)](https://tauri.app)
 [![Rust](https://img.shields.io/badge/Rust-1.85+-DEA584?style=flat-square&logo=rust&logoColor=white)](https://www.rust-lang.org/)
@@ -78,8 +78,8 @@ Built on **Tauri 2** and **Rust** with a fine-grained reactive **SolidJS** front
 ### Windows
 Download the latest binaries from our [**GitHub Releases**](https://github.com/BerryUIKI/Lexora/releases):
 
-- **Standard Installer (Recommended)**: [`Lexora_0.1.0_x64-setup.exe`](https://github.com/BerryUIKI/Lexora/releases) *(3.62 MB — auto-registers `.md` file associations)*
-- **Enterprise MSI Package**: [`Lexora_0.1.0_x64_en-US.msi`](https://github.com/BerryUIKI/Lexora/releases) *(5.19 MB)*
+- **Standard Installer (Recommended)**: [`Lexora_0.1.1_x64-setup.exe`](https://github.com/BerryUIKI/Lexora/releases) *(3.62 MB — auto-registers `.md` file associations)*
+- **Enterprise MSI Package**: [`Lexora_0.1.1_x64_en-US.msi`](https://github.com/BerryUIKI/Lexora/releases) *(5.19 MB)*
 - **Standalone Portable**: [`lexora.exe`](https://github.com/BerryUIKI/Lexora/releases) *(run directly without installation)*
 
 ---
