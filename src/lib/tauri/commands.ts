@@ -79,6 +79,13 @@ export async function stopWatchingFile(): Promise<void> {
 }
 
 /**
+ * Get command line file arguments passed when opening files from Windows Explorer.
+ */
+export async function getCliArgs(): Promise<string[]> {
+  return invoke<string[]>("get_cli_args");
+}
+
+/**
  * Greet command — used to verify IPC round-trip works.
  */
 export async function greet(name: string): Promise<string> {

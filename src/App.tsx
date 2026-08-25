@@ -1,6 +1,7 @@
 import { Component, createSignal, Show, onMount, onCleanup } from "solid-js";
 import { open, save } from "@tauri-apps/plugin-dialog";
 import { getCurrentWebview } from "@tauri-apps/api/webview";
+import { MenuBar } from "./components/MenuBar/MenuBar";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { TabBar } from "./components/Tabs/TabBar";
 import { QuickSwitcher } from "./components/QuickSwitcher/QuickSwitcher";
@@ -28,6 +29,8 @@ import {
   openTabs,
   setQuickSwitcherOpen,
   syncCurrentDocumentToTab,
+  setWorkspaceTree,
+  setSidebarMode,
 } from "./store/files";
 import { zenMode, setZenMode, focusMode, setFocusMode } from "./store/settings";
 import {
@@ -35,6 +38,9 @@ import {
   saveFile,
   startWatchingFile,
   stopWatchingFile,
+  exportDocument,
+  listDirectoryTree,
+  getCliArgs,
 } from "./lib/tauri/commands";
 import { onFileChanged } from "./lib/tauri/events";
 import { isDropOverTabBar, processFileDrop } from "./lib/dnd";
@@ -70,6 +76,25 @@ const App: Component = () => {
       }
     } catch (err) {
       console.error("Failed to open file dialog:", err);
+    }
+  };
+
+  // Handle opening a workspace folder
+  const handleOpenFolder = async () => {
+    try {
+      const selected = await open({
+        directory: true,
+        multiple: false,
+      });
+
+      if (selected && typeof selected === "string") {
+        const tree = await listDirectoryTree(selected);
+        setWorkspaceTree(tree);
+        setSidebarMode("files");
+        setSidebarOpen(true);
+      }
+    } catch (err) {
+      console.error("Failed to open folder:", err);
     }
   };
 
@@ -142,6 +167,23 @@ const App: Component = () => {
     }
   };
 
+  // Handle exporting the current document to standalone HTML
+  const handleExport = async () => {
+    const doc = currentDocument();
+    try {
+      const selected = await save({
+        defaultPath: `${doc.filename.replace(/\.md$/, "")}.html`,
+        filters: [{ name: "HTML Document", extensions: ["html"] }],
+      });
+      if (selected && typeof selected === "string") {
+        await exportDocument(doc.content, doc.filename, selected);
+        alert(`Exported document successfully to:\n${selected}`);
+      }
+    } catch (err) {
+      console.error("Export error:", err);
+    }
+  };
+
   // Handle creating a new document tab
   const handleNewDocument = () => {
     const newDoc = {
@@ -165,6 +207,18 @@ const App: Component = () => {
       await loadFile(doc.path);
     }
   };
+
+  // Check for CLI startup file arguments (Windows file association opening)
+  onMount(async () => {
+    try {
+      const cliArgs = await getCliArgs();
+      if (cliArgs && cliArgs.length > 0) {
+        await loadFile(cliArgs[0]);
+      }
+    } catch (e) {
+      console.warn("CLI args check error:", e);
+    }
+  });
 
   // Set up auto-save interval (every 30 seconds for dirty files with path)
   onMount(() => {
@@ -274,7 +328,7 @@ const App: Component = () => {
       e.preventDefault();
       setSearchModalOpen((prev) => !prev);
     } else if (isCmd && e.shiftKey && (e.key === "B" || e.key === "b")) {
-      // Toggle sidebar shortcut migrated from Ctrl+B to Ctrl+Shift+B
+      // Toggle sidebar shortcut migrated to Ctrl+Shift+B
       e.preventDefault();
       setSidebarOpen((prev) => !prev);
     } else if (isCmd && e.shiftKey && (e.key === "X" || e.key === "x")) {
@@ -315,6 +369,9 @@ const App: Component = () => {
     } else if (isCmd && e.key === "s") {
       e.preventDefault();
       handleSaveFile();
+    } else if (isCmd && e.key === "e") {
+      e.preventDefault();
+      handleExport();
     } else if (isCmd && e.key === "n") {
       e.preventDefault();
       handleNewDocument();
@@ -347,6 +404,22 @@ const App: Component = () => {
       class={`flex flex-col h-screen relative ${zenMode() ? "zen-mode" : ""} ${focusMode() ? "focus-mode" : ""}`}
       style={{ background: "var(--color-bg-primary)", color: "var(--color-text-primary)" }}
     >
+      {/* Top VS Code-Style Menu Bar */}
+      <Show when={!zenMode()}>
+        <MenuBar
+          onNewDocument={handleNewDocument}
+          onOpenFile={handleOpenFile}
+          onOpenFolder={handleOpenFolder}
+          onSaveFile={handleSaveFile}
+          onExport={handleExport}
+          onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
+          onOpenQuickSwitcher={() => setQuickSwitcherOpen(true)}
+          onOpenSearchModal={() => setSearchModalOpen(true)}
+          onOpenFindReplace={() => setFindReplaceOpen(true)}
+          onOpenRecent={loadFile}
+        />
+      </Show>
+
       {/* Full-window drop overlay when no file is open (Monochrome SVG) */}
       <Show when={dragHoverTarget() === "window"}>
         <div class="fixed inset-0 z-50 bg-[var(--color-bg-primary)]/85 backdrop-blur-xs flex items-center justify-center border-3 border-dashed border-[var(--color-accent)] m-4 rounded-2xl pointer-events-none transition-all animate-in fade-in">
