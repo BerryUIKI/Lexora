@@ -4,8 +4,8 @@
 
 **A Typora-style, high-performance Markdown reader & editor built with Tauri 2 + Rust + SolidJS.**
 
-[![Release](https://img.shields.io/badge/release-v1.5.0-4361ee.svg?style=flat-square)](https://github.com/BerryUIKI/Lexora/releases)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
+[![Release](https://img.shields.io/badge/release-v0.1.1-4361ee.svg?style=flat-square)](https://github.com/BerryUIKI/Lexora/releases)
+[![License: AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-blue.svg?style=flat-square)](LICENSE)
 [![Tauri 2](https://img.shields.io/badge/Tauri-2.0-FFC131?style=flat-square&logo=tauri&logoColor=white)](https://tauri.app)
 [![Rust](https://img.shields.io/badge/Rust-1.85+-DEA584?style=flat-square&logo=rust&logoColor=white)](https://www.rust-lang.org/)
 [![SolidJS](https://img.shields.io/badge/SolidJS-1.9+-2C4F7C?style=flat-square&logo=solid&logoColor=white)](https://www.solidjs.com/)
@@ -69,7 +69,7 @@ Built on **Tauri 2** and **Rust** with a fine-grained reactive **SolidJS** front
 | 📊 **Mermaid Diagrams & Math** | Live rendering containers for `mermaid` diagrams and LaTeX math blocks | ✅ Complete |
 | 🧘 **Zen & Focus Modes** | Full-screen distraction-free layout (<kbd>F11</kbd> / <kbd>Ctrl+Shift+Z</kbd>) | ✅ Complete |
 | 🏠 **Welcome Hub Dashboard** | Minimalist home dashboard with quick start, recent files history, and shortcut cheat sheet | ✅ Complete |
-| 🌍 **Multi-Language Localization** | Comprehensive i18n roadmap supporting English, Chinese, Japanese, German, etc. | 🔄 In Progress |
+| 🌍 **Multi-Language Localization (i18n)** | Native support for 9 languages (EN, 中文简体/繁體, 日本語, 한국어, DE, FR, ES, RU) with auto-detect | ✅ Complete |
 
 ---
 
@@ -78,8 +78,8 @@ Built on **Tauri 2** and **Rust** with a fine-grained reactive **SolidJS** front
 ### Windows
 Download the latest binaries from our [**GitHub Releases**](https://github.com/BerryUIKI/Lexora/releases):
 
-- **Standard Installer (Recommended)**: [`Lexora_0.1.0_x64-setup.exe`](https://github.com/BerryUIKI/Lexora/releases) *(3.62 MB — auto-registers `.md` file associations)*
-- **Enterprise MSI Package**: [`Lexora_0.1.0_x64_en-US.msi`](https://github.com/BerryUIKI/Lexora/releases) *(5.19 MB)*
+- **Standard Installer (Recommended)**: [`Lexora_0.1.1_x64-setup.exe`](https://github.com/BerryUIKI/Lexora/releases) *(3.62 MB — auto-registers `.md` file associations)*
+- **Enterprise MSI Package**: [`Lexora_0.1.1_x64_en-US.msi`](https://github.com/BerryUIKI/Lexora/releases) *(5.19 MB)*
 - **Standalone Portable**: [`lexora.exe`](https://github.com/BerryUIKI/Lexora/releases) *(run directly without installation)*
 
 ---
@@ -173,5 +173,5 @@ Contributions, feature requests, and bug reports are warmly welcome!
 
 ## 📄 License
 
-Lexora is open-source software licensed under the [MIT License](LICENSE).
+Lexora is open-source software licensed under the [GNU Affero General Public License v3.0 (AGPL-3.0)](LICENSE).
 Copyright &copy; 2026 Lexora Contributors.

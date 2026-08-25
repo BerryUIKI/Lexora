@@ -1,5 +1,6 @@
 import { Component, For, Show } from "solid-js";
 import { recentFiles } from "../../store/files";
+import { t } from "../../i18n";
 
 export interface WelcomeHubProps {
   onNewDocument: () => void;
@@ -8,17 +9,17 @@ export interface WelcomeHubProps {
 }
 
 export const WelcomeHub: Component<WelcomeHubProps> = (props) => {
-  const shortcuts = [
-    { key: "Ctrl + N", desc: "New Document" },
-    { key: "Ctrl + O", desc: "Open File" },
-    { key: "Ctrl + S", desc: "Save File" },
-    { key: "Ctrl + /", desc: "Switch Reading / Writing / Code" },
-    { key: "Ctrl + B", desc: "Bold Text" },
-    { key: "Ctrl + I", desc: "Italic Text" },
-    { key: "Ctrl + 1~6", desc: "Heading Levels" },
-    { key: "Ctrl + 0", desc: "Paragraph / Normal Text" },
-    { key: "Ctrl + Shift + B", desc: "Toggle Outline Sidebar" },
-    { key: "Ctrl + P", desc: "Quick Document Switcher" },
+  const shortcuts = () => [
+    { key: "Ctrl + N", desc: t("file.newDocument") },
+    { key: "Ctrl + O", desc: t("file.openFile") },
+    { key: "Ctrl + S", desc: t("file.save") },
+    { key: "Ctrl + /", desc: t("view.readingMode") + " / " + t("view.writingMode") + " / " + t("view.codeMode") },
+    { key: "Ctrl + B", desc: t("edit.bold") },
+    { key: "Ctrl + I", desc: t("edit.italic") },
+    { key: "Ctrl + 1~6", desc: t("edit.heading") },
+    { key: "Ctrl + 0", desc: t("edit.paragraph") },
+    { key: "Ctrl + Shift + B", desc: t("view.toggleOutline") },
+    { key: "Ctrl + P", desc: t("view.quickSwitcher") },
   ];
 
   const handleContainerDblClick = (e: MouseEvent) => {
@@ -32,7 +33,7 @@ export const WelcomeHub: Component<WelcomeHubProps> = (props) => {
     <div
       class="h-full overflow-y-auto flex items-center justify-center p-8 bg-[var(--color-bg-primary)] select-none no-select cursor-default"
       onDblClick={handleContainerDblClick}
-      title="Double click empty area to create a new document"
+      title={t("welcome.dblClickHint")}
     >
       <div class="max-w-3xl w-full flex flex-col items-center text-center space-y-8 animate-in fade-in duration-300">
         {/* App Branding */}
@@ -44,10 +45,10 @@ export const WelcomeHub: Component<WelcomeHubProps> = (props) => {
             </svg>
           </div>
           <h1 class="text-3xl font-bold tracking-tight text-[var(--color-text-primary)]">
-            Lexora
+            {t("welcome.title")}
           </h1>
           <p class="text-xs text-[var(--color-text-secondary)] font-medium tracking-wide">
-            Minimalist Typora-style Markdown Reader & Editor
+            {t("welcome.subtitle")}
           </p>
         </div>
 
@@ -61,7 +62,7 @@ export const WelcomeHub: Component<WelcomeHubProps> = (props) => {
               <line x1="12" y1="5" x2="12" y2="19" />
               <line x1="5" y1="12" x2="19" y2="12" />
             </svg>
-            <span>New Document</span>
+            <span>{t("welcome.newDocument")}</span>
             <span class="text-[10px] opacity-70 font-mono ml-1">Ctrl+N</span>
           </button>
 
@@ -72,7 +73,7 @@ export const WelcomeHub: Component<WelcomeHubProps> = (props) => {
             <svg class="w-4 h-4 text-[var(--color-text-secondary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
             </svg>
-            <span>Open File</span>
+            <span>{t("welcome.openFile")}</span>
             <span class="text-[10px] opacity-50 font-mono ml-1">Ctrl+O</span>
           </button>
 
@@ -85,7 +86,7 @@ export const WelcomeHub: Component<WelcomeHubProps> = (props) => {
             <svg class="w-4 h-4 text-[var(--color-text-secondary)]" viewBox="0 0 24 24" fill="currentColor">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
             </svg>
-            <span>GitHub</span>
+            <span>{t("welcome.github")}</span>
           </a>
         </div>
 
@@ -98,7 +99,7 @@ export const WelcomeHub: Component<WelcomeHubProps> = (props) => {
                 <circle cx="12" cy="12" r="10" />
                 <polyline points="12 6 12 12 16 14" />
               </svg>
-              <span>Recent Files</span>
+              <span>{t("welcome.recentFiles")}</span>
             </h3>
 
             <div class="flex-1 overflow-y-auto space-y-1 pr-1">
@@ -106,14 +107,14 @@ export const WelcomeHub: Component<WelcomeHubProps> = (props) => {
                 when={recentFiles().length > 0}
                 fallback={
                   <div class="h-full flex items-center justify-center text-xs text-[var(--color-text-secondary)] italic">
-                    No recent files yet. Drag or open a file to begin.
+                    {t("welcome.noRecentFiles")}
                   </div>
                 }
               >
                 <For each={recentFiles()}>
                   {(file) => (
                     <button
-                      class="w-full text-left p-2 rounded-lg hover:bg-[var(--color-hover)] transition-colors group flex items-center justify-between"
+                      class="w-full text-left p-2 rounded-lg hover:bg-[var(--color-hover)] transition-colors group flex items-center justify-between recent-file-item"
                       onClick={() => props.onOpenRecent(file.path)}
                     >
                       <div class="truncate pr-2">
@@ -141,11 +142,11 @@ export const WelcomeHub: Component<WelcomeHubProps> = (props) => {
                 <rect x="2" y="4" width="20" height="16" rx="2" />
                 <path d="M6 8h.001M10 8h.001M14 8h.001M18 8h.001M8 12h.001M12 12h.001M16 12h.001M6 16h12" />
               </svg>
-              <span>Shortcuts Reference</span>
+              <span>{t("welcome.shortcuts")}</span>
             </h3>
 
             <div class="flex-1 overflow-y-auto space-y-1.5 pr-1">
-              <For each={shortcuts}>
+              <For each={shortcuts()}>
                 {(sc) => (
                   <div class="flex items-center justify-between text-xs py-1 border-b border-[var(--color-border)]/40 last:border-0">
                     <span class="text-[var(--color-text-secondary)]">{sc.desc}</span>
@@ -166,7 +167,7 @@ export const WelcomeHub: Component<WelcomeHubProps> = (props) => {
             <polyline points="7 10 12 15 17 10" />
             <line x1="12" y1="15" x2="12" y2="3" />
           </svg>
-          <span>Tip: Drag and drop any Markdown file directly into this window to open</span>
+          <span>{t("welcome.tip")}</span>
         </div>
       </div>
     </div>

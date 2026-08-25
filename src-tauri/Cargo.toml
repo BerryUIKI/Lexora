@@ -1,10 +1,10 @@
 [package]
 name = "lexora"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 rust-version = "1.85"
 description = "A Typora-style Markdown reader-editor"
-license = "MIT"
+license = "AGPL-3.0-only"
 
 [lib]
 name = "lexora_lib"
