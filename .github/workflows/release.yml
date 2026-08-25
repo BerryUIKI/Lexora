@@ -69,8 +69,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: ${{ github.ref_name || inputs.tag_name || 'v0.1.3' }}
-          releaseName: ${{ inputs.release_name || format('Lexora {0}', github.ref_name) }}
+          tagName: ${{ github.event_name == 'workflow_dispatch' && inputs.tag_name || github.ref_name }}
+          releaseName: ${{ github.event_name == 'workflow_dispatch' && inputs.release_name || format('Lexora {0}', github.ref_name) }}
           releaseBody: |
             # Lexora Release
 
