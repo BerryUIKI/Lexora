@@ -86,6 +86,34 @@ export async function getCliArgs(): Promise<string[]> {
 }
 
 /**
+ * Minimize the application window.
+ */
+export async function minimizeWindow(): Promise<void> {
+  return invoke<void>("minimize_window");
+}
+
+/**
+ * Toggle maximize / restore for the application window.
+ */
+export async function toggleMaximizeWindow(): Promise<void> {
+  return invoke<void>("toggle_maximize_window");
+}
+
+/**
+ * Close the application window.
+ */
+export async function closeWindow(): Promise<void> {
+  return invoke<void>("close_window");
+}
+
+/**
+ * Check if the application window is currently maximized.
+ */
+export async function isWindowMaximized(): Promise<boolean> {
+  return invoke<boolean>("is_window_maximized");
+}
+
+/**
  * Greet command — used to verify IPC round-trip works.
  */
 export async function greet(name: string): Promise<string> {
