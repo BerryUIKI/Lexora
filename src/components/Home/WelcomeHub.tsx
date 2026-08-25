@@ -21,8 +21,19 @@ export const WelcomeHub: Component<WelcomeHubProps> = (props) => {
     { key: "Ctrl + P", desc: "Quick Document Switcher" },
   ];
 
+  const handleContainerDblClick = (e: MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (!target.closest("button, a, input, textarea, [role='button'], .recent-file-item, .no-dblclick")) {
+      props.onNewDocument();
+    }
+  };
+
   return (
-    <div class="h-full overflow-y-auto flex items-center justify-center p-8 bg-[var(--color-bg-primary)] select-none no-select">
+    <div
+      class="h-full overflow-y-auto flex items-center justify-center p-8 bg-[var(--color-bg-primary)] select-none no-select cursor-default"
+      onDblClick={handleContainerDblClick}
+      title="Double click empty area to create a new document"
+    >
       <div class="max-w-3xl w-full flex flex-col items-center text-center space-y-8 animate-in fade-in duration-300">
         {/* App Branding */}
         <div class="space-y-2">
