@@ -1555,25 +1555,67 @@ ${langOptionsHtml}
     });
     document.addEventListener('click', () => menu.classList.add('hidden'));
 
-    ${isRoot ? `// First visit language auto-routing
-    const savedLang = localStorage.getItem('lexora_user_lang');
-    if (!savedLang && !sessionStorage.getItem('lexora_redirected')) {
-      const navLang = (navigator.language || '').toLowerCase();
-      let target = null;
-      if (navLang.startsWith('zh-tw') || navLang.startsWith('zh-hk') || navLang.startsWith('zh-mo')) target = 'zh-TW';
-      else if (navLang.startsWith('zh')) target = 'zh-CN';
-      else if (navLang.startsWith('ja')) target = 'ja';
-      else if (navLang.startsWith('ko')) target = 'ko';
-      else if (navLang.startsWith('de')) target = 'de';
-      else if (navLang.startsWith('fr')) target = 'fr';
-      else if (navLang.startsWith('es')) target = 'es';
-      else if (navLang.startsWith('ru')) target = 'ru';
-
-      if (target) {
-        sessionStorage.setItem('lexora_redirected', 'true');
-        window.location.replace('./' + target + '/');
+    ${isRoot ? `// System & Browser Language Detection Logic:
+    // 1. User manual selection (localStorage) takes top priority
+    // 2. Detect browser/system languages (navigator.languages / navigator.language)
+    // 3. Fallback to English (no redirect) if undetected or unsupported
+    (function detectLanguage() {
+      const savedLang = localStorage.getItem('lexora_user_lang');
+      if (savedLang) {
+        // If user explicitly picked English, stay on root
+        if (savedLang !== 'en' && !sessionStorage.getItem('lexora_navigated')) {
+          sessionStorage.setItem('lexora_navigated', '1');
+          window.location.replace('./' + savedLang + '/');
+        }
+        return;
       }
-    }` : ''}
+
+      // First visit: inspect browser/system language preferences
+      if (sessionStorage.getItem('lexora_navigated')) return;
+
+      const candidateLangs = (navigator.languages && navigator.languages.length)
+        ? navigator.languages
+        : [navigator.language || navigator.userLanguage || 'en'];
+
+      let detected = 'en'; // default fallback
+      for (let i = 0; i < candidateLangs.length; i++) {
+        const l = (candidateLangs[i] || '').toLowerCase();
+        if (l.startsWith('zh-tw') || l.startsWith('zh-hk') || l.startsWith('zh-mo') || l.includes('hant')) {
+          detected = 'zh-TW';
+          break;
+        } else if (l.startsWith('zh')) {
+          detected = 'zh-CN';
+          break;
+        } else if (l.startsWith('ja')) {
+          detected = 'ja';
+          break;
+        } else if (l.startsWith('ko')) {
+          detected = 'ko';
+          break;
+        } else if (l.startsWith('de')) {
+          detected = 'de';
+          break;
+        } else if (l.startsWith('fr')) {
+          detected = 'fr';
+          break;
+        } else if (l.startsWith('es')) {
+          detected = 'es';
+          break;
+        } else if (l.startsWith('ru')) {
+          detected = 'ru';
+          break;
+        } else if (l.startsWith('en')) {
+          detected = 'en';
+          break;
+        }
+      }
+
+      // If detected non-English on first visit, redirect to corresponding localized path
+      if (detected !== 'en') {
+        sessionStorage.setItem('lexora_navigated', '1');
+        window.location.replace('./' + detected + '/');
+      }
+    })();` : ''}
 
     // OS detection: highlight recommended card
     const ua = navigator.userAgent.toLowerCase();
