@@ -3,7 +3,7 @@ import { TranslationDictionary } from "../types";
 export const ko: TranslationDictionary = {
   app: {
     name: "Lexora",
-    tagline: "미니멀 Typora 스타일 마크다운 뷰어 & 에디터",
+    tagline: "미니멀 인플레이스 마크다운 뷰어 & 에디터",
     description: "Tauri 2, Rust, SolidJS로 제작된 로컬 우선 미니멀 마크다운 뷰어 및 실시간 WYSIWYG 에디터.",
     copyright: "저작권 © 2026 Lexora Contributors",
     licenseNotice: "GNU AGPL-3.0 라이선스",
@@ -85,7 +85,7 @@ export const ko: TranslationDictionary = {
   },
   welcome: {
     title: "Lexora",
-    subtitle: "미니멀 Typora 스타일 마크다운 뷰어 & 에디터",
+    subtitle: "미니멀 인플레이스 마크다운 뷰어 & 에디터",
     newDocument: "새 문서",
     openFile: "파일 열기",
     github: "GitHub",

@@ -4,7 +4,7 @@
 
 # ✨ Lexora
 
-**Un lector y editor Markdown WYSIWYG local, ultrarrápido y al estilo de Typora.**
+**Un lector y editor Markdown WYSIWYG local, ultrarrápido y fluido.**
 
 [![Release](https://img.shields.io/badge/release-latest-4361ee.svg?style=for-the-badge)](https://github.com/BerryUIKI/Lexora/releases/latest)
 [![License: AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-10b981.svg?style=for-the-badge)](LICENSE)

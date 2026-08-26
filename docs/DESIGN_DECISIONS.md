@@ -37,7 +37,7 @@ Use **SolidJS** instead of React as the primary frontend UI framework.
 ## ADR-002: Milkdown over TipTap for Editor Core
 
 ### Context
-Lexora aims to deliver a Typora-like seamless WYSIWYG experience where users edit Markdown natively without switching between raw code and split-pane preview modes. Most rich text editors (such as TipTap, Slate, or Quill) model their document state internally as JSON/HTML and rely on lossy serialization layers to convert back and forth to Markdown.
+Lexora aims to deliver a seamless in-place WYSIWYG experience where users edit Markdown natively without switching between raw code and split-pane preview modes. Most rich text editors (such as TipTap, Slate, or Quill) model their document state internally as JSON/HTML and rely on lossy serialization layers to convert back and forth to Markdown.
 
 ### Decision
 Adopt **Milkdown** (built on top of ProseMirror) as the core editor engine rather than TipTap.
@@ -45,7 +45,7 @@ Adopt **Milkdown** (built on top of ProseMirror) as the core editor engine rathe
 ### Rationale
 - **Markdown-First Internal State**: Milkdown uses a Markdown Abstract Syntax Tree (AST) powered by `remark` as its native data representation. Round-tripping between disk and the editor surface is lossless and preserves custom Markdown syntax.
 - **ProseMirror Foundation**: Built on the proven ProseMirror transaction model, ensuring reliable undo/redo histories, robust selection handling, and extensible plugin architecture.
-- **Typora-Style Interaction**: Milkdown is architected from the ground up for seamless inline Markdown editing.
+- **In-Place WYSIWYG Interaction**: Milkdown is architected from the ground up for seamless inline Markdown editing.
 
 ### Consequences & Trade-offs
 - **Consequences**: Complex custom ProseMirror schema extensions require familiarity with both Milkdown's plugin API and ProseMirror's transaction pipeline.

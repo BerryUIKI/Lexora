@@ -6,7 +6,7 @@ This document provides context, architectural constraints, project conventions, 
 
 ## 🧠 Architectural Mental Model
 
-Lexora is a **local-first, Typora-style Markdown reader & editor** built on **Tauri 2 + Rust + SolidJS**.
+Lexora is a **local-first, in-place WYSIWYG Markdown reader & editor** built on **Tauri 2 + Rust + SolidJS**.
 
 ```
 ┌────────────────────────────────────────────────────────┐

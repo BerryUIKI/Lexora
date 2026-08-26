@@ -4,7 +4,7 @@
 
 # ✨ Lexora
 
-**A Typora-style, local-first, high-performance Markdown reader & in-place WYSIWYG editor.**
+**A seamless, local-first, high-performance Markdown reader & in-place WYSIWYG editor.**
 
 [![Release](https://img.shields.io/badge/release-latest-4361ee.svg?style=for-the-badge)](https://github.com/BerryUIKI/Lexora/releases/latest)
 [![License: AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-10b981.svg?style=for-the-badge)](LICENSE)
@@ -72,7 +72,7 @@ Built on **Tauri 2** and **Rust** with a fine-grained reactive **SolidJS** front
 | 🌐 **9-Language i18n System** | Native support for **English**, **简体中文**, **繁體中文**, **日本語**, **한국어**, **Deutsch**, **Français**, **Español**, and **Русский** with OS auto-detection | ✅ Complete |
 | 🪟 **Platform-Native Window Chrome** | Theme-matched menus with compact custom controls on Windows/Linux and native traffic-light window controls on macOS | ✅ Complete |
 | 🏷️ **Windows `.md` File Association** | Automatically associates `.md`, `.markdown`, `.mdx`, and `.txt` files; double-click in Windows Explorer to open directly | ✅ Complete |
-| 🔄 **Tri-State Display Modes** | Quickly switch between **Reading** (read-only), **Writing** (Typora-style WYSIWYG), and **Code** (source code with line sync) | ✅ Complete |
+| 🔄 **Tri-State Display Modes** | Quickly switch between **Reading** (read-only), **Writing** (in-place WYSIWYG), and **Code** (source code with line sync) | ✅ Complete |
 | 📥 **Intelligent Drag & Drop** | Drag file into window to open; drag onto tab bar for new tabs; drag into text to insert formatted Markdown links | ✅ Complete |
 | ✍️ **In-Place Formatting** | Format selections directly with standard shortcuts (<kbd>Ctrl+B</kbd> for bold, <kbd>Ctrl+0</kbd> for paragraph, <kbd>Ctrl+1~6</kbd> for headings) | ✅ Complete |
 | 🔲 **Monochrome Vector UI** | Pure, minimalist theme-adaptive vector SVGs (`stroke="currentColor"`) that keep focus on your text | ✅ Complete |

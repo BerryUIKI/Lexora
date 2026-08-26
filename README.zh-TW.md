@@ -4,7 +4,7 @@
 
 # ✨ Lexora
 
-**一款 Typora 風格、本機優先、極速響應的 Markdown 閱讀與原位所見即所得編輯器。**
+**一款本機優先、極速響應的 Markdown 閱讀與原位所見即所得編輯器。**
 
 [![Release](https://img.shields.io/badge/release-latest-4361ee.svg?style=for-the-badge)](https://github.com/BerryUIKI/Lexora/releases/latest)
 [![License: AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-10b981.svg?style=for-the-badge)](LICENSE)
@@ -38,7 +38,7 @@
 
 ## 📖 專案簡介
 
-**Lexora** 是一款為作家、開發者與學者量身打造的開源 Markdown 編輯器。它徹底摒棄傳統編輯器“左邊寫程式碼、右邊看預覽”的分割視窗模式，採用如同 Typora 的原位即時排版渲染。
+**Lexora** 是一款為作家、開發者與學者量身打造的開源 Markdown 編輯器。它徹底摒棄傳統編輯器“左邊寫程式碼、右邊看預覽”的分割視窗模式，採用原位即時排版渲染。
 
 基於 **Tauri 2 + Rust + SolidJS** 現代技術棧構建，擁有流暢原生效能與極簡沉浸的寫作體驗。
 

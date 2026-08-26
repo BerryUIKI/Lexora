@@ -1,6 +1,6 @@
 # Lexora — Project Milestones & Release Schedule
 
-This document tracks the strategic milestones, deliverables, acceptance criteria, and progress for **Lexora** — the Typora-style Markdown reader-editor built on **Tauri 2 + Rust + SolidJS**.
+This document tracks the strategic milestones, deliverables, acceptance criteria, and progress for **Lexora** — the seamless in-place Markdown reader-editor built on **Tauri 2 + Rust + SolidJS**.
 
 ---
 
@@ -60,7 +60,7 @@ gantt
 ### Milestone 2: In-Place WYSIWYG Editing & Tri-State Display Modes (v0.2.0)
 - **Status**: ✅ Completed
 - **Target Date**: 2026-08-24
-- **Objective**: Introduce Typora-style seamless inline Markdown editing and three rapidly toggleable display modes.
+- **Objective**: Introduce seamless inline Markdown editing and three rapidly toggleable display modes.
 - **Key Deliverables**:
   - [x] **Tri-State Display Mode Switcher** (Status bar toggle & shortcut <kbd>Ctrl+/</kbd>):
     - 📖 **Reading**: Read-only rendering of GFM Markdown text.

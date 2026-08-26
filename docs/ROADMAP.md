@@ -49,7 +49,7 @@ gantt
 ### Phase 2 — In-Place WYSIWYG & Display Modes (~1–2 weeks) :white_check_mark: Completed
 - [x] **Three Tri-State Display Modes** (switchable via bottom status bar & shortcuts):
   1. **Reading Mode** (📖): Read-only view rendering clean GFM Markdown text.
-  2. **Writing Mode** (✍️): Typora-style in-place WYSIWYG editing (reveal syntax on cursor focus, render on blur).
+  2. **Writing Mode** (✍️): In-place WYSIWYG editing (reveal syntax on cursor focus, render on blur).
   3. **Code Mode** (💻): Raw plain-text Markdown source view with monospace font and line numbers.
 - [x] Milkdown v7 editor integration inside SolidJS lifecycle.
 - [x] Full keyboard shortcut support (<kbd>Ctrl+B</kbd>, <kbd>Ctrl+I</kbd>, <kbd>Ctrl+K</kbd>, <kbd>Ctrl+1..6</kbd>).
@@ -125,7 +125,7 @@ gantt
 
 | Category | Features | Target Phase |
 | :--- | :--- | :--- |
-| **Must Have**<br>*(Critical for MVP)* | - Typora-style WYSIWYG editor via Milkdown<br>- Atomic file open / save operations<br>- Tabbed interface & dirty state tracking<br>- Workspace folder navigation & file tree<br>- Dark / Light mode switching<br>- Status bar (word count, line/column)<br>- Strict security capabilities & local-only storage<br>- Custom top Menu Bar (VS Code style)<br>- Windows `.md` default file associations | Phase 0–5 |
+| **Must Have**<br>*(Critical for MVP)* | - In-place WYSIWYG editor via Milkdown<br>- Atomic file open / save operations<br>- Tabbed interface & dirty state tracking<br>- Workspace folder navigation & file tree<br>- Dark / Light mode switching<br>- Status bar (word count, line/column)<br>- Strict security capabilities & local-only storage<br>- Custom top Menu Bar (VS Code style)<br>- Windows `.md` default file associations | Phase 0–5 |
 | **Should Have**<br>*(Important for v1.1)* | - Find and Replace toolbar<br>- HTML export engine<br>- Interactive table insertion<br>- Document outline / TOC sidebar with smooth scrolling<br>- Auto-save timer<br>- Multi-language i18n localization | Phase 6, 8 |
 | **Could Have**<br>*(Desirable for v1.2+)* | - KaTeX math rendering<br>- Mermaid diagram rendering<br>- Typewriter mode & Zen mode<br>- Custom user themes & CSS overrides<br>- Global workspace full-text search<br>- Vim keybinding mode | Phase 7 |
 | **Won't Have**<br>*(Out of Scope)* | - Cloud sync backend / proprietary account login (Lexora remains 100% local-first)<br>- Multi-user real-time collaborative editing (CRDTs)<br>- Heavy IDE extensions / LSP debugging | Out of Scope |
