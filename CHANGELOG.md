@@ -193,7 +193,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - **Tri-State Display Modes**:
-  - Seamless toggle between 📖 **Reading Mode** (read-only rendered view), ✍️ **Writing Mode** (Typora-style in-place WYSIWYG editor), and 💻 **Code Mode** (raw Markdown source view with line numbers).
+  - Seamless toggle between 📖 **Reading Mode** (read-only rendered view), ✍️ **Writing Mode** (in-place WYSIWYG editor), and 💻 **Code Mode** (raw Markdown source view with line numbers).
   - Status bar mode switcher button and global shortcut <kbd>Ctrl+/</kbd>.
 - **In-Place WYSIWYG Editor**:
   - Milkdown v7 editor integration inside SolidJS component lifecycle.

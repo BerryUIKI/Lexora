@@ -3,7 +3,7 @@ import { TranslationDictionary } from "../types";
 export const ru: TranslationDictionary = {
   app: {
     name: "Lexora",
-    tagline: "Минималистичный Markdown-ридер и редактор в стиле Typora",
+    tagline: "Минималистичный Markdown-ридер и интерактивный редактор",
     description: "Минималистичный локальный Markdown-ридер и WYSIWYG-редактор реального времени на базе Tauri 2, Rust и SolidJS.",
     copyright: "Авторские права © 2026 Lexora Contributors",
     licenseNotice: "Лицензия GNU AGPL-3.0",
@@ -85,7 +85,7 @@ export const ru: TranslationDictionary = {
   },
   welcome: {
     title: "Lexora",
-    subtitle: "Минималистичный Markdown-ридер и редактор в стиле Typora",
+    subtitle: "Минималистичный Markdown-ридер и интерактивный редактор",
     newDocument: "Новый документ",
     openFile: "Открыть файл",
     github: "GitHub",

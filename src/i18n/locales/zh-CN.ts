@@ -3,7 +3,7 @@ import { TranslationDictionary } from "../types";
 export const zhCN: TranslationDictionary = {
   app: {
     name: "Lexora",
-    tagline: "极简 Typora 风格 Markdown 阅读与编辑器",
+    tagline: "极简 Markdown 阅读与原位编辑器",
     description: "基于 Tauri 2、Rust 与 SolidJS 构建的极简本地优先 Markdown 阅读与即时所见即所得编辑器。",
     copyright: "版权所有 © 2026 Lexora Contributors",
     licenseNotice: "GNU AGPL-3.0 开源协议",
@@ -85,7 +85,7 @@ export const zhCN: TranslationDictionary = {
   },
   welcome: {
     title: "Lexora",
-    subtitle: "极简 Typora 风格 Markdown 阅读与编辑器",
+    subtitle: "极简 Markdown 阅读与原位编辑器",
     newDocument: "新建文档",
     openFile: "打开文件",
     github: "GitHub",

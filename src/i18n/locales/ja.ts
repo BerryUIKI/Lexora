@@ -3,8 +3,8 @@ import { TranslationDictionary } from "../types";
 export const ja: TranslationDictionary = {
   app: {
     name: "Lexora",
-    tagline: "ミニマリストなTypora風Markdownリーダー＆エディター",
-    description: "Tauri 2、Rust、SolidJSで構築された、ローカルファーストのTypora風Markdownリーダー＆リアルタイムWYSIWYGエディター。",
+    tagline: "ミニマリストなMarkdownリーダー＆インプレースエディター",
+    description: "Tauri 2、Rust、SolidJSで構築された、ローカルファーストのMarkdownリーダー＆インプレースWYSIWYGエディター。",
     copyright: "著作権 © 2026 Lexora Contributors",
     licenseNotice: "GNU AGPL-3.0 ライセンス",
   },
@@ -85,7 +85,7 @@ export const ja: TranslationDictionary = {
   },
   welcome: {
     title: "Lexora",
-    subtitle: "ミニマリストなTypora風Markdownリーダー＆エディター",
+    subtitle: "ミニマリストなMarkdownリーダー＆インプレースエディター",
     newDocument: "新規ドキュメント",
     openFile: "ファイルを開く",
     github: "GitHub",

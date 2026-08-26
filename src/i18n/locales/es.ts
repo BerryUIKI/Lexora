@@ -3,7 +3,7 @@ import { TranslationDictionary } from "../types";
 export const es: TranslationDictionary = {
   app: {
     name: "Lexora",
-    tagline: "Lector y editor Markdown minimalista estilo Typora",
+    tagline: "Lector y editor Markdown minimalista e in-situ",
     description: "Un lector y editor Markdown WYSIWYG local-first minimalista creado con Tauri 2, Rust y SolidJS.",
     copyright: "Copyright © 2026 Lexora Contributors",
     licenseNotice: "Licencia GNU AGPL-3.0",
@@ -85,7 +85,7 @@ export const es: TranslationDictionary = {
   },
   welcome: {
     title: "Lexora",
-    subtitle: "Lector y editor Markdown minimalista estilo Typora",
+    subtitle: "Lector y editor Markdown minimalista e in-situ",
     newDocument: "Nuevo documento",
     openFile: "Abrir archivo",
     github: "GitHub",

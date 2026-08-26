@@ -4,7 +4,7 @@
 
 # ✨ Lexora
 
-**Typora 스타일의 로컬 우선, 초고속 Markdown 리더 및 인플레이스 WYSIWYG 편집기.**
+**로컬 우선, 초고속 Markdown 리더 및 인플레이스 WYSIWYG 편집기.**
 
 [![Release](https://img.shields.io/badge/release-latest-4361ee.svg?style=for-the-badge)](https://github.com/BerryUIKI/Lexora/releases/latest)
 [![License: AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-10b981.svg?style=for-the-badge)](LICENSE)

@@ -74,7 +74,7 @@ jobs:
           releaseBody: |
             # Lexora Release
 
-            **A Typora-style, high-performance Markdown reader & in-place editor built with Tauri 2 + Rust + SolidJS.**
+            **A seamless, high-performance Markdown reader & in-place WYSIWYG editor built with Tauri 2 + Rust + SolidJS.**
 
             ### ✨ Highlights in v0.1.3
             - **Native macOS Window Chrome**: macOS now retains native traffic-light controls and overlay title-bar behavior, while Windows and Linux keep Lexora's compact custom controls.

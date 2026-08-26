@@ -39,7 +39,7 @@ We are eager to hear ideas for improving Lexora:
 
 1. Open a **Feature Request** on GitHub Issues.
 2. Clearly explain the motivation and use case for the proposed feature.
-3. Detail how the feature should behave and how it aligns with Lexora's Typora-style WYSIWYG philosophy.
+3. Detail how the feature should behave and how it aligns with Lexora's seamless in-place WYSIWYG philosophy.
 4. Discuss architectural considerations (e.g., frontend SolidJS vs. backend Rust implementation) before beginning work on a large pull request.
 
 ---
@@ -110,6 +110,6 @@ During code reviews, maintainers evaluate:
 - **Performance**: Does the change introduce latency into the typing loop or file opening sequence?
 - **Security**: Does the IPC command expose unnecessary filesystem access or violate Tauri capabilities?
 - **Type Safety**: Are TypeScript and Rust types strict, avoiding `any` or unchecked unwrap operations?
-- **User Experience**: Does the UI match the clean, minimalistic Typora-inspired aesthetic?
+- **User Experience**: Does the UI match the clean, minimalist aesthetic?
 
 Thank you for helping make Lexora great!

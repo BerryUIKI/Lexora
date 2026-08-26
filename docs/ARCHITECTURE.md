@@ -1,6 +1,6 @@
 # Lexora Architecture
 
-Lexora is a high-performance, Typora-style WYSIWYG Markdown reader-editor built on **Tauri 2**, **Rust**, **SolidJS**, and **Milkdown**. This document outlines the technical architecture, component boundaries, data flows, security constraints, and performance goals of the application.
+Lexora is a high-performance, seamless in-place WYSIWYG Markdown reader-editor built on **Tauri 2**, **Rust**, **SolidJS**, and **Milkdown**. This document outlines the technical architecture, component boundaries, data flows, security constraints, and performance goals of the application.
 
 ---
 
