@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lexora — Lector y Editor Markdown WYSIWYG In-Situ</title>
+  <meta name="description" content="Un lector y editor Markdown WYSIWYG local-first minimalista creado con Tauri 2, Rust y SolidJS. Sin división de pantalla — renderizado en tiempo real mientras escribes." />
+  
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Lexora — Lector y Editor Markdown WYSIWYG In-Situ" />
+  <meta property="og:description" content="Un lector y editor Markdown WYSIWYG local-first minimalista creado con Tauri 2, Rust y SolidJS. Sin división de pantalla — renderizado en tiempo real mientras escribes." />
+  <meta property="og:image" content="../app-icon.svg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Lexora — Lector y Editor Markdown WYSIWYG In-Situ" />
+  <meta name="twitter:description" content="Un lector y editor Markdown WYSIWYG local-first minimalista creado con Tauri 2, Rust y SolidJS. Sin división de pantalla — renderizado en tiempo real mientras escribes." />
+
+  <link rel="icon" type="image/svg+xml" href="../app-icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      --color-bg: #FFFFFF;
+      --color-bg-subtle: #FAFAFA;
+      --color-bg-soft: #F5F5FA;
+      --color-bg-tag: #EDEDFA;
+      --color-ink: #0D0D0F;
+      --color-ink-secondary: #636366;
+      --color-ink-tertiary: #8F8F94;
+      --color-border: #E6E6E8;
+      --color-accent: #4361EE;
+      --color-arrow: #A6A6AC;
+      --font-display: "Inter Tight", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--color-ink); background: var(--color-bg); }
+    .shot-shadow { box-shadow: 0 24px 48px -12px rgba(0,0,0,0.12), 0 6px 16px 0 rgba(0,0,0,0.06); }
+    .dropdown-shadow { box-shadow: 0 10px 25px -5px rgba(0,0,0,0.12), 0 8px 10px -6px rgba(0,0,0,0.08); }
+  </style>
+</head>
+<body class="h-full antialiased" style="padding-top:72px">
+
+  <!-- ═══════════ Header ═══════════ -->
+  <header class="fixed top-0 inset-x-0 z-50 h-[72px] px-[48px] bg-bg/95 backdrop-blur-md flex items-center justify-between border-b border-border/80 max-[768px]:px-4">
+    <a href="#" class="flex items-center gap-[10px]">
+      <svg width="28" height="28" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="lgH" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4361ee"/><stop offset="1" stop-color="#3a0ca3"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#lgH)"/><rect x="120" y="96" width="272" height="320" rx="20" fill="white" opacity="0.95"/><rect x="160" y="160" width="120" height="24" rx="6" fill="#4361ee"/><rect x="160" y="210" width="192" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="240" width="160" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="270" width="180" height="14" rx="4" fill="#6c757d" opacity="0.6"/><polygon points="310,380 390,300 420,330 340,410 300,420" fill="#4cc9f0"/></svg>
+      <span class="font-display text-[18px] font-bold text-ink">Lexora</span>
+    </a>
+    <nav class="hidden lg:flex items-center gap-[28px] text-[14px] text-ink-secondary">
+      <a href="#features" class="hover:text-ink transition-colors">Características</a>
+      <a href="#download" class="hover:text-ink transition-colors">Descargar</a>
+      <a href="#architecture" class="hover:text-ink transition-colors">Arquitectura</a>
+      <a href="#shortcuts" class="hover:text-ink transition-colors">Atajos</a>
+      <a href="#faq" class="hover:text-ink transition-colors">Preguntas Frecuentes</a>
+    </nav>
+    <div class="flex items-center gap-[10px]">
+      <div class="relative" id="langSwitcher">
+        <button id="langBtn" class="flex items-center gap-[6px] px-[10px] py-[7px] rounded-[8px] border border-border text-[13px] text-ink-secondary hover:text-ink transition-colors" aria-label="Seleccionar idioma">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M3 12h18M12 3c2.5 2.4 3.8 5.5 3.8 9S14.5 18.6 12 21c-2.5-2.4-3.8-5.5-3.8-9S9.5 5.4 12 3z" stroke="currentColor" stroke-width="1.8"/></svg>
+          <span id="langLabel" class="font-medium">Español</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div id="langMenu" class="hidden absolute top-[44px] right-0 w-[220px] rounded-[10px] bg-bg border border-border dropdown-shadow p-[6px] flex flex-col gap-[2px] z-50">
+          <p class="px-[10px] py-[4px] text-[11px] text-ink-tertiary">Seleccionar idioma</p>
+          <a href="../" onclick="setLang('en')" class="lang-opt flex items-center justify-between px-[10px] py-[7px] rounded-[6px] text-[12px] text-ink hover:bg-bg-subtle transition-colors">English <span class="text-[11px] text-ink-tertiary">en</span></a>
+          <a href="../zh-CN/" onclick="setLang('zh-CN')" class="lang-opt flex items-center justify-between px-[10px] py-[7px] rounded-[6px] text-[12px] text-ink hover:bg-bg-subtle transition-colors">简体中文 <span class="text-[11px] text-ink-tertiary">zh-CN</span></a>
+          <a href="../zh-TW/" onclick="setLang('zh-TW')" class="lang-opt flex items-center justify-between px-[10px] py-[7px] rounded-[6px] text-[12px] text-ink hover:bg-bg-subtle transition-colors">繁體中文 <span class="text-[11px] text-ink-tertiary">zh-TW</span></a>
+          <a href="../ja/" onclick="setLang('ja')" class="lang-opt flex items-center justify-between px-[10px] py-[7px] rounded-[6px] text-[12px] text-ink hover:bg-bg-subtle transition-colors">日本語 <span class="text-[11px] text-ink-tertiary">ja</span></a>
+          <a href="../ko/" onclick="setLang('ko')" class="lang-opt flex items-center justify-between px-[10px] py-[7px] rounded-[6px] text-[12px] text-ink hover:bg-bg-subtle transition-colors">한국어 <span class="text-[11px] text-ink-tertiary">ko</span></a>
+          <a href="../de/" onclick="setLang('de')" class="lang-opt flex items-center justify-between px-[10px] py-[7px] rounded-[6px] text-[12px] text-ink hover:bg-bg-subtle transition-colors">Deutsch <span class="text-[11px] text-ink-tertiary">de</span></a>
+          <a href="../fr/" onclick="setLang('fr')" class="lang-opt flex items-center justify-between px-[10px] py-[7px] rounded-[6px] text-[12px] text-ink hover:bg-bg-subtle transition-colors">Français <span class="text-[11px] text-ink-tertiary">fr</span></a>
+          <a href="../es/" onclick="setLang('es')" class="lang-opt flex items-center justify-between px-[10px] py-[7px] rounded-[6px] text-[12px] bg-bg-tag text-accent font-medium">Español <span class="text-[11px] font-semibold">✓</span></a>
+          <a href="../ru/" onclick="setLang('ru')" class="lang-opt flex items-center justify-between px-[10px] py-[7px] rounded-[6px] text-[12px] text-ink hover:bg-bg-subtle transition-colors">Русский <span class="text-[11px] text-ink-tertiary">ru</span></a>
+        </div>
+      </div>
+      <a href="https://github.com/BerryUIKI/Lexora" target="_blank" rel="noopener" class="hidden sm:flex items-center px-[10px] py-[7px] rounded-[8px] border border-border text-ink-secondary hover:text-ink transition-colors" aria-label="GitHub">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5 4-1.4 6.8-5.2 6.8-9.7C22 6.6 17.5 2 12 2z" fill="#636366"/></svg>
+      </a>
+      <a href="#download" class="flex items-center gap-[6px] px-[14px] py-[8px] rounded-[8px] bg-ink text-white text-[14px] font-semibold hover:opacity-85 transition-opacity">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Descargar
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ═══════════ Hero ═══════════ -->
+    <section class="bg-bg pt-[88px] pb-[72px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex flex-col items-center gap-[28px]">
+      <div class="flex items-center gap-[8px] px-[14px] py-[7px] rounded-full bg-bg-subtle border border-border text-[13px] text-ink-secondary">
+        <span class="w-[6px] h-[6px] rounded-full bg-[#34C759]"></span>
+        v0.1.3 publicado · Código abierto AGPL-3.0
+      </div>
+      <h1 class="font-display text-[64px] font-bold leading-[1.1] tracking-[-1.5px] text-ink text-center max-[768px]:text-[40px]">Markdown, directamente en su lugar.</h1>
+      <p class="max-w-[720px] text-center text-[18px] leading-[30px] text-ink-secondary">
+        Un lector y editor Markdown WYSIWYG in-situ rápido y minimalista. Olvídate de la doble pantalla: formateo instantáneo en tiempo real con Tauri 2 + Rust + SolidJS.
+      </p>
+      <div class="flex items-center gap-[12px]">
+        <a href="#download" class="flex items-center gap-[8px] px-[24px] py-[12px] rounded-[8px] bg-ink text-white text-[16px] font-semibold hover:opacity-85 transition-opacity">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Descargar Ahora
+        </a>
+        <a href="https://github.com/BerryUIKI/Lexora" target="_blank" rel="noopener" class="flex items-center gap-[8px] px-[24px] py-[12px] rounded-[8px] bg-bg border border-border text-[16px] font-semibold text-ink hover:bg-bg-subtle transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5 4-1.4 6.8-5.2 6.8-9.7C22 6.6 17.5 2 12 2z" fill="#0D0D0F"/></svg>
+          Ver en GitHub
+        </a>
+      </div>
+      <div class="flex items-center gap-[36px] text-[14px] text-ink-tertiary max-[768px]:flex-wrap max-[768px]:justify-center">
+        <span class="flex items-center gap-[8px]"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="#8F8F94"/></svg>Inicio <400ms</span>
+        <span class="flex items-center gap-[8px]"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="7" height="16" rx="1.5" stroke="#8F8F94" stroke-width="1.8"/><rect x="14" y="4" width="7" height="16" rx="1.5" stroke="#8F8F94" stroke-width="1.8"/></svg>Sin panel dividido</span>
+        <span class="flex items-center gap-[8px]"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="#8F8F94" stroke-width="1.8"/><path d="M3 12h18M12 3c2.5 2.4 3.8 5.5 3.8 9S14.5 18.6 12 21c-2.5-2.4-3.8-5.5-3.8-9S9.5 5.4 12 3z" stroke="#8F8F94" stroke-width="1.8"/></svg>9 idiomas nativos</span>
+        <span class="flex items-center gap-[8px]"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3a7 7 0 0 1 7 7c0 1.5-.5 2.9-1.3 4M5.3 7.3A7 7 0 0 0 5 10a7 7 0 0 0 3.5 6.1M3 3l18 18" stroke="#8F8F94" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Totalmente offline</span>
+      </div>
+
+      <!-- Real UI Mockup -->
+      <div class="w-full h-[620px] max-[1200px]:h-[480px] max-[768px]:h-[300px] rounded-[16px] bg-bg border border-border shot-shadow overflow-hidden flex flex-col">
+        <div class="flex items-center justify-between px-[16px] h-[34px] bg-[#F6F6F7] border-b border-border">
+          <div class="flex items-center gap-[18px] text-[12px] text-ink-secondary">
+            <span>Archivo</span><span>Editar</span><span>Ver</span><span>Ventana</span><span>Ayuda</span>
+          </div>
+          <span class="text-[12px] text-ink-secondary">Lexora — README.md</span>
+          <div class="flex items-center gap-[14px]">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="#636366" stroke-width="1.8"/><path d="M16.5 16.5L21 21" stroke="#636366" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3" stroke="#636366" stroke-width="1.8"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1" stroke="#636366" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5 4-1.4 6.8-5.2 6.8-9.7C22 6.6 17.5 2 12 2z" fill="#636366"/></svg>
+          </div>
+        </div>
+        <div class="flex items-center gap-[8px] px-[12px] h-[36px] border-b border-border">
+          <span class="flex items-center gap-[6px] px-[12px] py-[6px] rounded-[6px] bg-bg-tag text-[12px] text-ink"><span class="w-[6px] h-[6px] rounded-full bg-accent"></span>README.md</span>
+          <span class="px-[12px] py-[6px] rounded-[6px] text-[12px] text-ink-tertiary">notes.md</span>
+          <span class="ml-auto w-[20px] h-[20px] rounded-[5px] border border-[#BFBFC5] flex items-center justify-center">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5v14M5 12h14" stroke="#8F8F94" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+        </div>
+        <div class="flex-1 flex min-h-0">
+          <aside class="w-[224px] max-[768px]:hidden shrink-0 bg-bg-subtle border-r border-border p-[16px] flex flex-col gap-[6px]">
+            <span class="text-[11px] font-semibold text-ink-tertiary pt-[8px]">Esquema</span>
+            <span class="text-[12px] text-ink-secondary">- Introducción</span>
+            <span class="text-[12px] text-ink-secondary">- Características</span>
+            <span class="text-[12px] text-ink-secondary">- Atajos</span>
+            <span class="text-[11px] font-semibold text-ink-tertiary pt-[10px]">Espacio de trabajo</span>
+            <span class="text-[12px] text-ink-secondary pl-[4px]">docs/</span>
+            <span class="text-[12px] text-ink-secondary pl-[4px]">src/</span>
+          </aside>
+          <div class="flex-1 p-[32px] flex flex-col gap-[10px] overflow-hidden">
+            <h2 class="font-display text-[22px] font-bold text-ink"># Introducción</h2>
+            <p class="text-[13px] leading-[22px] text-ink-secondary">Lexora elimina la doble pantalla al renderizar Markdown en el lugar exacto con una tipografía limpia.</p>
+            <p class="text-[13px] leading-[22px] text-ink-secondary">Sin división de pantalla · WYSIWYG in-situ · Búsqueda global ripgrep.</p>
+            <div class="pt-[8px]">
+              <div class="flex border-y border-border">
+                <span class="w-[180px] py-[6px] text-[11px] font-semibold text-ink">Tiempo de inicio</span>
+                <span class="w-[160px] py-[6px] text-[11px] font-semibold text-ink">< 400 ms</span>
+                <span class="flex-1 py-[6px] text-[11px] font-semibold text-ink">Arranque instantáneo</span>
+              </div>
+              <div class="flex border-b border-border">
+                <span class="w-[180px] py-[5px] text-[11px] text-ink-secondary">Tiempo de inicio</span>
+                <span class="w-[160px] py-[5px] text-[11px] text-ink-secondary">< 400 ms</span>
+                <span class="flex-1 py-[5px] text-[11px] text-ink-secondary">Arranque instantáneo</span>
+              </div>
+              <div class="flex">
+                <span class="w-[180px] py-[5px] text-[11px] text-ink-secondary">Búsqueda de texto</span>
+                <span class="w-[160px] py-[5px] text-[11px] text-ink-secondary">ripgrep</span>
+                <span class="flex-1 py-[5px] text-[11px] text-ink-secondary">Todo el espacio</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between px-[14px] h-[28px] bg-[#F6F6F7] border-t border-border">
+          <div class="flex items-center gap-[10px] text-[11px]">
+            <span class="text-ink-tertiary">Lectura</span>
+            <span class="font-semibold text-accent">Escritura</span>
+            <span class="text-ink-tertiary">Código</span>
+          </div>
+          <span class="text-[11px] text-ink-tertiary">Lín 1, Col 1  ·  1.420 palabras  ·  UTF-8  ·  LF</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ Features ═══════════ -->
+    <section id="features" class="bg-bg-subtle py-[96px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex flex-col items-center gap-[48px]">
+      <div class="flex flex-col items-center gap-[12px]">
+        <span class="font-display text-[12px] font-semibold tracking-[2px] text-accent">CARACTERÍSTICAS CLAVE</span>
+        <h2 class="text-[40px] font-bold text-ink max-[768px]:text-[28px]">Escritura enfocada, sin distracciones</h2>
+        <p class="max-w-[600px] text-center text-[16px] leading-[26px] text-ink-secondary">Renderizado en tiempo real. Desde el esquema del documento y pestañas hasta la búsqueda ripgrep, todo está diseñado para una escritura fluida.</p>
+      </div>
+      <div class="grid grid-cols-4 gap-[16px] w-full max-[1100px]:grid-cols-2 max-[640px]:grid-cols-1">
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#0D0D0F" stroke-width="1.8" stroke-linejoin="round"/><path d="M2 12l10 5 10-5M2 17l10 5 10-5" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Tres modos de visualización</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Alterna al instante entre modo Lectura (solo lectura), Escritura (WYSIWYG in-situ) y Código (código fuente sincronizado).</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="#0D0D0F" stroke-width="1.8"/><path d="M3 12h18M12 3c2.5 2.4 3.8 5.5 3.8 9S14.5 18.6 12 21c-2.5-2.4-3.8-5.5-3.8-9S9.5 5.4 12 3z" stroke="#0D0D0F" stroke-width="1.8"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Internacionalización (9 idiomas)</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Detecta automáticamente el idioma de tu sistema entre 9 lenguas con cambio instantáneo.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Resaltado de sintaxis</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Motor syntect de alto rendimiento con etiquetas de lenguaje y botón de copia con un clic.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16M4 4l7 8-7 8M4 20h16" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Mermaid y fórmulas LaTeX</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Visualización interactiva de diagramas de flujo, secuencia y clases Mermaid, además de fórmulas KaTeX.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="#0D0D0F" stroke-width="1.8"/><path d="M16.5 16.5L21 21" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Búsqueda global Ripgrep</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Búsqueda ultra rápida en todo el espacio de trabajo (Ctrl+Shift+F) y buscar/reemplazar en el documento (Ctrl+F/H).</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" stroke="#0D0D0F" stroke-width="1.8" stroke-linejoin="round"/><path d="M17 21v-8H7v8M7 3v5h8" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Guardado atómico seguro</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Escritura atómica (.tmp rename) y seguimiento de cambios que previenen la pérdida accidental de datos.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 3l14 9-6 1-3 6-5-16z" stroke="#0D0D0F" stroke-width="1.8" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Arrastrar y soltar inteligente</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Arrastra archivos a la ventana para abrirlos, a las pestañas o al texto para insertar enlaces Markdown.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v13m0 0l-4.5-4.5M12 16l4.5-4.5M4 21h16" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Exportación a HTML autónomo</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Un atajo (Ctrl+E) para exportar archivos HTML independientes y listos para compartir sin conexión.</p></div>
+      </div>
+    </section>
+
+    <!-- ═══════════ Download ═══════════ -->
+    <section id="download" class="bg-bg py-[96px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex flex-col items-center gap-[40px]">
+      <div class="flex flex-col items-center gap-[12px]">
+        <span class="font-display text-[12px] font-semibold tracking-[2px] text-accent">DESCARGA</span>
+        <h2 class="text-[40px] font-bold text-ink max-[768px]:text-[28px]">Descarga gratuita, empieza ahora</h2>
+        <p class="max-w-[600px] text-center text-[16px] leading-[26px] text-ink-secondary">Detecta automáticamente tu sistema operativo y recomienda el instalador para Windows, macOS y Linux.</p>
+      </div>
+      <div class="grid grid-cols-3 gap-[16px] w-full max-[1000px]:grid-cols-1">
+        <!-- Windows card -->
+        <div id="os-win" class="os-card bg-bg border-2 border-accent rounded-[12px] p-[28px] flex flex-col gap-[16px]">
+          <span class="os-badge w-fit px-[10px] py-[4px] rounded-full bg-accent text-white text-[11px] font-semibold tracking-[1px]">RECOMENDADO PARA TU SISTEMA</span>
+          <div class="flex items-center gap-[14px]">
+            <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5.5L10.5 4.3v7.2H3zM10.5 11.5v7.2L3 17.5v-6zM11.5 4.1L21 2.8v8.7h-9.5zM21 11.5v8.7l-9.5-1.3v-7.4z" fill="#0D0D0F"/></svg></div>
+            <div><h3 class="font-display text-[20px] font-semibold text-ink">Windows</h3><p class="os-detected text-[12px] text-ink-tertiary">Windows x86_64</p></div>
+          </div>
+          <a id="win-btn" href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Windows_x86_64.exe" class="flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-accent text-white text-[15px] font-semibold hover:opacity-90 transition-opacity">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Descargar para Windows (.exe)
+          </a>
+          <div class="flex items-center justify-between text-[12px] text-ink-tertiary pt-1">
+            <span>MSI:</span>
+            <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Windows_x86_64.msi" class="text-accent hover:underline font-mono text-[11px]">Lexora_Windows_x86_64.msi</a>
+          </div>
+        </div>
+        <!-- macOS card -->
+        <div id="os-macos" class="os-card bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[16px]">
+          <span class="os-badge hidden w-fit px-[10px] py-[4px] rounded-full bg-accent text-white text-[11px] font-semibold tracking-[1px]">RECOMENDADO PARA TU SISTEMA</span>
+          <div class="flex items-center gap-[14px]">
+            <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.4 12.6c0-2.2 1.8-3.2 1.9-3.3-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.6.8-3.3.8-.7 0-1.7-.8-2.8-.8-1.5 0-2.8.8-3.6 2.1-1.5 2.7-.4 6.6 1.1 8.8.7 1 1.6 2.2 2.7 2.1 1.1 0 1.5-.7 2.8-.7s1.7.7 2.8.7c1.2 0 1.9-1 2.6-2 .8-1.2 1.2-2.4 1.2-2.4s-2.2-.9-2.2-3.6zM14.6 6.2c.6-.7 1-1.7.9-2.7-.9 0-1.9.6-2.5 1.3-.6.6-1 1.6-.9 2.6 1 .1 1.9-.5 2.5-1.2z" fill="#0D0D0F"/></svg></div>
+            <div><h3 class="font-display text-[20px] font-semibold text-ink">macOS</h3><p class="os-detected text-[12px] text-ink-tertiary">Apple Silicon / Intel</p></div>
+          </div>
+          <a id="mac-btn" href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_aarch64.dmg" class="flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-ink text-white text-[15px] font-semibold hover:opacity-85 transition-opacity">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Descargar para Apple Silicon (.dmg)
+          </a>
+          <div class="flex items-center justify-between text-[12px] text-ink-tertiary pt-1">
+            <span>Intel Mac:</span>
+            <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_x86_64.dmg" class="text-accent hover:underline font-mono text-[11px]">Lexora_macOS_x86_64.dmg</a>
+          </div>
+        </div>
+        <!-- Linux card -->
+        <div id="os-linux" class="os-card bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[16px]">
+          <span class="os-badge hidden w-fit px-[10px] py-[4px] rounded-full bg-accent text-white text-[11px] font-semibold tracking-[1px]">RECOMENDADO PARA TU SISTEMA</span>
+          <div class="flex items-center gap-[14px]">
+            <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="16" rx="2" stroke="#0D0D0F" stroke-width="1.8"/><path d="M7 9l3 3-3 3M13 15h4" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div><h3 class="font-display text-[20px] font-semibold text-ink">Linux</h3><p class="os-detected text-[12px] text-ink-tertiary">x86_64</p></div>
+          </div>
+          <a id="linux-btn" href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.AppImage" class="flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-ink text-white text-[15px] font-semibold hover:opacity-85 transition-opacity">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Descargar AppImage
+          </a>
+          <div class="flex items-center justify-between text-[12px] text-ink-tertiary pt-1">
+            <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.deb" class="text-accent hover:underline">Debian (.deb)</a>
+            <span>·</span>
+            <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.rpm" class="text-accent hover:underline">Fedora (.rpm)</a>
+          </div>
+        </div>
+      </div>
+      <a href="download.html" class="flex items-center justify-center gap-[8px] py-[14px] w-full rounded-[8px] border border-border bg-bg text-[15px] font-medium text-ink hover:bg-bg-subtle transition-colors">Ver todos los paquetes y sumas de verificación →</a>
+    </section>
+
+    <!-- ═══════════ Architecture ═══════════ -->
+    <section id="architecture" class="bg-bg-subtle py-[96px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex flex-col items-center gap-[48px]">
+      <div class="flex flex-col items-center gap-[12px]">
+        <span class="font-display text-[12px] font-semibold tracking-[2px] text-accent">ARQUITECTURA</span>
+        <h2 class="text-[40px] font-bold text-ink max-[768px]:text-[28px]">Motor en Rust y frontend ligero en SolidJS</h2>
+        <p class="max-w-[620px] text-center text-[16px] leading-[26px] text-ink-secondary">Tauri 2 conecta un backend seguro en Rust con una interfaz webview en SolidJS — sin pausas de recolección de basura y latencia menor a 16ms.</p>
+      </div>
+      <div class="w-full bg-bg border border-border rounded-[16px] p-[48px] max-[768px]:p-[24px] flex items-center justify-between gap-[24px]">
+        <div class="flex-1 flex flex-col gap-[10px]">
+          <span class="font-display text-[11px] font-semibold tracking-[1.5px] text-accent">FRONTEND</span>
+          <span class="font-display text-[18px] font-semibold text-ink">SolidJS + Webview</span>
+          <div class="flex flex-wrap gap-[8px]"><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Señales reactivas</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Milkdown / ProseMirror</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">i18n 9 idiomas</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">IPC tipado</span></div>
+        </div>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="shrink-0 max-[768px]:hidden"><path d="M4 12h15m0 0l-5.5-5.5M19 12l-5.5 5.5" stroke="#A6A6AC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="flex-1 flex flex-col gap-[10px]">
+          <span class="font-display text-[11px] font-semibold tracking-[1.5px] text-accent">PUENTE IPC</span>
+          <span class="font-display text-[18px] font-semibold text-ink">Tauri 2 Core</span>
+          <div class="flex flex-wrap gap-[8px]"><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Comandos zero-copy</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Bus de eventos</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Seguridad por permisos</span></div>
+        </div>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="shrink-0 max-[768px]:hidden"><path d="M4 12h15m0 0l-5.5-5.5M19 12l-5.5 5.5" stroke="#A6A6AC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="flex-1 flex flex-col gap-[10px]">
+          <span class="font-display text-[11px] font-semibold tracking-[1.5px] text-accent">NÚCLEO RUST</span>
+          <span class="font-display text-[18px] font-semibold text-ink">Motor nativo</span>
+          <div class="flex flex-wrap gap-[8px]"><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">pulldown-cmark AST</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Resaltado syntect</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Monitor notify</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">I/O atómico</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ Shortcuts ═══════════ -->
+    <section id="shortcuts" class="bg-bg py-[96px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex flex-col items-center gap-[48px]">
+      <div class="flex flex-col items-center gap-[12px]">
+        <span class="font-display text-[12px] font-semibold tracking-[2px] text-accent">ATAJOS DE TECLADO</span>
+        <h2 class="text-[40px] font-bold text-ink max-[768px]:text-[28px]">Todo el control desde tu teclado</h2>
+        <p class="max-w-[600px] text-center text-[16px] leading-[26px] text-ink-secondary">Compatibilidad con todos los atajos habituales de Markdown para dar formato, navegar y organizar documentos sin tocar el ratón.</p>
+      </div>
+      <div class="grid grid-cols-3 gap-[16px] w-full max-[1000px]:grid-cols-1">
+        <div class="bg-bg-subtle border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px]">
+          <h3 class="text-[16px] font-semibold text-ink">Documento y Archivo</h3>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Nuevo documento</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+N</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Abrir archivo</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+O</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Guardar documento</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+S</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Guardar como...</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+Shift+S</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Exportar a HTML</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+E</span></div>
+        </div>
+        <div class="bg-bg-subtle border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px]">
+          <h3 class="text-[16px] font-semibold text-ink">Formato</h3>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Negrita</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+B</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Cursiva</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+I</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Encabezados 1–6</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+1~6</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Párrafo estándar</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+0</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Insertar enlace</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+K</span></div>
+        </div>
+        <div class="bg-bg-subtle border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px]">
+          <h3 class="text-[16px] font-semibold text-ink">Navegación y Vista</h3>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Cambio rápido de archivo</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+P</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Buscar en el documento</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+F</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Reemplazar en el documento</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+H</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Buscar en espacio de trabajo</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+Shift+F</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Cambiar modo de vista</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+/</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ FAQ + Changelog ═══════════ -->
+    <section id="faq" class="bg-bg-subtle py-[96px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex gap-[64px] max-[1000px]:flex-col">
+      <div class="w-[380px] max-[1000px]:w-full flex flex-col gap-[32px]">
+        <div class="flex flex-col gap-[12px]">
+          <span class="font-display text-[12px] font-semibold tracking-[2px] text-accent">PREGUNTAS FRECUENTES</span>
+          <h2 class="font-display text-[36px] font-bold text-ink">Preguntas frecuentes (FAQ)</h2>
+          <p class="text-[15px] leading-[25px] text-ink-secondary">¿Tienes alguna duda o sugerencia? Abre una incidencia o participa en las discusiones en GitHub.</p>
+        </div>
+        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px]">
+          <div class="flex items-center justify-between">
+            <h3 class="text-[16px] font-semibold text-ink">Última versión</h3>
+            <span class="px-[8px] py-[3px] rounded-full bg-bg-tag text-[12px] text-accent font-semibold">v0.1.3</span>
+          </div>
+          <div class="flex items-center gap-[10px]"><span class="w-[5px] h-[5px] rounded-full bg-accent"></span><span class="text-[14px] text-ink-secondary">Controles de ventana nativos en macOS</span></div>
+          <div class="flex items-center gap-[10px]"><span class="w-[5px] h-[5px] rounded-full bg-accent"></span><span class="text-[14px] text-ink-secondary">Estandarización de nombres de instaladores</span></div>
+          <div class="flex items-center gap-[10px]"><span class="w-[5px] h-[5px] rounded-full bg-accent"></span><span class="text-[14px] text-ink-secondary">Documentación y descargas en 9 idiomas</span></div>
+          <div class="flex items-center gap-[10px]"><span class="w-[5px] h-[5px] rounded-full bg-accent"></span><span class="text-[14px] text-ink-secondary">Contraste y visibilidad de tablas mejorados</span></div>
+        </div>
+      </div>
+      <div class="flex-1 flex flex-col gap-[16px]">
+        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">¿Qué hace diferente a Lexora de otros editores?</h3><p class="text-[14px] leading-[24px] text-ink-secondary">Lexora ofrece edición WYSIWYG real en el mismo lugar donde escribes, sin paneles divididos. Desarrollado en Rust y Tauri 2, es ligero, rápido y no depende del sobrepeso de Electron.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">¿Mis datos están seguros?</h3><p class="text-[14px] leading-[24px] text-ink-secondary">100% local-first. Todos tus documentos se guardan exclusivamente en tu equipo sin envío a la nube. El guardado atómico protege tus textos de cierres inesperados.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">¿Qué funciones de Markdown están soportadas?</h3><p class="text-[14px] leading-[24px] text-ink-secondary">GitHub Flavored Markdown (GFM), tablas, listas de tareas, resaltado de código, diagramas Mermaid y fórmulas matemáticas KaTeX.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">¿Es gratuito y de código abierto?</h3><p class="text-[14px] leading-[24px] text-ink-secondary">Sí, Lexora es software libre bajo licencia GNU AGPL-3.0. Agradecemos comentarios, traducciones y colaboraciones en GitHub.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══════════ Footer ═══════════ -->
+  <footer class="bg-[#0D0D0F] pt-[80px] pb-[40px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex flex-col gap-[56px]">
+    <div class="flex gap-[96px] max-[1000px]:flex-col max-[1000px]:gap-[48px]">
+      <div class="w-[420px] max-[1000px]:w-full flex flex-col gap-[18px]">
+        <div class="flex items-center gap-[10px]">
+          <svg width="30" height="30" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="lgF" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4361ee"/><stop offset="1" stop-color="#3a0ca3"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#lgF)"/><rect x="120" y="96" width="272" height="320" rx="20" fill="white" opacity="0.95"/><rect x="160" y="160" width="120" height="24" rx="6" fill="#4361ee"/><rect x="160" y="210" width="192" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="240" width="160" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="270" width="180" height="14" rx="4" fill="#6c757d" opacity="0.6"/><polygon points="310,380 390,300 420,330 340,410 300,420" fill="#4cc9f0"/></svg>
+          <span class="font-display text-[20px] font-bold text-white">Lexora</span>
+        </div>
+        <p class="text-[14px] leading-[24px] text-white/70">Un lector y editor Markdown WYSIWYG local-first minimalista creado con Tauri 2, Rust y SolidJS. Sin división de pantalla — renderizado en tiempo real mientras escribes.</p>
+        <p class="text-[11px] leading-[18px] text-white/40 w-[380px] max-[1000px]:w-full">English · 简体中文 · 繁體中文 · 日本語 · 한국어 · Deutsch · Français · Español · Русский</p>
+      </div>
+      <div class="flex-1 flex flex-col gap-[12px]">
+        <h4 class="text-[14px] font-semibold text-white">Product</h4>
+        <a href="#download" class="text-[13px] text-white/60 hover:text-white transition-colors">Descargar</a>
+        <a href="#features" class="text-[13px] text-white/60 hover:text-white transition-colors">Características</a>
+        <a href="#shortcuts" class="text-[13px] text-white/60 hover:text-white transition-colors">Atajos</a>
+        <a href="#faq" class="text-[13px] text-white/60 hover:text-white transition-colors">Preguntas Frecuentes</a>
+      </div>
+      <div class="flex-1 flex flex-col gap-[12px]">
+        <h4 class="text-[14px] font-semibold text-white">Resources</h4>
+        <a href="https://github.com/BerryUIKI/Lexora" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">GitHub Repository</a>
+        <a href="https://github.com/BerryUIKI/Lexora/tree/main/docs" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">Documentation</a>
+        <a href="https://github.com/BerryUIKI/Lexora/releases" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">Releases</a>
+        <a href="https://github.com/BerryUIKI/Lexora/blob/main/AGENTS.md" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">AGENTS.md</a>
+      </div>
+      <div class="flex-1 flex flex-col gap-[12px]">
+        <h4 class="text-[14px] font-semibold text-white">Open Source</h4>
+        <a href="https://github.com/BerryUIKI/Lexora/blob/main/LICENSE" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">AGPL-3.0 License</a>
+        <a href="https://github.com/BerryUIKI/Lexora/blob/main/docs/CONTRIBUTING.md" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">Contributing Guide</a>
+        <a href="https://github.com/BerryUIKI/Lexora/issues" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">Open an Issue</a>
+        <a href="https://github.com/BerryUIKI/Lexora/security" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">Security</a>
+      </div>
+    </div>
+    <div class="h-px w-full bg-white/[0.12]"></div>
+    <div class="flex items-center justify-between text-[12px] max-[768px]:flex-col max-[768px]:gap-[8px]">
+      <span class="text-white/50">Copyright © 2026 Lexora Contributors · Licensed under AGPL-3.0</span>
+      <span class="text-white/40">Built with Tauri 2 · Rust · SolidJS</span>
+    </div>
+  </footer>
+
+  <script>
+    function setLang(lang) {
+      localStorage.setItem('lexora_user_lang', lang);
+    }
+
+    const sw = document.getElementById('langSwitcher');
+    const menu = document.getElementById('langMenu');
+    const btn = document.getElementById('langBtn');
+
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      menu.classList.toggle('hidden');
+    });
+    document.addEventListener('click', () => menu.classList.add('hidden'));
+
+    
+
+    // OS detection: highlight recommended card
+    const ua = navigator.userAgent.toLowerCase();
+    let os = 'win';
+    if (ua.includes('mac')) os = 'macos';
+    else if (ua.includes('linux')) os = 'linux';
+
+    document.querySelectorAll('.os-card').forEach(c => {
+      c.classList.remove('border-2', 'border-accent');
+      c.classList.add('border', 'border-border');
+      const b = c.querySelector('.os-badge');
+      if (b) b.classList.add('hidden');
+    });
+
+    const card = document.getElementById('os-' + os);
+    if (card) {
+      card.classList.remove('border', 'border-border');
+      card.classList.add('border-2', 'border-accent');
+      const badge = card.querySelector('.os-badge');
+      if (badge) badge.classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>

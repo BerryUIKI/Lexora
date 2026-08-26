@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lexora — 原位所見即所得 Markdown 閱讀與編輯器</title>
+  <meta name="description" content="基於 Tauri 2 + Rust + SolidJS 構建的極簡本機優先 Markdown 閱讀與即時所見即所得編輯器。告別分割視窗，原位即時排版渲染。" />
+  
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Lexora — 原位所見即所得 Markdown 閱讀與編輯器" />
+  <meta property="og:description" content="基於 Tauri 2 + Rust + SolidJS 構建的極簡本機優先 Markdown 閱讀與即時所見即所得編輯器。告別分割視窗，原位即時排版渲染。" />
+  <meta property="og:image" content="../app-icon.svg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Lexora — 原位所見即所得 Markdown 閱讀與編輯器" />
+  <meta name="twitter:description" content="基於 Tauri 2 + Rust + SolidJS 構建的極簡本機優先 Markdown 閱讀與即時所見即所得編輯器。告別分割視窗，原位即時排版渲染。" />
+
+  <link rel="icon" type="image/svg+xml" href="../app-icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      --color-bg: #FFFFFF;
+      --color-bg-subtle: #FAFAFA;
+      --color-bg-soft: #F5F5FA;
+      --color-bg-tag: #EDEDFA;
+      --color-ink: #0D0D0F;
+      --color-ink-secondary: #636366;
+      --color-ink-tertiary: #8F8F94;
+      --color-border: #E6E6E8;
+      --color-accent: #4361EE;
+      --color-arrow: #A6A6AC;
+      --font-display: "Inter Tight", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--color-ink); background: var(--color-bg); }
+    .shot-shadow { box-shadow: 0 24px 48px -12px rgba(0,0,0,0.12), 0 6px 16px 0 rgba(0,0,0,0.06); }
+    .dropdown-shadow { box-shadow: 0 10px 25px -5px rgba(0,0,0,0.12), 0 8px 10px -6px rgba(0,0,0,0.08); }
+  </style>
+</head>
+<body class="h-full antialiased" style="padding-top:72px">
+
+  <!-- ═══════════ Header ═══════════ -->
+  <header class="fixed top-0 inset-x-0 z-50 h-[72px] px-[48px] bg-bg/95 backdrop-blur-md flex items-center justify-between border-b border-border/80 max-[768px]:px-4">
+    <a href="#" class="flex items-center gap-[10px]">
+      <svg width="28" height="28" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="lgH" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4361ee"/><stop offset="1" stop-color="#3a0ca3"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#lgH)"/><rect x="120" y="96" width="272" height="320" rx="20" fill="white" opacity="0.95"/><rect x="160" y="160" width="120" height="24" rx="6" fill="#4361ee"/><rect x="160" y="210" width="192" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="240" width="160" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="270" width="180" height="14" rx="4" fill="#6c757d" opacity="0.6"/><polygon points="310,380 390,300 420,330 340,410 300,420" fill="#4cc9f0"/></svg>
+      <span class="font-display text-[18px] font-bold text-ink">Lexora</span>
+    </a>
+    <nav class="hidden lg:flex items-center gap-[28px] text-[14px] text-ink-secondary">
+      <a href="#features" class="hover:text-ink transition-colors">核心特色</a>
+      <a href="#download" class="hover:text-ink transition-colors">下載安裝</a>
+      <a href="#architecture" class="hover:text-ink transition-colors">技術架構</a>
+      <a href="#shortcuts" class="hover:text-ink transition-colors">快捷鍵</a>
+      <a href="#faq" class="hover:text-ink transition-colors">常見問題</a>
+    </nav>
+    <div class="flex items-center gap-[10px]">
+      <div class="relative" id="langSwitcher">
+        <button id="langBtn" class="flex items-center gap-[6px] px-[10px] py-[7px] rounded-[8px] border border-border text-[13px] text-ink-secondary hover:text-ink transition-colors" aria-label="選擇介面顯示語言">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M3 12h18M12 3c2.5 2.4 3.8 5.5 3.8 9S14.5 18.6 12 21c-2.5-2.4-3.8-5.5-3.8-9S9.5 5.4 12 3z" stroke="currentColor" stroke-width="1.8"/></svg>
+          <span id="langLabel" class="font-medium">繁體中文</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div id="langMenu" class="hidden absolute top-[44px] right-0 w-[220px] rounded-[10px] bg-bg border border-border dropdown-shadow p-[6px] flex flex-col gap-[2px] z-50">
+          <p class="px-[10px] py-[4px] text-[11px] text-ink-tertiary">選擇介面顯示語言</p>
+          <a href="../" onclick="setLang('en')" class="lang-opt flex items-center justify-between px-[10px] py-[7px] rounded-[6px] text-[12px] text-ink hover:bg-bg-subtle transition-colors">English <span class="text-[11px] text-ink-tertiary">en</span></a>
+          <a href="../zh-CN/" onclick="setLang('zh-CN')" class="lang-opt flex items-center justify-between px-[10px] py-[7px] rounded-[6px] text-[12px] text-ink hover:bg-bg-subtle transition-colors">简体中文 <span class="text-[11px] text-ink-tertiary">zh-CN</span></a>
+          <a href="../zh-TW/" onclick="setLang('zh-TW')" class="lang-opt flex items-center justify-between px-[10px] py-[7px] rounded-[6px] text-[12px] bg-bg-tag text-accent font-medium">繁體中文 <span class="text-[11px] font-semibold">✓</span></a>
+          <a href="../ja/" onclick="setLang('ja')" class="lang-opt flex items-center justify-between px-[10px] py-[7px] rounded-[6px] text-[12px] text-ink hover:bg-bg-subtle transition-colors">日本語 <span class="text-[11px] text-ink-tertiary">ja</span></a>
+          <a href="../ko/" onclick="setLang('ko')" class="lang-opt flex items-center justify-between px-[10px] py-[7px] rounded-[6px] text-[12px] text-ink hover:bg-bg-subtle transition-colors">한국어 <span class="text-[11px] text-ink-tertiary">ko</span></a>
+          <a href="../de/" onclick="setLang('de')" class="lang-opt flex items-center justify-between px-[10px] py-[7px] rounded-[6px] text-[12px] text-ink hover:bg-bg-subtle transition-colors">Deutsch <span class="text-[11px] text-ink-tertiary">de</span></a>
+          <a href="../fr/" onclick="setLang('fr')" class="lang-opt flex items-center justify-between px-[10px] py-[7px] rounded-[6px] text-[12px] text-ink hover:bg-bg-subtle transition-colors">Français <span class="text-[11px] text-ink-tertiary">fr</span></a>
+          <a href="../es/" onclick="setLang('es')" class="lang-opt flex items-center justify-between px-[10px] py-[7px] rounded-[6px] text-[12px] text-ink hover:bg-bg-subtle transition-colors">Español <span class="text-[11px] text-ink-tertiary">es</span></a>
+          <a href="../ru/" onclick="setLang('ru')" class="lang-opt flex items-center justify-between px-[10px] py-[7px] rounded-[6px] text-[12px] text-ink hover:bg-bg-subtle transition-colors">Русский <span class="text-[11px] text-ink-tertiary">ru</span></a>
+        </div>
+      </div>
+      <a href="https://github.com/BerryUIKI/Lexora" target="_blank" rel="noopener" class="hidden sm:flex items-center px-[10px] py-[7px] rounded-[8px] border border-border text-ink-secondary hover:text-ink transition-colors" aria-label="GitHub">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5 4-1.4 6.8-5.2 6.8-9.7C22 6.6 17.5 2 12 2z" fill="#636366"/></svg>
+      </a>
+      <a href="#download" class="flex items-center gap-[6px] px-[14px] py-[8px] rounded-[8px] bg-ink text-white text-[14px] font-semibold hover:opacity-85 transition-opacity">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        下載安裝
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ═══════════ Hero ═══════════ -->
+    <section class="bg-bg pt-[88px] pb-[72px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex flex-col items-center gap-[28px]">
+      <div class="flex items-center gap-[8px] px-[14px] py-[7px] rounded-full bg-bg-subtle border border-border text-[13px] text-ink-secondary">
+        <span class="w-[6px] h-[6px] rounded-full bg-[#34C759]"></span>
+        v0.1.3 正式發布 · AGPL-3.0 開源協議
+      </div>
+      <h1 class="font-display text-[64px] font-bold leading-[1.1] tracking-[-1.5px] text-ink text-center max-[768px]:text-[40px]">原位排版，所見即所得。</h1>
+      <p class="max-w-[720px] text-center text-[18px] leading-[30px] text-ink-secondary">
+        極簡、極速的本機優先 Markdown 原位所見即所得閱讀與編輯器。徹底摒棄傳統雙欄分割視窗，打字即時排版——基於 Tauri 2 + Rust + SolidJS 打造毫秒級流暢響應。
+      </p>
+      <div class="flex items-center gap-[12px]">
+        <a href="#download" class="flex items-center gap-[8px] px-[24px] py-[12px] rounded-[8px] bg-ink text-white text-[16px] font-semibold hover:opacity-85 transition-opacity">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          立即下載
+        </a>
+        <a href="https://github.com/BerryUIKI/Lexora" target="_blank" rel="noopener" class="flex items-center gap-[8px] px-[24px] py-[12px] rounded-[8px] bg-bg border border-border text-[16px] font-semibold text-ink hover:bg-bg-subtle transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5 4-1.4 6.8-5.2 6.8-9.7C22 6.6 17.5 2 12 2z" fill="#0D0D0F"/></svg>
+          GitHub 開源儲存庫
+        </a>
+      </div>
+      <div class="flex items-center gap-[36px] text-[14px] text-ink-tertiary max-[768px]:flex-wrap max-[768px]:justify-center">
+        <span class="flex items-center gap-[8px]"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="#8F8F94"/></svg><400ms 毫秒級冷啟動</span>
+        <span class="flex items-center gap-[8px]"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="7" height="16" rx="1.5" stroke="#8F8F94" stroke-width="1.8"/><rect x="14" y="4" width="7" height="16" rx="1.5" stroke="#8F8F94" stroke-width="1.8"/></svg>無需分割視窗原位渲染</span>
+        <span class="flex items-center gap-[8px]"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="#8F8F94" stroke-width="1.8"/><path d="M3 12h18M12 3c2.5 2.4 3.8 5.5 3.8 9S14.5 18.6 12 21c-2.5-2.4-3.8-5.5-3.8-9S9.5 5.4 12 3z" stroke="#8F8F94" stroke-width="1.8"/></svg>9 種原生語言</span>
+        <span class="flex items-center gap-[8px]"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3a7 7 0 0 1 7 7c0 1.5-.5 2.9-1.3 4M5.3 7.3A7 7 0 0 0 5 10a7 7 0 0 0 3.5 6.1M3 3l18 18" stroke="#8F8F94" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>100% 本機離線</span>
+      </div>
+
+      <!-- Real UI Mockup -->
+      <div class="w-full h-[620px] max-[1200px]:h-[480px] max-[768px]:h-[300px] rounded-[16px] bg-bg border border-border shot-shadow overflow-hidden flex flex-col">
+        <div class="flex items-center justify-between px-[16px] h-[34px] bg-[#F6F6F7] border-b border-border">
+          <div class="flex items-center gap-[18px] text-[12px] text-ink-secondary">
+            <span>檔案</span><span>編輯</span><span>檢視</span><span>視窗</span><span>說明</span>
+          </div>
+          <span class="text-[12px] text-ink-secondary">Lexora — README.md</span>
+          <div class="flex items-center gap-[14px]">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="#636366" stroke-width="1.8"/><path d="M16.5 16.5L21 21" stroke="#636366" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3" stroke="#636366" stroke-width="1.8"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1" stroke="#636366" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5 4-1.4 6.8-5.2 6.8-9.7C22 6.6 17.5 2 12 2z" fill="#636366"/></svg>
+          </div>
+        </div>
+        <div class="flex items-center gap-[8px] px-[12px] h-[36px] border-b border-border">
+          <span class="flex items-center gap-[6px] px-[12px] py-[6px] rounded-[6px] bg-bg-tag text-[12px] text-ink"><span class="w-[6px] h-[6px] rounded-full bg-accent"></span>README.md</span>
+          <span class="px-[12px] py-[6px] rounded-[6px] text-[12px] text-ink-tertiary">notes.md</span>
+          <span class="ml-auto w-[20px] h-[20px] rounded-[5px] border border-[#BFBFC5] flex items-center justify-center">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5v14M5 12h14" stroke="#8F8F94" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+        </div>
+        <div class="flex-1 flex min-h-0">
+          <aside class="w-[224px] max-[768px]:hidden shrink-0 bg-bg-subtle border-r border-border p-[16px] flex flex-col gap-[6px]">
+            <span class="text-[11px] font-semibold text-ink-tertiary pt-[8px]">大綱目錄</span>
+            <span class="text-[12px] text-ink-secondary">- 專案簡介</span>
+            <span class="text-[12px] text-ink-secondary">- 核心特色</span>
+            <span class="text-[12px] text-ink-secondary">- 快捷鍵</span>
+            <span class="text-[11px] font-semibold text-ink-tertiary pt-[10px]">工作區</span>
+            <span class="text-[12px] text-ink-secondary pl-[4px]">docs/</span>
+            <span class="text-[12px] text-ink-secondary pl-[4px]">src/</span>
+          </aside>
+          <div class="flex-1 p-[32px] flex flex-col gap-[10px] overflow-hidden">
+            <h2 class="font-display text-[22px] font-bold text-ink"># 專案簡介</h2>
+            <p class="text-[13px] leading-[22px] text-ink-secondary">Lexora 徹底摒棄了傳統“左邊寫程式碼、右邊看預覽”的分割視窗模式，採用極簡沉浸的原位即時排版。</p>
+            <p class="text-[13px] leading-[22px] text-ink-secondary">零分割視窗 · 原位所見即所得 · Ripgrep 全域全文本搜尋。</p>
+            <div class="pt-[8px]">
+              <div class="flex border-y border-border">
+                <span class="w-[180px] py-[6px] text-[11px] font-semibold text-ink">冷啟動耗時</span>
+                <span class="w-[160px] py-[6px] text-[11px] font-semibold text-ink">< 400 毫秒</span>
+                <span class="flex-1 py-[6px] text-[11px] font-semibold text-ink">毫秒級極速就緒</span>
+              </div>
+              <div class="flex border-b border-border">
+                <span class="w-[180px] py-[5px] text-[11px] text-ink-secondary">冷啟動耗時</span>
+                <span class="w-[160px] py-[5px] text-[11px] text-ink-secondary">< 400 毫秒</span>
+                <span class="flex-1 py-[5px] text-[11px] text-ink-secondary">毫秒級極速就緒</span>
+              </div>
+              <div class="flex">
+                <span class="w-[180px] py-[5px] text-[11px] text-ink-secondary">全文搜尋</span>
+                <span class="w-[160px] py-[5px] text-[11px] text-ink-secondary">ripgrep</span>
+                <span class="flex-1 py-[5px] text-[11px] text-ink-secondary">工作區全域秒搜</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between px-[14px] h-[28px] bg-[#F6F6F7] border-t border-border">
+          <div class="flex items-center gap-[10px] text-[11px]">
+            <span class="text-ink-tertiary">閱讀</span>
+            <span class="font-semibold text-accent">寫作</span>
+            <span class="text-ink-tertiary">源碼</span>
+          </div>
+          <span class="text-[11px] text-ink-tertiary">第 1 行, 第 1 列  ·  1,420 字  ·  UTF-8  ·  LF</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ Features ═══════════ -->
+    <section id="features" class="bg-bg-subtle py-[96px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex flex-col items-center gap-[48px]">
+      <div class="flex flex-col items-center gap-[12px]">
+        <span class="font-display text-[12px] font-semibold tracking-[2px] text-accent">核心特色</span>
+        <h2 class="text-[40px] font-bold text-ink max-[768px]:text-[28px]">專注純粹寫作，告別一切干擾</h2>
+        <p class="max-w-[600px] text-center text-[16px] leading-[26px] text-ink-secondary">所見即所得打字排版。從文件大綱、多分頁到工作區全文搜尋，所有設計皆為高效沉浸的寫作體驗而生。</p>
+      </div>
+      <div class="grid grid-cols-4 gap-[16px] w-full max-[1100px]:grid-cols-2 max-[640px]:grid-cols-1">
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#0D0D0F" stroke-width="1.8" stroke-linejoin="round"/><path d="M2 12l10 5 10-5M2 17l10 5 10-5" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">三態模式自由切換</h3><p class="text-[13px] leading-[21px] text-ink-secondary">一鍵無縫切換閱讀模式（唯讀瀏覽）、寫作模式（原位所見即所得）與源碼模式（行號同步）。</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="#0D0D0F" stroke-width="1.8"/><path d="M3 12h18M12 3c2.5 2.4 3.8 5.5 3.8 9S14.5 18.6 12 21c-2.5-2.4-3.8-5.5-3.8-9S9.5 5.4 12 3z" stroke="#0D0D0F" stroke-width="1.8"/></svg></div><h3 class="text-[16px] font-semibold text-ink">9 種語言國際化支援</h3><p class="text-[13px] leading-[21px] text-ink-secondary">內建 9 國在地化語言，依據系統環境全自動辨識，隨時在選單中即時無縫切換。</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">高效能程式碼高亮</h3><p class="text-[13px] leading-[21px] text-ink-secondary">基於 syntect 原生引擎打造，支援上百種程式語言高亮、語言標籤與一鍵複製功能。</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16M4 4l7 8-7 8M4 20h16" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Mermaid 圖表與 LaTeX 數學</h3><p class="text-[13px] leading-[21px] text-ink-secondary">原生支援流程圖、循序圖、類別圖等 Mermaid 圖表即時渲染，以及 KaTeX 行內/多行數學公式。</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="#0D0D0F" stroke-width="1.8"/><path d="M16.5 16.5L21 21" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Ripgrep 全域全文秒搜</h3><p class="text-[13px] leading-[21px] text-ink-secondary">毫秒級工作區全文字快速搜尋（Ctrl+Shift+F）與文件內尋找取代（Ctrl+F/H）。</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" stroke="#0D0D0F" stroke-width="1.8" stroke-linejoin="round"/><path d="M17 21v-8H7v8M7 3v5h8" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">當機級安全原子儲存</h3><p class="text-[13px] leading-[21px] text-ink-secondary">採用暫存檔原子覆寫（.tmp rename）機制與即時中繼狀態追蹤，從根本杜絕資料損壞或遺失。</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 3l14 9-6 1-3 6-5-16z" stroke="#0D0D0F" stroke-width="1.8" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">智慧拖曳互動</h3><p class="text-[13px] leading-[21px] text-ink-secondary">拖入檔案立即開啟、拖到分頁列新增分頁、拖入文字區域自動產生規範 Markdown 超連結。</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v13m0 0l-4.5-4.5M12 16l4.5-4.5M4 21h16" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">單一檔案獨立 HTML 匯出</h3><p class="text-[13px] leading-[21px] text-ink-secondary">一鍵快捷鍵（Ctrl+E）匯出樣式完整、無需外部依賴的獨立離線 HTML 網頁。</p></div>
+      </div>
+    </section>
+
+    <!-- ═══════════ Download ═══════════ -->
+    <section id="download" class="bg-bg py-[96px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex flex-col items-center gap-[40px]">
+      <div class="flex flex-col items-center gap-[12px]">
+        <span class="font-display text-[12px] font-semibold tracking-[2px] text-accent">下載安裝</span>
+        <h2 class="text-[40px] font-bold text-ink max-[768px]:text-[28px]">免費下載，即刻開啟沉浸寫作</h2>
+        <p class="max-w-[600px] text-center text-[16px] leading-[26px] text-ink-secondary">自動識別您的作業系統，智慧推薦適配 Windows、macOS 與 Linux 的最新安裝套件。</p>
+      </div>
+      <div class="grid grid-cols-3 gap-[16px] w-full max-[1000px]:grid-cols-1">
+        <!-- Windows card -->
+        <div id="os-win" class="os-card bg-bg border-2 border-accent rounded-[12px] p-[28px] flex flex-col gap-[16px]">
+          <span class="os-badge w-fit px-[10px] py-[4px] rounded-full bg-accent text-white text-[11px] font-semibold tracking-[1px]">目前作業系統推薦</span>
+          <div class="flex items-center gap-[14px]">
+            <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5.5L10.5 4.3v7.2H3zM10.5 11.5v7.2L3 17.5v-6zM11.5 4.1L21 2.8v8.7h-9.5zM21 11.5v8.7l-9.5-1.3v-7.4z" fill="#0D0D0F"/></svg></div>
+            <div><h3 class="font-display text-[20px] font-semibold text-ink">Windows</h3><p class="os-detected text-[12px] text-ink-tertiary">Windows x86_64</p></div>
+          </div>
+          <a id="win-btn" href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Windows_x86_64.exe" class="flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-accent text-white text-[15px] font-semibold hover:opacity-90 transition-opacity">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            下載 Windows 安裝套件 (.exe)
+          </a>
+          <div class="flex items-center justify-between text-[12px] text-ink-tertiary pt-1">
+            <span>MSI:</span>
+            <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Windows_x86_64.msi" class="text-accent hover:underline font-mono text-[11px]">Lexora_Windows_x86_64.msi</a>
+          </div>
+        </div>
+        <!-- macOS card -->
+        <div id="os-macos" class="os-card bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[16px]">
+          <span class="os-badge hidden w-fit px-[10px] py-[4px] rounded-full bg-accent text-white text-[11px] font-semibold tracking-[1px]">目前作業系統推薦</span>
+          <div class="flex items-center gap-[14px]">
+            <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.4 12.6c0-2.2 1.8-3.2 1.9-3.3-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.6.8-3.3.8-.7 0-1.7-.8-2.8-.8-1.5 0-2.8.8-3.6 2.1-1.5 2.7-.4 6.6 1.1 8.8.7 1 1.6 2.2 2.7 2.1 1.1 0 1.5-.7 2.8-.7s1.7.7 2.8.7c1.2 0 1.9-1 2.6-2 .8-1.2 1.2-2.4 1.2-2.4s-2.2-.9-2.2-3.6zM14.6 6.2c.6-.7 1-1.7.9-2.7-.9 0-1.9.6-2.5 1.3-.6.6-1 1.6-.9 2.6 1 .1 1.9-.5 2.5-1.2z" fill="#0D0D0F"/></svg></div>
+            <div><h3 class="font-display text-[20px] font-semibold text-ink">macOS</h3><p class="os-detected text-[12px] text-ink-tertiary">Apple Silicon / Intel</p></div>
+          </div>
+          <a id="mac-btn" href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_aarch64.dmg" class="flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-ink text-white text-[15px] font-semibold hover:opacity-85 transition-opacity">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            下載 Apple Silicon 安裝映像檔 (.dmg)
+          </a>
+          <div class="flex items-center justify-between text-[12px] text-ink-tertiary pt-1">
+            <span>Intel Mac:</span>
+            <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_x86_64.dmg" class="text-accent hover:underline font-mono text-[11px]">Lexora_macOS_x86_64.dmg</a>
+          </div>
+        </div>
+        <!-- Linux card -->
+        <div id="os-linux" class="os-card bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[16px]">
+          <span class="os-badge hidden w-fit px-[10px] py-[4px] rounded-full bg-accent text-white text-[11px] font-semibold tracking-[1px]">目前作業系統推薦</span>
+          <div class="flex items-center gap-[14px]">
+            <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="16" rx="2" stroke="#0D0D0F" stroke-width="1.8"/><path d="M7 9l3 3-3 3M13 15h4" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div><h3 class="font-display text-[20px] font-semibold text-ink">Linux</h3><p class="os-detected text-[12px] text-ink-tertiary">x86_64</p></div>
+          </div>
+          <a id="linux-btn" href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.AppImage" class="flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-ink text-white text-[15px] font-semibold hover:opacity-85 transition-opacity">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            下載通用 AppImage
+          </a>
+          <div class="flex items-center justify-between text-[12px] text-ink-tertiary pt-1">
+            <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.deb" class="text-accent hover:underline">Debian (.deb)</a>
+            <span>·</span>
+            <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.rpm" class="text-accent hover:underline">Fedora (.rpm)</a>
+          </div>
+        </div>
+      </div>
+      <a href="download.html" class="flex items-center justify-center gap-[8px] py-[14px] w-full rounded-[8px] border border-border bg-bg text-[15px] font-medium text-ink hover:bg-bg-subtle transition-colors">前往完整下載清單查看全部安裝套件與校驗碼 →</a>
+    </section>
+
+    <!-- ═══════════ Architecture ═══════════ -->
+    <section id="architecture" class="bg-bg-subtle py-[96px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex flex-col items-center gap-[48px]">
+      <div class="flex flex-col items-center gap-[12px]">
+        <span class="font-display text-[12px] font-semibold tracking-[2px] text-accent">技術架構</span>
+        <h2 class="text-[40px] font-bold text-ink max-[768px]:text-[28px]">Rust 系統級核心，輕量 SolidJS 前端</h2>
+        <p class="max-w-[620px] text-center text-[16px] leading-[26px] text-ink-secondary">基於 Tauri 2 構建，Rust 原生後端與 SolidJS 細粒度響應式前端深度協作——記憶體安全、零垃圾回收卡頓、按鍵延遲低於 16ms。</p>
+      </div>
+      <div class="w-full bg-bg border border-border rounded-[16px] p-[48px] max-[768px]:p-[24px] flex items-center justify-between gap-[24px]">
+        <div class="flex-1 flex flex-col gap-[10px]">
+          <span class="font-display text-[11px] font-semibold tracking-[1.5px] text-accent">前端層</span>
+          <span class="font-display text-[18px] font-semibold text-ink">SolidJS + Webview</span>
+          <div class="flex flex-wrap gap-[8px]"><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">細粒度響應式 Signals</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Milkdown / ProseMirror</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">9 語言 i18n 引擎</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">型別安全 IPC 封裝</span></div>
+        </div>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="shrink-0 max-[768px]:hidden"><path d="M4 12h15m0 0l-5.5-5.5M19 12l-5.5 5.5" stroke="#A6A6AC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="flex-1 flex flex-col gap-[10px]">
+          <span class="font-display text-[11px] font-semibold tracking-[1.5px] text-accent">IPC 通訊橋</span>
+          <span class="font-display text-[18px] font-semibold text-ink">Tauri 2 核心橋接</span>
+          <div class="flex flex-wrap gap-[8px]"><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">零複製 Commands</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">非同步 Event 事件匯流排</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">最小權限安全能力管控</span></div>
+        </div>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="shrink-0 max-[768px]:hidden"><path d="M4 12h15m0 0l-5.5-5.5M19 12l-5.5 5.5" stroke="#A6A6AC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="flex-1 flex flex-col gap-[10px]">
+          <span class="font-display text-[11px] font-semibold tracking-[1.5px] text-accent">系統核心</span>
+          <span class="font-display text-[18px] font-semibold text-ink">Rust 原生引擎</span>
+          <div class="flex flex-wrap gap-[8px]"><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">pulldown-cmark AST 解析</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">syntect 語法高亮</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">notify 檔案系統監聽</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">原子級檔案 I/O 寫入</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ Shortcuts ═══════════ -->
+    <section id="shortcuts" class="bg-bg py-[96px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex flex-col items-center gap-[48px]">
+      <div class="flex flex-col items-center gap-[12px]">
+        <span class="font-display text-[12px] font-semibold tracking-[2px] text-accent">常用快捷鍵</span>
+        <h2 class="text-[40px] font-bold text-ink max-[768px]:text-[28px]">雙手無需離開鍵盤</h2>
+        <p class="max-w-[600px] text-center text-[16px] leading-[26px] text-ink-secondary">支援所有主流 Markdown 常用快捷鍵，格式排版、檔案管理與全域搜尋皆可在指尖瞬間完成。</p>
+      </div>
+      <div class="grid grid-cols-3 gap-[16px] w-full max-[1000px]:grid-cols-1">
+        <div class="bg-bg-subtle border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px]">
+          <h3 class="text-[16px] font-semibold text-ink">文件與檔案</h3>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">新增文件</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+N</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">開啟檔案</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+O</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">儲存目前文件</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+S</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">另存新檔...</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+Shift+S</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">匯出為 HTML</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+E</span></div>
+        </div>
+        <div class="bg-bg-subtle border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px]">
+          <h3 class="text-[16px] font-semibold text-ink">排版與格式</h3>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">粗體</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+B</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">斜體</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+I</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">1~6 級標題</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+1~6</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">本文段落</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+0</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">插入超連結</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+K</span></div>
+        </div>
+        <div class="bg-bg-subtle border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px]">
+          <h3 class="text-[16px] font-semibold text-ink">導覽與檢視</h3>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">快速檔案切換器</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+P</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">文件內尋找</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+F</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">文件內取代</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+H</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">工作區全文搜尋</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+Shift+F</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">切換顯示模式</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+/</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ FAQ + Changelog ═══════════ -->
+    <section id="faq" class="bg-bg-subtle py-[96px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex gap-[64px] max-[1000px]:flex-col">
+      <div class="w-[380px] max-[1000px]:w-full flex flex-col gap-[32px]">
+        <div class="flex flex-col gap-[12px]">
+          <span class="font-display text-[12px] font-semibold tracking-[2px] text-accent">常見問題</span>
+          <h2 class="font-display text-[36px] font-bold text-ink">常見問題解答</h2>
+          <p class="text-[15px] leading-[25px] text-ink-secondary">有疑問或建議？歡迎前往 GitHub 提交 Issue 或參與討論交流。</p>
+        </div>
+        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px]">
+          <div class="flex items-center justify-between">
+            <h3 class="text-[16px] font-semibold text-ink">最新版本</h3>
+            <span class="px-[8px] py-[3px] rounded-full bg-bg-tag text-[12px] text-accent font-semibold">v0.1.3</span>
+          </div>
+          <div class="flex items-center gap-[10px]"><span class="w-[5px] h-[5px] rounded-full bg-accent"></span><span class="text-[14px] text-ink-secondary">macOS 原生紅綠燈視窗控制按鈕適配</span></div>
+          <div class="flex items-center gap-[10px]"><span class="w-[5px] h-[5px] rounded-full bg-accent"></span><span class="text-[14px] text-ink-secondary">統一標準化發布安裝套件命名規範</span></div>
+          <div class="flex items-center gap-[10px]"><span class="w-[5px] h-[5px] rounded-full bg-accent"></span><span class="text-[14px] text-ink-secondary">9 種語言在地化文件與下載矩陣</span></div>
+          <div class="flex items-center gap-[10px]"><span class="w-[5px] h-[5px] rounded-full bg-accent"></span><span class="text-[14px] text-ink-secondary">全面最佳化表格對比度與暗黑主題顯示</span></div>
+        </div>
+      </div>
+      <div class="flex-1 flex flex-col gap-[16px]">
+        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">Lexora 與傳統 Markdown 編輯器有何不同？</h3><p class="text-[14px] leading-[24px] text-ink-secondary">Lexora 採用徹底的原位所見即所得渲染，告別左右分割視窗。打字時游標所在處即時排版，無 Electron 的沉重包袱，冷啟動僅需數百毫秒，帶來極致輕快的原生桌面體驗。</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">我的文件資料安全嗎？</h3><p class="text-[14px] leading-[24px] text-ink-secondary">100% 本機優先。所有文件均完整儲存在您的本機磁碟中，不傳送任何雲端伺服器。配合底層原子寫入機制，即便電腦突發斷電也不會損壞檔案。</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">支援哪些 Markdown 擴充語法？</h3><p class="text-[14px] leading-[24px] text-ink-secondary">完整支援 GitHub Flavored Markdown (GFM)、表格、任務清單、程式碼高亮、Mermaid 圖表（流程圖、循序圖、類別圖等）以及 KaTeX 數學公式渲染。</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">Lexora 是否免費開源？如何參與貢獻？</h3><p class="text-[14px] leading-[24px] text-ink-secondary">是的，Lexora 基於 GNU AGPL-3.0 協議完全免費且開源。歡迎提交 Issue 反饋缺陷、參與多語言翻譯或發起 Pull Request。</p></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══════════ Footer ═══════════ -->
+  <footer class="bg-[#0D0D0F] pt-[80px] pb-[40px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex flex-col gap-[56px]">
+    <div class="flex gap-[96px] max-[1000px]:flex-col max-[1000px]:gap-[48px]">
+      <div class="w-[420px] max-[1000px]:w-full flex flex-col gap-[18px]">
+        <div class="flex items-center gap-[10px]">
+          <svg width="30" height="30" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="lgF" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4361ee"/><stop offset="1" stop-color="#3a0ca3"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#lgF)"/><rect x="120" y="96" width="272" height="320" rx="20" fill="white" opacity="0.95"/><rect x="160" y="160" width="120" height="24" rx="6" fill="#4361ee"/><rect x="160" y="210" width="192" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="240" width="160" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="270" width="180" height="14" rx="4" fill="#6c757d" opacity="0.6"/><polygon points="310,380 390,300 420,330 340,410 300,420" fill="#4cc9f0"/></svg>
+          <span class="font-display text-[20px] font-bold text-white">Lexora</span>
+        </div>
+        <p class="text-[14px] leading-[24px] text-white/70">基於 Tauri 2 + Rust + SolidJS 構建的極簡本機優先 Markdown 閱讀與即時所見即所得編輯器。告別分割視窗，原位即時排版渲染。</p>
+        <p class="text-[11px] leading-[18px] text-white/40 w-[380px] max-[1000px]:w-full">English · 简体中文 · 繁體中文 · 日本語 · 한국어 · Deutsch · Français · Español · Русский</p>
+      </div>
+      <div class="flex-1 flex flex-col gap-[12px]">
+        <h4 class="text-[14px] font-semibold text-white">Product</h4>
+        <a href="#download" class="text-[13px] text-white/60 hover:text-white transition-colors">下載安裝</a>
+        <a href="#features" class="text-[13px] text-white/60 hover:text-white transition-colors">核心特色</a>
+        <a href="#shortcuts" class="text-[13px] text-white/60 hover:text-white transition-colors">快捷鍵</a>
+        <a href="#faq" class="text-[13px] text-white/60 hover:text-white transition-colors">常見問題</a>
+      </div>
+      <div class="flex-1 flex flex-col gap-[12px]">
+        <h4 class="text-[14px] font-semibold text-white">Resources</h4>
+        <a href="https://github.com/BerryUIKI/Lexora" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">GitHub Repository</a>
+        <a href="https://github.com/BerryUIKI/Lexora/tree/main/docs" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">Documentation</a>
+        <a href="https://github.com/BerryUIKI/Lexora/releases" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">Releases</a>
+        <a href="https://github.com/BerryUIKI/Lexora/blob/main/AGENTS.md" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">AGENTS.md</a>
+      </div>
+      <div class="flex-1 flex flex-col gap-[12px]">
+        <h4 class="text-[14px] font-semibold text-white">Open Source</h4>
+        <a href="https://github.com/BerryUIKI/Lexora/blob/main/LICENSE" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">AGPL-3.0 License</a>
+        <a href="https://github.com/BerryUIKI/Lexora/blob/main/docs/CONTRIBUTING.md" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">Contributing Guide</a>
+        <a href="https://github.com/BerryUIKI/Lexora/issues" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">Open an Issue</a>
+        <a href="https://github.com/BerryUIKI/Lexora/security" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">Security</a>
+      </div>
+    </div>
+    <div class="h-px w-full bg-white/[0.12]"></div>
+    <div class="flex items-center justify-between text-[12px] max-[768px]:flex-col max-[768px]:gap-[8px]">
+      <span class="text-white/50">Copyright © 2026 Lexora Contributors · Licensed under AGPL-3.0</span>
+      <span class="text-white/40">Built with Tauri 2 · Rust · SolidJS</span>
+    </div>
+  </footer>
+
+  <script>
+    function setLang(lang) {
+      localStorage.setItem('lexora_user_lang', lang);
+    }
+
+    const sw = document.getElementById('langSwitcher');
+    const menu = document.getElementById('langMenu');
+    const btn = document.getElementById('langBtn');
+
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      menu.classList.toggle('hidden');
+    });
+    document.addEventListener('click', () => menu.classList.add('hidden'));
+
+    
+
+    // OS detection: highlight recommended card
+    const ua = navigator.userAgent.toLowerCase();
+    let os = 'win';
+    if (ua.includes('mac')) os = 'macos';
+    else if (ua.includes('linux')) os = 'linux';
+
+    document.querySelectorAll('.os-card').forEach(c => {
+      c.classList.remove('border-2', 'border-accent');
+      c.classList.add('border', 'border-border');
+      const b = c.querySelector('.os-badge');
+      if (b) b.classList.add('hidden');
+    });
+
+    const card = document.getElementById('os-' + os);
+    if (card) {
+      card.classList.remove('border', 'border-border');
+      card.classList.add('border-2', 'border-accent');
+      const badge = card.querySelector('.os-badge');
+      if (badge) badge.classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
