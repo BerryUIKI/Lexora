@@ -7,14 +7,13 @@ import {
 import { relaunch } from "@tauri-apps/plugin-process";
 import { getVersion } from "@tauri-apps/api/app";
 import { automaticUpdateChecks } from "../store/settings";
-import { currentLocale } from "../i18n";
-import { selectLocalizedReleaseNotes } from "../i18n/changelog";
+import { t } from "../i18n";
 
 const LAST_CHECK_KEY = "lexora_last_update_check";
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 const MAX_STARTUP_JITTER_MS = 60 * 1000;
 
-export type UpdateStatus = "update_available" | "up_to_date" | "error";
+export type UpdateStatus = "checking" | "update_available" | "up_to_date" | "error";
 export type UpdatePhase = "idle" | "downloading" | "installing";
 
 export interface UpdateInfo {
@@ -68,10 +67,29 @@ export function isAutomaticCheckDue(now = Date.now()): boolean {
   );
 }
 
+function showManualCheckingStatus(): void {
+  setUpdateInfo({
+    status: "checking",
+    currentVersion: "",
+    latestVersion: "",
+    releaseNotes: "",
+    publishedAt: "",
+    isManualCheck: true,
+  });
+  setUpdateModalOpen(true);
+}
+
 /** Check the signed stable-channel manifest configured in tauri.conf.json. */
 export async function checkForUpdates(manual = false): Promise<void> {
-  if (isCheckingUpdate()) return;
+  if (isCheckingUpdate()) {
+    if (manual) showManualCheckingStatus();
+    return;
+  }
   setIsCheckingUpdate(true);
+
+  if (manual) {
+    showManualCheckingStatus();
+  }
 
   try {
     const update = await check({ timeout: 30_000 });
@@ -99,7 +117,9 @@ export async function checkForUpdates(manual = false): Promise<void> {
       status: "update_available",
       currentVersion: update.currentVersion,
       latestVersion: update.version,
-      releaseNotes: selectLocalizedReleaseNotes(update.body, currentLocale()),
+      releaseNotes: t("update.localizedReleaseNotes", {
+        version: update.version,
+      }),
       publishedAt: update.date || "",
       isManualCheck: manual,
     });

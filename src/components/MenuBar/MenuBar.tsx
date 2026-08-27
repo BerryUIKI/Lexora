@@ -23,6 +23,8 @@ import { AboutModal } from "./AboutModal";
 import { LanguageModal } from "./LanguageModal";
 
 export interface MenuBarProps {
+  homeVisible: boolean;
+  onGoHome: () => void;
   onNewDocument: () => void;
   onOpenFile: () => void;
   onOpenFolder: () => void;
@@ -45,7 +47,8 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
   const [langModalOpen, setLangModalOpen] = createSignal(false);
 
   const doc = () => currentDocument();
-  const hasDoc = () => doc().path !== null || doc().content.length > 0;
+  const hasDoc = () =>
+    !props.homeVisible && (doc().path !== null || doc().content.length > 0);
 
   const closeMenus = () => {
     setActiveMenu(null);
@@ -172,9 +175,9 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
             onClick={(e) => {
               e.stopPropagation();
               closeMenus();
-              setAboutOpen(true);
+              props.onGoHome();
             }}
-            title={t("help.about")}
+            title={t("welcome.title")}
           >
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
@@ -558,6 +561,14 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
 
                 <button
                   class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => handleOpenLink("https://berryuiki.github.io/Lexora/")}
+                >
+                  <span>{t("help.website")}</span>
+                  <svg class="w-3 h-3 text-[var(--color-text-secondary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
+                </button>
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
                   onClick={() => handleOpenLink("https://github.com/BerryUIKI/Lexora#readme")}
                 >
                   <span>{t("help.documentation")}</span>
@@ -649,6 +660,18 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="8" />
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </button>
+
+          {/* Official website */}
+          <button
+            class="p-1.5 mr-0.5 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+            onClick={() => handleOpenLink("https://berryuiki.github.io/Lexora/")}
+            title={t("help.website")}
+          >
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20" />
             </svg>
           </button>
 

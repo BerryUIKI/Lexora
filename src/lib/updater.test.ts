@@ -12,19 +12,23 @@ vi.mock("@tauri-apps/plugin-process", () => ({ relaunch: mocks.relaunch }));
 vi.mock("@tauri-apps/api/app", () => ({ getVersion: mocks.getVersion }));
 
 import { setAutomaticUpdateChecks } from "../store/settings";
+import { setLocale } from "../i18n";
 import {
   checkForUpdates,
   downloadProgress,
   installPendingUpdate,
+  isCheckingUpdate,
   isAutomaticCheckDue,
   resetUpdaterForTests,
   updateInfo,
+  updateModalOpen,
 } from "./updater";
 
 describe("native updater", () => {
   beforeEach(() => {
     localStorage.clear();
     setAutomaticUpdateChecks(true);
+    setLocale("en-US");
     resetUpdaterForTests();
     vi.clearAllMocks();
     mocks.getVersion.mockResolvedValue("0.1.4");
@@ -38,7 +42,46 @@ describe("native updater", () => {
     expect(isAutomaticCheckDue(200_000_000)).toBe(false);
   });
 
-  it("uses localized manifest notes and installs with progress", async () => {
+  it("opens a visible checking state before a manual request completes", async () => {
+    let resolveCheck: (value: null) => void = () => undefined;
+    mocks.check.mockReturnValue(
+      new Promise<null>((resolve) => {
+        resolveCheck = resolve;
+      })
+    );
+
+    const request = checkForUpdates(true);
+    expect(isCheckingUpdate()).toBe(true);
+    expect(updateModalOpen()).toBe(true);
+    expect(updateInfo()?.status).toBe("checking");
+
+    resolveCheck(null);
+    await request;
+    expect(isCheckingUpdate()).toBe(false);
+    expect(updateInfo()?.status).toBe("up_to_date");
+  });
+
+  it("reveals an automatic check when the user requests status", async () => {
+    let resolveCheck: (value: null) => void = () => undefined;
+    mocks.check.mockReturnValue(
+      new Promise<null>((resolve) => {
+        resolveCheck = resolve;
+      })
+    );
+
+    const automaticRequest = checkForUpdates(false);
+    expect(updateModalOpen()).toBe(false);
+
+    await checkForUpdates(true);
+    expect(updateModalOpen()).toBe(true);
+    expect(updateInfo()?.status).toBe("checking");
+
+    resolveCheck(null);
+    await automaticRequest;
+  });
+
+  it("uses in-app localized notes and installs with progress", async () => {
+    setLocale("zh-CN");
     mocks.downloadAndInstall.mockImplementation(async (onEvent) => {
       onEvent({ event: "Started", data: { contentLength: 100 } });
       onEvent({ event: "Progress", data: { chunkLength: 40 } });
@@ -48,13 +91,14 @@ describe("native updater", () => {
       currentVersion: "0.1.3",
       version: "0.1.4",
       date: "2026-08-27T00:00:00Z",
-      body: "<!-- lang:en-US -->Update notes<!-- /lang -->",
+      body: "English-only GitHub release notes",
       downloadAndInstall: mocks.downloadAndInstall,
     });
 
     await checkForUpdates(true);
     expect(updateInfo()?.latestVersion).toBe("0.1.4");
-    expect(updateInfo()?.releaseNotes).toBe("Update notes");
+    expect(updateInfo()?.releaseNotes).toContain("版本 0.1.4");
+    expect(updateInfo()?.releaseNotes).not.toContain("GitHub release notes");
 
     await installPendingUpdate();
     expect(downloadProgress()).toBe(100);

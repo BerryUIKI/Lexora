@@ -1,7 +1,5 @@
 # Changelog
 
-[简体中文](CHANGELOG.zh-CN.md) · [繁體中文](CHANGELOG.zh-TW.md) · [日本語](CHANGELOG.ja.md) · [한국어](CHANGELOG.ko.md) · [Deutsch](CHANGELOG.de.md) · [Français](CHANGELOG.fr.md) · [Español](CHANGELOG.es.md) · [Русский](CHANGELOG.ru.md)
-
 All notable changes to Lexora will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
@@ -9,12 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Official website links in the title bar, Help menu, and About dialog.
+- Non-destructive home navigation from the Lexora title-bar icon.
+- Raw block and inline HTML formatting in rendered Markdown, including HTML inside headings.
+
+### Changed
+- Manual update checks now display an immediate progress state and keep the About dialog open.
+- In-app update notes now come from Lexora's nine-language translation dictionaries; GitHub release descriptions remain English-only.
+- The latest-version result now displays a green confirmation checkmark.
+
 ## [0.1.4] - 2026-08-27
 
 ### Added
 - Signed, in-app updates for Windows, macOS, and Linux with download progress and user-confirmed installation.
 - Daily stable-channel update checks with startup jitter and an opt-out setting.
-- Localized release notes and changelog summaries for all nine supported languages.
+- Localized in-app release notes for all nine supported interface languages.
 
 ### Changed
 - Update installation now warns when any open tab has unsaved changes before Lexora exits or restarts.

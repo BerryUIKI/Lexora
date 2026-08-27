@@ -94,6 +94,7 @@ export const ja: TranslationDictionary = {
   help: {
     documentation: "ドキュメント",
     github: "GitHub リポジトリ",
+    website: "公式サイト",
     checkForUpdates: "アップデートを確認...",
     reportIssue: "問題を報告",
     about: "Lexora について",
@@ -137,6 +138,8 @@ export const ja: TranslationDictionary = {
   },
   update: {
     checking: "アップデートを確認中...",
+    checkingDesc: "安定版アップデートチャンネルに接続しています。しばらくお待ちください。",
+    localizedReleaseNotes: "バージョン {version} には、最新機能、互換性の改善、バグ修正が含まれています。",
     upToDate: "現在最新の安定版です",
     upToDateDesc: "お使いのバージョンは最新の安定リリースです。",
     aheadTitle: "🌟 公式リリースより新しいバージョン",

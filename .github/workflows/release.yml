@@ -80,60 +80,10 @@ jobs:
           tagName: ${{ github.event_name == 'workflow_dispatch' && inputs.tag_name || github.ref_name }}
           releaseName: ${{ github.event_name == 'workflow_dispatch' && inputs.release_name || format('Lexora {0}', github.ref_name) }}
           releaseBody: |
-            <!-- lang:en-US -->
             ### What's new
-            - Signed in-app updates with progress and confirmation.
-            - Daily stable-channel checks with an opt-out setting.
-            - Protection for unsaved documents before installation.
-            <!-- /lang -->
-            <!-- lang:zh-CN -->
-            ### 更新内容
-            - 支持带进度与确认步骤的签名应用内更新。
-            - 每日检查稳定版更新，并可在设置中关闭。
-            - 安装前保护未保存的文档。
-            <!-- /lang -->
-            <!-- lang:zh-TW -->
-            ### 更新內容
-            - 支援顯示進度並需確認的簽署應用程式內更新。
-            - 每日檢查穩定版更新，亦可在設定中停用。
-            - 安裝前保護未儲存的文件。
-            <!-- /lang -->
-            <!-- lang:ja-JP -->
-            ### 新機能
-            - 進行状況と確認を備えた署名済みアプリ内アップデート。
-            - オプトアウト可能な安定版の毎日確認。
-            - インストール前の未保存ドキュメント保護。
-            <!-- /lang -->
-            <!-- lang:ko-KR -->
-            ### 새로운 기능
-            - 진행률과 확인 절차를 제공하는 서명된 앱 내 업데이트.
-            - 설정에서 끌 수 있는 일일 안정 버전 확인.
-            - 설치 전 저장되지 않은 문서 보호.
-            <!-- /lang -->
-            <!-- lang:de-DE -->
-            ### Neuerungen
-            - Signierte In-App-Updates mit Fortschritt und Bestätigung.
-            - Tägliche Prüfung des stabilen Kanals mit Opt-out.
-            - Schutz ungespeicherter Dokumente vor der Installation.
-            <!-- /lang -->
-            <!-- lang:fr-FR -->
-            ### Nouveautés
-            - Mises à jour intégrées signées avec progression et confirmation.
-            - Vérification quotidienne du canal stable, désactivable.
-            - Protection des documents non enregistrés avant l’installation.
-            <!-- /lang -->
-            <!-- lang:es-ES -->
-            ### Novedades
-            - Actualizaciones firmadas dentro de la aplicación con progreso y confirmación.
-            - Comprobación diaria del canal estable, que puede desactivarse.
-            - Protección de documentos sin guardar antes de instalar.
-            <!-- /lang -->
-            <!-- lang:ru-RU -->
-            ### Что нового
-            - Подписанные обновления в приложении с прогрессом и подтверждением.
-            - Ежедневная проверка стабильного канала с возможностью отключения.
-            - Защита несохранённых документов перед установкой.
-            <!-- /lang -->
+            - See [CHANGELOG.md](https://github.com/BerryUIKI/Lexora/blob/main/CHANGELOG.md) for release details.
+
+            The in-app updater presents update notes in the selected interface language.
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}
