@@ -98,6 +98,7 @@
           <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_x86_64.dmg" class="flex items-center justify-between px-[14px] py-[11px] rounded-[8px] bg-bg-soft border border-border hover:border-accent hover:bg-bg-tag transition-colors">
             <span class="text-[13px] font-medium text-ink">Intel (DMG)</span><span class="text-[10px] text-ink-tertiary font-mono">Lexora_macOS_x86_64.dmg</span>
           </a>
+          <a href="#macos-gatekeeper" class="text-[12px] leading-[18px] text-accent hover:underline">Bloqué par Gatekeeper sur macOS ? Voir la procédure →</a>
         </div>
         <!-- Linux -->
         <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px]">
@@ -124,6 +125,28 @@
       <div class="flex items-center gap-[16px] pt-[16px]">
         <a href="https://github.com/BerryUIKI/Lexora/releases" target="_blank" rel="noopener" class="flex items-center gap-[8px] px-[20px] py-[12px] rounded-[8px] border border-border bg-bg text-[14px] font-medium text-ink hover:bg-bg-subtle transition-colors">Toutes les versions et sources</a>
         <a href="https://github.com/BerryUIKI/Lexora" target="_blank" rel="noopener" class="flex items-center gap-[8px] px-[20px] py-[12px] rounded-[8px] bg-ink text-white text-[14px] font-medium hover:opacity-85 transition-opacity">Dépôt GitHub</a>
+      </div>
+    </section>
+
+    <section id="macos-gatekeeper" class="scroll-mt-[24px] bg-bg-subtle py-[80px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6">
+      <div class="max-w-[860px] mx-auto bg-bg border border-border rounded-[16px] p-[40px] max-[768px]:p-[24px] flex flex-col gap-[20px]">
+        <div class="flex flex-col gap-[8px]">
+          <span class="font-display text-[12px] font-semibold tracking-[2px] text-accent">AIDE MACOS</span>
+          <h2 class="font-display text-[32px] font-bold text-ink max-[768px]:text-[26px]">Ouvrir Lexora lorsque macOS le bloque</h2>
+        </div>
+        <p class="text-[15px] leading-[25px] text-ink-secondary">Les versions macOS actuelles ne sont ni signées ni notariées. Gatekeeper peut donc indiquer qu’Apple ne peut pas vérifier le développeur ou l’absence de logiciels malveillants.</p>
+        <p class="text-[14px] leading-[23px] text-ink font-medium">Continuez uniquement si vous avez téléchargé Lexora depuis la page GitHub Releases officielle et si vous faites confiance au fichier. <a href="https://github.com/BerryUIKI/Lexora/releases/latest" target="_blank" rel="noopener" class="text-accent hover:underline">GitHub Releases</a></p>
+        <ol class="flex flex-col gap-[12px] list-decimal pl-[22px] text-[14px] leading-[23px] text-ink-secondary">
+          <li class="pl-[4px]">Déplacez <strong>Lexora.app</strong> dans <strong>Applications</strong>, puis essayez de l’ouvrir une fois.</li>
+          <li class="pl-[4px]">Ouvrez <strong>menu Pomme → Réglages Système → Confidentialité et sécurité</strong>.</li>
+          <li class="pl-[4px]">Faites défiler jusqu’à <strong>Sécurité</strong>, puis cliquez sur <strong>Ouvrir quand même</strong>. Cette option reste disponible environ une heure après le blocage.</li>
+          <li class="pl-[4px]">Authentifiez-vous, puis cliquez sur <strong>Ouvrir</strong>. Les prochains lancements fonctionneront normalement.</li>
+        </ol>
+        <div class="rounded-[10px] bg-bg-soft border border-border p-[18px] flex flex-col gap-[10px]">
+          <p class="text-[13px] leading-[21px] text-ink-secondary">Si l’option n’apparaît pas et que vous faites confiance au téléchargement, supprimez uniquement l’attribut de quarantaine de Lexora dans Terminal :</p>
+          <code class="block overflow-x-auto rounded-[7px] bg-[#0D0D0F] px-[14px] py-[12px] text-[12px] text-white">xattr -dr com.apple.quarantine /Applications/Lexora.app</code>
+        </div>
+        <p class="text-[13px] leading-[21px] text-ink-secondary"><strong class="text-ink">Ne désactivez pas Gatekeeper pour tout le système.</strong> <a href="https://support.apple.com/guide/mac-help/mh40616/mac" target="_blank" rel="noopener" class="text-accent hover:underline">Consulter les instructions d’Apple pour ouvrir une app d’un développeur inconnu →</a></p>
       </div>
     </section>
   </main>

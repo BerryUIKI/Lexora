@@ -1138,6 +1138,81 @@ const languages = {
   }
 };
 
+const gatekeeperGuidance = {
+  en: {
+    link: 'Blocked by macOS Gatekeeper? Follow these steps →',
+    tag: 'MACOS HELP',
+    title: 'Opening Lexora when macOS blocks it',
+    intro: 'Current macOS builds are not code-signed or notarized, so Gatekeeper may say that Apple cannot verify the developer or check the app for malicious software.',
+    sourceWarning: 'Only continue if you downloaded Lexora from the official GitHub Releases page and trust the file.',
+    steps: [
+      'Move <strong>Lexora.app</strong> to <strong>Applications</strong>, then try to open it once.',
+      'Open <strong>Apple menu → System Settings → Privacy &amp; Security</strong>.',
+      'Scroll to <strong>Security</strong> and click <strong>Open Anyway</strong>. The option remains available for about one hour after the blocked attempt.',
+      'Authenticate when prompted, then click <strong>Open</strong>. Future launches will work normally.'
+    ],
+    fallback: 'If Open Anyway does not appear and you trust the download, remove the quarantine attribute from Lexora only in Terminal:',
+    safety: 'Do not disable Gatekeeper system-wide.',
+    appleLink: 'Read Apple’s guidance for opening an app from an unknown developer →'
+  },
+  'zh-CN': {
+    link: '被 macOS Gatekeeper 阻止？查看解决步骤 →', tag: 'MACOS 帮助', title: 'macOS 阻止 Lexora 时如何打开',
+    intro: '目前的 macOS 版本尚未进行代码签名或公证，因此 Gatekeeper 可能提示无法验证开发者或无法检查恶意软件。',
+    sourceWarning: '请仅在从官方 GitHub Releases 页面下载且确认信任该文件时继续。',
+    steps: ['将 <strong>Lexora.app</strong> 移到<strong>应用程序</strong>文件夹，然后尝试打开一次。', '打开<strong>苹果菜单 → 系统设置 → 隐私与安全性</strong>。', '滚动到<strong>安全性</strong>，点击<strong>仍要打开</strong>。此选项会在被阻止后保留约一小时。', '按提示完成验证，然后点击<strong>打开</strong>。以后即可正常启动。'],
+    fallback: '如果未显示“仍要打开”且你信任该下载，请在终端中仅移除 Lexora 的隔离属性：', safety: '请勿在系统范围内禁用 Gatekeeper。', appleLink: '查看 Apple 关于打开未知开发者应用的说明 →'
+  },
+  'zh-TW': {
+    link: '遭 macOS Gatekeeper 阻擋？查看解決步驟 →', tag: 'MACOS 說明', title: 'macOS 阻擋 Lexora 時如何開啟',
+    intro: '目前的 macOS 版本尚未進行程式碼簽署或公證，因此 Gatekeeper 可能提示無法驗證開發者或檢查惡意軟體。',
+    sourceWarning: '請只在從官方 GitHub Releases 頁面下載且信任該檔案時繼續。',
+    steps: ['將 <strong>Lexora.app</strong> 移到<strong>應用程式</strong>資料夾，然後嘗試開啟一次。', '開啟<strong>蘋果選單 → 系統設定 → 隱私權與安全性</strong>。', '捲動到<strong>安全性</strong>，按一下<strong>強制打開</strong>。此選項會在遭阻擋後保留約一小時。', '依提示完成驗證，然後按一下<strong>開啟</strong>。之後即可正常啟動。'],
+    fallback: '如果未顯示「強制打開」且你信任該下載，請在終端機中只移除 Lexora 的隔離屬性：', safety: '請勿在整個系統停用 Gatekeeper。', appleLink: '查看 Apple 關於開啟未知開發者 App 的說明 →'
+  },
+  ja: {
+    link: 'macOS Gatekeeper にブロックされましたか？手順を見る →', tag: 'MACOS ヘルプ', title: 'macOS に Lexora がブロックされた場合',
+    intro: '現在の macOS ビルドはコード署名および公証がされていないため、Gatekeeper が開発元や悪意のあるソフトウェアの有無を確認できない場合があります。',
+    sourceWarning: '公式 GitHub Releases ページからダウンロードし、そのファイルを信頼できる場合にのみ続行してください。',
+    steps: ['<strong>Lexora.app</strong> を<strong>アプリケーション</strong>フォルダに移動し、一度開いてみます。', '<strong>Apple メニュー → システム設定 → プライバシーとセキュリティ</strong>を開きます。', '<strong>セキュリティ</strong>までスクロールし、<strong>このまま開く</strong>をクリックします。この項目はブロック後約1時間表示されます。', '求められたら認証し、<strong>開く</strong>をクリックします。次回からは通常どおり起動できます。'],
+    fallback: '「このまま開く」が表示されず、ダウンロードを信頼できる場合は、ターミナルで Lexora の隔離属性だけを削除します：', safety: 'Gatekeeper をシステム全体で無効にしないでください。', appleLink: '不明な開発元のアプリを開く方法（Apple）→'
+  },
+  ko: {
+    link: 'macOS Gatekeeper가 차단하나요? 해결 방법 보기 →', tag: 'MACOS 도움말', title: 'macOS에서 Lexora가 차단될 때 여는 방법',
+    intro: '현재 macOS 빌드는 코드 서명 및 공증이 되어 있지 않아 Gatekeeper가 개발자 또는 악성 소프트웨어 여부를 확인할 수 없다고 표시할 수 있습니다.',
+    sourceWarning: '공식 GitHub Releases 페이지에서 다운로드했고 파일을 신뢰하는 경우에만 계속하세요.',
+    steps: ['<strong>Lexora.app</strong>을 <strong>응용 프로그램</strong> 폴더로 옮긴 뒤 한 번 실행해 보세요.', '<strong>Apple 메뉴 → 시스템 설정 → 개인정보 보호 및 보안</strong>을 여세요.', '<strong>보안</strong>으로 스크롤하여 <strong>확인 없이 열기</strong>를 클릭하세요. 이 옵션은 차단 시도 후 약 한 시간 동안 표시됩니다.', '요청 시 인증하고 <strong>열기</strong>를 클릭하세요. 이후에는 정상적으로 실행됩니다.'],
+    fallback: '옵션이 표시되지 않고 다운로드를 신뢰한다면 터미널에서 Lexora에 대해서만 격리 속성을 제거하세요:', safety: 'Gatekeeper를 시스템 전체에서 비활성화하지 마세요.', appleLink: '확인되지 않은 개발자의 앱 열기에 관한 Apple 안내 →'
+  },
+  de: {
+    link: 'Von macOS Gatekeeper blockiert? Anleitung ansehen →', tag: 'MACOS-HILFE', title: 'Lexora trotz macOS-Blockierung öffnen',
+    intro: 'Die aktuellen macOS-Builds sind nicht codesigniert oder notarisiert. Gatekeeper kann daher melden, dass der Entwickler oder die App nicht überprüft werden kann.',
+    sourceWarning: 'Fahre nur fort, wenn du Lexora von der offiziellen GitHub-Releases-Seite geladen hast und der Datei vertraust.',
+    steps: ['Verschiebe <strong>Lexora.app</strong> nach <strong>Programme</strong> und versuche einmal, die App zu öffnen.', 'Öffne <strong>Apple-Menü → Systemeinstellungen → Datenschutz &amp; Sicherheit</strong>.', 'Scrolle zu <strong>Sicherheit</strong> und klicke auf <strong>Dennoch öffnen</strong>. Die Option ist nach dem blockierten Versuch etwa eine Stunde verfügbar.', 'Authentifiziere dich und klicke auf <strong>Öffnen</strong>. Künftige Starts funktionieren normal.'],
+    fallback: 'Wenn die Option nicht erscheint und du dem Download vertraust, entferne im Terminal nur das Quarantäneattribut von Lexora:', safety: 'Deaktiviere Gatekeeper nicht systemweit.', appleLink: 'Apples Anleitung zum Öffnen von Apps unbekannter Entwickler →'
+  },
+  fr: {
+    link: 'Bloqué par Gatekeeper sur macOS ? Voir la procédure →', tag: 'AIDE MACOS', title: 'Ouvrir Lexora lorsque macOS le bloque',
+    intro: 'Les versions macOS actuelles ne sont ni signées ni notariées. Gatekeeper peut donc indiquer qu’Apple ne peut pas vérifier le développeur ou l’absence de logiciels malveillants.',
+    sourceWarning: 'Continuez uniquement si vous avez téléchargé Lexora depuis la page GitHub Releases officielle et si vous faites confiance au fichier.',
+    steps: ['Déplacez <strong>Lexora.app</strong> dans <strong>Applications</strong>, puis essayez de l’ouvrir une fois.', 'Ouvrez <strong>menu Pomme → Réglages Système → Confidentialité et sécurité</strong>.', 'Faites défiler jusqu’à <strong>Sécurité</strong>, puis cliquez sur <strong>Ouvrir quand même</strong>. Cette option reste disponible environ une heure après le blocage.', 'Authentifiez-vous, puis cliquez sur <strong>Ouvrir</strong>. Les prochains lancements fonctionneront normalement.'],
+    fallback: 'Si l’option n’apparaît pas et que vous faites confiance au téléchargement, supprimez uniquement l’attribut de quarantaine de Lexora dans Terminal :', safety: 'Ne désactivez pas Gatekeeper pour tout le système.', appleLink: 'Consulter les instructions d’Apple pour ouvrir une app d’un développeur inconnu →'
+  },
+  es: {
+    link: '¿Gatekeeper de macOS bloque la app? Ver instrucciones →', tag: 'AYUDA PARA MACOS', title: 'Cómo abrir Lexora si macOS lo bloquea',
+    intro: 'Las versiones actuales para macOS no están firmadas ni notarizadas, por lo que Gatekeeper puede indicar que Apple no puede verificar al desarrollador o comprobar si hay software malicioso.',
+    sourceWarning: 'Continúa solo si descargaste Lexora desde la página oficial de GitHub Releases y confías en el archivo.',
+    steps: ['Mueve <strong>Lexora.app</strong> a <strong>Aplicaciones</strong> e intenta abrirla una vez.', 'Abre <strong>menú Apple → Ajustes del Sistema → Privacidad y seguridad</strong>.', 'Desplázate hasta <strong>Seguridad</strong> y pulsa <strong>Abrir igualmente</strong>. La opción permanece disponible aproximadamente una hora después del bloqueo.', 'Autentícate y pulsa <strong>Abrir</strong>. Los próximos inicios funcionarán con normalidad.'],
+    fallback: 'Si la opción no aparece y confías en la descarga, elimina solo el atributo de cuarentena de Lexora desde Terminal:', safety: 'No desactives Gatekeeper en todo el sistema.', appleLink: 'Consulta la guía de Apple para abrir apps de desarrolladores desconocidos →'
+  },
+  ru: {
+    link: 'macOS Gatekeeper блокирует приложение? Открыть инструкцию →', tag: 'ПОМОЩЬ ДЛЯ MACOS', title: 'Как открыть Lexora, если macOS его блокирует',
+    intro: 'Текущие сборки для macOS не подписаны и не нотарифицированы, поэтому Gatekeeper может сообщить, что Apple не может проверить разработчика или приложение на наличие вредоносного ПО.',
+    sourceWarning: 'Продолжайте, только если загрузили Lexora с официальной страницы GitHub Releases и доверяете файлу.',
+    steps: ['Переместите <strong>Lexora.app</strong> в папку <strong>Программы</strong> и один раз попробуйте открыть приложение.', 'Откройте <strong>меню Apple → Системные настройки → Конфиденциальность и безопасность</strong>.', 'Прокрутите до раздела <strong>Безопасность</strong> и нажмите <strong>Всё равно открыть</strong>. Кнопка доступна около часа после блокировки.', 'Подтвердите действие и нажмите <strong>Открыть</strong>. В дальнейшем приложение будет запускаться как обычно.'],
+    fallback: 'Если кнопка не появилась и вы доверяете загрузке, удалите в Терминале атрибут карантина только у Lexora:', safety: 'Не отключайте Gatekeeper для всей системы.', appleLink: 'Инструкция Apple по открытию приложений неизвестных разработчиков →'
+  }
+};
+
 function renderLangOptions(currentCode, isRoot) {
   return Object.values(languages).map(lang => {
     const isCur = lang.code === currentCode;
@@ -1168,6 +1243,7 @@ function buildIndex(lang) {
   const homePath = isRoot ? '#' : '#';
   const dlPagePath = isRoot ? 'download.html' : 'download.html';
   const langOptionsHtml = renderLangOptions(lang.code, isRoot);
+  const gatekeeper = gatekeeperGuidance[lang.code] || gatekeeperGuidance.en;
 
   return `<!DOCTYPE html>
 <html lang="${lang.htmlLang}" class="h-full">
@@ -1405,6 +1481,7 @@ ${langOptionsHtml}
             <span>Intel Mac:</span>
             <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_x86_64.dmg" class="text-accent hover:underline font-mono text-[11px]">Lexora_macOS_x86_64.dmg</a>
           </div>
+          <a href="${dlPagePath}#macos-gatekeeper" class="text-[12px] leading-[18px] text-accent hover:underline">${gatekeeper.link}</a>
         </div>
         <!-- Linux card -->
         <div id="os-linux" class="os-card bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[16px]">
@@ -1647,6 +1724,7 @@ function buildDownload(lang) {
   const iconPath = isRoot ? 'app-icon.svg' : '../app-icon.svg';
   const homePath = isRoot ? 'index.html' : 'index.html';
   const langOptionsHtml = renderLangDownloadOptions(lang.code, isRoot);
+  const gatekeeper = gatekeeperGuidance[lang.code] || gatekeeperGuidance.en;
 
   return `<!DOCTYPE html>
 <html lang="${lang.htmlLang}" class="h-full">
@@ -1740,6 +1818,7 @@ ${langOptionsHtml}
           <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_x86_64.dmg" class="flex items-center justify-between px-[14px] py-[11px] rounded-[8px] bg-bg-soft border border-border hover:border-accent hover:bg-bg-tag transition-colors">
             <span class="text-[13px] font-medium text-ink">Intel (DMG)</span><span class="text-[10px] text-ink-tertiary font-mono">Lexora_macOS_x86_64.dmg</span>
           </a>
+          <a href="#macos-gatekeeper" class="text-[12px] leading-[18px] text-accent hover:underline">${gatekeeper.link}</a>
         </div>
         <!-- Linux -->
         <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px]">
@@ -1766,6 +1845,25 @@ ${langOptionsHtml}
       <div class="flex items-center gap-[16px] pt-[16px]">
         <a href="https://github.com/BerryUIKI/Lexora/releases" target="_blank" rel="noopener" class="flex items-center gap-[8px] px-[20px] py-[12px] rounded-[8px] border border-border bg-bg text-[14px] font-medium text-ink hover:bg-bg-subtle transition-colors">${lang.downloadPage.allReleases}</a>
         <a href="https://github.com/BerryUIKI/Lexora" target="_blank" rel="noopener" class="flex items-center gap-[8px] px-[20px] py-[12px] rounded-[8px] bg-ink text-white text-[14px] font-medium hover:opacity-85 transition-opacity">${lang.downloadPage.viewGh}</a>
+      </div>
+    </section>
+
+    <section id="macos-gatekeeper" class="scroll-mt-[24px] bg-bg-subtle py-[80px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6">
+      <div class="max-w-[860px] mx-auto bg-bg border border-border rounded-[16px] p-[40px] max-[768px]:p-[24px] flex flex-col gap-[20px]">
+        <div class="flex flex-col gap-[8px]">
+          <span class="font-display text-[12px] font-semibold tracking-[2px] text-accent">${gatekeeper.tag}</span>
+          <h2 class="font-display text-[32px] font-bold text-ink max-[768px]:text-[26px]">${gatekeeper.title}</h2>
+        </div>
+        <p class="text-[15px] leading-[25px] text-ink-secondary">${gatekeeper.intro}</p>
+        <p class="text-[14px] leading-[23px] text-ink font-medium">${gatekeeper.sourceWarning} <a href="https://github.com/BerryUIKI/Lexora/releases/latest" target="_blank" rel="noopener" class="text-accent hover:underline">GitHub Releases</a></p>
+        <ol class="flex flex-col gap-[12px] list-decimal pl-[22px] text-[14px] leading-[23px] text-ink-secondary">
+          ${gatekeeper.steps.map(step => `<li class="pl-[4px]">${step}</li>`).join('\n          ')}
+        </ol>
+        <div class="rounded-[10px] bg-bg-soft border border-border p-[18px] flex flex-col gap-[10px]">
+          <p class="text-[13px] leading-[21px] text-ink-secondary">${gatekeeper.fallback}</p>
+          <code class="block overflow-x-auto rounded-[7px] bg-[#0D0D0F] px-[14px] py-[12px] text-[12px] text-white">xattr -dr com.apple.quarantine /Applications/Lexora.app</code>
+        </div>
+        <p class="text-[13px] leading-[21px] text-ink-secondary"><strong class="text-ink">${gatekeeper.safety}</strong> <a href="https://support.apple.com/guide/mac-help/mh40616/mac" target="_blank" rel="noopener" class="text-accent hover:underline">${gatekeeper.appleLink}</a></p>
       </div>
     </section>
   </main>

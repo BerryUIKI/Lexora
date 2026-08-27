@@ -98,6 +98,7 @@
           <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_x86_64.dmg" class="flex items-center justify-between px-[14px] py-[11px] rounded-[8px] bg-bg-soft border border-border hover:border-accent hover:bg-bg-tag transition-colors">
             <span class="text-[13px] font-medium text-ink">Intel (DMG)</span><span class="text-[10px] text-ink-tertiary font-mono">Lexora_macOS_x86_64.dmg</span>
           </a>
+          <a href="#macos-gatekeeper" class="text-[12px] leading-[18px] text-accent hover:underline">遭 macOS Gatekeeper 阻擋？查看解決步驟 →</a>
         </div>
         <!-- Linux -->
         <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px]">
@@ -124,6 +125,28 @@
       <div class="flex items-center gap-[16px] pt-[16px]">
         <a href="https://github.com/BerryUIKI/Lexora/releases" target="_blank" rel="noopener" class="flex items-center gap-[8px] px-[20px] py-[12px] rounded-[8px] border border-border bg-bg text-[14px] font-medium text-ink hover:bg-bg-subtle transition-colors">查看歷史版本與原始碼歸檔</a>
         <a href="https://github.com/BerryUIKI/Lexora" target="_blank" rel="noopener" class="flex items-center gap-[8px] px-[20px] py-[12px] rounded-[8px] bg-ink text-white text-[14px] font-medium hover:opacity-85 transition-opacity">GitHub 開源儲存庫</a>
+      </div>
+    </section>
+
+    <section id="macos-gatekeeper" class="scroll-mt-[24px] bg-bg-subtle py-[80px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6">
+      <div class="max-w-[860px] mx-auto bg-bg border border-border rounded-[16px] p-[40px] max-[768px]:p-[24px] flex flex-col gap-[20px]">
+        <div class="flex flex-col gap-[8px]">
+          <span class="font-display text-[12px] font-semibold tracking-[2px] text-accent">MACOS 說明</span>
+          <h2 class="font-display text-[32px] font-bold text-ink max-[768px]:text-[26px]">macOS 阻擋 Lexora 時如何開啟</h2>
+        </div>
+        <p class="text-[15px] leading-[25px] text-ink-secondary">目前的 macOS 版本尚未進行程式碼簽署或公證，因此 Gatekeeper 可能提示無法驗證開發者或檢查惡意軟體。</p>
+        <p class="text-[14px] leading-[23px] text-ink font-medium">請只在從官方 GitHub Releases 頁面下載且信任該檔案時繼續。 <a href="https://github.com/BerryUIKI/Lexora/releases/latest" target="_blank" rel="noopener" class="text-accent hover:underline">GitHub Releases</a></p>
+        <ol class="flex flex-col gap-[12px] list-decimal pl-[22px] text-[14px] leading-[23px] text-ink-secondary">
+          <li class="pl-[4px]">將 <strong>Lexora.app</strong> 移到<strong>應用程式</strong>資料夾，然後嘗試開啟一次。</li>
+          <li class="pl-[4px]">開啟<strong>蘋果選單 → 系統設定 → 隱私權與安全性</strong>。</li>
+          <li class="pl-[4px]">捲動到<strong>安全性</strong>，按一下<strong>強制打開</strong>。此選項會在遭阻擋後保留約一小時。</li>
+          <li class="pl-[4px]">依提示完成驗證，然後按一下<strong>開啟</strong>。之後即可正常啟動。</li>
+        </ol>
+        <div class="rounded-[10px] bg-bg-soft border border-border p-[18px] flex flex-col gap-[10px]">
+          <p class="text-[13px] leading-[21px] text-ink-secondary">如果未顯示「強制打開」且你信任該下載，請在終端機中只移除 Lexora 的隔離屬性：</p>
+          <code class="block overflow-x-auto rounded-[7px] bg-[#0D0D0F] px-[14px] py-[12px] text-[12px] text-white">xattr -dr com.apple.quarantine /Applications/Lexora.app</code>
+        </div>
+        <p class="text-[13px] leading-[21px] text-ink-secondary"><strong class="text-ink">請勿在整個系統停用 Gatekeeper。</strong> <a href="https://support.apple.com/guide/mac-help/mh40616/mac" target="_blank" rel="noopener" class="text-accent hover:underline">查看 Apple 關於開啟未知開發者 App 的說明 →</a></p>
       </div>
     </section>
   </main>
