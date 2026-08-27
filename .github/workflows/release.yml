@@ -7,13 +7,13 @@ on:
   workflow_dispatch:
     inputs:
       tag_name:
-        description: 'Tag name (e.g. v0.1.3)'
+        description: 'Tag name (e.g. v0.1.4)'
         required: true
-        default: 'v0.1.3'
+        default: 'v0.1.4'
       release_name:
         description: 'Release title'
         required: false
-        default: 'Lexora v0.1.3'
+        default: 'Lexora v0.1.4'
 
 jobs:
   build-tauri:
@@ -21,6 +21,7 @@ jobs:
       contents: write
     strategy:
       fail-fast: false
+      max-parallel: 1
       matrix:
         include:
           - platform: 'macos-latest'
@@ -64,26 +65,92 @@ jobs:
       - name: Install frontend dependencies
         run: pnpm install
 
+      - name: Validate release version
+        run: node scripts/validate-release-version.mjs
+        env:
+          RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag_name || github.ref_name }}
+
       - name: Build Tauri Package & Create GitHub Release
-        uses: tauri-apps/tauri-action@v0
+        uses: tauri-apps/tauri-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         with:
           tagName: ${{ github.event_name == 'workflow_dispatch' && inputs.tag_name || github.ref_name }}
           releaseName: ${{ github.event_name == 'workflow_dispatch' && inputs.release_name || format('Lexora {0}', github.ref_name) }}
           releaseBody: |
-            # Lexora Release
-
-            **A seamless, high-performance Markdown reader & in-place WYSIWYG editor built with Tauri 2 + Rust + SolidJS.**
-
-            ### ✨ Highlights in v0.1.3
-            - **Native macOS Window Chrome**: macOS now retains native traffic-light controls and overlay title-bar behavior, while Windows and Linux keep Lexora's compact custom controls.
-            - **Improved Markdown Table Contrast**: Removed table header, row, and column fills across Reading mode, Writing mode, and exported HTML.
-            - **Stable Release Asset Names**: Installers now use `Lexora_<OS>_<architecture>` names without embedded version numbers.
-            - **Simplified Instant Downloads**: All nine localized READMEs now provide concise, stable links to the latest platform packages.
-
-            See [CHANGELOG.md](https://github.com/BerryUIKI/Lexora/blob/main/CHANGELOG.md) for full release details.
-          releaseDraft: false
+            <!-- lang:en-US -->
+            ### What's new
+            - Signed in-app updates with progress and confirmation.
+            - Daily stable-channel checks with an opt-out setting.
+            - Protection for unsaved documents before installation.
+            <!-- /lang -->
+            <!-- lang:zh-CN -->
+            ### 更新内容
+            - 支持带进度与确认步骤的签名应用内更新。
+            - 每日检查稳定版更新，并可在设置中关闭。
+            - 安装前保护未保存的文档。
+            <!-- /lang -->
+            <!-- lang:zh-TW -->
+            ### 更新內容
+            - 支援顯示進度並需確認的簽署應用程式內更新。
+            - 每日檢查穩定版更新，亦可在設定中停用。
+            - 安裝前保護未儲存的文件。
+            <!-- /lang -->
+            <!-- lang:ja-JP -->
+            ### 新機能
+            - 進行状況と確認を備えた署名済みアプリ内アップデート。
+            - オプトアウト可能な安定版の毎日確認。
+            - インストール前の未保存ドキュメント保護。
+            <!-- /lang -->
+            <!-- lang:ko-KR -->
+            ### 새로운 기능
+            - 진행률과 확인 절차를 제공하는 서명된 앱 내 업데이트.
+            - 설정에서 끌 수 있는 일일 안정 버전 확인.
+            - 설치 전 저장되지 않은 문서 보호.
+            <!-- /lang -->
+            <!-- lang:de-DE -->
+            ### Neuerungen
+            - Signierte In-App-Updates mit Fortschritt und Bestätigung.
+            - Tägliche Prüfung des stabilen Kanals mit Opt-out.
+            - Schutz ungespeicherter Dokumente vor der Installation.
+            <!-- /lang -->
+            <!-- lang:fr-FR -->
+            ### Nouveautés
+            - Mises à jour intégrées signées avec progression et confirmation.
+            - Vérification quotidienne du canal stable, désactivable.
+            - Protection des documents non enregistrés avant l’installation.
+            <!-- /lang -->
+            <!-- lang:es-ES -->
+            ### Novedades
+            - Actualizaciones firmadas dentro de la aplicación con progreso y confirmación.
+            - Comprobación diaria del canal estable, que puede desactivarse.
+            - Protección de documentos sin guardar antes de instalar.
+            <!-- /lang -->
+            <!-- lang:ru-RU -->
+            ### Что нового
+            - Подписанные обновления в приложении с прогрессом и подтверждением.
+            - Ежедневная проверка стабильного канала с возможностью отключения.
+            - Защита несохранённых документов перед установкой.
+            <!-- /lang -->
+          releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}
-          assetNamePattern: ${{ matrix.asset_name }}
+          releaseAssetNamePattern: ${{ matrix.asset_name }}
+          uploadUpdaterJson: true
+          uploadUpdaterSignatures: true
+          updaterJsonPreferNsis: true
+          retryAttempts: 3
+
+  publish-release:
+    needs: build-tauri
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Publish completed release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag_name || github.ref_name }}
+        run: gh release edit "$RELEASE_TAG" --draft=false --repo "$GITHUB_REPOSITORY"

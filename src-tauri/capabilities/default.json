@@ -23,6 +23,8 @@
     "fs:allow-rename",
     "fs:allow-remove",
     "fs:allow-read-dir",
+    "process:allow-restart",
+    "updater:default",
     "shell:allow-open"
   ]
 }

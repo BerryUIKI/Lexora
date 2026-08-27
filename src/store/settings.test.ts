@@ -9,6 +9,8 @@ import {
   setMarkdownTheme,
   elementShadows,
   setElementShadows,
+  automaticUpdateChecks,
+  setAutomaticUpdateChecks,
 } from "./settings";
 
 describe("Settings Store", () => {
@@ -16,6 +18,7 @@ describe("Settings Store", () => {
     setTheme("light");
     setMarkdownTheme("lexora");
     setElementShadows(false);
+    setAutomaticUpdateChecks(true);
     setFontSize(16);
   });
 
@@ -66,5 +69,12 @@ describe("Settings Store", () => {
     expect(document.documentElement.getAttribute("data-element-shadows")).toBe(
       "true"
     );
+  });
+
+  it("should enable automatic update checks by default and allow opting out", () => {
+    expect(automaticUpdateChecks()).toBe(true);
+    setAutomaticUpdateChecks(false);
+    expect(automaticUpdateChecks()).toBe(false);
+    expect(localStorage.getItem("lexora-automatic-update-checks")).toBe("false");
   });
 });

@@ -1,9 +1,18 @@
-import { Component, For, onCleanup, onMount, Show } from "solid-js";
+import {
+  Component,
+  createSignal,
+  For,
+  onCleanup,
+  onMount,
+  Show,
+} from "solid-js";
 import {
   MARKDOWN_THEME_OPTIONS,
+  automaticUpdateChecks,
   elementShadows,
   markdownTheme,
   setElementShadows,
+  setAutomaticUpdateChecks,
   setMarkdownTheme,
   setTheme,
   theme,
@@ -26,6 +35,7 @@ const colorModes: Array<{
 ];
 
 export const SettingsModal: Component<SettingsModalProps> = (props) => {
+  const [activeTab, setActiveTab] = createSignal<"theme" | "updates">("theme");
   const handleKeyDown = (event: KeyboardEvent) => {
     if (props.isOpen && event.key === "Escape") props.onClose();
   };
@@ -59,13 +69,31 @@ export const SettingsModal: Component<SettingsModalProps> = (props) => {
           </header>
 
           <div class="flex flex-1 min-h-0">
-            <nav class="w-40 flex-shrink-0 p-3 bg-[var(--color-bg-secondary)] border-r border-[var(--color-border)]">
-              <button class="w-full px-3 py-2 rounded-lg bg-[var(--color-accent)]/12 text-[var(--color-accent)] text-left text-sm font-semibold">
+            <nav class="w-40 flex-shrink-0 p-3 space-y-1 bg-[var(--color-bg-secondary)] border-r border-[var(--color-border)]">
+              <button
+                class={`w-full px-3 py-2 rounded-lg text-left text-sm font-semibold ${
+                  activeTab() === "theme"
+                    ? "bg-[var(--color-accent)]/12 text-[var(--color-accent)]"
+                    : "text-[var(--color-text-secondary)] hover:bg-[var(--color-hover)]"
+                }`}
+                onClick={() => setActiveTab("theme")}
+              >
                 {t("settings.themeTab")}
+              </button>
+              <button
+                class={`w-full px-3 py-2 rounded-lg text-left text-sm font-semibold ${
+                  activeTab() === "updates"
+                    ? "bg-[var(--color-accent)]/12 text-[var(--color-accent)]"
+                    : "text-[var(--color-text-secondary)] hover:bg-[var(--color-hover)]"
+                }`}
+                onClick={() => setActiveTab("updates")}
+              >
+                {t("settings.updatesTab")}
               </button>
             </nav>
 
             <section class="flex-1 overflow-y-auto p-6 space-y-8">
+              <Show when={activeTab() === "theme"}>
               <div class="space-y-3">
                 <div>
                   <h3 class="text-sm font-semibold">{t("settings.markdownTheme")}</h3>
@@ -154,6 +182,43 @@ export const SettingsModal: Component<SettingsModalProps> = (props) => {
                   />
                 </button>
               </div>
+              </Show>
+
+              <Show when={activeTab() === "updates"}>
+                <div class="space-y-5">
+                  <div>
+                    <h3 class="text-sm font-semibold">{t("settings.automaticUpdateChecks")}</h3>
+                    <p class="mt-1 text-xs leading-5 text-[var(--color-text-secondary)]">
+                      {t("settings.automaticUpdateChecksDescription")}
+                    </p>
+                  </div>
+                  <div class="flex items-center justify-between gap-5 rounded-xl border border-[var(--color-border)] p-4">
+                    <div>
+                      <h4 class="text-sm font-semibold">{t("settings.automaticUpdateChecks")}</h4>
+                      <p class="mt-1 text-xs leading-5 text-[var(--color-text-secondary)]">
+                        {t("settings.stableChannelDescription")}
+                      </p>
+                    </div>
+                    <button
+                      class={`relative w-10 h-6 rounded-full flex-shrink-0 transition-colors ${
+                        automaticUpdateChecks()
+                          ? "bg-[var(--color-accent)]"
+                          : "bg-[var(--color-border)]"
+                      }`}
+                      onClick={() => setAutomaticUpdateChecks((enabled) => !enabled)}
+                      role="switch"
+                      aria-checked={automaticUpdateChecks()}
+                      aria-label={t("settings.automaticUpdateChecks")}
+                    >
+                      <span
+                        class={`absolute top-1 w-4 h-4 rounded-full bg-white transition-transform ${
+                          automaticUpdateChecks() ? "translate-x-5" : "translate-x-1"
+                        }`}
+                      />
+                    </button>
+                  </div>
+                </div>
+              </Show>
             </section>
           </div>
         </div>
