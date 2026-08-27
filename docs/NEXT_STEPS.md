@@ -6,7 +6,7 @@ This document outlines the concrete technical strategy, task breakdown, risk ass
 
 ## 🎯 Phase 2 Objectives
 
-Transform Lexora from a Markdown reader into a full-featured **Typora-style Markdown environment with Three Display Modes**:
+Transform Lexora from a Markdown reader into a full-featured **seamless in-place Markdown environment with Three Display Modes**:
 1. **Three Display Modes** (rapidly toggled via status bar or shortcuts):
    - 📖 **Reading Mode**: Clean, read-only rendered Markdown view for distraction-free reading and review.
    - ✍️ **Writing Mode**: In-place WYSIWYG editing where Markdown syntax renders live as you type, and raw delimiters reveal only on cursor focus.
@@ -67,7 +67,7 @@ flowchart TB
 - Clean up resources with `editor.destroy()` inside `onCleanup`.
 - Listen to document changes via `@milkdown/plugin-listener` to update Solid's `currentDocument` reactive signals.
 
-### 2. Typora-Style In-Place Syntax Reveal
+### 2. In-Place Syntax Reveal
 - Use Milkdown's inspect / syntax-highlighting plugins to stylize active block delimiters.
 - Heading tags (`#`, `##`), emphasis (`*`, `_`), and links (`[text](url)`) remain visible in an unobtrusive, dim color when the cursor is positioned inside the node, and collapse cleanly when focus shifts away.
 

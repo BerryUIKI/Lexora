@@ -161,7 +161,7 @@ export const StatusBar: Component<StatusBarProps> = (props) => {
               "box-shadow": displayMode() === "writing" ? "0 1px 2px rgba(0,0,0,0.06)" : "none",
             }}
             onClick={() => setDisplayMode("writing")}
-            title={`${t("view.writingMode")} (Typora-style WYSIWYG)`}
+            title={`${t("view.writingMode")} (In-Place WYSIWYG)`}
           >
             <svg class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 20h9" />

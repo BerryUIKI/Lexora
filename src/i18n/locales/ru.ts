@@ -3,7 +3,7 @@ import { TranslationDictionary } from "../types";
 export const ru: TranslationDictionary = {
   app: {
     name: "Lexora",
-    tagline: "Минималистичный Markdown-ридер и редактор в стиле Typora",
+    tagline: "Минималистичный Markdown-ридер и интерактивный редактор",
     description: "Минималистичный локальный Markdown-ридер и WYSIWYG-редактор реального времени на базе Tauri 2, Rust и SolidJS.",
     copyright: "Авторские права © 2026 Lexora Contributors",
     licenseNotice: "Лицензия GNU AGPL-3.0",
@@ -69,6 +69,21 @@ export const ru: TranslationDictionary = {
     lightTheme: "Светлая тема",
     darkTheme: "Тёмная тема",
     systemTheme: "Как в системе",
+    themeSettings: "Тема...",
+  },
+  settings: {
+    title: "Настройки",
+    themeTab: "Тема",
+    updatesTab: "Обновления",
+    markdownTheme: "Тема",
+    markdownThemeDescription: "Выберите визуальный стиль Lexora и отображения Markdown.",
+    colorMode: "Цветовой режим",
+    colorModeDescription: "Светлый, тёмный и системный режимы работают со всеми темами.",
+    elementShadows: "Включить тени элементов",
+    elementShadowsDescription: "Добавлять лёгкие тени к изображениям и таблицам.",
+    automaticUpdateChecks: "Автоматически проверять обновления",
+    automaticUpdateChecksDescription: "Раз в день проверять стабильный канал и уведомлять перед установкой.",
+    stableChannelDescription: "Обновления загружаются и устанавливаются только после подтверждения.",
   },
   window: {
     minimize: "Свернуть",
@@ -85,7 +100,7 @@ export const ru: TranslationDictionary = {
   },
   welcome: {
     title: "Lexora",
-    subtitle: "Минималистичный Markdown-ридер и редактор в стиле Typora",
+    subtitle: "Минималистичный Markdown-ридер и интерактивный редактор",
     newDocument: "Новый документ",
     openFile: "Открыть файл",
     github: "GitHub",
@@ -98,6 +113,7 @@ export const ru: TranslationDictionary = {
   sidebar: {
     outline: "Оглавление",
     files: "Файлы",
+    workspace: "Рабочая область",
     sectionsCount: "разделов",
     noHeadings: "В этом документе нет заголовков.",
     noFolderOpen: "Папка не открыта. Нажмите ниже, чтобы открыть рабочую область.",
@@ -132,6 +148,15 @@ export const ru: TranslationDictionary = {
     downloadUpdate: "Скачать обновление",
     remindLater: "Напомнить позже",
     releaseNotes: "Что нового в этой версии",
+    downloading: "Загрузка обновления… {progress}%",
+    installing: "Установка обновления…",
+    installAndRestart: "Установить и перезапустить",
+    retry: "Повторить",
+    updateErrorTitle: "Не удалось обновить",
+    updateErrorDesc: "Lexora не удалось загрузить или установить обновление. Повторите попытку.",
+    unsavedTitle: "Несохранённые документы",
+    unsavedMessage: "Для установки Lexora будет закрыта. Сначала сохраните документы или явно продолжите без сохранения.",
+    discardAndInstall: "Не сохранять и установить",
   },
   dialogs: {
     ok: "ОК",

@@ -67,15 +67,6 @@ export const TabBar: Component<TabBarProps> = (props) => {
         }}
       </For>
 
-      {/* New tab button */}
-      <button
-        class="h-full px-3 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-hover)] transition-colors flex-shrink-0"
-        onClick={props.onNewTab}
-        title="New Document (Ctrl+N)"
-      >
-        +
-      </button>
-
       {/* Draggable empty area */}
       <div
         data-tauri-drag-region
@@ -88,6 +79,15 @@ export const TabBar: Component<TabBarProps> = (props) => {
           }
         }}
       />
+
+      {/* New tab button aligned to the far edge of the full-width strip */}
+      <button
+        class="h-full px-3 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-hover)] transition-colors flex-shrink-0"
+        onClick={props.onNewTab}
+        title="New Document (Ctrl+N)"
+      >
+        +
+      </button>
 
       {/* Drop hint when dragging over TabBar */}
       <Show when={props.isDragOver}>

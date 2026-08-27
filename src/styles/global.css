@@ -14,8 +14,17 @@
   --color-statusbar-bg: #f0f1f3;
   --color-hover: rgba(0, 0, 0, 0.04);
   --color-code-bg: #f4f5f7;
+  --color-code-text: #24292f;
+  --color-code-keyword: #cf222e;
+  --color-code-string: #0a3069;
+  --color-code-comment: #6e7781;
+  --color-code-function: #8250df;
+  --color-code-number: #0550ae;
+  --color-code-type: #953800;
   --color-blockquote-border: #4361ee;
   --color-link: #4361ee;
+  --markdown-font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --markdown-element-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -36,9 +45,137 @@
   --color-statusbar-bg: #16161e;
   --color-hover: rgba(255, 255, 255, 0.05);
   --color-code-bg: #24283b;
+  --color-code-text: #c0caf5;
+  --color-code-keyword: #bb9af7;
+  --color-code-string: #9ece6a;
+  --color-code-comment: #737aa2;
+  --color-code-function: #7aa2f7;
+  --color-code-number: #ff9e64;
+  --color-code-type: #2ac3de;
   --color-blockquote-border: #7aa2f7;
   --color-link: #7aa2f7;
+  --markdown-element-shadow: 0 8px 28px rgba(0, 0, 0, 0.32);
   color-scheme: dark;
+}
+
+/* GitHub rendering theme. Light/dark mode remains independently controlled. */
+[data-markdown-theme="github"][data-theme="light"] {
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f6f8fa;
+  --color-text-primary: #1f2328;
+  --color-text-secondary: #59636e;
+  --color-accent: #0969da;
+  --color-accent-hover: #0860ca;
+  --color-border: #d0d7de;
+  --color-editor-bg: #ffffff;
+  --color-sidebar-bg: #f6f8fa;
+  --color-statusbar-bg: #f6f8fa;
+  --color-hover: rgba(175, 184, 193, 0.2);
+  --color-code-bg: #eff1f3;
+  --color-code-text: #1f2328;
+  --color-code-keyword: #cf222e;
+  --color-code-string: #0a3069;
+  --color-code-comment: #6e7781;
+  --color-code-function: #8250df;
+  --color-code-number: #0550ae;
+  --color-code-type: #953800;
+  --color-blockquote-border: #d0d7de;
+  --color-link: #0969da;
+  --markdown-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+[data-markdown-theme="github"][data-theme="dark"] {
+  --color-bg-primary: #0d1117;
+  --color-bg-secondary: #161b22;
+  --color-text-primary: #f0f6fc;
+  --color-text-secondary: #8b949e;
+  --color-accent: #58a6ff;
+  --color-accent-hover: #79c0ff;
+  --color-border: #30363d;
+  --color-editor-bg: #0d1117;
+  --color-sidebar-bg: #161b22;
+  --color-statusbar-bg: #010409;
+  --color-hover: rgba(177, 186, 196, 0.12);
+  --color-code-bg: #161b22;
+  --color-code-text: #e6edf3;
+  --color-code-keyword: #ff7b72;
+  --color-code-string: #a5d6ff;
+  --color-code-comment: #8b949e;
+  --color-code-function: #d2a8ff;
+  --color-code-number: #79c0ff;
+  --color-code-type: #ffa657;
+  --color-blockquote-border: #3b434b;
+  --color-link: #58a6ff;
+  --markdown-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+/* Solarized theme with paired light and dark palettes. */
+[data-markdown-theme="solarized"][data-theme="light"] {
+  --color-bg-primary: #fdf6e3;
+  --color-bg-secondary: #eee8d5;
+  --color-text-primary: #586e75;
+  --color-text-secondary: #657b83;
+  --color-accent: #268bd2;
+  --color-accent-hover: #2aa198;
+  --color-border: #d8d0b8;
+  --color-editor-bg: #fdf6e3;
+  --color-sidebar-bg: #f5efd9;
+  --color-statusbar-bg: #eee8d5;
+  --color-hover: rgba(101, 123, 131, 0.1);
+  --color-code-bg: #eee8d5;
+  --color-code-text: #586e75;
+  --color-code-keyword: #859900;
+  --color-code-string: #2aa198;
+  --color-code-comment: #93a1a1;
+  --color-code-function: #268bd2;
+  --color-code-number: #d33682;
+  --color-code-type: #b58900;
+  --color-blockquote-border: #2aa198;
+  --color-link: #268bd2;
+  --markdown-font-family: Georgia, "Times New Roman", serif;
+}
+
+[data-markdown-theme="solarized"][data-theme="dark"] {
+  --color-bg-primary: #002b36;
+  --color-bg-secondary: #073642;
+  --color-text-primary: #93a1a1;
+  --color-text-secondary: #839496;
+  --color-accent: #2aa198;
+  --color-accent-hover: #268bd2;
+  --color-border: #164854;
+  --color-editor-bg: #002b36;
+  --color-sidebar-bg: #073642;
+  --color-statusbar-bg: #00212b;
+  --color-hover: rgba(238, 232, 213, 0.08);
+  --color-code-bg: #073642;
+  --color-code-text: #93a1a1;
+  --color-code-keyword: #859900;
+  --color-code-string: #2aa198;
+  --color-code-comment: #586e75;
+  --color-code-function: #268bd2;
+  --color-code-number: #d33682;
+  --color-code-type: #b58900;
+  --color-blockquote-border: #2aa198;
+  --color-link: #2aa198;
+  --markdown-font-family: Georgia, "Times New Roman", serif;
+}
+
+.theme-preview-lexora {
+  color: #4361ee;
+  background: #ffffff;
+  border-color: #dfe3ea;
+}
+
+.theme-preview-github {
+  color: #1f2328;
+  background: #f6f8fa;
+  border-color: #d0d7de;
+}
+
+.theme-preview-solarized {
+  color: #586e75;
+  background: #fdf6e3;
+  border-color: #d8d0b8;
 }
 
 html,
@@ -62,6 +199,7 @@ body,
   line-height: 1.75;
   font-size: 16px;
   color: var(--color-text-primary);
+  font-family: var(--markdown-font-family);
 }
 
 .markdown-body h1,
@@ -147,6 +285,7 @@ body,
   width: 100%;
   margin: 1em 0;
   background-color: transparent;
+  box-shadow: none;
 }
 
 .markdown-body th,
@@ -175,6 +314,25 @@ body,
   max-width: 100%;
   border-radius: 8px;
   margin: 1em 0;
+  box-shadow: none;
+}
+
+[data-element-shadows="true"] .markdown-body :where(img, table),
+[data-element-shadows="true"] .milkdown-container .ProseMirror :where(img, table) {
+  box-shadow: var(--markdown-element-shadow) !important;
+}
+
+[data-element-shadows="false"] .markdown-body :where(img, table),
+[data-element-shadows="false"] .milkdown-container .ProseMirror :where(img, table) {
+  box-shadow: none !important;
+}
+
+[data-markdown-theme="github"] .markdown-body {
+  line-height: 1.5;
+}
+
+[data-markdown-theme="github"] .markdown-body table tr:nth-child(2n) {
+  background-color: var(--color-bg-secondary);
 }
 
 .markdown-body del {
@@ -209,7 +367,7 @@ body,
   min-height: 500px;
   color: var(--color-text-primary);
   outline: none;
-  font-family: inherit;
+  font-family: var(--markdown-font-family);
 }
 
 .milkdown-container .ProseMirror p {
@@ -233,12 +391,52 @@ body,
   background-color: transparent !important;
 }
 
-[data-theme="dark"] .milkdown-container .ProseMirror pre {
-  background-color: var(--color-code-bg);
-  color: var(--color-text-primary);
+.milkdown-container .ProseMirror pre,
+.markdown-body pre,
+.markdown-body .code-block-wrapper,
+.markdown-body .code-container,
+.markdown-body .code-container pre {
+  background-color: var(--color-code-bg) !important;
+  color: var(--color-code-text) !important;
 }
 
-[data-theme="dark"] .milkdown-container .ProseMirror code {
-  background-color: var(--color-code-bg);
-  color: var(--color-accent);
+.milkdown-container .ProseMirror code,
+.markdown-body code {
+  color: var(--color-code-text) !important;
+}
+
+.milkdown-container .ProseMirror :not(pre) > code {
+  background-color: var(--color-code-bg) !important;
+}
+
+.milkdown-container .ProseMirror pre code {
+  background-color: transparent !important;
+  color: var(--color-code-text) !important;
+}
+
+/* Themeable Syntect token classes shared by every Markdown theme. */
+.syn-comment { color: var(--color-code-comment); font-style: italic; }
+.syn-keyword,
+.syn-storage.syn-modifier { color: var(--color-code-keyword); }
+.syn-string,
+.syn-string .syn-constant { color: var(--color-code-string); }
+.syn-entity.syn-name.syn-function,
+.syn-support.syn-function { color: var(--color-code-function); }
+.syn-constant.syn-numeric,
+.syn-constant.syn-language { color: var(--color-code-number); }
+.syn-storage.syn-type,
+.syn-support.syn-type,
+.syn-entity.syn-name.syn-type { color: var(--color-code-type); }
+.syn-variable,
+.syn-meta { color: var(--color-code-text); }
+
+.markdown-body .code-container pre {
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  white-space: pre;
+}
+
+.markdown-body .code-container pre code {
+  font-size: inherit;
 }

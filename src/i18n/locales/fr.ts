@@ -3,7 +3,7 @@ import { TranslationDictionary } from "../types";
 export const fr: TranslationDictionary = {
   app: {
     name: "Lexora",
-    tagline: "Lecteur et éditeur Markdown minimaliste style Typora",
+    tagline: "Lecteur et éditeur Markdown minimaliste et fluide",
     description: "Un lecteur et éditeur Markdown WYSIWYG local-first minimaliste conçu avec Tauri 2, Rust et SolidJS.",
     copyright: "Copyright © 2026 Lexora Contributors",
     licenseNotice: "Licence GNU AGPL-3.0",
@@ -69,6 +69,21 @@ export const fr: TranslationDictionary = {
     lightTheme: "Thème clair",
     darkTheme: "Thème sombre",
     systemTheme: "Suivre le thème du système",
+    themeSettings: "Thème...",
+  },
+  settings: {
+    title: "Paramètres",
+    themeTab: "Thème",
+    updatesTab: "Mises à jour",
+    markdownTheme: "Thème",
+    markdownThemeDescription: "Choisissez le style visuel de Lexora et du Markdown rendu.",
+    colorMode: "Mode de couleur",
+    colorModeDescription: "Les modes clair, sombre et système s’appliquent à tous les thèmes.",
+    elementShadows: "Activer les ombres des éléments",
+    elementShadowsDescription: "Ajouter des ombres discrètes aux images et tableaux rendus.",
+    automaticUpdateChecks: "Rechercher automatiquement les mises à jour",
+    automaticUpdateChecksDescription: "Vérifier le canal stable une fois par jour et vous prévenir avant l’installation.",
+    stableChannelDescription: "Les mises à jour ne sont téléchargées et installées qu’après votre confirmation.",
   },
   window: {
     minimize: "Réduire",
@@ -85,7 +100,7 @@ export const fr: TranslationDictionary = {
   },
   welcome: {
     title: "Lexora",
-    subtitle: "Lecteur et éditeur Markdown minimaliste style Typora",
+    subtitle: "Lecteur et éditeur Markdown minimaliste et fluide",
     newDocument: "Nouveau document",
     openFile: "Ouvrir un fichier",
     github: "GitHub",
@@ -98,6 +113,7 @@ export const fr: TranslationDictionary = {
   sidebar: {
     outline: "Plan",
     files: "Fichiers",
+    workspace: "Espace de travail",
     sectionsCount: "sections",
     noHeadings: "Aucun titre dans le document actuel.",
     noFolderOpen: "Aucun dossier ouvert. Cliquez ci-dessous pour ouvrir un espace de travail.",
@@ -132,6 +148,15 @@ export const fr: TranslationDictionary = {
     downloadUpdate: "Télécharger la mise à jour",
     remindLater: "Me rappeler plus tard",
     releaseNotes: "Notes de version",
+    downloading: "Téléchargement de la mise à jour… {progress}%",
+    installing: "Installation de la mise à jour…",
+    installAndRestart: "Installer et redémarrer",
+    retry: "Réessayer",
+    updateErrorTitle: "Échec de la mise à jour",
+    updateErrorDesc: "Lexora n’a pas pu télécharger ou installer la mise à jour. Veuillez réessayer.",
+    unsavedTitle: "Documents non enregistrés",
+    unsavedMessage: "L’installation fermera Lexora. Enregistrez d’abord vos documents ou choisissez explicitement de continuer sans enregistrer.",
+    discardAndInstall: "Ignorer et installer",
   },
   dialogs: {
     ok: "OK",

@@ -7,6 +7,8 @@ export interface FileTreeProps {
   tree: FileEntry;
   onSelectFile: (path: string) => void;
   onRefresh: () => void;
+  expanded: boolean;
+  onToggleExpanded: () => void;
 }
 
 interface TreeItemProps {
@@ -176,12 +178,25 @@ export const FileTree: Component<FileTreeProps> = (props) => {
       {/* Workspace Header Actions */}
       <div
         class="flex items-center justify-between p-2 text-xs"
-        style={{ "border-bottom": "1px solid var(--color-border)" }}
+        style={{
+          "border-bottom": props.expanded
+            ? "1px solid var(--color-border)"
+            : "none",
+        }}
       >
-        <span class="font-semibold uppercase tracking-wider truncate max-w-28 opacity-70">
-          {props.tree.name}
-        </span>
-        <div class="flex items-center gap-1.5">
+        <button
+          class="flex items-center gap-1.5 min-w-0 font-semibold text-[var(--color-text-primary)]"
+          title={props.tree.path}
+          onClick={props.onToggleExpanded}
+          aria-expanded={props.expanded}
+        >
+          <span class="text-[10px] opacity-60">
+            {props.expanded ? "▼" : "▶"}
+          </span>
+          <span class="truncate max-w-28">{t("sidebar.workspace")}</span>
+        </button>
+        <Show when={props.expanded}>
+          <div class="flex items-center gap-1.5">
           <button
             class="p-1 rounded hover:bg-[var(--color-hover)]"
             onClick={handleNewFile}
@@ -203,24 +218,27 @@ export const FileTree: Component<FileTreeProps> = (props) => {
           >
             🔄
           </button>
-        </div>
+          </div>
+        </Show>
       </div>
 
       {/* Directory Contents */}
-      <div class="flex-1 overflow-y-auto py-2">
-        <Show when={props.tree.children && props.tree.children.length > 0}>
-          <For each={props.tree.children}>
-            {(child) => (
-              <TreeItem
-                entry={child}
-                depth={0}
-                onSelectFile={props.onSelectFile}
-                onRefresh={props.onRefresh}
-              />
-            )}
-          </For>
-        </Show>
-      </div>
+      <Show when={props.expanded}>
+        <div class="flex-1 overflow-y-auto py-2">
+          <Show when={props.tree.children && props.tree.children.length > 0}>
+            <For each={props.tree.children}>
+              {(child) => (
+                <TreeItem
+                  entry={child}
+                  depth={0}
+                  onSelectFile={props.onSelectFile}
+                  onRefresh={props.onRefresh}
+                />
+              )}
+            </For>
+          </Show>
+        </div>
+      </Show>
     </div>
   );
 };

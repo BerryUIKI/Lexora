@@ -54,11 +54,19 @@ describe("i18n Internationalization Engine", () => {
       expect(d.edit.bold).toBeTruthy();
       expect(d.sidebar.outline).toBeTruthy();
       expect(d.sidebar.files).toBeTruthy();
+      expect(d.sidebar.workspace).toBeTruthy();
+      expect(d.view.themeSettings).toBeTruthy();
+      expect(d.settings.themeTab).toBeTruthy();
+      expect(d.settings.elementShadows).toBeTruthy();
+      expect(d.settings.updatesTab).toBeTruthy();
+      expect(d.settings.automaticUpdateChecks).toBeTruthy();
       expect(d.statusBar.wordsCount).toBeTruthy();
       expect(d.update.checking).toBeTruthy();
       expect(d.update.aheadTitle).toBeTruthy();
       expect(d.update.aheadDesc).toBeTruthy();
       expect(d.update.aheadBadge).toBeTruthy();
+      expect(d.update.installAndRestart).toBeTruthy();
+      expect(d.update.unsavedMessage).toBeTruthy();
     });
   });
 

@@ -84,6 +84,21 @@ export interface TranslationDictionary {
     lightTheme: string;
     darkTheme: string;
     systemTheme: string;
+    themeSettings: string;
+  };
+  settings: {
+    title: string;
+    themeTab: string;
+    updatesTab: string;
+    markdownTheme: string;
+    markdownThemeDescription: string;
+    colorMode: string;
+    colorModeDescription: string;
+    elementShadows: string;
+    elementShadowsDescription: string;
+    automaticUpdateChecks: string;
+    automaticUpdateChecksDescription: string;
+    stableChannelDescription: string;
   };
   window: {
     minimize: string;
@@ -113,6 +128,7 @@ export interface TranslationDictionary {
   sidebar: {
     outline: string;
     files: string;
+    workspace: string;
     sectionsCount: string;
     noHeadings: string;
     noFolderOpen: string;
@@ -147,6 +163,15 @@ export interface TranslationDictionary {
     downloadUpdate: string;
     remindLater: string;
     releaseNotes: string;
+    downloading: string;
+    installing: string;
+    installAndRestart: string;
+    retry: string;
+    updateErrorTitle: string;
+    updateErrorDesc: string;
+    unsavedTitle: string;
+    unsavedMessage: string;
+    discardAndInstall: string;
   };
   dialogs: {
     ok: string;

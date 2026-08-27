@@ -32,6 +32,7 @@ export interface MenuBarProps {
   onOpenQuickSwitcher: () => void;
   onOpenSearchModal: () => void;
   onOpenFindReplace: () => void;
+  onOpenThemeSettings: () => void;
   onOpenRecent: (path: string) => void;
 }
 
@@ -449,6 +450,14 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                 </button>
 
                 <div class="my-1 border-t border-[var(--color-border)]" />
+
+                <button
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                  onClick={() => { closeMenus(); props.onOpenThemeSettings(); }}
+                >
+                  <span>{t("view.themeSettings")}</span>
+                  <span class="text-[var(--color-text-secondary)]">›</span>
+                </button>
 
                 <div class="px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-text-secondary)]">
                   {t("statusBar.toggleTheme")}

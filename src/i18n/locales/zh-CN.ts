@@ -3,7 +3,7 @@ import { TranslationDictionary } from "../types";
 export const zhCN: TranslationDictionary = {
   app: {
     name: "Lexora",
-    tagline: "极简 Typora 风格 Markdown 阅读与编辑器",
+    tagline: "极简 Markdown 阅读与原位编辑器",
     description: "基于 Tauri 2、Rust 与 SolidJS 构建的极简本地优先 Markdown 阅读与即时所见即所得编辑器。",
     copyright: "版权所有 © 2026 Lexora Contributors",
     licenseNotice: "GNU AGPL-3.0 开源协议",
@@ -69,6 +69,21 @@ export const zhCN: TranslationDictionary = {
     lightTheme: "浅色主题",
     darkTheme: "深色主题",
     systemTheme: "跟随系统主题",
+    themeSettings: "主题...",
+  },
+  settings: {
+    title: "设置",
+    themeTab: "主题",
+    updatesTab: "更新",
+    markdownTheme: "主题",
+    markdownThemeDescription: "选择 Lexora 界面和 Markdown 渲染所使用的视觉风格。",
+    colorMode: "颜色模式",
+    colorModeDescription: "浅色、深色和跟随系统模式适用于所有主题。",
+    elementShadows: "启用元素阴影",
+    elementShadowsDescription: "为渲染后的图片和表格添加柔和阴影。",
+    automaticUpdateChecks: "自动检查更新",
+    automaticUpdateChecksDescription: "每天检查一次稳定版更新，并在安装前通知你。",
+    stableChannelDescription: "仅在你确认后下载并安装更新。",
   },
   window: {
     minimize: "最小化",
@@ -85,7 +100,7 @@ export const zhCN: TranslationDictionary = {
   },
   welcome: {
     title: "Lexora",
-    subtitle: "极简 Typora 风格 Markdown 阅读与编辑器",
+    subtitle: "极简 Markdown 阅读与原位编辑器",
     newDocument: "新建文档",
     openFile: "打开文件",
     github: "GitHub",
@@ -98,6 +113,7 @@ export const zhCN: TranslationDictionary = {
   sidebar: {
     outline: "大纲",
     files: "文件",
+    workspace: "工作区",
     sectionsCount: "个段落小节",
     noHeadings: "当前文档暂无标题大纲。",
     noFolderOpen: "未打开文件夹。点击下方打开工作区。",
@@ -132,6 +148,15 @@ export const zhCN: TranslationDictionary = {
     downloadUpdate: "立即下载更新",
     remindLater: "稍后提醒",
     releaseNotes: "更新日志",
+    downloading: "正在下载更新… {progress}%",
+    installing: "正在安装更新…",
+    installAndRestart: "安装并重启",
+    retry: "重试",
+    updateErrorTitle: "更新失败",
+    updateErrorDesc: "Lexora 无法下载或安装更新，请重试。",
+    unsavedTitle: "存在未保存的文档",
+    unsavedMessage: "安装更新将关闭 Lexora。请先保存文档，或明确选择不保存并继续。",
+    discardAndInstall: "放弃更改并安装",
   },
   dialogs: {
     ok: "确定",

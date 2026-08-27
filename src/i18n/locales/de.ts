@@ -3,7 +3,7 @@ import { TranslationDictionary } from "../types";
 export const de: TranslationDictionary = {
   app: {
     name: "Lexora",
-    tagline: "Minimalistischer Markdown-Reader & Editor im Typora-Stil",
+    tagline: "Minimalistischer Markdown-Reader & In-Place-Editor",
     description: "Ein minimalistischer, lokal orientierter Markdown-Reader und In-Place-WYSIWYG-Editor, entwickelt mit Tauri 2, Rust und SolidJS.",
     copyright: "Copyright © 2026 Lexora Contributors",
     licenseNotice: "GNU AGPL-3.0-Lizenz",
@@ -69,6 +69,21 @@ export const de: TranslationDictionary = {
     lightTheme: "Helles Design",
     darkTheme: "Dunkles Design",
     systemTheme: "Systemdesign folgen",
+    themeSettings: "Design...",
+  },
+  settings: {
+    title: "Einstellungen",
+    themeTab: "Design",
+    updatesTab: "Updates",
+    markdownTheme: "Design",
+    markdownThemeDescription: "Wähle den visuellen Stil für Lexora und gerendertes Markdown.",
+    colorMode: "Farbmodus",
+    colorModeDescription: "Hell, Dunkel und System gelten für jedes Design.",
+    elementShadows: "Elementschatten aktivieren",
+    elementShadowsDescription: "Gerenderten Bildern und Tabellen dezente Schatten hinzufügen.",
+    automaticUpdateChecks: "Automatisch nach Updates suchen",
+    automaticUpdateChecksDescription: "Einmal täglich den stabilen Kanal prüfen und vor der Installation benachrichtigen.",
+    stableChannelDescription: "Updates werden erst nach deiner Bestätigung heruntergeladen und installiert.",
   },
   window: {
     minimize: "Minimieren",
@@ -85,7 +100,7 @@ export const de: TranslationDictionary = {
   },
   welcome: {
     title: "Lexora",
-    subtitle: "Minimalistischer Markdown-Reader & Editor im Typora-Stil",
+    subtitle: "Minimalistischer Markdown-Reader & In-Place-Editor",
     newDocument: "Neues Dokument",
     openFile: "Datei öffnen",
     github: "GitHub",
@@ -98,6 +113,7 @@ export const de: TranslationDictionary = {
   sidebar: {
     outline: "Gliederung",
     files: "Dateien",
+    workspace: "Arbeitsbereich",
     sectionsCount: "Abschnitte",
     noHeadings: "Keine Überschriften im aktuellen Dokument.",
     noFolderOpen: "Kein Ordner geöffnet. Klicken Sie unten, um einen Arbeitsbereich zu öffnen.",
@@ -132,6 +148,15 @@ export const de: TranslationDictionary = {
     downloadUpdate: "Update herunterladen",
     remindLater: "Später erinnern",
     releaseNotes: "Versionshinweise",
+    downloading: "Update wird heruntergeladen… {progress}%",
+    installing: "Update wird installiert…",
+    installAndRestart: "Installieren und neu starten",
+    retry: "Erneut versuchen",
+    updateErrorTitle: "Update fehlgeschlagen",
+    updateErrorDesc: "Lexora konnte das Update nicht herunterladen oder installieren. Bitte erneut versuchen.",
+    unsavedTitle: "Nicht gespeicherte Dokumente",
+    unsavedMessage: "Lexora wird für die Installation geschlossen. Speichere zuerst deine Dokumente oder fahre ausdrücklich ohne Speichern fort.",
+    discardAndInstall: "Verwerfen und installieren",
   },
   dialogs: {
     ok: "OK",

@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" role="img" aria-label="Lexora in-place WYSIWYG Markdown editor interface">
+  <defs>
+    <clipPath id="windowClip">
+      <rect x="0" y="0" width="1200" height="620" rx="16"/>
+    </clipPath>
+    <filter id="winShadow" x="-10%" y="-10%" width="120%" height="135%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#000000" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Window frame -->
+  <rect x="0" y="0" width="1200" height="620" rx="16" fill="#FFFFFF" stroke="#E6E6E8" stroke-width="1.2" filter="url(#winShadow)"/>
+
+  <g clip-path="url(#windowClip)">
+    <!-- ═══════════ Menu bar ═══════════ -->
+    <rect x="0" y="0" width="1200" height="40" fill="#F6F6F7"/>
+    <text x="20" y="26" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#636366">File</text>
+    <text x="72" y="26" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#636366">Edit</text>
+    <text x="118" y="26" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#636366">View</text>
+    <text x="176" y="26" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#636366">Window</text>
+    <text x="248" y="26" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#636366">Help</text>
+
+    <text x="600" y="25" text-anchor="middle" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#636366">Lexora — README.md</text>
+
+    <!-- Search -->
+    <g transform="translate(1132,12) scale(0.6)">
+      <circle cx="11" cy="11" r="7" stroke="#636366" stroke-width="1.8" fill="none"/>
+      <path d="M16.5 16.5 L21 21" stroke="#636366" stroke-width="1.8" stroke-linecap="round"/>
+    </g>
+    <!-- Settings -->
+    <g transform="translate(1160,12) scale(0.6)">
+      <circle cx="12" cy="12" r="3" stroke="#636366" stroke-width="1.8" fill="none"/>
+      <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1" stroke="#636366" stroke-width="1.8" stroke-linecap="round"/>
+    </g>
+    <!-- GitHub -->
+    <g transform="translate(1188,12) scale(0.6)">
+      <path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5 4-1.4 6.8-5.2 6.8-9.7C22 6.6 17.5 2 12 2z" fill="#636366"/>
+    </g>
+    <line x1="0" y1="40" x2="1200" y2="40" stroke="#E6E6E8" stroke-width="1"/>
+
+    <!-- ═══════════ Tab bar ═══════════ -->
+    <rect x="0" y="40" width="1200" height="44" fill="#FFFFFF"/>
+    <rect x="16" y="48" width="152" height="28" rx="6" fill="#EDEDFA"/>
+    <circle cx="32" cy="62" r="3" fill="#4361EE"/>
+    <text x="42" y="66" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12.5" fill="#0D0D0F">README.md</text>
+    <text x="184" y="66" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12.5" fill="#8F8F94">notes.md</text>
+    <rect x="1140" y="50" width="22" height="22" rx="5" fill="none" stroke="#BFBFC5" stroke-width="1.2"/>
+    <path d="M1146 61h10M1151 56v10" stroke="#8F8F94" stroke-width="1.6" stroke-linecap="round"/>
+    <line x1="0" y1="84" x2="1200" y2="84" stroke="#E6E6E8" stroke-width="1"/>
+
+    <!-- ═══════════ Sidebar ═══════════ -->
+    <rect x="0" y="84" width="240" height="504" fill="#FAFAFA"/>
+    <line x1="239" y1="84" x2="239" y2="588" stroke="#E6E6E8" stroke-width="1"/>
+    <text x="20" y="112" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600" letter-spacing="0.5" fill="#8F8F94">OUTLINE</text>
+    <text x="24" y="134" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12.5" fill="#636366">- Introduction</text>
+    <text x="24" y="156" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12.5" fill="#636366">- Features</text>
+    <text x="24" y="178" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12.5" fill="#636366">- Shortcuts</text>
+    <text x="20" y="206" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600" letter-spacing="0.5" fill="#8F8F94">WORKSPACE</text>
+    <text x="24" y="228" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12.5" fill="#636366">- docs/</text>
+    <text x="24" y="250" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12.5" fill="#636366">- src/</text>
+    <text x="24" y="272" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12.5" fill="#8F8F94">- README.md</text>
+
+    <!-- ═══════════ Editor viewport ═══════════ -->
+    <text x="276" y="132" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="23" font-weight="700" fill="#0D0D0F"># Introduction</text>
+    <text x="276" y="164" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" fill="#636366">Lexora eliminates split-screen previews by rendering Markdown</text>
+    <text x="276" y="184" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" fill="#636366">directly in place with pure typography.</text>
+    <text x="276" y="210" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" fill="#636366">Zero split-panes · In-place WYSIWYG · Full-text ripgrep search.</text>
+
+    <!-- Metrics table -->
+    <text x="276" y="248" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#0D0D0F">Metric</text>
+    <text x="480" y="248" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#0D0D0F">Value</text>
+    <text x="660" y="248" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#0D0D0F">Notes</text>
+    <line x1="276" y1="256" x2="900" y2="256" stroke="#E6E6E8" stroke-width="1"/>
+
+    <text x="276" y="280" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#636366">Startup Time</text>
+    <text x="480" y="280" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#636366">&lt; 400 ms</text>
+    <text x="660" y="280" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#636366">Instant cold start</text>
+    <line x1="276" y1="289" x2="900" y2="289" stroke="#F0F0F2" stroke-width="1"/>
+
+    <text x="276" y="308" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#636366">Full-text Search</text>
+    <text x="480" y="308" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#636366">ripgrep</text>
+    <text x="660" y="308" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#636366">Whole workspace</text>
+    <line x1="276" y1="317" x2="900" y2="317" stroke="#F0F0F2" stroke-width="1"/>
+
+    <text x="276" y="336" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#636366">Installer Size</text>
+    <text x="480" y="336" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#636366">~3.6 MB</text>
+    <text x="660" y="336" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#636366">Lightweight</text>
+    <line x1="276" y1="345" x2="900" y2="345" stroke="#F0F0F2" stroke-width="1"/>
+
+    <!-- ═══════════ Status bar ═══════════ -->
+    <rect x="0" y="588" width="1200" height="32" fill="#F6F6F7"/>
+    <line x1="0" y1="588" x2="1200" y2="588" stroke="#E6E6E8" stroke-width="1"/>
+    <text x="20" y="608" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11.5" fill="#8F8F94">Reading</text>
+    <text x="88" y="608" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11.5" font-weight="700" fill="#4361EE">Writing</text>
+    <text x="152" y="608" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11.5" fill="#8F8F94">Code</text>
+    <text x="1175" y="608" text-anchor="end" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11.5" fill="#8F8F94">Ln 1, Col 1  ·  1,420 words  ·  UTF-8  ·  LF</text>
+  </g>
+</svg>

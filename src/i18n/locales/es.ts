@@ -3,7 +3,7 @@ import { TranslationDictionary } from "../types";
 export const es: TranslationDictionary = {
   app: {
     name: "Lexora",
-    tagline: "Lector y editor Markdown minimalista estilo Typora",
+    tagline: "Lector y editor Markdown minimalista e in-situ",
     description: "Un lector y editor Markdown WYSIWYG local-first minimalista creado con Tauri 2, Rust y SolidJS.",
     copyright: "Copyright © 2026 Lexora Contributors",
     licenseNotice: "Licencia GNU AGPL-3.0",
@@ -69,6 +69,21 @@ export const es: TranslationDictionary = {
     lightTheme: "Tema claro",
     darkTheme: "Tema oscuro",
     systemTheme: "Seguir tema del sistema",
+    themeSettings: "Tema...",
+  },
+  settings: {
+    title: "Configuración",
+    themeTab: "Tema",
+    updatesTab: "Actualizaciones",
+    markdownTheme: "Tema",
+    markdownThemeDescription: "Elige el estilo visual de Lexora y del Markdown renderizado.",
+    colorMode: "Modo de color",
+    colorModeDescription: "Los modos claro, oscuro y del sistema se aplican a todos los temas.",
+    elementShadows: "Activar sombras de elementos",
+    elementShadowsDescription: "Añade sombras sutiles a las imágenes y tablas renderizadas.",
+    automaticUpdateChecks: "Buscar actualizaciones automáticamente",
+    automaticUpdateChecksDescription: "Comprobar el canal estable una vez al día y avisarte antes de instalar.",
+    stableChannelDescription: "Las actualizaciones solo se descargan e instalan después de tu confirmación.",
   },
   window: {
     minimize: "Minimizar",
@@ -85,7 +100,7 @@ export const es: TranslationDictionary = {
   },
   welcome: {
     title: "Lexora",
-    subtitle: "Lector y editor Markdown minimalista estilo Typora",
+    subtitle: "Lector y editor Markdown minimalista e in-situ",
     newDocument: "Nuevo documento",
     openFile: "Abrir archivo",
     github: "GitHub",
@@ -98,6 +113,7 @@ export const es: TranslationDictionary = {
   sidebar: {
     outline: "Esquema",
     files: "Archivos",
+    workspace: "Espacio de trabajo",
     sectionsCount: "secciones",
     noHeadings: "No hay encabezados en el documento actual.",
     noFolderOpen: "No hay carpeta abierta. Haga clic abajo para abrir un espacio de trabajo.",
@@ -132,6 +148,15 @@ export const es: TranslationDictionary = {
     downloadUpdate: "Descargar actualización",
     remindLater: "Recordármelo más tarde",
     releaseNotes: "Novedades de la versión",
+    downloading: "Descargando actualización… {progress}%",
+    installing: "Instalando actualización…",
+    installAndRestart: "Instalar y reiniciar",
+    retry: "Reintentar",
+    updateErrorTitle: "Error de actualización",
+    updateErrorDesc: "Lexora no pudo descargar o instalar la actualización. Inténtalo de nuevo.",
+    unsavedTitle: "Documentos sin guardar",
+    unsavedMessage: "La instalación cerrará Lexora. Guarda primero tus documentos o elige explícitamente continuar sin guardar.",
+    discardAndInstall: "Descartar e instalar",
   },
   dialogs: {
     ok: "Aceptar",

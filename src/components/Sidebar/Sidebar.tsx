@@ -1,12 +1,7 @@
-import { Component, Show } from "solid-js";
+import { Component, createSignal, onCleanup, Show } from "solid-js";
 import { TocSidebar } from "./TocSidebar";
 import { FileTree } from "./FileTree";
-import {
-  workspaceTree,
-  setWorkspaceTree,
-  sidebarMode,
-  setSidebarMode,
-} from "../../store/files";
+import { workspaceTree, setWorkspaceTree } from "../../store/files";
 import { currentDocument } from "../../store/editor";
 import { listDirectoryTree } from "../../lib/tauri/commands";
 import { open } from "@tauri-apps/plugin-dialog";
@@ -18,6 +13,48 @@ export interface SidebarProps {
 
 export const Sidebar: Component<SidebarProps> = (props) => {
   const doc = () => currentDocument();
+  const [workspaceExpanded, setWorkspaceExpanded] = createSignal(false);
+  const [workspaceHeight, setWorkspaceHeight] = createSignal(240);
+  const [isResizingWorkspace, setIsResizingWorkspace] = createSignal(false);
+  let sidebarRef: HTMLElement | undefined;
+  let stopWorkspaceResize: (() => void) | undefined;
+
+  const startWorkspaceResize = (event: MouseEvent) => {
+    event.preventDefault();
+    setIsResizingWorkspace(true);
+
+    const handleMouseMove = (moveEvent: MouseEvent) => {
+      if (!sidebarRef) return;
+      const bounds = sidebarRef.getBoundingClientRect();
+      const minWorkspaceHeight = 120;
+      const minOutlineHeight = 96;
+      const maxWorkspaceHeight = Math.max(
+        minWorkspaceHeight,
+        bounds.height - minOutlineHeight
+      );
+      const nextHeight = bounds.bottom - moveEvent.clientY;
+      setWorkspaceHeight(
+        Math.max(
+          minWorkspaceHeight,
+          Math.min(maxWorkspaceHeight, nextHeight)
+        )
+      );
+    };
+
+    const handleMouseUp = () => {
+      setIsResizingWorkspace(false);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+      stopWorkspaceResize = undefined;
+    };
+
+    stopWorkspaceResize?.();
+    stopWorkspaceResize = handleMouseUp;
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+  };
+
+  onCleanup(() => stopWorkspaceResize?.());
 
   const handleOpenFolder = async () => {
     try {
@@ -29,7 +66,6 @@ export const Sidebar: Component<SidebarProps> = (props) => {
       if (selected && typeof selected === "string") {
         const tree = await listDirectoryTree(selected);
         setWorkspaceTree(tree);
-        setSidebarMode("files");
       }
     } catch (err) {
       console.error("Failed to open folder:", err);
@@ -50,82 +86,73 @@ export const Sidebar: Component<SidebarProps> = (props) => {
 
   return (
     <aside
+      ref={sidebarRef}
       class="h-full flex flex-col overflow-hidden no-select"
-      style={{
-        background: "var(--color-sidebar-bg)",
-        "border-right": "1px solid var(--color-border)",
-      }}
+      style={{ background: "var(--color-sidebar-bg)" }}
     >
-      {/* Sidebar Mode Tabs */}
-      <div class="flex items-center border-b border-[var(--color-border)] text-xs font-semibold">
-        <button
-          class="flex-1 py-2 text-center transition-colors flex items-center justify-center gap-1.5"
+      <section class="flex-1 min-h-[96px] overflow-hidden">
+        <TocSidebar toc={doc().toc} />
+      </section>
+
+      <Show when={workspaceExpanded()}>
+        <div
+          class="h-1 flex-shrink-0 cursor-row-resize hover:bg-[var(--color-accent)] transition-colors"
           style={{
-            background: sidebarMode() === "toc" ? "var(--color-bg-primary)" : "transparent",
-            color: sidebarMode() === "toc" ? "var(--color-accent)" : "var(--color-text-secondary)",
-            "border-bottom": sidebarMode() === "toc" ? "2px solid var(--color-accent)" : "none",
+            background: isResizingWorkspace()
+              ? "var(--color-accent)"
+              : "var(--color-border)",
           }}
-          onClick={() => setSidebarMode("toc")}
-          title={t("sidebar.outline")}
-        >
-          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="8" y1="6" x2="21" y2="6" />
-            <line x1="8" y1="12" x2="21" y2="12" />
-            <line x1="8" y1="18" x2="21" y2="18" />
-            <line x1="3" y1="6" x2="3.01" y2="6" />
-            <line x1="3" y1="12" x2="3.01" y2="12" />
-            <line x1="3" y1="18" x2="3.01" y2="18" />
-          </svg>
-          <span>{t("sidebar.outline")}</span>
-        </button>
+          onMouseDown={startWorkspaceResize}
+          title="Resize workspace panel"
+        />
+      </Show>
 
-        <button
-          class="flex-1 py-2 text-center transition-colors flex items-center justify-center gap-1.5"
-          style={{
-            background: sidebarMode() === "files" ? "var(--color-bg-primary)" : "transparent",
-            color: sidebarMode() === "files" ? "var(--color-accent)" : "var(--color-text-secondary)",
-            "border-bottom": sidebarMode() === "files" ? "2px solid var(--color-accent)" : "none",
-          }}
-          onClick={() => setSidebarMode("files")}
-          title={t("sidebar.files")}
-        >
-          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
-          </svg>
-          <span>{t("sidebar.files")}</span>
-        </button>
-      </div>
-
-      {/* Sidebar Content */}
-      <div class="flex-1 overflow-hidden">
-        <Show when={sidebarMode() === "toc"}>
-          <TocSidebar toc={doc().toc} />
-        </Show>
-
-        <Show when={sidebarMode() === "files"}>
-          <Show
-            when={workspaceTree()}
-            fallback={
-              <div class="p-6 text-center text-xs text-[var(--color-text-secondary)] space-y-3">
-                <p>{t("sidebar.noFolderOpen")}</p>
+      <section
+        class="flex-shrink-0 min-h-0 overflow-hidden border-t border-[var(--color-border)]"
+        style={{ height: workspaceExpanded() ? `${workspaceHeight()}px` : "37px" }}
+      >
+        <Show
+          when={workspaceTree()}
+          fallback={
+            <div class="h-full flex flex-col">
+              <div class="flex items-center px-3 py-2.5 text-xs font-semibold text-[var(--color-text-primary)] border-b border-[var(--color-border)]">
                 <button
-                  class="px-3 py-1.5 rounded-lg text-white font-medium transition-colors shadow-xs"
-                  style={{ background: "var(--color-accent)" }}
-                  onClick={handleOpenFolder}
+                  class="flex items-center gap-1.5 min-w-0"
+                  onClick={() => setWorkspaceExpanded((expanded) => !expanded)}
+                  aria-expanded={workspaceExpanded()}
                 >
-                  {t("sidebar.openFolder")}
+                  <span class="text-[10px] opacity-60">
+                    {workspaceExpanded() ? "▼" : "▶"}
+                  </span>
+                  <span>{t("sidebar.workspace")}</span>
                 </button>
               </div>
+              <Show when={workspaceExpanded()}>
+                <div class="p-6 text-center text-xs text-[var(--color-text-secondary)] space-y-3">
+                  <p>{t("sidebar.noFolderOpen")}</p>
+                  <button
+                    class="px-3 py-1.5 rounded-lg text-white font-medium transition-colors shadow-xs"
+                    style={{ background: "var(--color-accent)" }}
+                    onClick={handleOpenFolder}
+                  >
+                    {t("sidebar.openFolder")}
+                  </button>
+                </div>
+              </Show>
+            </div>
+          }
+        >
+          <FileTree
+            tree={workspaceTree()!}
+            onSelectFile={props.onSelectFile}
+            onRefresh={handleRefreshWorkspace}
+            expanded={workspaceExpanded()}
+            onToggleExpanded={() =>
+              setWorkspaceExpanded((expanded) => !expanded)
             }
-          >
-            <FileTree
-              tree={workspaceTree()!}
-              onSelectFile={props.onSelectFile}
-              onRefresh={handleRefreshWorkspace}
-            />
-          </Show>
+          />
         </Show>
-      </div>
+      </section>
     </aside>
   );
 };
