@@ -69,6 +69,17 @@ export const ru: TranslationDictionary = {
     lightTheme: "Светлая тема",
     darkTheme: "Тёмная тема",
     systemTheme: "Как в системе",
+    themeSettings: "Тема...",
+  },
+  settings: {
+    title: "Настройки",
+    themeTab: "Тема",
+    markdownTheme: "Тема",
+    markdownThemeDescription: "Выберите визуальный стиль Lexora и отображения Markdown.",
+    colorMode: "Цветовой режим",
+    colorModeDescription: "Светлый, тёмный и системный режимы работают со всеми темами.",
+    elementShadows: "Включить тени элементов",
+    elementShadowsDescription: "Добавлять лёгкие тени к изображениям и таблицам.",
   },
   window: {
     minimize: "Свернуть",

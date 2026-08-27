@@ -69,6 +69,17 @@ export const fr: TranslationDictionary = {
     lightTheme: "Thème clair",
     darkTheme: "Thème sombre",
     systemTheme: "Suivre le thème du système",
+    themeSettings: "Thème...",
+  },
+  settings: {
+    title: "Paramètres",
+    themeTab: "Thème",
+    markdownTheme: "Thème",
+    markdownThemeDescription: "Choisissez le style visuel de Lexora et du Markdown rendu.",
+    colorMode: "Mode de couleur",
+    colorModeDescription: "Les modes clair, sombre et système s’appliquent à tous les thèmes.",
+    elementShadows: "Activer les ombres des éléments",
+    elementShadowsDescription: "Ajouter des ombres discrètes aux images et tableaux rendus.",
   },
   window: {
     minimize: "Réduire",

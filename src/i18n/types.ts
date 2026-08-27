@@ -84,6 +84,17 @@ export interface TranslationDictionary {
     lightTheme: string;
     darkTheme: string;
     systemTheme: string;
+    themeSettings: string;
+  };
+  settings: {
+    title: string;
+    themeTab: string;
+    markdownTheme: string;
+    markdownThemeDescription: string;
+    colorMode: string;
+    colorModeDescription: string;
+    elementShadows: string;
+    elementShadowsDescription: string;
   };
   window: {
     minimize: string;
