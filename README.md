@@ -36,6 +36,25 @@ Choose your platform and package:
 
 ---
 
+## 🍎 Opening Lexora when macOS blocks it
+
+Current macOS builds are not code-signed or notarized, so Gatekeeper may report that Apple cannot verify the developer or check the app for malicious software. Only continue if you downloaded Lexora from this repository's official [GitHub Releases](https://github.com/BerryUIKI/Lexora/releases/latest) page.
+
+1. Move **Lexora.app** to your **Applications** folder, then try to open it once so macOS records the blocked attempt.
+2. Open **Apple menu → System Settings → Privacy & Security**.
+3. Scroll to **Security**, find the message about Lexora, and click **Open Anyway**. This option is available for about one hour after the blocked attempt.
+4. Authenticate when prompted, then click **Open**. macOS saves Lexora as an exception, so future launches work normally.
+
+If **Open Anyway** does not appear and you trust the downloaded file, remove the quarantine attribute for Lexora only, then open it again:
+
+```bash
+xattr -dr com.apple.quarantine /Applications/Lexora.app
+```
+
+Do not disable Gatekeeper system-wide. See [Apple's guidance for opening an app from an unknown developer](https://support.apple.com/guide/mac-help/mh40616/mac) for more information.
+
+---
+
 ## 📖 Introduction
 
 **Lexora** is an open-source Markdown reader and editor engineered for writers, developers, and researchers who want the speed of plain-text Markdown without the cognitive overhead of split-screen previews.
