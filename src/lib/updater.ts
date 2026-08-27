@@ -1,140 +1,92 @@
 import { createSignal } from "solid-js";
-import { open as openUrl } from "@tauri-apps/plugin-shell";
-import { checkGithubUpdate, getAppVersion } from "./tauri/commands";
+import {
+  check,
+  type DownloadEvent,
+  type Update,
+} from "@tauri-apps/plugin-updater";
+import { relaunch } from "@tauri-apps/plugin-process";
+import { getVersion } from "@tauri-apps/api/app";
+import { automaticUpdateChecks } from "../store/settings";
+import { currentLocale } from "../i18n";
+import { selectLocalizedReleaseNotes } from "../i18n/changelog";
 
-export const CURRENT_VERSION = "0.1.2";
-export const GITHUB_REPO = "BerryUIKI/Lexora";
-export const REPO_RELEASES_URL = `https://github.com/${GITHUB_REPO}/releases`;
-export const REPO_API_URL = `https://api.github.com/repos/${GITHUB_REPO}/releases/latest`;
-export const REPO_ALL_RELEASES_API = `https://api.github.com/repos/${GITHUB_REPO}/releases`;
+const LAST_CHECK_KEY = "lexora_last_update_check";
+const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+const MAX_STARTUP_JITTER_MS = 60 * 1000;
 
-export type UpdateStatus =
-  | "update_available"
-  | "up_to_date"
-  | "ahead_of_release"
-  | "error";
-
-export interface ReleaseAsset {
-  name: string;
-  size: number;
-  browser_download_url: string;
-}
+export type UpdateStatus = "update_available" | "up_to_date" | "error";
+export type UpdatePhase = "idle" | "downloading" | "installing";
 
 export interface UpdateInfo {
   status: UpdateStatus;
-  hasUpdate: boolean;
   currentVersion: string;
   latestVersion: string;
-  releaseTitle: string;
   releaseNotes: string;
   publishedAt: string;
-  releaseUrl: string;
-  assets: ReleaseAsset[];
   isManualCheck: boolean;
+  errorMessage?: string;
 }
 
 const [updateModalOpen, setUpdateModalOpen] = createSignal(false);
 const [updateInfo, setUpdateInfo] = createSignal<UpdateInfo | null>(null);
 const [isCheckingUpdate, setIsCheckingUpdate] = createSignal(false);
+const [updatePhase, setUpdatePhase] = createSignal<UpdatePhase>("idle");
+const [downloadProgress, setDownloadProgress] = createSignal(0);
 
-export { updateModalOpen, setUpdateModalOpen, updateInfo, isCheckingUpdate };
+let pendingUpdate: Update | null = null;
 
-/**
- * Compare two semver-like version strings.
- * Returns:
- *   1  if remote is newer than local (update available)
- *  -1  if local is newer than remote (ahead of public release)
- *   0  if both are identical (up to date)
- */
+export {
+  updateModalOpen,
+  setUpdateModalOpen,
+  updateInfo,
+  isCheckingUpdate,
+  updatePhase,
+  downloadProgress,
+};
+
 export function compareVersions(remoteTag: string, localVersion: string): number {
-  const cleanRemote = remoteTag.replace(/^v/, "").trim();
-  const cleanLocal = localVersion.replace(/^v/, "").trim();
-
-  const rParts = cleanRemote.split(".").map((n) => parseInt(n, 10) || 0);
-  const lParts = cleanLocal.split(".").map((n) => parseInt(n, 10) || 0);
-
-  for (let i = 0; i < Math.max(rParts.length, lParts.length); i++) {
-    const r = rParts[i] || 0;
-    const l = lParts[i] || 0;
-    if (r > l) return 1;
-    if (r < l) return -1;
+  const remote = remoteTag.replace(/^v/, "").split(".").map(Number);
+  const local = localVersion.replace(/^v/, "").split(".").map(Number);
+  for (let index = 0; index < Math.max(remote.length, local.length); index += 1) {
+    const difference = (remote[index] || 0) - (local[index] || 0);
+    if (difference !== 0) return difference > 0 ? 1 : -1;
   }
   return 0;
 }
 
-/**
- * Check GitHub Releases for newer version.
- * First tries native Rust HTTPS check_github_update command, then falls back to fetch.
- * @param manual Whether this check was explicitly triggered by the user
- */
+function recordSuccessfulCheck(): void {
+  localStorage.setItem(LAST_CHECK_KEY, Date.now().toString());
+}
+
+export function isAutomaticCheckDue(now = Date.now()): boolean {
+  if (!automaticUpdateChecks()) return false;
+  const lastCheck = Number(localStorage.getItem(LAST_CHECK_KEY) || 0);
+  return (
+    !Number.isFinite(lastCheck) ||
+    lastCheck <= 0 ||
+    now - lastCheck >= ONE_DAY_MS
+  );
+}
+
+/** Check the signed stable-channel manifest configured in tauri.conf.json. */
 export async function checkForUpdates(manual = false): Promise<void> {
   if (isCheckingUpdate()) return;
   setIsCheckingUpdate(true);
 
-  let appVersion = CURRENT_VERSION;
   try {
-    const v = await getAppVersion();
-    if (v) appVersion = v;
-  } catch {
-    // Ignore when running in non-Tauri test environments
-  }
+    const update = await check({ timeout: 30_000 });
+    const currentVersion = update?.currentVersion || (await getVersion());
+    recordSuccessfulCheck();
 
-  let data: any = null;
-
-  try {
-    // Primary: Native Rust backend HTTPS request (bypasses WebView CORS & CSP completely)
-    try {
-      data = await checkGithubUpdate();
-    } catch (ipcErr) {
-      console.warn("Rust check_github_update error, attempting fetch fallback:", ipcErr);
-
-      // Fallback: Webview fetch (if IPC unavailable)
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000);
-
-      try {
-        const res = await fetch(REPO_API_URL, {
-          signal: controller.signal,
-          headers: {
-            Accept: "application/vnd.github.v3+json",
-            "User-Agent": `Lexora-App/${appVersion}`,
-          },
-        });
-
-        if (res.ok) {
-          data = await res.json();
-        } else if (res.status === 404) {
-          const allRes = await fetch(`${REPO_ALL_RELEASES_API}?per_page=5`, {
-            signal: controller.signal,
-            headers: {
-              Accept: "application/vnd.github.v3+json",
-              "User-Agent": `Lexora-App/${appVersion}`,
-            },
-          });
-          if (allRes.ok) {
-            const list = await allRes.json();
-            if (Array.isArray(list)) {
-              data = list.find((r: any) => !r.draft && !r.prerelease) || null;
-            }
-          }
-        }
-      } finally {
-        clearTimeout(timeoutId);
-      }
-    }
-
-    if (!data || !data.tag_name) {
+    if (!update) {
+      pendingUpdate = null;
       if (manual) {
         setUpdateInfo({
           status: "up_to_date",
-          hasUpdate: false,
-          currentVersion: appVersion,
-          latestVersion: appVersion,
-          releaseTitle: `Lexora v${appVersion}`,
+          currentVersion,
+          latestVersion: currentVersion,
           releaseNotes: "",
-          publishedAt: new Date().toISOString(),
-          releaseUrl: REPO_RELEASES_URL,
-          assets: [],
+          publishedAt: "",
           isManualCheck: true,
         });
         setUpdateModalOpen(true);
@@ -142,51 +94,27 @@ export async function checkForUpdates(manual = false): Promise<void> {
       return;
     }
 
-    const latestTag = data.tag_name || `v${appVersion}`;
-    const latestClean = latestTag.replace(/^v/, "");
-    const cmp = compareVersions(latestTag, appVersion);
-
-    // Save timestamp of last check
-    localStorage.setItem("lexora_last_update_check", Date.now().toString());
-
-    let status: UpdateStatus = "up_to_date";
-    if (cmp > 0) {
-      status = "update_available";
-    } else if (cmp < 0) {
-      status = "ahead_of_release";
-    } else {
-      status = "up_to_date";
-    }
-
-    if (status === "update_available" || manual) {
-      setUpdateInfo({
-        status,
-        hasUpdate: status === "update_available",
-        currentVersion: appVersion,
-        latestVersion: latestClean,
-        releaseTitle: data.name || latestTag,
-        releaseNotes: data.body || "",
-        publishedAt: data.published_at || new Date().toISOString(),
-        releaseUrl: data.html_url || REPO_RELEASES_URL,
-        assets: data.assets || [],
-        isManualCheck: manual,
-      });
-      setUpdateModalOpen(true);
-    }
-  } catch (err: any) {
-    console.warn("Update check failed:", err);
+    pendingUpdate = update;
+    setUpdateInfo({
+      status: "update_available",
+      currentVersion: update.currentVersion,
+      latestVersion: update.version,
+      releaseNotes: selectLocalizedReleaseNotes(update.body, currentLocale()),
+      publishedAt: update.date || "",
+      isManualCheck: manual,
+    });
+    setUpdateModalOpen(true);
+  } catch (error) {
+    console.warn("Update check failed:", error);
     if (manual) {
       setUpdateInfo({
         status: "error",
-        hasUpdate: false,
-        currentVersion: appVersion,
-        latestVersion: appVersion,
-        releaseTitle: "Network Error",
-        releaseNotes: "Unable to connect to GitHub. Please check your internet connection or try again later.",
-        publishedAt: new Date().toISOString(),
-        releaseUrl: REPO_RELEASES_URL,
-        assets: [],
+        currentVersion: "",
+        latestVersion: "",
+        releaseNotes: "",
+        publishedAt: "",
         isManualCheck: true,
+        errorMessage: String(error),
       });
       setUpdateModalOpen(true);
     }
@@ -195,30 +123,57 @@ export async function checkForUpdates(manual = false): Promise<void> {
   }
 }
 
-/**
- * Check for updates automatically once per week (7 days).
- */
-export function checkWeeklyUpdate(): void {
-  try {
-    const lastCheckStr = localStorage.getItem("lexora_last_update_check");
-    const now = Date.now();
-    const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+/** Schedule a due automatic check with a small startup jitter. */
+export function scheduleAutomaticUpdateCheck(): () => void {
+  if (!isAutomaticCheckDue()) return () => undefined;
+  const delay = Math.floor(Math.random() * MAX_STARTUP_JITTER_MS);
+  const timer = window.setTimeout(() => {
+    if (automaticUpdateChecks()) void checkForUpdates(false);
+  }, delay);
+  return () => window.clearTimeout(timer);
+}
 
-    if (!lastCheckStr || now - parseInt(lastCheckStr, 10) > ONE_WEEK_MS) {
-      checkForUpdates(false);
-    }
-  } catch (err) {
-    console.warn("Weekly update check error:", err);
+/** Download, verify, install, and relaunch using Tauri's signed updater. */
+export async function installPendingUpdate(): Promise<void> {
+  if (!pendingUpdate || updatePhase() !== "idle") return;
+
+  setUpdatePhase("downloading");
+  setDownloadProgress(0);
+  let downloaded = 0;
+  let total = 0;
+
+  try {
+    await pendingUpdate.downloadAndInstall((event: DownloadEvent) => {
+      if (event.event === "Started") {
+        total = event.data.contentLength || 0;
+      } else if (event.event === "Progress") {
+        downloaded += event.data.chunkLength;
+        if (total > 0) {
+          setDownloadProgress(
+            Math.min(100, Math.round((downloaded / total) * 100))
+          );
+        }
+      } else if (event.event === "Finished") {
+        setDownloadProgress(100);
+        setUpdatePhase("installing");
+      }
+    });
+    await relaunch();
+  } catch (error) {
+    console.error("Update installation failed:", error);
+    setUpdatePhase("idle");
+    setUpdateInfo((current) =>
+      current
+        ? { ...current, status: "error", errorMessage: String(error) }
+        : current
+    );
   }
 }
 
-/**
- * Open the download URL in the system default browser.
- */
-export async function openReleaseDownload(url: string): Promise<void> {
-  try {
-    await openUrl(url);
-  } catch {
-    window.open(url, "_blank");
-  }
+export function resetUpdaterForTests(): void {
+  pendingUpdate = null;
+  setUpdatePhase("idle");
+  setDownloadProgress(0);
+  setUpdateInfo(null);
+  setUpdateModalOpen(false);
 }

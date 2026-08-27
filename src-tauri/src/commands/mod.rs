@@ -1,7 +1,6 @@
 pub mod file;
 pub mod markdown;
 pub mod search;
-pub mod updater;
 pub mod window;
 
 /// A simple greet command to verify IPC round-trip.

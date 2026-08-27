@@ -15,7 +15,7 @@ import { StatusBar } from "./components/StatusBar/StatusBar";
 import { WelcomeHub } from "./components/Home/WelcomeHub";
 import { UpdateModal } from "./components/Updater/UpdateModal";
 import { SettingsModal } from "./components/Settings/SettingsModal";
-import { checkWeeklyUpdate } from "./lib/updater";
+import { scheduleAutomaticUpdateCheck } from "./lib/updater";
 import {
   currentDocument,
   setCurrentDocument,
@@ -64,6 +64,7 @@ const App: Component = () => {
   let unlistenFileChanged: (() => void) | null = null;
   let unlistenDragDrop: (() => void) | null = null;
   let autoSaveTimer: number | null = null;
+  let cancelAutomaticUpdateCheck: (() => void) | null = null;
 
   // Handle opening a file via native dialog
   const handleOpenFile = async () => {
@@ -208,8 +209,7 @@ const App: Component = () => {
       console.warn("CLI args check error:", e);
     }
 
-    // Weekly background update check
-    checkWeeklyUpdate();
+    cancelAutomaticUpdateCheck = scheduleAutomaticUpdateCheck();
   });
 
   // Set up auto-save interval (every 30 seconds for dirty files with path)
@@ -284,6 +284,7 @@ const App: Component = () => {
   onCleanup(() => {
     unlistenFileChanged?.();
     unlistenDragDrop?.();
+    cancelAutomaticUpdateCheck?.();
     if (autoSaveTimer !== null) {
       clearInterval(autoSaveTimer);
     }

@@ -1,9 +1,11 @@
 import { render } from "solid-js/web";
 import { afterEach, describe, expect, it } from "vitest";
 import {
+  automaticUpdateChecks,
   elementShadows,
   markdownTheme,
   setElementShadows,
+  setAutomaticUpdateChecks,
   setMarkdownTheme,
   setTheme,
 } from "../../store/settings";
@@ -47,5 +49,28 @@ describe("SettingsModal", () => {
     shadowSwitch?.click();
     expect(elementShadows()).toBe(true);
     expect(shadowSwitch?.getAttribute("aria-checked")).toBe("true");
+  });
+
+  it("allows automatic update checks to be disabled", () => {
+    setAutomaticUpdateChecks(true);
+    container = document.createElement("div");
+    document.body.append(container);
+
+    dispose = render(
+      () => <SettingsModal isOpen={true} onClose={() => undefined} />,
+      container
+    );
+
+    const updatesTab = Array.from(container.querySelectorAll("button")).find(
+      (button) => button.textContent?.trim() === "Updates"
+    );
+    updatesTab?.click();
+
+    const updateSwitch = container.querySelector<HTMLButtonElement>(
+      '[role="switch"]'
+    );
+    expect(updateSwitch?.getAttribute("aria-checked")).toBe("true");
+    updateSwitch?.click();
+    expect(automaticUpdateChecks()).toBe(false);
   });
 });

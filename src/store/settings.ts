@@ -48,12 +48,22 @@ function getInitialElementShadows(): boolean {
   );
 }
 
+function getInitialAutomaticUpdateChecks(): boolean {
+  return (
+    typeof localStorage === "undefined" ||
+    localStorage.getItem("lexora-automatic-update-checks") !== "false"
+  );
+}
+
 const [theme, setTheme] = createSignal<Theme>(getInitialTheme());
 const [markdownTheme, setMarkdownTheme] = createSignal<MarkdownTheme>(
   getInitialMarkdownTheme()
 );
 const [elementShadows, setElementShadows] = createSignal(
   getInitialElementShadows()
+);
+const [automaticUpdateChecks, setAutomaticUpdateChecks] = createSignal(
+  getInitialAutomaticUpdateChecks()
 );
 const [resolvedTheme, setResolvedTheme] = createSignal<"light" | "dark">(
   getInitialTheme() === "system" ? getSystemTheme() : (getInitialTheme() as "light" | "dark")
@@ -96,6 +106,13 @@ createEffect(() => {
   }
 });
 
+createEffect(() => {
+  const enabled = automaticUpdateChecks();
+  if (typeof localStorage !== "undefined") {
+    localStorage.setItem("lexora-automatic-update-checks", String(enabled));
+  }
+});
+
 // Listen for OS theme changes
 if (typeof window !== "undefined" && typeof window.matchMedia === "function") {
   window
@@ -124,6 +141,8 @@ export {
   setMarkdownTheme,
   elementShadows,
   setElementShadows,
+  automaticUpdateChecks,
+  setAutomaticUpdateChecks,
   fontSize,
   setFontSize,
   workspacePath,

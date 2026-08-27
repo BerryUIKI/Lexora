@@ -16,7 +16,9 @@ pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_fs::init())
+        .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_shell::init())
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .manage(AppState::default())
         .manage(WatcherState {
             _watcher: Mutex::new(None),
@@ -39,8 +41,6 @@ pub fn run() {
             commands::window::close_window,
             commands::window::is_window_maximized,
             commands::window::start_drag,
-            commands::updater::check_github_update,
-            commands::updater::get_app_version,
             get_cli_args,
             start_watching_file,
             stop_watching_file,
