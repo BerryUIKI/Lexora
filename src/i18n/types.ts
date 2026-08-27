@@ -113,6 +113,7 @@ export interface TranslationDictionary {
   sidebar: {
     outline: string;
     files: string;
+    workspace: string;
     sectionsCount: string;
     noHeadings: string;
     noFolderOpen: string;

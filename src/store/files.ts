@@ -37,7 +37,6 @@ const [openTabs, setOpenTabs] = createSignal<Tab[]>([]);
 const [activeTabId, setActiveTabId] = createSignal<string | null>(null);
 const [workspaceTree, setWorkspaceTree] = createSignal<FileEntry | null>(null);
 const [quickSwitcherOpen, setQuickSwitcherOpen] = createSignal(false);
-const [sidebarMode, setSidebarMode] = createSignal<"toc" | "files">("toc");
 const [recentFiles, setRecentFiles] = createSignal<RecentFile[]>(loadRecentFiles());
 
 export {
@@ -49,8 +48,6 @@ export {
   setWorkspaceTree,
   quickSwitcherOpen,
   setQuickSwitcherOpen,
-  sidebarMode,
-  setSidebarMode,
   recentFiles,
   setRecentFiles,
 };
@@ -100,6 +97,7 @@ export function closeTab(id: string) {
         path: null,
         filename: "Untitled",
         content: "",
+        renderedContent: "",
         html: "",
         toc: [],
         wordCount: 0,

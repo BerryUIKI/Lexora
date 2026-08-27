@@ -98,6 +98,7 @@ export const ru: TranslationDictionary = {
   sidebar: {
     outline: "Оглавление",
     files: "Файлы",
+    workspace: "Рабочая область",
     sectionsCount: "разделов",
     noHeadings: "В этом документе нет заголовков.",
     noFolderOpen: "Папка не открыта. Нажмите ниже, чтобы открыть рабочую область.",

@@ -98,6 +98,7 @@ export const ja: TranslationDictionary = {
   sidebar: {
     outline: "アウトライン",
     files: "ファイル",
+    workspace: "ワークスペース",
     sectionsCount: "個のセクション",
     noHeadings: "このドキュメントに見出しはありません。",
     noFolderOpen: "フォルダーが開かれていません。下をクリックして開いてください。",

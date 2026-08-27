@@ -98,6 +98,7 @@ export const zhCN: TranslationDictionary = {
   sidebar: {
     outline: "大纲",
     files: "文件",
+    workspace: "工作区",
     sectionsCount: "个段落小节",
     noHeadings: "当前文档暂无标题大纲。",
     noFolderOpen: "未打开文件夹。点击下方打开工作区。",
