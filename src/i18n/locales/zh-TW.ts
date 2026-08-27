@@ -98,6 +98,7 @@ export const zhTW: TranslationDictionary = {
   sidebar: {
     outline: "大綱",
     files: "檔案",
+    workspace: "工作區",
     sectionsCount: "個段落章節",
     noHeadings: "目前文件尚無標題大綱。",
     noFolderOpen: "未開啟資料夾。點擊下方開啟工作區。",

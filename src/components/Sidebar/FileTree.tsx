@@ -178,8 +178,11 @@ export const FileTree: Component<FileTreeProps> = (props) => {
         class="flex items-center justify-between p-2 text-xs"
         style={{ "border-bottom": "1px solid var(--color-border)" }}
       >
-        <span class="font-semibold uppercase tracking-wider truncate max-w-28 opacity-70">
-          {props.tree.name}
+        <span
+          class="font-semibold text-[var(--color-text-primary)] truncate max-w-28"
+          title={props.tree.path}
+        >
+          {t("sidebar.workspace")}
         </span>
         <div class="flex items-center gap-1.5">
           <button

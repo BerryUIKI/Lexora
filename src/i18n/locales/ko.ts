@@ -98,6 +98,7 @@ export const ko: TranslationDictionary = {
   sidebar: {
     outline: "개요",
     files: "파일",
+    workspace: "작업 영역",
     sectionsCount: "개 항목",
     noHeadings: "문서에 제목이 없습니다.",
     noFolderOpen: "열린 폴더가 없습니다. 아래를 클릭하여 작업 공간을 여세요.",

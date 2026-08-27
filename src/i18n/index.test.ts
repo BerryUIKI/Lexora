@@ -54,6 +54,7 @@ describe("i18n Internationalization Engine", () => {
       expect(d.edit.bold).toBeTruthy();
       expect(d.sidebar.outline).toBeTruthy();
       expect(d.sidebar.files).toBeTruthy();
+      expect(d.sidebar.workspace).toBeTruthy();
       expect(d.statusBar.wordsCount).toBeTruthy();
       expect(d.update.checking).toBeTruthy();
       expect(d.update.aheadTitle).toBeTruthy();

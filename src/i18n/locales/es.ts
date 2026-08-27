@@ -98,6 +98,7 @@ export const es: TranslationDictionary = {
   sidebar: {
     outline: "Esquema",
     files: "Archivos",
+    workspace: "Espacio de trabajo",
     sectionsCount: "secciones",
     noHeadings: "No hay encabezados en el documento actual.",
     noFolderOpen: "No hay carpeta abierta. Haga clic abajo para abrir un espacio de trabajo.",

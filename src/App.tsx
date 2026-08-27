@@ -19,6 +19,7 @@ import {
   currentDocument,
   setCurrentDocument,
   updateDocumentContent,
+  updateDocumentRendering,
   displayMode,
   setDisplayMode,
   cycleDisplayMode,
@@ -32,7 +33,6 @@ import {
   setQuickSwitcherOpen,
   syncCurrentDocumentToTab,
   setWorkspaceTree,
-  setSidebarMode,
 } from "./store/files";
 import { zenMode, setZenMode, focusMode, setFocusMode } from "./store/settings";
 import {
@@ -92,7 +92,6 @@ const App: Component = () => {
       if (selected && typeof selected === "string") {
         const tree = await listDirectoryTree(selected);
         setWorkspaceTree(tree);
-        setSidebarMode("files");
         setSidebarOpen(true);
       }
     } catch (err) {
@@ -109,6 +108,7 @@ const App: Component = () => {
         path: result.path,
         filename: result.filename,
         content: result.content,
+        renderedContent: result.content,
         html: result.html,
         toc: result.toc,
         wordCount: result.word_count,
@@ -128,15 +128,8 @@ const App: Component = () => {
     const doc = currentDocument();
     try {
       if (doc.path) {
-        await saveFile(doc.path, doc.content);
-        markSaved({
-          path: doc.path,
-          filename: doc.filename,
-          content: doc.content,
-          html: doc.html,
-          toc: doc.toc,
-          word_count: doc.wordCount,
-        });
+        const result = await saveFile(doc.path, doc.content);
+        markSaved(result);
         syncCurrentDocumentToTab();
       } else {
         const selected = await save({
@@ -149,17 +142,8 @@ const App: Component = () => {
         });
 
         if (selected && typeof selected === "string") {
-          await saveFile(selected, doc.content);
-          const filename =
-            selected.split(/[/\\]/).pop() || "Untitled.md";
-          markSaved({
-            path: selected,
-            filename,
-            content: doc.content,
-            html: doc.html,
-            toc: doc.toc,
-            word_count: doc.wordCount,
-          });
+          const result = await saveFile(selected, doc.content);
+          markSaved(result);
           syncCurrentDocumentToTab();
           await startWatchingFile(selected);
         }
@@ -192,6 +176,7 @@ const App: Component = () => {
       path: null,
       filename: `Untitled-${openTabs().length + 1}.md`,
       content: "",
+      renderedContent: "",
       html: "",
       toc: [],
       wordCount: 0,
@@ -458,6 +443,15 @@ const App: Component = () => {
         onClose={() => setFindReplaceOpen(false)}
       />
 
+      {/* Full-width document tab bar below the title/menu bar */}
+      <Show when={openTabs().length > 0 && !zenMode()}>
+        <TabBar
+          ref={(el) => (tabBarElement = el)}
+          isDragOver={dragHoverTarget() === "tabbar"}
+          onNewTab={handleNewDocument}
+        />
+      </Show>
+
       {/* Main content area */}
       <div
         class="flex flex-1 overflow-hidden"
@@ -484,17 +478,8 @@ const App: Component = () => {
           />
         </Show>
 
-        {/* Center Panel (TabBar + Toolbar + Viewport) */}
+        {/* Center Panel (Toolbar + Viewport) */}
         <div class="flex-1 flex flex-col overflow-hidden relative">
-          {/* Multi-Document Tab Bar */}
-          <Show when={openTabs().length > 0 && !zenMode()}>
-            <TabBar
-              ref={(el) => (tabBarElement = el)}
-              isDragOver={dragHoverTarget() === "tabbar"}
-              onNewTab={handleNewDocument}
-            />
-          </Show>
-
           {/* Editor Quick Format Toolbar (Writing / Code modes) */}
           <Show
             when={
@@ -537,9 +522,15 @@ const App: Component = () => {
               {/* Tri-State Viewport */}
               <Show when={displayMode() === "reading"}>
                 <MarkdownView
+                  content={doc().content}
+                  renderedContent={doc().renderedContent}
                   html={doc().html}
                   externallyModified={doc().externallyModified}
                   onReload={reloadCurrentFile}
+                  onRendered={(sourceContent, result) => {
+                    updateDocumentRendering(sourceContent, result);
+                    syncCurrentDocumentToTab();
+                  }}
                 />
               </Show>
 

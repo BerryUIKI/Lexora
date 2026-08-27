@@ -1,5 +1,5 @@
 import { createSignal } from "solid-js";
-import type { OpenFileResponse } from "../lib/tauri/commands";
+import type { OpenFileResponse, RenderResult } from "../lib/tauri/commands";
 
 export type DisplayMode = "reading" | "writing" | "code";
 
@@ -13,6 +13,7 @@ export interface DocumentState {
   path: string | null;
   filename: string;
   content: string;
+  renderedContent: string;
   html: string;
   toc: TocEntry[];
   wordCount: number;
@@ -24,6 +25,7 @@ const emptyDocument: DocumentState = {
   path: null,
   filename: "Untitled",
   content: "",
+  renderedContent: "",
   html: "",
   toc: [],
   wordCount: 0,
@@ -57,11 +59,29 @@ export function updateDocumentContent(newContent: string) {
   });
 }
 
+export function updateDocumentRendering(
+  sourceContent: string,
+  result: RenderResult
+) {
+  setCurrentDocument((prev) => {
+    if (prev.content !== sourceContent) return prev;
+
+    return {
+      ...prev,
+      renderedContent: sourceContent,
+      html: result.html,
+      toc: result.toc,
+      wordCount: result.word_count,
+    };
+  });
+}
+
 export function markSaved(result: OpenFileResponse) {
   setCurrentDocument({
     path: result.path,
     filename: result.filename,
     content: result.content,
+    renderedContent: result.content,
     html: result.html,
     toc: result.toc,
     wordCount: result.word_count,

@@ -63,7 +63,7 @@ export const TocSidebar: Component<TocSidebarProps> = (props) => {
   };
 
   return (
-    <div class="flex flex-col h-full">
+    <div class="flex flex-col max-h-full">
       {/* Header */}
       <div
         class="px-3 py-2.5 flex-shrink-0 flex items-center justify-between"
@@ -86,7 +86,7 @@ export const TocSidebar: Component<TocSidebarProps> = (props) => {
       </div>
 
       {/* TOC entries */}
-      <div class="flex-1 overflow-y-auto py-2 px-1">
+      <div class="min-h-0 overflow-y-auto py-2 px-1">
         <Show
           when={props.toc.length > 0}
           fallback={

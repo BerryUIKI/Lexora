@@ -98,6 +98,7 @@ export const de: TranslationDictionary = {
   sidebar: {
     outline: "Gliederung",
     files: "Dateien",
+    workspace: "Arbeitsbereich",
     sectionsCount: "Abschnitte",
     noHeadings: "Keine Überschriften im aktuellen Dokument.",
     noFolderOpen: "Kein Ordner geöffnet. Klicken Sie unten, um einen Arbeitsbereich zu öffnen.",
