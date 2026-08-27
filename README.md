@@ -1,14 +1,20 @@
 <div align="center">
 
-[ **English** ] · [ [简体中文](README.zh-CN.md) ] · [ [繁體中文](README.zh-TW.md) ] · [ [日本語](README.ja.md) ] · [ [한국어](README.ko.md) ] · [ [Deutsch](README.de.md) ] · [ [Français](README.fr.md) ] · [ [Español](README.es.md) ] · [ [Русский](README.ru.md) ]
+[**English**](README.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Deutsch](README.de.md) · [Français](README.fr.md) · [Español](README.es.md) · [Русский](README.ru.md)
+
+<img src="app-icon.svg" alt="Lexora" width="96" height="96">
 
 # ✨ Lexora
 
-**A seamless, local-first, high-performance Markdown reader & in-place WYSIWYG editor.**
+**A Typora-style, local-first, high-performance Markdown reader & in-place WYSIWYG editor.**
 
+<span style="font-size: 13px;">v0.1.3 Released · AGPL-3.0 Open Source</span>
+
+[![Website](https://img.shields.io/badge/website-berryuiki.github.io%2FLexora-4895ef.svg?style=for-the-badge)](https://berryuiki.github.io/Lexora/)
 [![Release](https://img.shields.io/badge/release-latest-4361ee.svg?style=for-the-badge)](https://github.com/BerryUIKI/Lexora/releases/latest)
 [![License: AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-10b981.svg?style=for-the-badge)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-6366f1.svg?style=for-the-badge)](https://github.com/BerryUIKI/Lexora/releases)
+[![CI](https://img.shields.io/github/actions/workflow/status/BerryUIKI/Lexora/ci.yml?style=for-the-badge&label=CI&logo=githubactions&logoColor=white&color=3a0ca3)](https://github.com/BerryUIKI/Lexora/actions)
 [![Tauri 2](https://img.shields.io/badge/Tauri-2.0-FFC131?style=for-the-badge&logo=tauri&logoColor=white)](https://tauri.app)
 [![Rust](https://img.shields.io/badge/Rust-1.85+-DEA584?style=for-the-badge&logo=rust&logoColor=white)](https://www.rust-lang.org/)
 [![SolidJS](https://img.shields.io/badge/SolidJS-1.9+-2C4F7C?style=for-the-badge&logo=solid&logoColor=white)](https://www.solidjs.com/)
@@ -17,9 +23,38 @@
   <b>🚀 Local-first</b> • <b>⚡ Blazing fast (&lt;400ms startup)</b> • <b>📝 Zero split-panes</b> • <b>🌐 9 Languages</b> • <b>📦 Lightweight (~3.6 MB)</b>
 </p>
 
-[**📥 Download Latest Release**](#-instant-downloads) • [**🌟 Features**](#-key-features) • [**⌨️ Shortcuts**](#-keyboard-shortcuts) • [**📖 Documentation**](docs/DEVELOPMENT.md)
+[**📥 Download**](#-instant-downloads) · [**🖥️ Interface Preview**](#-interface-preview) · [**🌟 Key Features**](#-key-features) · [**⌨️ Keyboard Shortcuts**](#-keyboard-shortcuts) · [**📚 Documentation**](#-documentation) · [**🌐 Website**](https://berryuiki.github.io/Lexora/)
 
 </div>
+
+---
+
+## 📖 Table of Contents
+
+- [🖥️ Interface Preview](#-interface-preview)
+- [📥 Instant Downloads](#-instant-downloads)
+- [🌟 Key Features](#-key-features)
+- [💡 Why Lexora?](#-why-lexora)
+- [⌨️ Keyboard Shortcuts](#-keyboard-shortcuts)
+- [🛠️ Architecture & Tech Stack](#-architecture--tech-stack)
+- [💻 Developer Setup](#-developer-setup)
+- [📚 Documentation](#-documentation)
+- [🤝 Contributing](#-contributing)
+- [💬 Community & Support](#-community--support)
+- [❤️ Acknowledgments](#-acknowledgments)
+- [📄 License](#-license)
+
+---
+
+## 🖥️ Interface Preview
+
+A real look at Lexora in action — menu bar, multi-tabs, outline sidebar, and in-place WYSIWYG editing, all in one window. No split panes, no previews, no distractions.
+
+<p align="center">
+  <img src="assets/lexora-ui.svg" alt="Lexora in-place WYSIWYG Markdown editor" width="85%">
+</p>
+
+> **Reading** · **Writing** · **Code** — three display modes, one keystroke (`Ctrl+/`) to switch.
 
 ---
 
@@ -36,51 +71,11 @@ Choose your platform and package:
 
 ---
 
-## 🍎 Opening Lexora when macOS blocks it
-
-Current macOS builds are not code-signed or notarized, so Gatekeeper may report that Apple cannot verify the developer or check the app for malicious software. Only continue if you downloaded Lexora from this repository's official [GitHub Releases](https://github.com/BerryUIKI/Lexora/releases/latest) page.
-
-1. Move **Lexora.app** to your **Applications** folder, then try to open it once so macOS records the blocked attempt.
-2. Open **Apple menu → System Settings → Privacy & Security**.
-3. Scroll to **Security**, find the message about Lexora, and click **Open Anyway**. This option is available for about one hour after the blocked attempt.
-4. Authenticate when prompted, then click **Open**. macOS saves Lexora as an exception, so future launches work normally.
-
-If **Open Anyway** does not appear and you trust the downloaded file, remove the quarantine attribute for Lexora only, then open it again:
-
-```bash
-xattr -dr com.apple.quarantine /Applications/Lexora.app
-```
-
-Do not disable Gatekeeper system-wide. See [Apple's guidance for opening an app from an unknown developer](https://support.apple.com/guide/mac-help/mh40616/mac) for more information.
-
----
-
 ## 📖 Introduction
 
 **Lexora** is an open-source Markdown reader and editor engineered for writers, developers, and researchers who want the speed of plain-text Markdown without the cognitive overhead of split-screen previews.
 
 Built on **Tauri 2** and **Rust** with a fine-grained reactive **SolidJS** frontend, Lexora combines native desktop responsiveness with a minimalist, distraction-free aesthetic.
-
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│ 📘 File  Edit  View  Window  Help     Lexora — README.md ●         🔍 ⚙️ 🐙 │
-├───────────────┬─────────────────────────────────────────────────────────────┤
-│ 📑 Outline    │  [Tab 1: README.md ●]  [Tab 2: notes.md]              +     │
-│ ├─ Overview   ├─────────────────────────────────────────────────────────────┤
-│ ├─ Features   │   # Introduction                                            │
-│ └─ Shortcuts  │                                                             │
-│               │   Lexora eliminates split-screen previews by rendering      │
-│ 📁 Workspace  │   Markdown directly in place with pure typography.          │
-│ • docs/       │                                                             │
-│ • src/        │   | Metric          | Value        | Notes   |              │
-│               │   |-----------------|--------------|---------|              │
-│               │   | Startup Time    | < 400 ms     | Instant |              │
-│               │   | Installer Size  | ~3.6 MB      | Compact |              │
-│               │                                                             │
-├───────────────┴─────────────────────────────────────────────────────────────┤
-│ ◧  📖 Reading | ✍️ Writing | 💻 Code   Ln 1, Col 1 | 1,420 words | UTF-8 | LF│
-└─────────────────────────────────────────────────────────────────────────────┘
-```
 
 ---
 
@@ -88,10 +83,10 @@ Built on **Tauri 2** and **Rust** with a fine-grained reactive **SolidJS** front
 
 | Feature | Highlights | Status |
 |---|---|:---:|
-| 🌐 **9-Language i18n System** | Native support for **English**, **简体中文**, **繁體中文**, **日本語**, **한국어**, **Deutsch**, **Français**, **Español**, and **Русский** with OS auto-detection | ✅ Complete |
+| 🌐 **9-Language i18n System** | Native support for **English**, **简体中文**, **繁體中文**, **日本語**, **한국어**, **Deutsch**, **Français**, **Español**, and **Русский** with OS auto-detection and runtime switching | ✅ Complete |
 | 🪟 **Platform-Native Window Chrome** | Theme-matched menus with compact custom controls on Windows/Linux and native traffic-light window controls on macOS | ✅ Complete |
 | 🏷️ **Windows `.md` File Association** | Automatically associates `.md`, `.markdown`, `.mdx`, and `.txt` files; double-click in Windows Explorer to open directly | ✅ Complete |
-| 🔄 **Tri-State Display Modes** | Quickly switch between **Reading** (read-only), **Writing** (in-place WYSIWYG), and **Code** (source code with line sync) | ✅ Complete |
+| 🔄 **Tri-State Display Modes** | Quickly switch between **Reading** (read-only), **Writing** (Typora-style WYSIWYG), and **Code** (source code with line sync) via `Ctrl+/` | ✅ Complete |
 | 📥 **Intelligent Drag & Drop** | Drag file into window to open; drag onto tab bar for new tabs; drag into text to insert formatted Markdown links | ✅ Complete |
 | ✍️ **In-Place Formatting** | Format selections directly with standard shortcuts (<kbd>Ctrl+B</kbd> for bold, <kbd>Ctrl+0</kbd> for paragraph, <kbd>Ctrl+1~6</kbd> for headings) | ✅ Complete |
 | 🔲 **Monochrome Vector UI** | Pure, minimalist theme-adaptive vector SVGs (`stroke="currentColor"`) that keep focus on your text | ✅ Complete |
@@ -100,8 +95,25 @@ Built on **Tauri 2** and **Rust** with a fine-grained reactive **SolidJS** front
 | 🌈 **Code Syntax Highlighting** | High-performance code block highlighting via `syntect` with language tags and copy button | ✅ Complete |
 | 📑 **Dynamic Table of Contents** | Interactive document outline with smooth anchor scrolling across all display modes | ✅ Complete |
 | 📊 **Mermaid Diagrams & Math** | Rich interactive flowchart, sequence, class diagrams, and LaTeX math formatting | ✅ Complete |
-| 🔍 **Full-Text Ripgrep Search** | Instant whole-workspace full-text search (<kbd>Ctrl+Shift+F</kbd>) and in-document Find & Replace (<kbd>Ctrl+F</kbd>) | ✅ Complete |
+| 🔍 **Full-Text Ripgrep Search** | Instant whole-workspace full-text search (<kbd>Ctrl+Shift+F</kbd>) and in-document Find & Replace (<kbd>Ctrl+F</kbd> / <kbd>Ctrl+H</kbd>) | ✅ Complete |
 | 📤 **Standalone HTML Export** | Export any document to self-contained, offline-styled HTML (<kbd>Ctrl+E</kbd>) | ✅ Complete |
+
+*See the [Roadmap](docs/ROADMAP.md) for what's planned next.*
+
+---
+
+## 💡 Why Lexora?
+
+| | Lexora | Split-Pane Editors | Web-Based Notes |
+|---|---|---|---|
+| **Rendering** | In-place WYSIWYG, zero panes | Side-by-side preview | Browser tab juggling |
+| **Startup** | < 400 ms native cold start | Depends on Electron weight | Page load + sync wait |
+| **Privacy** | 100% local-first, zero telemetry | Local files | Data stored on cloud |
+| **Size** | ~3.6 MB installer | 100+ MB installers | N/A |
+| **Offline** | Fully offline | Fully offline | Requires network |
+| **Formatting** | Pure Markdown on disk | Proprietary formats possible | Vendor lock-in |
+
+Lexora keeps your documents as **pure Markdown on disk** — portable, diffable, and yours forever. No cloud account, no sync engine, no lock-in.
 
 ---
 
@@ -116,7 +128,8 @@ Built on **Tauri 2** and **Rust** with a fine-grained reactive **SolidJS** front
 | | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd> | Save As... |
 | | <kbd>Ctrl</kbd> + <kbd>W</kbd> | Close Current Tab |
 | | <kbd>Ctrl</kbd> + <kbd>E</kbd> | Export Document as HTML... |
-| **Editing** | <kbd>Ctrl</kbd> + <kbd>B</kbd> | Toggle Bold Formatting |
+| **Editing** | <kbd>Ctrl</kbd> + <kbd>Z</kbd> / <kbd>Ctrl</kbd> + <kbd>Y</kbd> | Undo / Redo |
+| | <kbd>Ctrl</kbd> + <kbd>B</kbd> | Toggle Bold Formatting |
 | | <kbd>Ctrl</kbd> + <kbd>I</kbd> | Toggle Italic Formatting |
 | | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd> | Toggle Strikethrough |
 | | <kbd>Ctrl</kbd> + <kbd>K</kbd> | Insert / Wrap Link |
@@ -127,8 +140,10 @@ Built on **Tauri 2** and **Rust** with a fine-grained reactive **SolidJS** front
 | | <kbd>Ctrl</kbd> + <kbd>F</kbd> | Find in Current Document |
 | | <kbd>Ctrl</kbd> + <kbd>H</kbd> | Replace in Current Document |
 | | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd> | Search Across Workspace |
-| **View** | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd> | Toggle Sidebar (Files / Outline) |
+| **View** | <kbd>Ctrl</kbd> + <kbd>/</kbd> | Switch Display Mode (Reading / Writing / Code) |
+| | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd> | Toggle Sidebar (Files / Outline) |
 | | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd> | Toggle Focus Mode (Distraction-Free) |
+| | <kbd>F11</kbd> / <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Z</kbd> | Toggle Zen Mode (Full-Screen) |
 | | <kbd>Ctrl</kbd> + <kbd>+</kbd> / <kbd>-</kbd> | Zoom In / Zoom Out Font Size |
 | | <kbd>Ctrl</kbd> + <kbd>0</kbd> (NumPad) | Reset Font Size (16px) |
 
@@ -179,6 +194,18 @@ pnpm install
 pnpm tauri dev
 ```
 
+### Tests & Verification
+```bash
+# Run all Rust unit tests
+cargo test --manifest-path src-tauri/Cargo.toml
+
+# Strict TypeScript type check
+pnpm tsc --noEmit
+
+# Run frontend unit tests (Vitest)
+pnpm test
+```
+
 ### Production Build
 ```bash
 # Build standalone executable & OS installers
@@ -187,6 +214,64 @@ pnpm tauri build
 
 ---
 
+## 📚 Documentation
+
+| Document | Description |
+|---|---|
+| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | System design & data flow |
+| [DESIGN_DECISIONS.md](docs/DESIGN_DECISIONS.md) | Architecture Decision Records (ADRs) |
+| [DEVELOPMENT.md](docs/DEVELOPMENT.md) | Developer setup & debug guide |
+| [CONTRIBUTING.md](docs/CONTRIBUTING.md) | Contribution guidelines & conventions |
+| [COLLABORATION.md](docs/COLLABORATION.md) | Team workflow & review rules |
+| [ROADMAP.md](docs/ROADMAP.md) | Phased feature roadmap & MoSCoW |
+| [MILESTONES.md](docs/MILESTONES.md) | Milestones & schedule |
+| [NEXT_STEPS.md](docs/NEXT_STEPS.md) | Phase 2 implementation blueprint |
+
+---
+
+## 🤝 Contributing
+
+Contributions are warmly welcome — bug reports, feature ideas, translations, and pull requests alike.
+
+1. Fork the repository and create a branch from `dev`.
+2. Follow the [Contributing Guide](docs/CONTRIBUTING.md) and [Collaboration Handbook](docs/COLLABORATION.md).
+3. Keep commits in [Conventional Commits](https://www.conventionalcommits.org/) format.
+4. Open a pull request against `dev`.
+
+All commit messages follow the format: `<type>(<scope>): <short summary>` — e.g. `feat(editor): integrate Milkdown core in-place WYSIWYG renderer`.
+
+---
+
+## 💬 Community & Support
+
+- 🐛 [Report a Bug / Request a Feature](https://github.com/BerryUIKI/Lexora/issues)
+- 🌐 [Website](https://berryuiki.github.io/Lexora/)
+- 💡 [Start a Discussion](https://github.com/BerryUIKI/Lexora/discussions)
+- 🔒 [Security Policy](https://github.com/BerryUIKI/Lexora/security)
+- 📦 [All Releases](https://github.com/BerryUIKI/Lexora/releases)
+
+---
+
+## ❤️ Acknowledgments
+
+Lexora stands on the shoulders of these amazing open-source projects:
+
+- [Tauri 2](https://tauri.app) — lightweight, secure desktop shell
+- [Rust](https://www.rust-lang.org/) — memory-safe native backend
+- [SolidJS](https://www.solidjs.com/) — fine-grained reactive frontend
+- [Milkdown](https://milkdown.dev) / [ProseMirror](https://prosemirror.net) — WYSIWYG editing engine
+- [pulldown-cmark](https://github.com/pulldown-cmark/pulldown-cmark) — zero-copy GFM AST parsing
+- [syntect](https://github.com/trishume/syntect) — code syntax highlighting
+- [notify](https://github.com/notify-rs/notify) — file system watching
+- [ripgrep](https://github.com/BurntSushi/ripgrep) — full-text search
+- [Mermaid](https://mermaid.js.org) — diagrams
+- [KaTeX](https://katex.org) — math rendering
+- [Tailwind CSS](https://tailwindcss.com) — utility-first styling
+
+---
+
 ## 📄 License
 
 This project is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**. See the [LICENSE](LICENSE) file for details.
+
+If you modify Lexora and run it as a network service, AGPL-3.0 requires you to make your modified source code available to its users.
