@@ -5,6 +5,7 @@ import { startDrag } from "../../lib/tauri/commands";
 
 export interface TabBarProps {
   onNewTab: () => void;
+  onSelectTab?: () => void;
   isDragOver?: boolean;
   ref?: HTMLDivElement | ((el: HTMLDivElement) => void);
 }
@@ -13,6 +14,7 @@ export const TabBar: Component<TabBarProps> = (props) => {
   const handleSelectTab = (tabId: string) => {
     const tab = openTabs().find((t) => t.id === tabId);
     if (tab) {
+      props.onSelectTab?.();
       setCurrentDocument(tab.document);
       addOrSwitchTab(tab.document);
     }

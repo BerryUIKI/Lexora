@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Official website links in the title bar, Help menu, and About dialog.
+- Non-destructive home navigation from the Lexora title-bar icon.
+- Raw block and inline HTML formatting in rendered Markdown, including HTML inside headings.
+
+### Changed
+- Manual update checks now display an immediate progress state and keep the About dialog open.
+- In-app update notes now come from Lexora's nine-language translation dictionaries; GitHub release descriptions remain English-only.
+- The latest-version result now displays a green confirmation checkmark.
+
 ## [0.1.4] - 2026-08-27
 
 ### Added

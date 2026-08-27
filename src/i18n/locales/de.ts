@@ -94,6 +94,7 @@ export const de: TranslationDictionary = {
   help: {
     documentation: "Dokumentation",
     github: "GitHub-Repository",
+    website: "Offizielle Website",
     checkForUpdates: "Nach Updates suchen...",
     reportIssue: "Problem melden",
     about: "Über Lexora",
@@ -137,6 +138,8 @@ export const de: TranslationDictionary = {
   },
   update: {
     checking: "Suche nach Updates...",
+    checkingDesc: "Der stabile Update-Kanal wird kontaktiert. Dies kann einen Moment dauern.",
+    localizedReleaseNotes: "Version {version} enthält die neuesten Funktionen, Kompatibilitätsverbesserungen und Fehlerbehebungen.",
     upToDate: "Sie verwenden die neueste stabile Version",
     upToDateDesc: "Ihre Version ist die aktuellste stabile Veröffentlichung.",
     aheadTitle: "🌟 Dem offiziellen Release voraus",

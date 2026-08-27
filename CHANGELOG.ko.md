@@ -2,6 +2,18 @@
 
 [English](CHANGELOG.md) · [简体中文](CHANGELOG.zh-CN.md) · [繁體中文](CHANGELOG.zh-TW.md) · [日本語](CHANGELOG.ja.md) · [Deutsch](CHANGELOG.de.md) · [Français](CHANGELOG.fr.md) · [Español](CHANGELOG.es.md) · [Русский](CHANGELOG.ru.md)
 
+## [미출시]
+
+### 추가
+- 제목 표시줄, 도움말 메뉴 및 정보 대화상자에 공식 웹사이트 링크를 추가했습니다.
+- 열린 문서를 닫지 않고 제목 표시줄의 Lexora 아이콘으로 홈 화면에 돌아갈 수 있습니다.
+- 제목 안의 HTML을 포함한 블록 및 인라인 HTML Markdown 렌더링을 지원합니다.
+
+### 변경
+- 수동 업데이트 확인 시 진행 상태를 즉시 표시하고 정보 대화상자를 열린 상태로 유지합니다.
+- 앱 내 업데이트 안내는 Lexora의 9개 언어 번역 사전에서 제공하며 GitHub 릴리스 설명은 영어로만 표시합니다.
+- 최신 버전인 경우 녹색 확인 표시를 보여 줍니다.
+
 ## [0.1.4] - 2026-08-27
 
 ### 추가

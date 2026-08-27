@@ -109,6 +109,7 @@ export interface TranslationDictionary {
   help: {
     documentation: string;
     github: string;
+    website: string;
     checkForUpdates: string;
     reportIssue: string;
     about: string;
@@ -152,6 +153,8 @@ export interface TranslationDictionary {
   };
   update: {
     checking: string;
+    checkingDesc: string;
+    localizedReleaseNotes: string;
     upToDate: string;
     upToDateDesc: string;
     aheadTitle: string;

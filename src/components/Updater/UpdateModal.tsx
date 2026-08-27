@@ -8,13 +8,14 @@ import {
   updateInfo,
   updateModalOpen,
   updatePhase,
+  isCheckingUpdate,
 } from "../../lib/updater";
 import { openTabs } from "../../store/files";
 import { t } from "../../i18n";
 
 export const UpdateModal: Component = () => {
   const info = () => updateInfo();
-  const busy = () => updatePhase() !== "idle";
+  const busy = () => isCheckingUpdate() || updatePhase() !== "idle";
 
   const beginInstall = async () => {
     if (openTabs().some((tab) => tab.document.isDirty)) {
@@ -42,6 +43,8 @@ export const UpdateModal: Component = () => {
           aria-label={
             info()?.status === "error"
               ? t("update.updateErrorTitle")
+              : info()?.status === "checking"
+                ? t("update.checking")
               : t("update.updateAvailable")
           }
           onClick={(event) => event.stopPropagation()}
@@ -51,6 +54,8 @@ export const UpdateModal: Component = () => {
               <h3 class="text-base font-bold tracking-tight">
                 {info()?.status === "error"
                   ? t("update.updateErrorTitle")
+                  : info()?.status === "checking"
+                    ? t("update.checking")
                   : info()?.status === "up_to_date"
                     ? t("update.upToDate")
                     : t("update.updateAvailable")}
@@ -58,6 +63,8 @@ export const UpdateModal: Component = () => {
               <p class="mt-1 text-xs text-[var(--color-text-secondary)]">
                 {info()?.status === "error"
                   ? t("update.updateErrorDesc")
+                  : info()?.status === "checking"
+                    ? t("update.checkingDesc")
                   : info()?.status === "up_to_date"
                     ? t("update.upToDateDesc")
                     : `v${info()?.latestVersion}`}
@@ -73,7 +80,23 @@ export const UpdateModal: Component = () => {
             </button>
           </div>
 
-          <Show when={info()?.status !== "error"}>
+          <Show when={info()?.status === "checking"}>
+            <div class="flex items-center gap-3 py-3 px-3.5 rounded-xl bg-[var(--color-bg-secondary)] border border-[var(--color-border)] text-xs text-[var(--color-text-secondary)]" aria-live="polite">
+              <span class="w-4 h-4 rounded-full border-2 border-[var(--color-border)] border-t-[var(--color-accent)] animate-spin" aria-hidden="true" />
+              <span>{t("update.checkingDesc")}</span>
+            </div>
+          </Show>
+
+          <Show when={info()?.status === "up_to_date"}>
+            <div class="flex items-center gap-3 py-3 px-3.5 rounded-xl bg-green-500/10 border border-green-500/30 text-xs text-green-600 dark:text-green-400" role="status">
+              <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+              <span>{t("update.upToDateDesc")}</span>
+            </div>
+          </Show>
+
+          <Show when={info()?.status === "update_available"}>
             <div class="flex items-center gap-3 py-2.5 px-3.5 rounded-xl bg-[var(--color-bg-secondary)] border border-[var(--color-border)] text-xs">
               <span class="text-[var(--color-text-secondary)]">{t("update.currentVersion")}</span>
               <span class="font-mono font-semibold">v{info()?.currentVersion}</span>

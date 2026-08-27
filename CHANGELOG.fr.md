@@ -2,6 +2,18 @@
 
 [English](CHANGELOG.md) · [简体中文](CHANGELOG.zh-CN.md) · [繁體中文](CHANGELOG.zh-TW.md) · [日本語](CHANGELOG.ja.md) · [한국어](CHANGELOG.ko.md) · [Deutsch](CHANGELOG.de.md) · [Español](CHANGELOG.es.md) · [Русский](CHANGELOG.ru.md)
 
+## [Non publié]
+
+### Ajouté
+- Liens vers le site officiel dans la barre de titre, le menu Aide et la boîte de dialogue À propos.
+- Retour non destructif à l’accueil via l’icône Lexora de la barre de titre.
+- Rendu Markdown du HTML en bloc et en ligne, y compris dans les titres.
+
+### Modifié
+- La vérification manuelle affiche immédiatement sa progression et conserve la boîte de dialogue À propos ouverte.
+- Les notes de mise à jour intégrées proviennent des dictionnaires de traduction en neuf langues de Lexora ; les descriptions GitHub restent en anglais.
+- Une coche verte confirme que la version est à jour.
+
 ## [0.1.4] - 2026-08-27
 
 ### Ajouté

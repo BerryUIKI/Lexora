@@ -94,6 +94,7 @@ export const zhTW: TranslationDictionary = {
   help: {
     documentation: "使用文件",
     github: "GitHub 開源儲存庫",
+    website: "官方網站",
     checkForUpdates: "檢查更新...",
     reportIssue: "回報問題",
     about: "關於 Lexora",
@@ -137,6 +138,8 @@ export const zhTW: TranslationDictionary = {
   },
   update: {
     checking: "正在檢查更新...",
+    checkingDesc: "正在連線至穩定版更新頻道，請稍候。",
+    localizedReleaseNotes: "版本 {version} 包含最新功能、相容性改進與錯誤修正。",
     upToDate: "目前已是最新穩定版本",
     upToDateDesc: "目前版本已是官方最新穩定版，無需更新。",
     aheadTitle: "🌟 領先於官方發行版",

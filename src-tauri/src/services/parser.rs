@@ -149,6 +149,7 @@ pub fn markdown_to_html(markdown: &str) -> String {
                     Event::Text(t) => Event::Text(t.to_string().into()),
                     Event::Code(c) => Event::Code(c.to_string().into()),
                     Event::Html(h) => Event::Html(h.to_string().into()),
+                    Event::InlineHtml(h) => Event::InlineHtml(h.to_string().into()),
                     _ => Event::Html("".into()),
                 };
                 heading_events.push(static_ev);
@@ -285,6 +286,21 @@ mod tests {
     fn test_bold() {
         let result = markdown_to_html("**bold text**");
         assert!(result.contains("<strong>"));
+    }
+
+    #[test]
+    fn test_raw_html_formatting_is_preserved() {
+        let md = "<div class=\"callout\"><u>Underlined</u> and <mark>marked</mark></div>";
+        let result = markdown_to_html(md);
+        assert!(result.contains("<div class=\"callout\">"));
+        assert!(result.contains("<u>Underlined</u>"));
+        assert!(result.contains("<mark>marked</mark>"));
+    }
+
+    #[test]
+    fn test_inline_html_in_heading_is_preserved() {
+        let result = markdown_to_html("# Heading <span class=\"accent\">HTML</span>");
+        assert!(result.contains("<span class=\"accent\">HTML</span>"));
     }
 
     #[test]

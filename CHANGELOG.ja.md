@@ -2,6 +2,18 @@
 
 [English](CHANGELOG.md) · [简体中文](CHANGELOG.zh-CN.md) · [繁體中文](CHANGELOG.zh-TW.md) · [한국어](CHANGELOG.ko.md) · [Deutsch](CHANGELOG.de.md) · [Français](CHANGELOG.fr.md) · [Español](CHANGELOG.es.md) · [Русский](CHANGELOG.ru.md)
 
+## [未リリース]
+
+### 追加
+- タイトルバー、ヘルプメニュー、About ダイアログに公式サイトへのリンクを追加。
+- タイトルバーの Lexora アイコンから、開いている文書を閉じずにホームへ戻れるナビゲーションを追加。
+- 見出し内を含む、ブロックおよびインライン HTML の Markdown レンダリングに対応。
+
+### 変更
+- 手動アップデート確認で進行状況を即座に表示し、About ダイアログを開いたままにするよう変更。
+- アプリ内の更新情報を Lexora の9言語翻訳辞書から表示し、GitHub のリリース説明は英語のみに変更。
+- 最新版の場合に緑色のチェックマークを表示。
+
 ## [0.1.4] - 2026-08-27
 
 ### 追加

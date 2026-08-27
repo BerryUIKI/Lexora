@@ -94,6 +94,7 @@ export const ko: TranslationDictionary = {
   help: {
     documentation: "문서",
     github: "GitHub 저장소",
+    website: "공식 웹사이트",
     checkForUpdates: "업데이트 확인...",
     reportIssue: "문제 보고",
     about: "Lexora 정보",
@@ -137,6 +138,8 @@ export const ko: TranslationDictionary = {
   },
   update: {
     checking: "업데이트 확인 중...",
+    checkingDesc: "안정 버전 업데이트 채널에 연결하고 있습니다. 잠시만 기다려 주세요.",
+    localizedReleaseNotes: "버전 {version}에는 최신 기능, 호환성 개선 및 버그 수정이 포함되어 있습니다.",
     upToDate: "현재 최신 안정 버전입니다",
     upToDateDesc: "현재 버전은 공식 최신 안정 릴리스입니다.",
     aheadTitle: "🌟 공식 릴리스보다 앞선 버전",
