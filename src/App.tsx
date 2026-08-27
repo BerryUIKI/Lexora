@@ -14,6 +14,7 @@ import { CodeView } from "./components/CodeView/CodeView";
 import { StatusBar } from "./components/StatusBar/StatusBar";
 import { WelcomeHub } from "./components/Home/WelcomeHub";
 import { UpdateModal } from "./components/Updater/UpdateModal";
+import { SettingsModal } from "./components/Settings/SettingsModal";
 import { checkWeeklyUpdate } from "./lib/updater";
 import {
   currentDocument,
@@ -54,6 +55,7 @@ const App: Component = () => {
   const [isResizing, setIsResizing] = createSignal(false);
   const [findReplaceOpen, setFindReplaceOpen] = createSignal(false);
   const [searchModalOpen, setSearchModalOpen] = createSignal(false);
+  const [settingsOpen, setSettingsOpen] = createSignal(false);
   const [dragHoverTarget, setDragHoverTarget] = createSignal<
     "window" | "tabbar" | "editor" | null
   >(null);
@@ -406,6 +408,7 @@ const App: Component = () => {
           onOpenQuickSwitcher={() => setQuickSwitcherOpen(true)}
           onOpenSearchModal={() => setSearchModalOpen(true)}
           onOpenFindReplace={() => setFindReplaceOpen(true)}
+          onOpenThemeSettings={() => setSettingsOpen(true)}
           onOpenRecent={loadFile}
         />
       </Show>
@@ -441,6 +444,11 @@ const App: Component = () => {
       <FindReplace
         isOpen={findReplaceOpen()}
         onClose={() => setFindReplaceOpen(false)}
+      />
+
+      <SettingsModal
+        isOpen={settingsOpen()}
+        onClose={() => setSettingsOpen(false)}
       />
 
       {/* Full-width document tab bar below the title/menu bar */}

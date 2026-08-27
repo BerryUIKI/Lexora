@@ -69,6 +69,17 @@ export const zhTW: TranslationDictionary = {
     lightTheme: "亮色主題",
     darkTheme: "深色主題",
     systemTheme: "跟隨系統主題",
+    themeSettings: "主題...",
+  },
+  settings: {
+    title: "設定",
+    themeTab: "主題",
+    markdownTheme: "主題",
+    markdownThemeDescription: "選擇 Lexora 介面與 Markdown 轉譯使用的視覺風格。",
+    colorMode: "色彩模式",
+    colorModeDescription: "亮色、深色與跟隨系統模式適用於所有主題。",
+    elementShadows: "啟用元素陰影",
+    elementShadowsDescription: "為轉譯後的圖片與表格加入柔和陰影。",
   },
   window: {
     minimize: "最小化",

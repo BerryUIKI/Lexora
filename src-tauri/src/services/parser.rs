@@ -67,8 +67,7 @@ pub fn markdown_to_html(markdown: &str) -> String {
                                 </div>
                                 <div class="code-container p-4 overflow-x-auto text-sm">{}</div>
                             </div>"#,
-                            lang_display,
-                            highlighted_inner
+                            lang_display, highlighted_inner
                         )
                     } else {
                         format!(
@@ -79,8 +78,7 @@ pub fn markdown_to_html(markdown: &str) -> String {
                                 </div>
                                 <pre class="p-4 overflow-x-auto text-sm"><code>{}</code></pre>
                             </div>"#,
-                            lang_display,
-                            escaped_code
+                            lang_display, escaped_code
                         )
                     }
                 };
@@ -116,13 +114,23 @@ pub fn markdown_to_html(markdown: &str) -> String {
                         Tag::Emphasis => Event::Start(Tag::Emphasis),
                         Tag::Strong => Event::Start(Tag::Strong),
                         Tag::Strikethrough => Event::Start(Tag::Strikethrough),
-                        Tag::Link { link_type, dest_url, title, id } => Event::Start(Tag::Link {
+                        Tag::Link {
+                            link_type,
+                            dest_url,
+                            title,
+                            id,
+                        } => Event::Start(Tag::Link {
                             link_type,
                             dest_url: dest_url.to_string().into(),
                             title: title.to_string().into(),
                             id: id.to_string().into(),
                         }),
-                        Tag::Image { link_type, dest_url, title, id } => Event::Start(Tag::Image {
+                        Tag::Image {
+                            link_type,
+                            dest_url,
+                            title,
+                            id,
+                        } => Event::Start(Tag::Image {
                             link_type,
                             dest_url: dest_url.to_string().into(),
                             title: title.to_string().into(),
@@ -247,7 +255,13 @@ fn heading_level_to_u8(level: HeadingLevel) -> u8 {
 fn slugify(text: &str) -> String {
     text.to_lowercase()
         .chars()
-        .map(|c| if c.is_alphanumeric() || c == '-' || c == '_' { c } else { '-' })
+        .map(|c| {
+            if c.is_alphanumeric() || c == '-' || c == '_' {
+                c
+            } else {
+                '-'
+            }
+        })
         .collect::<String>()
         .split('-')
         .filter(|s| !s.is_empty())
@@ -278,6 +292,13 @@ mod tests {
         let md = "| A | B |\n|---|---|\n| 1 | 2 |";
         let result = markdown_to_html(md);
         assert!(result.contains("<table>"));
+    }
+
+    #[test]
+    fn test_remote_image_url_is_preserved() {
+        let result = markdown_to_html("![Remote image](https://images.example.com/photo.png)");
+        assert!(result.contains("<img"));
+        assert!(result.contains("https://images.example.com/photo.png"));
     }
 
     #[test]

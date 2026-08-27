@@ -69,6 +69,17 @@ export const ja: TranslationDictionary = {
     lightTheme: "ライトテーマ",
     darkTheme: "ダークテーマ",
     systemTheme: "システムテーマに従う",
+    themeSettings: "テーマ...",
+  },
+  settings: {
+    title: "設定",
+    themeTab: "テーマ",
+    markdownTheme: "テーマ",
+    markdownThemeDescription: "Lexora 全体と Markdown 表示に使用する外観を選択します。",
+    colorMode: "カラーモード",
+    colorModeDescription: "ライト、ダーク、システム設定はすべてのテーマに適用されます。",
+    elementShadows: "要素の影を有効にする",
+    elementShadowsDescription: "表示された画像とテーブルに控えめな影を追加します。",
   },
   window: {
     minimize: "最小化",

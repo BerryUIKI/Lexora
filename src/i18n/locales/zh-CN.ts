@@ -69,6 +69,17 @@ export const zhCN: TranslationDictionary = {
     lightTheme: "浅色主题",
     darkTheme: "深色主题",
     systemTheme: "跟随系统主题",
+    themeSettings: "主题...",
+  },
+  settings: {
+    title: "设置",
+    themeTab: "主题",
+    markdownTheme: "主题",
+    markdownThemeDescription: "选择 Lexora 界面和 Markdown 渲染所使用的视觉风格。",
+    colorMode: "颜色模式",
+    colorModeDescription: "浅色、深色和跟随系统模式适用于所有主题。",
+    elementShadows: "启用元素阴影",
+    elementShadowsDescription: "为渲染后的图片和表格添加柔和阴影。",
   },
   window: {
     minimize: "最小化",

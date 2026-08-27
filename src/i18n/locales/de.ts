@@ -69,6 +69,17 @@ export const de: TranslationDictionary = {
     lightTheme: "Helles Design",
     darkTheme: "Dunkles Design",
     systemTheme: "Systemdesign folgen",
+    themeSettings: "Design...",
+  },
+  settings: {
+    title: "Einstellungen",
+    themeTab: "Design",
+    markdownTheme: "Design",
+    markdownThemeDescription: "Wähle den visuellen Stil für Lexora und gerendertes Markdown.",
+    colorMode: "Farbmodus",
+    colorModeDescription: "Hell, Dunkel und System gelten für jedes Design.",
+    elementShadows: "Elementschatten aktivieren",
+    elementShadowsDescription: "Gerenderten Bildern und Tabellen dezente Schatten hinzufügen.",
   },
   window: {
     minimize: "Minimieren",

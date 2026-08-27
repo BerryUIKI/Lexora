@@ -69,6 +69,17 @@ export const en: TranslationDictionary = {
     lightTheme: "Light Theme",
     darkTheme: "Dark Theme",
     systemTheme: "Follow System Theme",
+    themeSettings: "Theme...",
+  },
+  settings: {
+    title: "Settings",
+    themeTab: "Theme",
+    markdownTheme: "Theme",
+    markdownThemeDescription: "Choose the visual style used throughout Lexora and for rendered Markdown.",
+    colorMode: "Color mode",
+    colorModeDescription: "Light, dark, and system modes apply to every theme.",
+    elementShadows: "Enable element shadows",
+    elementShadowsDescription: "Add subtle shadows to rendered images and tables.",
   },
   window: {
     minimize: "Minimize",

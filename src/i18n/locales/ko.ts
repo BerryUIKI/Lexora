@@ -69,6 +69,17 @@ export const ko: TranslationDictionary = {
     lightTheme: "밝은 테마",
     darkTheme: "어두운 테마",
     systemTheme: "시스템 테마 따름",
+    themeSettings: "테마...",
+  },
+  settings: {
+    title: "설정",
+    themeTab: "테마",
+    markdownTheme: "테마",
+    markdownThemeDescription: "Lexora 전체와 Markdown 렌더링에 사용할 시각 스타일을 선택합니다.",
+    colorMode: "색상 모드",
+    colorModeDescription: "라이트, 다크 및 시스템 모드는 모든 테마에 적용됩니다.",
+    elementShadows: "요소 그림자 사용",
+    elementShadowsDescription: "렌더링된 이미지와 표에 은은한 그림자를 추가합니다.",
   },
   window: {
     minimize: "최소화",

@@ -1,6 +1,16 @@
 import { createSignal, createEffect } from "solid-js";
 
 export type Theme = "light" | "dark" | "system";
+export type MarkdownTheme = "lexora" | "github" | "solarized";
+
+export const MARKDOWN_THEME_OPTIONS: ReadonlyArray<{
+  id: MarkdownTheme;
+  name: string;
+}> = [
+  { id: "lexora", name: "Lexora" },
+  { id: "github", name: "GitHub" },
+  { id: "solarized", name: "Solarized" },
+];
 
 function getSystemTheme(): "light" | "dark" {
   if (typeof window !== "undefined" && typeof window.matchMedia === "function") {
@@ -21,7 +31,30 @@ function getInitialTheme(): Theme {
   return "system";
 }
 
+function getInitialMarkdownTheme(): MarkdownTheme {
+  if (typeof localStorage !== "undefined") {
+    const stored = localStorage.getItem("lexora-markdown-theme");
+    if (stored === "lexora" || stored === "github" || stored === "solarized") {
+      return stored;
+    }
+  }
+  return "lexora";
+}
+
+function getInitialElementShadows(): boolean {
+  return (
+    typeof localStorage !== "undefined" &&
+    localStorage.getItem("lexora-element-shadows") === "true"
+  );
+}
+
 const [theme, setTheme] = createSignal<Theme>(getInitialTheme());
+const [markdownTheme, setMarkdownTheme] = createSignal<MarkdownTheme>(
+  getInitialMarkdownTheme()
+);
+const [elementShadows, setElementShadows] = createSignal(
+  getInitialElementShadows()
+);
 const [resolvedTheme, setResolvedTheme] = createSignal<"light" | "dark">(
   getInitialTheme() === "system" ? getSystemTheme() : (getInitialTheme() as "light" | "dark")
 );
@@ -37,6 +70,29 @@ createEffect(() => {
   setResolvedTheme(resolved);
   if (typeof document !== "undefined") {
     document.documentElement.setAttribute("data-theme", resolved);
+  }
+});
+
+createEffect(() => {
+  const current = markdownTheme();
+  if (typeof localStorage !== "undefined") {
+    localStorage.setItem("lexora-markdown-theme", current);
+  }
+  if (typeof document !== "undefined") {
+    document.documentElement.setAttribute("data-markdown-theme", current);
+  }
+});
+
+createEffect(() => {
+  const enabled = elementShadows();
+  if (typeof localStorage !== "undefined") {
+    localStorage.setItem("lexora-element-shadows", String(enabled));
+  }
+  if (typeof document !== "undefined") {
+    document.documentElement.setAttribute(
+      "data-element-shadows",
+      String(enabled)
+    );
   }
 });
 
@@ -64,6 +120,10 @@ export {
   theme,
   setTheme,
   resolvedTheme,
+  markdownTheme,
+  setMarkdownTheme,
+  elementShadows,
+  setElementShadows,
   fontSize,
   setFontSize,
   workspacePath,
