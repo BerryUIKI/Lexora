@@ -63,7 +63,7 @@ export const TocSidebar: Component<TocSidebarProps> = (props) => {
   };
 
   return (
-    <div class="flex flex-col max-h-full">
+    <div class="flex flex-col h-full">
       {/* Header */}
       <div
         class="px-3 py-2.5 flex-shrink-0 flex items-center justify-between"
