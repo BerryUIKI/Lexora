@@ -1,11 +1,24 @@
 # Changelog
 
+[简体中文](CHANGELOG.zh-CN.md) · [繁體中文](CHANGELOG.zh-TW.md) · [日本語](CHANGELOG.ja.md) · [한국어](CHANGELOG.ko.md) · [Deutsch](CHANGELOG.de.md) · [Français](CHANGELOG.fr.md) · [Español](CHANGELOG.es.md) · [Русский](CHANGELOG.ru.md)
+
 All notable changes to Lexora will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.1.4] - 2026-08-27
+
+### Added
+- Signed, in-app updates for Windows, macOS, and Linux with download progress and user-confirmed installation.
+- Daily stable-channel update checks with startup jitter and an opt-out setting.
+- Localized release notes and changelog summaries for all nine supported languages.
+
+### Changed
+- Update installation now warns when any open tab has unsaved changes before Lexora exits or restarts.
+- Application versioning now derives from `package.json` and is validated against Cargo and the release tag in CI.
 
 ## [0.1.3] - 2026-08-26
 
