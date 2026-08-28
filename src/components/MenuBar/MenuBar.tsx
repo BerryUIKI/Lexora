@@ -24,6 +24,7 @@ import { LanguageModal } from "./LanguageModal";
 
 export interface MenuBarProps {
   homeVisible: boolean;
+  sidebarOpen: boolean;
   onGoHome: () => void;
   onNewDocument: () => void;
   onOpenFile: () => void;
@@ -169,6 +170,23 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
       >
         {/* Left: App Logo & Top-Level Menus (No drag on buttons) */}
         <div class="flex items-center gap-0.5 pointer-events-auto" data-tauri-drag-region="false">
+          {/* Sidebar toggle */}
+          <button
+            class="p-1.5 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors no-drag"
+            onClick={(event) => {
+              event.stopPropagation();
+              closeMenus();
+              props.onToggleSidebar();
+            }}
+            title={`${t("view.toggleSidebar")} (Ctrl+Shift+B)`}
+            aria-pressed={props.sidebarOpen}
+          >
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <line x1="9" y1="3" x2="9" y2="21" />
+            </svg>
+          </button>
+
           {/* App Icon Mark Button */}
           <button
             class="flex items-center gap-1.5 px-2 py-1 text-[var(--color-accent)] font-semibold rounded hover:bg-[var(--color-hover)] transition-colors no-drag cursor-pointer"
