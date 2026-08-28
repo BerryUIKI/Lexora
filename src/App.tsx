@@ -404,6 +404,7 @@ const App: Component = () => {
       <Show when={!zenMode()}>
         <MenuBar
           homeVisible={homeVisible()}
+          sidebarOpen={sidebarOpen()}
           onGoHome={() => setHomeVisible(true)}
           onNewDocument={handleNewDocument}
           onOpenFile={handleOpenFile}
@@ -563,12 +564,7 @@ const App: Component = () => {
       </div>
 
       {/* Persistent Status Bar */}
-      <StatusBar
-        sidebarOpen={sidebarOpen()}
-        onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
-        onOpenFile={handleOpenFile}
-        onSaveFile={handleSaveFile}
-      />
+      <StatusBar />
 
       {/* GitHub Releases Update Modal */}
       <UpdateModal />

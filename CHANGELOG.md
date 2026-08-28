@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Manual update checks now display an immediate progress state and keep the About dialog open.
 - In-app update notes now come from Lexora's nine-language translation dictionaries; GitHub release descriptions remain English-only.
 - The latest-version result now displays a green confirmation checkmark.
+- The sidebar toggle now sits at the far left of the title bar, while the display-mode switcher anchors the bottom-left status area; redundant bottom Open and Save buttons were removed.
 
 ## [0.1.4] - 2026-08-27
 
