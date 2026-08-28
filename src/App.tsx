@@ -56,6 +56,7 @@ const App: Component = () => {
   const [findReplaceOpen, setFindReplaceOpen] = createSignal(false);
   const [searchModalOpen, setSearchModalOpen] = createSignal(false);
   const [settingsOpen, setSettingsOpen] = createSignal(false);
+  const [homeVisible, setHomeVisible] = createSignal(false);
   const [dragHoverTarget, setDragHoverTarget] = createSignal<
     "window" | "tabbar" | "editor" | null
   >(null);
@@ -120,6 +121,7 @@ const App: Component = () => {
       };
       markSaved(result);
       addOrSwitchTab(docState);
+      setHomeVisible(false);
       await startWatchingFile(path);
     } catch (err) {
       console.error("Failed to open file:", err);
@@ -187,6 +189,7 @@ const App: Component = () => {
       externallyModified: false,
     };
     addOrSwitchTab(newDoc);
+    setHomeVisible(false);
   };
 
   // Handle reloading externally modified file
@@ -400,6 +403,9 @@ const App: Component = () => {
       {/* Top VS Code-Style Menu Bar */}
       <Show when={!zenMode()}>
         <MenuBar
+          homeVisible={homeVisible()}
+          sidebarOpen={sidebarOpen()}
+          onGoHome={() => setHomeVisible(true)}
           onNewDocument={handleNewDocument}
           onOpenFile={handleOpenFile}
           onOpenFolder={handleOpenFolder}
@@ -458,6 +464,7 @@ const App: Component = () => {
           ref={(el) => (tabBarElement = el)}
           isDragOver={dragHoverTarget() === "tabbar"}
           onNewTab={handleNewDocument}
+          onSelectTab={() => setHomeVisible(false)}
         />
       </Show>
 
@@ -493,6 +500,7 @@ const App: Component = () => {
           <Show
             when={
               hasDocument() &&
+              !homeVisible() &&
               (displayMode() === "writing" || displayMode() === "code") &&
               !zenMode()
             }
@@ -519,7 +527,7 @@ const App: Component = () => {
             </Show>
 
             <Show
-              when={hasDocument()}
+              when={hasDocument() && !homeVisible()}
               fallback={
                 <WelcomeHub
                   onNewDocument={handleNewDocument}
@@ -556,12 +564,7 @@ const App: Component = () => {
       </div>
 
       {/* Persistent Status Bar */}
-      <StatusBar
-        sidebarOpen={sidebarOpen()}
-        onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
-        onOpenFile={handleOpenFile}
-        onSaveFile={handleSaveFile}
-      />
+      <StatusBar />
 
       {/* GitHub Releases Update Modal */}
       <UpdateModal />

@@ -94,6 +94,7 @@ export const zhCN: TranslationDictionary = {
   help: {
     documentation: "使用文档",
     github: "GitHub 开源仓库",
+    website: "官方网站",
     checkForUpdates: "检查更新...",
     reportIssue: "反馈问题",
     about: "关于 Lexora",
@@ -137,6 +138,8 @@ export const zhCN: TranslationDictionary = {
   },
   update: {
     checking: "正在检查更新...",
+    checkingDesc: "正在连接稳定版更新通道，请稍候。",
+    localizedReleaseNotes: "版本 {version} 包含最新功能、兼容性改进和错误修复。",
     upToDate: "当前已是最新稳定版本",
     upToDateDesc: "当前版本已是官方最新稳定版，无需更新。",
     aheadTitle: "🌟 领先于官方发行版",

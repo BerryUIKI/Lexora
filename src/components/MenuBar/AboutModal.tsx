@@ -1,6 +1,11 @@
-import { Component, Show } from "solid-js";
+import { Component, createSignal, onMount, Show } from "solid-js";
 import { open as openUrl } from "@tauri-apps/plugin-shell";
-import { checkForUpdates } from "../../lib/updater";
+import { getVersion } from "@tauri-apps/api/app";
+import {
+  checkForUpdates,
+  isCheckingUpdate,
+  updateInfo,
+} from "../../lib/updater";
 import { t } from "../../i18n";
 
 export interface AboutModalProps {
@@ -9,6 +14,12 @@ export interface AboutModalProps {
 }
 
 export const AboutModal: Component<AboutModalProps> = (props) => {
+  const [appVersion, setAppVersion] = createSignal("");
+
+  onMount(() => {
+    void getVersion().then(setAppVersion).catch(() => setAppVersion("0.1.4"));
+  });
+
   const handleOpenLink = async (url: string) => {
     try {
       await openUrl(url);
@@ -18,8 +29,7 @@ export const AboutModal: Component<AboutModalProps> = (props) => {
   };
 
   const handleCheckUpdates = () => {
-    props.onClose();
-    checkForUpdates(true);
+    void checkForUpdates(true);
   };
 
   return (
@@ -43,7 +53,7 @@ export const AboutModal: Component<AboutModalProps> = (props) => {
             <div>
               <h2 class="text-2xl font-bold tracking-tight">Lexora</h2>
               <p class="text-xs text-[var(--color-text-secondary)] font-mono mt-0.5">
-                Version 0.1.2 (Production Release)
+                {appVersion() ? `Version ${appVersion()}` : "Lexora"}
               </p>
             </div>
           </div>
@@ -57,11 +67,37 @@ export const AboutModal: Component<AboutModalProps> = (props) => {
             <button
               class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--color-accent)]/10 text-[var(--color-accent)] border border-[var(--color-accent)]/30 hover:bg-[var(--color-accent)]/20 text-xs font-semibold transition-colors shadow-xs"
               onClick={handleCheckUpdates}
+              disabled={isCheckingUpdate()}
+            >
+              <Show
+                when={!isCheckingUpdate()}
+                fallback={<span class="w-3.5 h-3.5 rounded-full border-2 border-[var(--color-accent)]/30 border-t-[var(--color-accent)] animate-spin" aria-hidden="true" />}
+              >
+                <Show
+                  when={updateInfo()?.status === "up_to_date"}
+                  fallback={
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+                    </svg>
+                  }
+                >
+                  <svg class="w-3.5 h-3.5 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label={t("update.upToDate")}>
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                </Show>
+              </Show>
+              <span>{isCheckingUpdate() ? t("update.checking") : t("help.checkForUpdates")}</span>
+            </button>
+
+            <button
+              class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[var(--color-border)] hover:bg-[var(--color-hover)] text-xs font-semibold transition-colors"
+              onClick={() => handleOpenLink("https://berryuiki.github.io/Lexora/")}
             >
               <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+                <circle cx="12" cy="12" r="10" />
+                <path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20" />
               </svg>
-              <span>{t("help.checkForUpdates")}</span>
+              <span>{t("help.website")}</span>
             </button>
 
             <button
