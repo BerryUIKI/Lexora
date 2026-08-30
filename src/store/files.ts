@@ -38,6 +38,7 @@ const [activeTabId, setActiveTabId] = createSignal<string | null>(null);
 const [workspaceTree, setWorkspaceTree] = createSignal<FileEntry | null>(null);
 const [quickSwitcherOpen, setQuickSwitcherOpen] = createSignal(false);
 const [recentFiles, setRecentFiles] = createSignal<RecentFile[]>(loadRecentFiles());
+let untitledTabSequence = 0;
 
 export {
   openTabs,
@@ -73,12 +74,28 @@ export function addOrSwitchTab(doc: DocumentState) {
     setActiveTabId(existing.id);
     setCurrentDocument(existing.document);
   } else {
-    const newId = doc.path || `untitled-${Date.now()}`;
+    const newId = doc.path || `untitled-${Date.now()}-${++untitledTabSequence}`;
     const newTab: Tab = { id: newId, document: doc };
     setOpenTabs([...tabs, newTab]);
     setActiveTabId(newId);
     setCurrentDocument(doc);
   }
+}
+
+export function selectTab(id: string): boolean {
+  const currentId = activeTabId();
+  const current = currentDocument();
+  const tabs = openTabs().map((tab) =>
+    tab.id === currentId ? { ...tab, document: current } : tab
+  );
+  const selected = tabs.find((tab) => tab.id === id);
+
+  if (!selected) return false;
+
+  setOpenTabs(tabs);
+  setActiveTabId(selected.id);
+  setCurrentDocument(selected.document);
+  return true;
 }
 
 export function closeTab(id: string) {

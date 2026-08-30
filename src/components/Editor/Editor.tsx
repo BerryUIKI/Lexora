@@ -33,11 +33,7 @@ import "@milkdown/theme-nord/style.css";
 import { currentDocument, updateDocumentContent } from "../../store/editor";
 import { registerWritingFormatter, type FormatAction } from "../../lib/formatter";
 
-export interface EditorProps {
-  onSave?: () => void;
-}
-
-export const Editor: Component<EditorProps> = (props) => {
+export const Editor: Component = () => {
   let containerRef!: HTMLDivElement;
   let editorInstance: MilkdownEditor | null = null;
 
@@ -175,18 +171,8 @@ export const Editor: Component<EditorProps> = (props) => {
     }
   });
 
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if ((e.ctrlKey || e.metaKey) && e.key === "s") {
-      e.preventDefault();
-      props.onSave?.();
-    }
-  };
-
   return (
-    <div
-      class="h-full overflow-y-auto bg-[var(--color-editor-bg)] px-8 py-6"
-      onKeyDown={handleKeyDown}
-    >
+    <div class="h-full overflow-y-auto bg-[var(--color-editor-bg)] px-8 py-6">
       <div class="max-w-4xl mx-auto">
         <div ref={containerRef} class="milkdown-container" />
       </div>
