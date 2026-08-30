@@ -2,11 +2,7 @@ import { Component, createMemo, onMount, onCleanup } from "solid-js";
 import { currentDocument, updateDocumentContent } from "../../store/editor";
 import { registerCodeFormatter, type FormatAction } from "../../lib/formatter";
 
-export interface CodeViewProps {
-  onSave?: () => void;
-}
-
-export const CodeView: Component<CodeViewProps> = (props) => {
+export const CodeView: Component = () => {
   let textareaRef!: HTMLTextAreaElement;
   let lineGutterRef!: HTMLDivElement;
   let isComposing = false;
@@ -147,30 +143,7 @@ export const CodeView: Component<CodeViewProps> = (props) => {
   const handleKeyDown = (e: KeyboardEvent) => {
     if (isComposing) return;
 
-    const isCmd = e.ctrlKey || e.metaKey;
-
-    if (isCmd && e.key === "s") {
-      e.preventDefault();
-      props.onSave?.();
-    } else if (isCmd && (e.key === "b" || e.key === "B")) {
-      e.preventDefault();
-      executeCodeFormat("bold");
-    } else if (isCmd && (e.key === "i" || e.key === "I")) {
-      e.preventDefault();
-      executeCodeFormat("italic");
-    } else if (isCmd && (e.key === "k" || e.key === "K")) {
-      e.preventDefault();
-      executeCodeFormat("link");
-    } else if (isCmd && e.key === "`") {
-      e.preventDefault();
-      executeCodeFormat("code_inline");
-    } else if (isCmd && e.key === "0") {
-      e.preventDefault();
-      executeCodeFormat("paragraph");
-    } else if (isCmd && e.key >= "1" && e.key <= "6") {
-      e.preventDefault();
-      executeCodeFormat(`h${e.key}` as FormatAction);
-    } else if (e.key === "Tab") {
+    if (e.key === "Tab") {
       e.preventDefault();
       const textarea = textareaRef;
       const start = textarea.selectionStart;

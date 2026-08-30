@@ -48,6 +48,7 @@ import {
 import { onFileChanged } from "./lib/tauri/events";
 import { isDropOverTabBar, processFileDrop } from "./lib/dnd";
 import { dispatchFormat, type FormatAction } from "./lib/formatter";
+import { createSingleFlight } from "./lib/singleFlight";
 
 const App: Component = () => {
   const [sidebarOpen, setSidebarOpen] = createSignal(true);
@@ -129,7 +130,7 @@ const App: Component = () => {
   };
 
   // Handle saving the current file (atomic write)
-  const handleSaveFile = async () => {
+  const saveCurrentFile = async () => {
     const doc = currentDocument();
     try {
       if (doc.path) {
@@ -157,6 +158,7 @@ const App: Component = () => {
       console.error("Failed to save file:", err);
     }
   };
+  const handleSaveFile = createSingleFlight(saveCurrentFile);
 
   // Handle exporting the current document to standalone HTML
   const handleExport = async () => {
@@ -552,11 +554,11 @@ const App: Component = () => {
               </Show>
 
               <Show when={displayMode() === "writing"}>
-                <Editor onSave={handleSaveFile} />
+                <Editor />
               </Show>
 
               <Show when={displayMode() === "code"}>
-                <CodeView onSave={handleSaveFile} />
+                <CodeView />
               </Show>
             </Show>
           </main>

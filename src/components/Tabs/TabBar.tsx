@@ -1,6 +1,5 @@
 import { Component, For, Show } from "solid-js";
-import { openTabs, activeTabId, closeTab, addOrSwitchTab } from "../../store/files";
-import { setCurrentDocument } from "../../store/editor";
+import { openTabs, activeTabId, closeTab, selectTab } from "../../store/files";
 import { startDrag } from "../../lib/tauri/commands";
 
 export interface TabBarProps {
@@ -12,11 +11,8 @@ export interface TabBarProps {
 
 export const TabBar: Component<TabBarProps> = (props) => {
   const handleSelectTab = (tabId: string) => {
-    const tab = openTabs().find((t) => t.id === tabId);
-    if (tab) {
+    if (selectTab(tabId)) {
       props.onSelectTab?.();
-      setCurrentDocument(tab.document);
-      addOrSwitchTab(tab.document);
     }
   };
 

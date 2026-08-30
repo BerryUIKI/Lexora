@@ -1,5 +1,5 @@
 import { Component, createSignal, createMemo, For, Show, onMount, onCleanup } from "solid-js";
-import { openTabs, quickSwitcherOpen, setQuickSwitcherOpen, addOrSwitchTab } from "../../store/files";
+import { openTabs, quickSwitcherOpen, setQuickSwitcherOpen, selectTab } from "../../store/files";
 import type { Tab } from "../../store/files";
 
 export interface QuickSwitcherProps {
@@ -22,7 +22,7 @@ export const QuickSwitcher: Component<QuickSwitcherProps> = (props) => {
   });
 
   const handleSelect = (tab: Tab) => {
-    addOrSwitchTab(tab.document);
+    selectTab(tab.id);
     setQuickSwitcherOpen(false);
   };
 
