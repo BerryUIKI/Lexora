@@ -8,7 +8,7 @@
 
 **Ein lokaler, blitzschneller Markdown-Reader & In-Place-WYSIWYG-Editor im Typora-Stil.**
 
-<span style="font-size: 13px;">v0.1.3 veröffentlicht · AGPL-3.0 Open Source</span>
+<span style="font-size: 13px;">v0.1.6 veröffentlicht · AGPL-3.0 Open Source</span>
 
 [![Website](https://img.shields.io/badge/website-berryuiki.github.io%2FLexora-4895ef.svg?style=for-the-badge)](https://berryuiki.github.io/Lexora/)
 [![Release](https://img.shields.io/badge/release-latest-4361ee.svg?style=for-the-badge)](https://github.com/BerryUIKI/Lexora/releases/latest)
