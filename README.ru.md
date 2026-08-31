@@ -8,7 +8,7 @@
 
 **Локальный, молниеносный Markdown-ридер и WYSIWYG-редактор в стиле Typora.**
 
-<span style="font-size: 13px;">v0.1.3 выпущена · Открытый исходный код (AGPL-3.0)</span>
+<span style="font-size: 13px;">v0.1.6 выпущена · Открытый исходный код (AGPL-3.0)</span>
 
 [![Website](https://img.shields.io/badge/website-berryuiki.github.io%2FLexora-4895ef.svg?style=for-the-badge)](https://berryuiki.github.io/Lexora/)
 [![Release](https://img.shields.io/badge/release-latest-4361ee.svg?style=for-the-badge)](https://github.com/BerryUIKI/Lexora/releases/latest)

@@ -8,7 +8,7 @@
 
 **一款 Typora 風格、本機優先、極速響應的 Markdown 閱讀與原位所見即所得編輯器。**
 
-<span style="font-size: 13px;">v0.1.3 已發佈 · AGPL-3.0 開源</span>
+<span style="font-size: 13px;">v0.1.6 已發佈 · AGPL-3.0 開源</span>
 
 [![Website](https://img.shields.io/badge/website-berryuiki.github.io%2FLexora-4895ef.svg?style=for-the-badge)](https://berryuiki.github.io/Lexora/)
 [![Release](https://img.shields.io/badge/release-latest-4361ee.svg?style=for-the-badge)](https://github.com/BerryUIKI/Lexora/releases/latest)

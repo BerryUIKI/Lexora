@@ -7,13 +7,13 @@ on:
   workflow_dispatch:
     inputs:
       tag_name:
-        description: 'Tag name (e.g. v0.1.5)'
+        description: 'Tag name (e.g. v0.1.6)'
         required: true
-        default: 'v0.1.5'
+        default: 'v0.1.6'
       release_name:
         description: 'Release title'
         required: false
-        default: 'Lexora v0.1.5'
+        default: 'Lexora v0.1.6'
 
 jobs:
   build-tauri:
