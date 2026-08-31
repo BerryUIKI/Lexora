@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.6] - 2026-08-31
+
+### Changed
+- Document details now appear on the far left of the status bar, while display-mode controls sit immediately before the icon-only theme toggle on the far right.
+- macOS release packages now require a valid Developer ID Application signature, with automatic notarization when App Store Connect credentials are configured.
+
+### Fixed
+- Clicking an already open unsaved tab no longer creates a duplicate tab.
+- A single Save keyboard shortcut no longer opens multiple native Save dialogs.
+- macOS release verification now rejects ad-hoc or otherwise invalid application signatures before publishing.
+
 ## [0.1.5] - 2026-08-28
 
 ### Added

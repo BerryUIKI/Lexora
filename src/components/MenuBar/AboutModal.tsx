@@ -17,7 +17,7 @@ export const AboutModal: Component<AboutModalProps> = (props) => {
   const [appVersion, setAppVersion] = createSignal("");
 
   onMount(() => {
-    void getVersion().then(setAppVersion).catch(() => setAppVersion("0.1.5"));
+    void getVersion().then(setAppVersion).catch(() => setAppVersion("0.1.6"));
   });
 
   const handleOpenLink = async (url: string) => {

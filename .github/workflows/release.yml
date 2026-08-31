@@ -7,13 +7,13 @@ on:
   workflow_dispatch:
     inputs:
       tag_name:
-        description: 'Tag name (e.g. v0.1.5)'
+        description: 'Tag name (e.g. v0.1.6)'
         required: true
-        default: 'v0.1.5'
+        default: 'v0.1.6'
       release_name:
         description: 'Release title'
         required: false
-        default: 'Lexora v0.1.5'
+        default: 'Lexora v0.1.6'
 
 jobs:
   build-tauri:
@@ -26,9 +26,11 @@ jobs:
         include:
           - platform: 'macos-latest'
             args: '--target aarch64-apple-darwin'
+            target: 'aarch64-apple-darwin'
             asset_name: 'Lexora_macOS_aarch64[ext]'
           - platform: 'macos-latest'
             args: '--target x86_64-apple-darwin'
+            target: 'x86_64-apple-darwin'
             asset_name: 'Lexora_macOS_x86_64[ext]'
           - platform: 'ubuntu-22.04'
             args: ''
@@ -70,12 +72,79 @@ jobs:
         env:
           RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag_name || github.ref_name }}
 
+      - name: Verify macOS signing secrets
+        if: matrix.platform == 'macos-latest'
+        env:
+          MAC_SIGNING_CERT_BASE64: ${{ secrets.MAC_SIGNING_CERT_BASE64 }}
+          MAC_SIGNING_CERT_PASSWORD: ${{ secrets.MAC_SIGNING_CERT_PASSWORD }}
+        run: |
+          set -euo pipefail
+
+          missing=()
+          for name in \
+            MAC_SIGNING_CERT_BASE64 \
+            MAC_SIGNING_CERT_PASSWORD; do
+            if [[ -z "${!name:-}" ]]; then
+              missing+=("$name")
+            fi
+          done
+
+          if (( ${#missing[@]} > 0 )); then
+            echo "::error::Missing required macOS signing secrets: ${missing[*]}"
+            echo "See docs/MACOS_RELEASE_SIGNING.md for setup instructions."
+            exit 1
+          fi
+
+      - name: Prepare optional Apple notarization key
+        if: matrix.platform == 'macos-latest'
+        id: prepare_apple_notarization_key
+        env:
+          APPLE_API_KEY: ${{ secrets.APPLE_API_KEY }}
+          APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
+          APPLE_API_KEY_CONTENT: ${{ secrets.APPLE_API_KEY_CONTENT }}
+        run: |
+          set -euo pipefail
+
+          if [[ -z "$APPLE_API_KEY" && -z "$APPLE_API_ISSUER" && -z "$APPLE_API_KEY_CONTENT" ]]; then
+            echo "Apple notarization credentials not configured; continuing with code signing only."
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "api_key=" >> "$GITHUB_OUTPUT"
+            echo "api_issuer=" >> "$GITHUB_OUTPUT"
+            echo "path=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          missing=()
+          for name in APPLE_API_KEY APPLE_API_ISSUER APPLE_API_KEY_CONTENT; do
+            if [[ -z "${!name:-}" ]]; then
+              missing+=("$name")
+            fi
+          done
+
+          if (( ${#missing[@]} > 0 )); then
+            echo "::error::Apple notarization configuration is incomplete: ${missing[*]}"
+            exit 1
+          fi
+
+          key_path="${RUNNER_TEMP}/AuthKey_${APPLE_API_KEY}.p8"
+          printf '%s' "$APPLE_API_KEY_CONTENT" | base64 -D > "$key_path"
+          chmod 600 "$key_path"
+          echo "enabled=true" >> "$GITHUB_OUTPUT"
+          echo "api_key=$APPLE_API_KEY" >> "$GITHUB_OUTPUT"
+          echo "api_issuer=$APPLE_API_ISSUER" >> "$GITHUB_OUTPUT"
+          echo "path=$key_path" >> "$GITHUB_OUTPUT"
+
       - name: Build Tauri Package & Create GitHub Release
         uses: tauri-apps/tauri-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+          APPLE_CERTIFICATE: ${{ matrix.platform == 'macos-latest' && secrets.MAC_SIGNING_CERT_BASE64 || '' }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ matrix.platform == 'macos-latest' && secrets.MAC_SIGNING_CERT_PASSWORD || '' }}
+          APPLE_API_KEY: ${{ steps.prepare_apple_notarization_key.outputs.api_key }}
+          APPLE_API_ISSUER: ${{ steps.prepare_apple_notarization_key.outputs.api_issuer }}
+          APPLE_API_KEY_PATH: ${{ steps.prepare_apple_notarization_key.outputs.path }}
         with:
           tagName: ${{ github.event_name == 'workflow_dispatch' && inputs.tag_name || github.ref_name }}
           releaseName: ${{ github.event_name == 'workflow_dispatch' && inputs.release_name || format('Lexora {0}', github.ref_name) }}
@@ -92,6 +161,48 @@ jobs:
           uploadUpdaterSignatures: true
           updaterJsonPreferNsis: true
           retryAttempts: 3
+
+      - name: Verify macOS Developer ID signature
+        if: matrix.platform == 'macos-latest'
+        env:
+          APP_PATH: src-tauri/target/${{ matrix.target }}/release/bundle/macos/Lexora.app
+          DMG_DIRECTORY: src-tauri/target/${{ matrix.target }}/release/bundle/dmg
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+
+          codesign --verify --deep --strict --verbose=2 "$APP_PATH"
+          signature_info=$(codesign --display --verbose=4 "$APP_PATH" 2>&1)
+          echo "$signature_info"
+
+          if [[ "$signature_info" == *"Signature=adhoc"* ]]; then
+            echo "::error::The macOS app has only an ad-hoc signature."
+            exit 1
+          fi
+
+          if [[ "$signature_info" != *"Authority=Developer ID Application:"* ]]; then
+            echo "::error::The macOS app is not signed with a Developer ID Application certificate."
+            exit 1
+          fi
+
+          if [[ "$signature_info" == *"TeamIdentifier=not set"* ]]; then
+            echo "::error::The macOS app signature does not contain an Apple Developer Team ID."
+            exit 1
+          fi
+
+          dmg_files=("$DMG_DIRECTORY"/*.dmg)
+          if (( ${#dmg_files[@]} != 1 )); then
+            echo "::error::Expected exactly one macOS DMG in $DMG_DIRECTORY."
+            exit 1
+          fi
+
+          codesign --verify --strict --verbose=2 "${dmg_files[0]}"
+
+      - name: Verify macOS Gatekeeper assessment
+        if: matrix.platform == 'macos-latest' && steps.prepare_apple_notarization_key.outputs.enabled == 'true'
+        env:
+          APP_PATH: src-tauri/target/${{ matrix.target }}/release/bundle/macos/Lexora.app
+        run: spctl --assess --type execute --verbose=4 "$APP_PATH"
 
   publish-release:
     needs: build-tauri

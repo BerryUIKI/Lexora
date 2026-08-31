@@ -12,6 +12,7 @@ const DisplayModeSwitcher: Component = () => (
     }}
     role="group"
     aria-label="Display mode switcher"
+    data-status-section="display-mode"
   >
     <button
       class="flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium transition-all"
@@ -89,64 +90,70 @@ export const StatusBar: Component = () => {
         "border-top": "1px solid var(--color-border)",
       }}
     >
-      {/* Far-left display mode controls */}
-      <DisplayModeSwitcher />
+      {/* Document details stay anchored to the far left. */}
+      <div
+        class="flex items-center gap-2 min-w-0 overflow-hidden"
+        data-status-section="document-info"
+      >
+        <div class="flex items-center gap-1.5 min-w-0 flex-shrink">
+          <Show when={hasDoc()}>
+            <span
+              class="max-w-44 truncate font-medium text-[var(--color-text-primary)]"
+              title={doc().path ?? "Untitled"}
+            >
+              {doc().filename}
+            </span>
 
-      <span class="text-[var(--color-border)]">|</span>
+            <Show when={doc().isDirty}>
+              <span
+                class="px-1.5 py-0.2 rounded text-[10px] font-medium border border-[var(--color-border)] bg-[var(--color-hover)] text-[var(--color-text-primary)]"
+                title="Unsaved changes"
+              >
+                ● unsaved
+              </span>
+            </Show>
 
-      {/* Current document state */}
-      <div class="flex items-center gap-1.5 min-w-0">
+            <Show when={doc().externallyModified}>
+              <span
+                class="px-1.5 py-0.2 rounded text-[10px] font-medium border border-[var(--color-border)] bg-[var(--color-hover)] text-[var(--color-text-primary)]"
+                title="File modified externally on disk"
+              >
+                modified
+              </span>
+            </Show>
+          </Show>
+
+          <Show when={!hasDoc()}>
+            <span class="italic text-[var(--color-text-secondary)]">No file open</span>
+          </Show>
+        </div>
+
         <Show when={hasDoc()}>
-          <span
-            class="max-w-44 truncate font-medium text-[var(--color-text-primary)]"
-            title={doc().path ?? "Untitled"}
-          >
-            {doc().filename}
-          </span>
-
-          <Show when={doc().isDirty}>
-            <span
-              class="px-1.5 py-0.2 rounded text-[10px] font-medium border border-[var(--color-border)] bg-[var(--color-hover)] text-[var(--color-text-primary)]"
-              title="Unsaved changes"
-            >
-              ● unsaved
-            </span>
-          </Show>
-
-          <Show when={doc().externallyModified}>
-            <span
-              class="px-1.5 py-0.2 rounded text-[10px] font-medium border border-[var(--color-border)] bg-[var(--color-hover)] text-[var(--color-text-primary)]"
-              title="File modified externally on disk"
-            >
-              modified
-            </span>
-          </Show>
-        </Show>
-
-        <Show when={!hasDoc()}>
-          <span class="italic text-[var(--color-text-secondary)]">No file open</span>
+          <div class="flex items-center gap-2 flex-shrink-0">
+            <span class="text-[var(--color-border)]">|</span>
+            <span>{doc().wordCount.toLocaleString()} {t("statusBar.wordsCount")}</span>
+            <span class="text-[var(--color-border)]">|</span>
+            <span>{charCount().toLocaleString()} chars</span>
+            <span class="text-[var(--color-border)]">|</span>
+            <span>UTF-8</span>
+            <span class="text-[var(--color-border)]">|</span>
+            <span>{lineEnding()}</span>
+          </div>
         </Show>
       </div>
 
       <div class="flex-1" />
 
-      {/* Document stats and global theme */}
+      {/* Display and theme controls stay anchored to the far right. */}
       <div class="flex items-center gap-2 flex-shrink-0">
-        <Show when={hasDoc()}>
-          <span>{doc().wordCount.toLocaleString()} {t("statusBar.wordsCount")}</span>
-          <span class="text-[var(--color-border)]">|</span>
-          <span>{charCount().toLocaleString()} chars</span>
-          <span class="text-[var(--color-border)]">|</span>
-          <span>UTF-8</span>
-          <span class="text-[var(--color-border)]">|</span>
-          <span>{lineEnding()}</span>
-          <span class="text-[var(--color-border)]">|</span>
-        </Show>
+        <DisplayModeSwitcher />
 
         <button
-          class="flex items-center gap-1.5 px-1.5 py-0.5 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+          class="flex items-center justify-center p-1 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
           onClick={cycleTheme}
           title={`${t("statusBar.toggleTheme")}: ${themeLabel()}`}
+          aria-label={`${t("statusBar.toggleTheme")}: ${themeLabel()}`}
+          data-status-section="theme"
         >
           <Show when={theme() === "light"}>
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -172,7 +179,6 @@ export const StatusBar: Component = () => {
               <path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" opacity="0.3" />
             </svg>
           </Show>
-          <span class="hidden sm:inline text-[11px] font-medium">{themeLabel()}</span>
         </button>
       </div>
     </footer>

@@ -8,7 +8,7 @@
 
 **Typora 스타일의 로컬 우선, 초고속 Markdown 리더 및 인플레이스 WYSIWYG 편집기.**
 
-<span style="font-size: 13px;">v0.1.3 출시 · AGPL-3.0 오픈소스</span>
+<span style="font-size: 13px;">v0.1.6 출시 · AGPL-3.0 오픈소스</span>
 
 [![Website](https://img.shields.io/badge/website-berryuiki.github.io%2FLexora-4895ef.svg?style=for-the-badge)](https://berryuiki.github.io/Lexora/)
 [![Release](https://img.shields.io/badge/release-latest-4361ee.svg?style=for-the-badge)](https://github.com/BerryUIKI/Lexora/releases/latest)
