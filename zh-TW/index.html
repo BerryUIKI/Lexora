@@ -3,19 +3,134 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Taleno — 原位所見即所得 Markdown 閱讀與編輯器</title>
-  <meta name="description" content="基於 Tauri 2 + Rust + SolidJS 構建的極簡本機優先 Markdown 閱讀與即時所見即所得編輯器。告別分割視窗，原位即時排版渲染。" />
+  <title>Taleno — 極速原生原位所見即所得 Markdown 閱讀與編輯器</title>
+  <meta name="description" content="Taleno 是一款基於 Tauri 2 + Rust + SolidJS 建置的本機優先原位所見即所得 Markdown 閱讀與編輯器。告別雙欄分屏，即時排版，支援外掛市場、社群佈景與離線隱私保護。" />
+  <meta name="keywords" content="Taleno, Markdown editor, WYSIWYG Markdown, in-place Markdown, Typora alternative, Obsidian alternative, Tauri Markdown app, local-first editor, GFM reader" />
+  <meta name="author" content="BerryUIKI" />
+  <link rel="canonical" href="https://berryuiki.github.io/Taleno/zh-TW/" />
+  <link rel="alternate" hreflang="x-default" href="https://berryuiki.github.io/Taleno/" />
+  <link rel="alternate" hreflang="en" href="https://berryuiki.github.io/Taleno/" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://berryuiki.github.io/Taleno/zh-CN/" />
+  <link rel="alternate" hreflang="zh-Hant" href="https://berryuiki.github.io/Taleno/zh-TW/" />
+  <link rel="alternate" hreflang="ja" href="https://berryuiki.github.io/Taleno/ja/" />
+  <link rel="alternate" hreflang="ko" href="https://berryuiki.github.io/Taleno/ko/" />
+  <link rel="alternate" hreflang="de" href="https://berryuiki.github.io/Taleno/de/" />
+  <link rel="alternate" hreflang="fr" href="https://berryuiki.github.io/Taleno/fr/" />
+  <link rel="alternate" hreflang="es" href="https://berryuiki.github.io/Taleno/es/" />
+  <link rel="alternate" hreflang="ru" href="https://berryuiki.github.io/Taleno/ru/" />
   
-  <!-- Open Graph / Twitter -->
+  <!-- Open Graph / Twitter Cards -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Taleno — 原位所見即所得 Markdown 閱讀與編輯器" />
-  <meta property="og:description" content="基於 Tauri 2 + Rust + SolidJS 構建的極簡本機優先 Markdown 閱讀與即時所見即所得編輯器。告別分割視窗，原位即時排版渲染。" />
-  <meta property="og:image" content="../app-icon.svg" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Taleno — 原位所見即所得 Markdown 閱讀與編輯器" />
-  <meta name="twitter:description" content="基於 Tauri 2 + Rust + SolidJS 構建的極簡本機優先 Markdown 閱讀與即時所見即所得編輯器。告別分割視窗，原位即時排版渲染。" />
+  <meta property="og:site_name" content="Taleno" />
+  <meta property="og:url" content="https://berryuiki.github.io/Taleno/zh-TW/" />
+  <meta property="og:title" content="Taleno — 極速原生原位所見即所得 Markdown 閱讀與編輯器" />
+  <meta property="og:description" content="Taleno 是一款基於 Tauri 2 + Rust + SolidJS 建置的本機優先原位所見即所得 Markdown 閱讀與編輯器。告別雙欄分屏，即時排版，支援外掛市場、社群佈景與離線隱私保護。" />
+  <meta property="og:image" content="https://berryuiki.github.io/Taleno/og-preview.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Taleno — 極速原生原位所見即所得 Markdown 閱讀與編輯器" />
+  <meta name="twitter:description" content="Taleno 是一款基於 Tauri 2 + Rust + SolidJS 建置的本機優先原位所見即所得 Markdown 閱讀與編輯器。告別雙欄分屏，即時排版，支援外掛市場、社群佈景與離線隱私保護。" />
+  <meta name="twitter:image" content="https://berryuiki.github.io/Taleno/og-preview.png" />
 
   <link rel="icon" type="image/svg+xml" href="../app-icon.svg" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://berryuiki.github.io/Taleno/#software",
+      "name": "Taleno",
+      "alternateName": "Taleno Markdown Editor",
+      "description": "Taleno 是一款基於 Tauri 2 + Rust + SolidJS 建置的本機優先原位所見即所得 Markdown 閱讀與編輯器。告別雙欄分屏，即時排版，支援外掛市場、社群佈景與離線隱私保護。",
+      "applicationCategory": "ProductivityApplication",
+      "operatingSystem": "Windows 10+, macOS 11+, Linux (Ubuntu, Debian, Fedora, Arch)",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "softwareVersion": "0.1.7",
+      "license": "https://www.gnu.org/licenses/agpl-3.0.html",
+      "url": "https://berryuiki.github.io/Taleno/",
+      "downloadUrl": "https://berryuiki.github.io/Taleno/download.html",
+      "image": "https://berryuiki.github.io/Taleno/app-icon.svg",
+      "screenshot": "https://berryuiki.github.io/Taleno/og-preview.png",
+      "author": {
+        "@type": "Organization",
+        "name": "BerryUIKI",
+        "url": "https://github.com/BerryUIKI"
+      },
+      "featureList": [
+        "三態模式自由切換",
+        "外掛生態市場",
+        "社群佈景與外觀",
+        "9 種語言國際化支援",
+        "高效能程式碼高亮",
+        "Mermaid 圖表與 LaTeX 數學",
+        "Ripgrep 全域全文秒搜",
+        "當機級安全原子儲存",
+        "智慧拖曳互動",
+        "單一檔案獨立 HTML 匯出"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://berryuiki.github.io/Taleno/#website",
+      "url": "https://berryuiki.github.io/Taleno/zh-TW/",
+      "name": "Taleno",
+      "inLanguage": "zh-TW"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://berryuiki.github.io/Taleno/zh-TW/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Taleno 與 Typora、Obsidian 及 Electron 編輯器相比有何優勢？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "與封裝完整 Chromium 執行環境的 Electron 編輯器相比，Taleno 採用 Rust 與 Tauri 2 原生架構，冷啟動低於 400 毫秒且記憶體極度輕巧。相較於雙欄預覽，Taleno 提供純粹的原位即時排版。所有檔案 100% 本機儲存並享有不可部分完成（原子級）防損壞機制，同時可透過官方 Taleno-Plugins 市場自由取得外掛與佈景主題。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Taleno 與傳統 Markdown 編輯器有何不同？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Taleno 採用徹底的原位所見即所得渲染，告別左右分割視窗。打字時游標所在處即時排版，無 Electron 的沉重包袱，冷啟動僅需數百毫秒，帶來極致輕快的原生桌面體驗。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "我的文件資料安全嗎？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "100% 本機優先。所有文件均完整儲存在您的本機磁碟中，不傳送任何雲端伺服器。配合底層原子寫入機制，即便電腦突發斷電也不會損壞檔案。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "支援哪些 Markdown 擴充語法？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "完整支援 GitHub Flavored Markdown (GFM)、表格、任務清單、程式碼高亮、Mermaid 圖表（流程圖、循序圖、類別圖等）以及 KaTeX 數學公式渲染。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Taleno 是否免費開源？如何參與貢獻？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "是的，Taleno 基於 GNU AGPL-3.0 協議完全免費且開源。歡迎提交 Issue 反饋缺陷、參與多語言翻譯或發起 Pull Request。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -94,9 +209,9 @@
         <span class="w-[6px] h-[6px] rounded-full bg-[#34C759]"></span>
         v0.1.7 正式發布 · AGPL-3.0 開源協議
       </div>
-      <h1 class="font-display text-[64px] font-bold leading-[1.1] tracking-[-1.5px] text-ink text-center max-[768px]:text-[40px]">原位排版，所見即所得。</h1>
+      <h1 class="font-display text-[52px] sm:text-[64px] font-bold leading-[1.1] tracking-[-1.5px] text-ink text-center max-[768px]:text-[38px]"><span class="block text-[20px] sm:text-[26px] font-semibold text-accent tracking-normal mb-2">Taleno — In-Place WYSIWYG</span>原位排版，所見即所得。</h1>
       <p class="max-w-[720px] text-center text-[18px] leading-[30px] text-ink-secondary">
-        極簡、極速的本機優先 Markdown 原位所見即所得閱讀與編輯器。徹底摒棄傳統雙欄分割視窗，打字即時排版——基於 Tauri 2 + Rust + SolidJS 打造毫秒級流暢響應。
+        極簡、極速的本機優先 Markdown 原位所見即所得閱讀與編輯器。告別傳統雙欄分屏，打字即時排版——基於 Tauri 2 + Rust + SolidJS 打造毫秒級流暢響應，支援擴充外掛與個人化佈景。
       </p>
       <div class="flex items-center gap-[12px]">
         <a href="#download" class="flex items-center gap-[8px] px-[24px] py-[12px] rounded-[8px] bg-ink text-white text-[16px] font-semibold hover:opacity-85 transition-opacity">
@@ -345,6 +460,7 @@
         </div>
       </div>
       <div class="flex-1 flex flex-col gap-[16px]">
+        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">Taleno 與 Typora、Obsidian 及 Electron 編輯器相比有何優勢？</h3><p class="text-[14px] leading-[24px] text-ink-secondary">與封裝完整 Chromium 執行環境的 Electron 編輯器相比，Taleno 採用 Rust 與 Tauri 2 原生架構，冷啟動低於 400 毫秒且記憶體極度輕巧。相較於雙欄預覽，Taleno 提供純粹的原位即時排版。所有檔案 100% 本機儲存並享有不可部分完成（原子級）防損壞機制，同時可透過官方 Taleno-Plugins 市場自由取得外掛與佈景主題。</p></div>
         <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">Taleno 與傳統 Markdown 編輯器有何不同？</h3><p class="text-[14px] leading-[24px] text-ink-secondary">Taleno 採用徹底的原位所見即所得渲染，告別左右分割視窗。打字時游標所在處即時排版，無 Electron 的沉重包袱，冷啟動僅需數百毫秒，帶來極致輕快的原生桌面體驗。</p></div>
         <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">我的文件資料安全嗎？</h3><p class="text-[14px] leading-[24px] text-ink-secondary">100% 本機優先。所有文件均完整儲存在您的本機磁碟中，不傳送任何雲端伺服器。配合底層原子寫入機制，即便電腦突發斷電也不會損壞檔案。</p></div>
         <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">支援哪些 Markdown 擴充語法？</h3><p class="text-[14px] leading-[24px] text-ink-secondary">完整支援 GitHub Flavored Markdown (GFM)、表格、任務清單、程式碼高亮、Mermaid 圖表（流程圖、循序圖、類別圖等）以及 KaTeX 數學公式渲染。</p></div>
@@ -361,7 +477,7 @@
           <svg width="30" height="30" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="lgF" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4361ee"/><stop offset="1" stop-color="#3a0ca3"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#lgF)"/><rect x="120" y="96" width="272" height="320" rx="20" fill="white" opacity="0.95"/><rect x="160" y="160" width="120" height="24" rx="6" fill="#4361ee"/><rect x="160" y="210" width="192" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="240" width="160" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="270" width="180" height="14" rx="4" fill="#6c757d" opacity="0.6"/><polygon points="310,380 390,300 420,330 340,410 300,420" fill="#4cc9f0"/></svg>
           <span class="font-display text-[20px] font-bold text-white">Taleno</span>
         </div>
-        <p class="text-[14px] leading-[24px] text-white/70">基於 Tauri 2 + Rust + SolidJS 構建的極簡本機優先 Markdown 閱讀與即時所見即所得編輯器。告別分割視窗，原位即時排版渲染。</p>
+        <p class="text-[14px] leading-[24px] text-white/70">Taleno 是一款基於 Tauri 2 + Rust + SolidJS 建置的本機優先原位所見即所得 Markdown 閱讀與編輯器。告別雙欄分屏，即時排版，支援外掛市場、社群佈景與離線隱私保護。</p>
         <p class="text-[11px] leading-[18px] text-white/40 w-[380px] max-[1000px]:w-full">English · 简体中文 · 繁體中文 · 日本語 · 한국어 · Deutsch · Français · Español · Русский</p>
       </div>
       <div class="flex-1 flex flex-col gap-[12px]">

@@ -8,14 +8,14 @@ const languages = {
     dir: '',
     name: 'English',
     htmlLang: 'en',
-    title: 'Taleno — In-Place WYSIWYG Markdown Reader & Editor',
-    metaDesc: 'A minimalist in-place WYSIWYG Markdown reader & editor. Render-as-you-type with zero split panes — built on Tauri 2 + Rust + SolidJS for instant response.',
+    title: 'Taleno — Free In-Place WYSIWYG Markdown Reader & Editor for Desktop',
+    metaDesc: 'Taleno is a free, local-first in-place WYSIWYG Markdown reader & editor built with Tauri 2, Rust, and SolidJS. Zero split panes, plugins, themes, and offline privacy for Windows, macOS, and Linux.',
     nav: { features: 'Features', download: 'Download', architecture: 'Architecture', shortcuts: 'Shortcuts', faq: 'FAQ & Notes', github: 'GitHub' },
     selectLang: 'Select display language',
     hero: {
       badge: 'v0.1.7 Released · AGPL-3.0 Open Source',
       title: 'Markdown, in&nbsp;place.',
-      subtitle: 'A minimalist, high-performance in-place WYSIWYG Markdown reader & editor. Render-as-you-type with zero split panes — built on Tauri 2 + Rust + SolidJS for instant response.',
+      subtitle: 'A minimalist, high-performance in-place WYSIWYG Markdown reader & editor. Render-as-you-type with zero split panes — built on Tauri 2 + Rust + SolidJS for instant response, complete privacy, and extensible plugins.',
       downloadBtn: 'Download Now',
       githubBtn: 'View on GitHub',
       chips: ['<400ms cold start', 'Zero split panes', 'Plugins & Themes', '9 languages']
@@ -112,6 +112,10 @@ const languages = {
         'Full rebranding to Taleno with performance polish'
       ],
       items: [
+        {
+          q: 'How does Taleno compare to Typora, Obsidian, and Electron-based editors?',
+          a: 'Unlike Electron-based editors that bundle a full Chromium runtime, Taleno is engineered in Rust and Tauri 2, achieving sub-400ms cold starts and minimal RAM consumption. Unlike dual-pane tools, Taleno renders formatting directly in place as you type. All documents remain 100% offline with crash-safe atomic writes, and third-party extensions and themes can be installed with one click from the official BerryUIKI/Taleno-Plugins marketplace.'
+        },
         { q: 'What makes Taleno unique?', a: 'Taleno provides true in-place WYSIWYG editing with zero split panes. Markdown renders live as you type, and raw syntax reveals seamlessly under your cursor. Powered by Rust and Tauri 2, it delivers native speed without Electron bulk.' },
         { q: 'Is my data private and secure?', a: '100% local-first. All documents stay strictly on your local device with zero cloud telemetry. Atomic writes ensure you never lose work even during unexpected system shutdowns.' },
         { q: 'Which Markdown extensions are supported?', a: 'Taleno supports full GitHub Flavored Markdown (GFM), tables, task lists, code block syntax highlighting, Mermaid diagrams (flowcharts, sequence, class diagrams), and KaTeX math formulas.' },
@@ -136,14 +140,14 @@ const languages = {
     dir: 'zh-CN',
     name: '简体中文',
     htmlLang: 'zh-CN',
-    title: 'Taleno — 原位所见即所得 Markdown 阅读与编辑器',
-    metaDesc: '基于 Tauri 2 + Rust + SolidJS 构建的极简本地优先 Markdown 阅读与即时所见即所得编辑器。告别分屏，原位即时渲染排版。',
+    title: 'Taleno — 极速原生原位所见即所得 Markdown 阅读与编辑器',
+    metaDesc: 'Taleno 是一款基于 Tauri 2 + Rust + SolidJS 构建的本地优先原位所见即所得 Markdown 阅读与编辑器。彻底告别双栏分屏，打字即时排版，支持插件市场、社区主题与离线隐私保护。',
     nav: { features: '核心特性', download: '下载安装', architecture: '技术架构', shortcuts: '快捷键', faq: '常见问题', github: 'GitHub' },
     selectLang: '选择界面显示语言',
     hero: {
       badge: 'v0.1.7 正式发布 · AGPL-3.0 开源协议',
       title: '原位排版，所见即所得。',
-      subtitle: '极简、极速的本地优先 Markdown 原位所见即所得阅读与编辑器。告别传统双栏分屏，打字即时排版——基于 Tauri 2 + Rust + SolidJS 打造毫秒级流畅响应。',
+      subtitle: '极简、极速的本地优先 Markdown 原位所见即所得阅读与编辑器。告别传统双栏分屏，打字即时排版——基于 Tauri 2 + Rust + SolidJS 打造毫秒级流畅响应，支持扩展插件与个性化主题。',
       downloadBtn: '立即下载',
       githubBtn: 'GitHub 开源仓库',
       chips: ['<400ms 极速冷启动', '无需分屏原位渲染', '插件与主题生态', '9 种原生语言']
@@ -240,6 +244,10 @@ const languages = {
         '全面品牌升级为 Taleno 与性能调优'
       ],
       items: [
+        {
+          q: 'Taleno 与 Typora、Obsidian 及 Electron 编辑器相比有何优势？',
+          a: '与内置完整 Chromium 的 Electron 编辑器相比，Taleno 采用 Rust + Tauri 2 原生架构，冷启动耗时低于 400 毫秒，内存占用极低。相比传统双栏分屏，Taleno 提供纯粹的光标处即时排版。所有文件 100% 本地存储并享有底层原子级防崩溃保护，同时支持通过官方 Taleno-Plugins 市场自由获取扩展插件与个性化主题，零专有云端绑定。'
+        },
         { q: 'Taleno 与传统 Markdown 编辑器有何不同？', a: 'Taleno 采用彻底的原位所见即所得渲染，告别左右分屏。打字时光标所在处即时排版，无 Electron 的笨重包袱，冷启动仅需数百毫秒，带来极致轻快的原生桌面体验。' },
         { q: '我的文档数据安全吗？', a: '100% 本地优先。所有文档均完整保存在您的本地磁盘中，不上传任何云端服务器。配合底层原子写入机制，即便电脑突发断电也不会损坏文件。' },
         { q: '支持哪些 Markdown 扩展语法？', a: '完整支持 GitHub Flavored Markdown (GFM)、表格、任务列表、代码高亮、Mermaid 图表（流程图、时序图、类图等）以及 KaTeX 数学公式渲染。' },
@@ -264,14 +272,14 @@ const languages = {
     dir: 'zh-TW',
     name: '繁體中文',
     htmlLang: 'zh-TW',
-    title: 'Taleno — 原位所見即所得 Markdown 閱讀與編輯器',
-    metaDesc: '基於 Tauri 2 + Rust + SolidJS 構建的極簡本機優先 Markdown 閱讀與即時所見即所得編輯器。告別分割視窗，原位即時排版渲染。',
+    title: 'Taleno — 極速原生原位所見即所得 Markdown 閱讀與編輯器',
+    metaDesc: 'Taleno 是一款基於 Tauri 2 + Rust + SolidJS 建置的本機優先原位所見即所得 Markdown 閱讀與編輯器。告別雙欄分屏，即時排版，支援外掛市場、社群佈景與離線隱私保護。',
     nav: { features: '核心特色', download: '下載安裝', architecture: '技術架構', shortcuts: '快捷鍵', faq: '常見問題', github: 'GitHub' },
     selectLang: '選擇介面顯示語言',
     hero: {
       badge: 'v0.1.7 正式發布 · AGPL-3.0 開源協議',
       title: '原位排版，所見即所得。',
-      subtitle: '極簡、極速的本機優先 Markdown 原位所見即所得閱讀與編輯器。徹底摒棄傳統雙欄分割視窗，打字即時排版——基於 Tauri 2 + Rust + SolidJS 打造毫秒級流暢響應。',
+      subtitle: '極簡、極速的本機優先 Markdown 原位所見即所得閱讀與編輯器。告別傳統雙欄分屏，打字即時排版——基於 Tauri 2 + Rust + SolidJS 打造毫秒級流暢響應，支援擴充外掛與個人化佈景。',
       downloadBtn: '立即下載',
       githubBtn: 'GitHub 開源儲存庫',
       chips: ['<400ms 極速冷啟動', '無需分屏原位渲染', '外掛與主題生態', '9 種原生語言']
@@ -368,6 +376,10 @@ const languages = {
         '全面品牌升級為 Taleno 與效能調優'
       ],
       items: [
+        {
+          q: 'Taleno 與 Typora、Obsidian 及 Electron 編輯器相比有何優勢？',
+          a: '與封裝完整 Chromium 執行環境的 Electron 編輯器相比，Taleno 採用 Rust 與 Tauri 2 原生架構，冷啟動低於 400 毫秒且記憶體極度輕巧。相較於雙欄預覽，Taleno 提供純粹的原位即時排版。所有檔案 100% 本機儲存並享有不可部分完成（原子級）防損壞機制，同時可透過官方 Taleno-Plugins 市場自由取得外掛與佈景主題。'
+        },
         { q: 'Taleno 與傳統 Markdown 編輯器有何不同？', a: 'Taleno 採用徹底的原位所見即所得渲染，告別左右分割視窗。打字時游標所在處即時排版，無 Electron 的沉重包袱，冷啟動僅需數百毫秒，帶來極致輕快的原生桌面體驗。' },
         { q: '我的文件資料安全嗎？', a: '100% 本機優先。所有文件均完整儲存在您的本機磁碟中，不傳送任何雲端伺服器。配合底層原子寫入機制，即便電腦突發斷電也不會損壞檔案。' },
         { q: '支援哪些 Markdown 擴充語法？', a: '完整支援 GitHub Flavored Markdown (GFM)、表格、任務清單、程式碼高亮、Mermaid 圖表（流程圖、循序圖、類別圖等）以及 KaTeX 數學公式渲染。' },
@@ -392,14 +404,14 @@ const languages = {
     dir: 'ja',
     name: '日本語',
     htmlLang: 'ja',
-    title: 'Taleno — インプレース WYSIWYG Markdown リーダー＆エディター',
-    metaDesc: 'Tauri 2、Rust、SolidJS で構築された、ローカルファーストのインプレース WYSIWYG Markdown リーダー＆エディター。2画面分割を廃止し、入力位置でそのまま美しくレンダリング。',
+    title: 'Taleno — 高速ネイティブ インプレース WYSIWYG Markdown エディタ',
+    metaDesc: 'Taleno は Tauri 2 + Rust + SolidJS で構築されたローカルファーストのインプレース WYSIWYG Markdown エディタです。2画面分割なしで即時組版。プラグイン、テーマ、オフライン完全対応。',
     nav: { features: '機能', download: 'ダウンロード', architecture: 'アーキテクチャ', shortcuts: 'ショートカット', faq: 'よくある質問', github: 'GitHub' },
     selectLang: '言語を選択',
     hero: {
       badge: 'v0.1.7 リリース · AGPL-3.0 オープンソース',
       title: 'その場で整う、Markdown。',
-      subtitle: 'ミニマリストで超高速なインプレース WYSIWYG Markdown リーダー＆エディター。左右分割プレビューを排除し、タイピングと同時にその場でレンダリング — Tauri 2 + Rust + SolidJS によるミリ秒単位の応答性。',
+      subtitle: 'ミニマルで高速なローカルファースト WYSIWYG Markdown リーダー＆エディタ。画面分割不要のインプレース即時レンダリング。Tauri 2 + Rust + SolidJS によるミリ秒単位の応答性と拡張性。',
       downloadBtn: '今すぐダウンロード',
       githubBtn: 'GitHub で見る',
       chips: ['<400ms 高速起動', '分割不要のインプレース', '拡張機能とテーマ', '9言語対応']
@@ -496,6 +508,10 @@ const languages = {
         'Taleno への全面リブランディングとパフォーマンス改善'
       ],
       items: [
+        {
+          q: 'Taleno は Typora や Obsidian、Electron 製エディタと何が違いますか？',
+          a: 'Chromium を丸ごと内蔵する Electron エディタと異なり、Taleno は Rust と Tauri 2 で構築されており、400ms 未満の高速起動と圧倒的な省メモリを実現しています。2画面分割ではなくカーソル位置で直接レンダリングされ、ファイルはアトミック保存により破損から保護されます。さらに公式 Taleno-Plugins ハブから拡張機能やテーマをワンクリックで追加可能です。'
+        },
         { q: '従来の Markdown エディターとの違いは何ですか？', a: '左右に分割されたプレビュー画面がなく、入力位置でそのままレンダリングされる真のインプレース WYSIWYG を提供します。Electron を使わず Rust と Tauri 2 で構築されているため、圧倒的に高速で軽量です。' },
         { q: 'データのプライバシーと安全性はどうなっていますか？', a: '100% ローカルファーストです。すべての文書はお手元のデバイスにのみ保存され、クラウドへの無断送信はありません。アトミック書き込みにより急な電源断でもファイルを破損から守ります。' },
         { q: 'どのような Markdown 拡張構文に対応していますか？', a: 'GitHub Flavored Markdown (GFM)、テーブル、タスクリスト、コードブロック構文ハイライト、Mermaid 図表（フローチャート・シーケンス図等）、KaTeX 数式に対応しています。' },
@@ -520,14 +536,14 @@ const languages = {
     dir: 'ko',
     name: '한국어',
     htmlLang: 'ko',
-    title: 'Taleno — 인플레이스 WYSIWYG 마크다운 뷰어 & 에디터',
-    metaDesc: 'Tauri 2, Rust, SolidJS 로 제작된 로컬 우선 미니멀 마크다운 뷰어 및 실시간 WYSIWYG 에디터. 분할 화면 없이 입력한 위치에서 즉시 렌더링됩니다.',
+    title: 'Taleno — 초고속 로컬 우선 인플레이스 WYSIWYG 마크다운 에디터',
+    metaDesc: 'Taleno는 Tauri 2 + Rust + SolidJS 기반의 초경량 로컬 우선 인플레이스 WYSIWYG 마크다운 편집기입니다. 화면 분할 없는 실시간 렌더링, 플러그인 및 테마 마켓, 완벽한 오프라인 개인정보 보호를 제공합니다.',
     nav: { features: '주요 기능', download: '다운로드', architecture: '아키텍처', shortcuts: '단축키', faq: '자주 묻는 질문', github: 'GitHub' },
     selectLang: '언어 선택',
     hero: {
       badge: 'v0.1.7 출시 · AGPL-3.0 오픈소스',
       title: '입력하는 그 자리에서, 마크다운.',
-      subtitle: '미니멀하고 강력한 로컬 우선 인플레이스 WYSIWYG 마크다운 뷰어 & 에디터. 좌우 분할 창 없이 타이핑하는 즉시 아름답게 렌더링 — Tauri 2 + Rust + SolidJS 기반의 즉각적인 반응성.',
+      subtitle: '미니멀하고 강력한 로컬 우선 인플레이스 WYSIWYG 마크다운 리더 및 편집기입니다. 화면 분할 없이 타이핑과 동시에 서식이 적용되며, Tauri 2 + Rust + SolidJS로 제작되어 초고속 응답성을 자랑합니다.',
       downloadBtn: '지금 다운로드',
       githubBtn: 'GitHub 에서 보기',
       chips: ['<400ms 초고속 콜드스타트', '분할 화면 없는 인플레이스', '플러그인 및 테마', '9개 언어 지원']
@@ -624,6 +640,10 @@ const languages = {
         'Taleno 브랜드 전면 개편 및 성능 최적화'
       ],
       items: [
+        {
+          q: 'Taleno는 Typora, Obsidian 및 Electron 기반 에디터와 비교하여 어떤 장점이 있나요?',
+          a: '무거운 Chromium 런타임을 포함하는 Electron 에디터와 달리, Taleno는 Rust와 Tauri 2 기반으로 개발되어 400ms 미만의 콜드 스타트와 매우 적은 메모리 사용량을 자랑합니다. 좌우 분할 화면 대신 입력 위치에서 즉시 서식이 적용되는 인플레이스 방식을 채택했으며, 모든 문서는 원자적 저장 방식으로 안전하게 보관됩니다. 또한 공식 Taleno-Plugins 마켓을 통해 플러그인과 테마를 자유롭게 확장할 수 있습니다.'
+        },
         { q: '기존 마크다운 편집기와 무엇이 다른가요?', a: 'Taleno 는 화면 분할 없이 글을 쓰는 위치에서 즉시 서식이 완성되는 실시간 인플레이스 WYSIWYG 방식을 채택했습니다. Electron 없이 Rust 와 Tauri 2 로 개발되어 가볍고 빠릅니다.' },
         { q: '내 데이터는 안전한가요?', a: '100% 로컬 우선입니다. 모든 문서는 사용자의 기기에만 보관되며 외부 서버로 전송되지 않습니다. 원자적 파일 저장 구조로 예기치 않은 종료 시에도 파일이 안전하게 보존됩니다.' },
         { q: '어떤 마크다운 확장 문법을 지원하나요?', a: 'GitHub Flavored Markdown (GFM), 표, 작업 목록, 코드 구문 강조, Mermaid 다이어그램(순서도, 시퀀스 등), KaTeX 수학 수식을 모두 지원합니다.' },
@@ -648,14 +668,14 @@ const languages = {
     dir: 'de',
     name: 'Deutsch',
     htmlLang: 'de',
-    title: 'Taleno — Nahtloser In-Place WYSIWYG Markdown Reader & Editor',
-    metaDesc: 'Ein minimalistischer, lokal orientierter Markdown-Reader und nahtloser In-Place-WYSIWYG-Editor, entwickelt mit Tauri 2, Rust und SolidJS. Keine geteilten Ansichten — sofortige visuelle Darstellung beim Tippen.',
+    title: 'Taleno — Schneller In-Place WYSIWYG Markdown-Editor für Desktop',
+    metaDesc: 'Taleno ist ein minimalistischer, lokaler In-Place WYSIWYG Markdown-Editor auf Basis von Tauri 2, Rust und SolidJS. Keine geteilten Bildschirme, Plugins, Themes und 100% Offline-Datenschutz für Windows, Mac und Linux.',
     nav: { features: 'Funktionen', download: 'Download', architecture: 'Architektur', shortcuts: 'Tastenkürzel', faq: 'FAQ & Hinweise', github: 'GitHub' },
     selectLang: 'Sprache auswählen',
     hero: {
       badge: 'v0.1.7 veröffentlicht · AGPL-3.0 Open Source',
       title: 'Markdown, direkt am Platz.',
-      subtitle: 'Ein minimalistischer, blitzschneller In-Place WYSIWYG Markdown-Reader und Editor. Keine störenden Split-Panes — formatiert direkt beim Schreiben, angetrieben von Tauri 2 + Rust + SolidJS.',
+      subtitle: 'Ein minimalistischer, performanter In-Place WYSIWYG Markdown-Editor. Formatierung direkt beim Tippen ohne geteilte Fenster — entwickelt mit Tauri 2, Rust und SolidJS für verzögerungsfreies Schreiben und maximale Privatsphäre.',
       downloadBtn: 'Jetzt herunterladen',
       githubBtn: 'Auf GitHub ansehen',
       chips: ['<400ms Kaltstart', 'Keine Split-Screens', 'Plugins & Themes', '9 Sprachen']
@@ -752,6 +772,10 @@ const languages = {
         'Vollständiges Rebranding zu Taleno & Performance-Optimierung'
       ],
       items: [
+        {
+          q: 'Wie schneidet Taleno im Vergleich zu Typora, Obsidian und Electron-Editoren ab?',
+          a: 'Im Gegensatz zu ressourcenhungrigen Electron-Apps basiert Taleno auf Rust und Tauri 2, startet in unter 400 ms und verbraucht minimalen Arbeitsspeicher. Anstelle von zweigeteilten Fenstern formatiert Taleno Text direkt an der Cursorposition. Ihre Notizen bleiben zu 100% lokal mit atomarem Schreibschutz, und über den offiziellen Taleno-Plugins-Hub können Plugins und Themes jederzeit ohne Cloud-Zwang nachgerüstet werden.'
+        },
         { q: 'Was unterscheidet Taleno von anderen Markdown-Editoren?', a: 'Taleno bietet echtes In-Place-WYSIWYG ohne geteilte Bildschirme. Markdown formatiert sich direkt beim Tippen. Entwickelt mit Rust und Tauri 2 ist es blitzschnell und frei von Electron-Ballast.' },
         { q: 'Sind meine Daten sicher und privat?', a: '100% lokal zuerst. Alle Dateien verbleiben vollständig auf Ihrem Gerät. Atomare Schreibvorgänge schützen Ihre Texte zuverlässig vor Beschädigung.' },
         { q: 'Welche Markdown-Erweiterungen werden unterstützt?', a: 'GitHub Flavored Markdown (GFM), Tabellen, Aufgabenlisten, Quellcode-Hervorhebung, Mermaid-Diagramme und KaTeX-Mathematikformeln.' },
@@ -776,14 +800,14 @@ const languages = {
     dir: 'fr',
     name: 'Français',
     htmlLang: 'fr',
-    title: 'Taleno — Lecteur & Éditeur Markdown WYSIWYG In-Situ',
-    metaDesc: 'Un lecteur et éditeur Markdown WYSIWYG local-first minimaliste conçu avec Tauri 2, Rust et SolidJS. Zéro panneau divisé — rendu instantané sur place pendant la frappe.',
+    title: 'Taleno — Éditeur Markdown WYSIWYG direct et fluide pour bureau',
+    metaDesc: "Taleno est un éditeur Markdown WYSIWYG direct local-first développé avec Tauri 2, Rust et SolidJS. Zéro écran scindé, marketplace d'extensions, thèmes personnalisés et confidentialité hors ligne pour Windows, macOS et Linux.",
     nav: { features: 'Fonctionnalités', download: 'Télécharger', architecture: 'Architecture', shortcuts: 'Raccourcis', faq: 'FAQ & Notes', github: 'GitHub' },
     selectLang: 'Choisir la langue',
     hero: {
       badge: 'v0.1.7 disponible · Open Source AGPL-3.0',
       title: 'Le Markdown, directement sur place.',
-      subtitle: 'Un lecteur et éditeur Markdown WYSIWYG in-situ ultra-rapide et épuré. Finis les doubles panneaux de prévisualisation : mise en page en direct au fil de la frappe avec Tauri 2 + Rust + SolidJS.',
+      subtitle: 'Un lecteur et éditeur Markdown WYSIWYG direct, minimaliste et ultra-rapide. Mise en page en direct sans double panneau — conçu avec Tauri 2, Rust et SolidJS pour une fluidité instantanée et une totale confidentialité.',
       downloadBtn: 'Télécharger',
       githubBtn: 'Voir sur GitHub',
       chips: ['Démarrage <400ms', 'Sans panneau scindé', 'Plugins & Thèmes', '9 langues']
@@ -880,6 +904,10 @@ const languages = {
         'Nouveau nom Taleno et optimisations de performance'
       ],
       items: [
+        {
+          q: 'Quels sont les avantages de Taleno face à Typora, Obsidian et aux éditeurs Electron ?',
+          a: 'Contrairement aux applications Electron qui embarquent un moteur Chromium lourd, Taleno est développé en Rust et Tauri 2, garantissant un démarrage en moins de 400 ms et une consommation de mémoire minimale. Sans aucun panneau scindé, le texte se met en page directement là où vous tapez. Tous vos fichiers restent 100% locaux avec écriture atomique sécurisée, et vous pouvez installer des extensions et thèmes depuis le hub officiel Taleno-Plugins.'
+        },
         { q: 'En quoi Taleno est-il différent des autres éditeurs ?', a: 'Taleno offre un rendu WYSIWYG direct sans panneau divisé. Le texte se met en page au fur et à mesure que vous tapez. Construit en Rust et Tauri 2, il démarre en quelques millisecondes sans la lourdeur d\'Electron.' },
         { q: 'Mes données sont-elles protégées ?', a: '100% local-first. Tous vos documents restent sur votre machine sans aucune transmission dans le cloud. L\'écriture atomique protège vos textes contre toute corruption.' },
         { q: 'Quelles extensions Markdown sont supportées ?', a: 'GitHub Flavored Markdown (GFM), tableaux, listes de tâches, coloration de code, diagrammes Mermaid et formules mathématiques KaTeX.' },
@@ -904,14 +932,14 @@ const languages = {
     dir: 'es',
     name: 'Español',
     htmlLang: 'es',
-    title: 'Taleno — Lector y Editor Markdown WYSIWYG In-Situ',
-    metaDesc: 'Un lector y editor Markdown WYSIWYG local-first minimalista creado con Tauri 2, Rust y SolidJS. Sin división de pantalla — renderizado en tiempo real mientras escribes.',
+    title: 'Taleno — Editor Markdown WYSIWYG en el lugar nativo y ligero',
+    metaDesc: 'Taleno es un editor Markdown WYSIWYG local-first creado con Tauri 2, Rust y SolidJS. Sin pantalla dividida, plugins, temas y total privacidad offline para Windows, macOS y Linux.',
     nav: { features: 'Características', download: 'Descargar', architecture: 'Arquitectura', shortcuts: 'Atajos', faq: 'Preguntas Frecuentes', github: 'GitHub' },
     selectLang: 'Seleccionar idioma',
     hero: {
       badge: 'v0.1.7 publicado · Código abierto AGPL-3.0',
       title: 'Markdown, directamente en su lugar.',
-      subtitle: 'Un lector y editor Markdown WYSIWYG in-situ rápido y minimalista. Olvídate de la doble pantalla: formateo instantáneo en tiempo real con Tauri 2 + Rust + SolidJS.',
+      subtitle: 'Un editor y lector Markdown WYSIWYG directo, minimalista y de alto rendimiento. Formato instantáneo sin paneles divididos — desarrollado con Tauri 2, Rust y SolidJS para una respuesta fluida y privacidad total.',
       downloadBtn: 'Descargar Ahora',
       githubBtn: 'Ver en GitHub',
       chips: ['Inicio <400ms', 'Sin paneles divididos', 'Plugins y Temas', '9 idiomas']
@@ -1008,6 +1036,10 @@ const languages = {
         'Rebranding completo a Taleno y mejoras de rendimiento'
       ],
       items: [
+        {
+          q: '¿Qué ventajas tiene Taleno frente a Typora, Obsidian y editores basados en Electron ?',
+          a: 'A diferencia de los editores basados en Electron que consumen abundante RAM, Taleno está programado en Rust y Tauri 2, arrancando en menos de 400 ms con un uso mínimo de recursos. En lugar de doble pantalla, renderiza directamente en el lugar de escritura. Tus documentos se guardan localmente con guardado atómico contra fallos, y puedes instalar extensiones y temas desde el repositorio oficial Taleno-Plugins sin depender de la nube.'
+        },
         { q: '¿Qué hace diferente a Taleno de otros editores?', a: 'Taleno ofrece edición WYSIWYG real en el mismo lugar donde escribes, sin paneles divididos. Desarrollado en Rust y Tauri 2, es ligero, rápido y no depende del sobrepeso de Electron.' },
         { q: '¿Mis datos están seguros?', a: '100% local-first. Todos tus documentos se guardan exclusivamente en tu equipo sin envío a la nube. El guardado atómico protege tus textos de cierres inesperados.' },
         { q: '¿Qué funciones de Markdown están soportadas?', a: 'GitHub Flavored Markdown (GFM), tablas, listas de tareas, resaltado de código, diagramas Mermaid y fórmulas matemáticas KaTeX.' },
@@ -1032,14 +1064,14 @@ const languages = {
     dir: 'ru',
     name: 'Русский',
     htmlLang: 'ru',
-    title: 'Taleno — Интерактивный WYSIWYG Markdown-ридер и редактор',
-    metaDesc: 'Минималистичный локальный Markdown-ридер и интерактивный WYSIWYG-редактор на базе Tauri 2, Rust и SolidJS. Никаких раздельных панелей — мгновенное форматирование прямо по месту ввода.',
+    title: 'Taleno — Быстрый WYSIWYG Markdown-редактор без разделения экрана',
+    metaDesc: 'Taleno — быстрый локальный WYSIWYG Markdown-редактор на Tauri 2, Rust и SolidJS. Рендеринг на месте без разделения экрана, плагины, темы и полная приватность без интернета для Windows, macOS и Linux.',
     nav: { features: 'Возможности', download: 'Скачать', architecture: 'Архитектура', shortcuts: 'Горячие клавиши', faq: 'Вопросы и ответы', github: 'GitHub' },
     selectLang: 'Выбрать язык',
     hero: {
       badge: 'Релиз v0.1.7 · Open Source AGPL-3.0',
       title: 'Markdown прямо на месте.',
-      subtitle: 'Минималистичный, молниеносный локальный WYSIWYG Markdown-ридер и редактор. Без разделения экрана — мгновенное форматирование по мере ввода на базе Tauri 2 + Rust + SolidJS.',
+      subtitle: 'Минималистичный и производительный WYSIWYG Markdown-редактор. Мгновенное форматирование на месте без разделения экрана — создан на Tauri 2, Rust и SolidJS для быстрой работы, приватности и расширения плагинами.',
       downloadBtn: 'Скачать сейчас',
       githubBtn: 'Открыть на GitHub',
       chips: ['Старт <400мс', 'Без разделения экрана', 'Плагины и темы', '9 языков']
@@ -1136,6 +1168,10 @@ const languages = {
         'Полный ребрендинг в Taleno и оптимизация скорости'
       ],
       items: [
+        {
+          q: 'В чем преимущества Taleno перед Typora, Obsidian и редакторами на базе Electron?',
+          a: 'В отличие от тяжелых Electron-приложений, Taleno создан на Rust и Tauri 2, запускаясь быстрее чем за 400 мс и потребляя минимум оперативной памяти. Вместо неудобного разделения экрана форматирование применяется прямо в месте ввода. Все файлы хранятся строго локально с атомарной защитой от сбоев, а через каталог Taleno-Plugins можно в один клик устанавливать плагины и темы без привязки к проприетарным облакам.'
+        },
         { q: 'Чем Taleno отличается от других Markdown-редакторов?', a: 'Taleno форматирует текст непосредственно в месте ввода без разделения экрана на код и превью. Благодаря Rust и Tauri 2 приложение мгновенно запускается и не тратит лишнюю память.' },
         { q: 'Безопасны ли мои данные?', a: '100% локально. Все файлы сохраняются исключительно на вашем диске и не передаются в облако. Атомарная запись защитит документы от повреждения при сбоях.' },
         { q: 'Какие расширения Markdown поддерживаются?', a: 'GitHub Flavored Markdown (GFM), таблицы, списки задач, подсветка синтаксиса, диаграммы Mermaid и математические формулы KaTeX.' },
@@ -1231,6 +1267,108 @@ const gatekeeperGuidance = {
   }
 };
 
+
+function renderHreflangTags(isDownload = false) {
+  const file = isDownload ? 'download.html' : '';
+  const hreflangMap = {
+    'x-default': 'https://berryuiki.github.io/Taleno/' + file,
+    'en': 'https://berryuiki.github.io/Taleno/' + file,
+    'zh-Hans': 'https://berryuiki.github.io/Taleno/zh-CN/' + file,
+    'zh-Hant': 'https://berryuiki.github.io/Taleno/zh-TW/' + file,
+    'ja': 'https://berryuiki.github.io/Taleno/ja/' + file,
+    'ko': 'https://berryuiki.github.io/Taleno/ko/' + file,
+    'de': 'https://berryuiki.github.io/Taleno/de/' + file,
+    'fr': 'https://berryuiki.github.io/Taleno/fr/' + file,
+    'es': 'https://berryuiki.github.io/Taleno/es/' + file,
+    'ru': 'https://berryuiki.github.io/Taleno/ru/' + file
+  };
+  return Object.entries(hreflangMap)
+    .map(([hlang, url]) => `  <link rel="alternate" hreflang="${hlang}" href="${url}" />`)
+    .join('\n');
+}
+
+function renderCanonicalTag(lang, isDownload = false) {
+  const isRoot = lang.code === 'en';
+  const path = isRoot
+    ? (isDownload ? 'download.html' : '')
+    : (isDownload ? `${lang.dir}/download.html` : `${lang.dir}/`);
+  const url = `https://berryuiki.github.io/Taleno/${path}`;
+  return `  <link rel="canonical" href="${url}" />`;
+}
+
+function renderJsonLd(lang, isDownload = false) {
+  const isRoot = lang.code === 'en';
+  const pageUrl = isRoot
+    ? (isDownload ? 'https://berryuiki.github.io/Taleno/download.html' : 'https://berryuiki.github.io/Taleno/')
+    : (isDownload ? `https://berryuiki.github.io/Taleno/${lang.dir}/download.html` : `https://berryuiki.github.io/Taleno/${lang.dir}/`);
+
+  const faqList = (lang.faq && lang.faq.items) ? lang.faq.items.map(it => ({
+    "@type": "Question",
+    "name": it.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": it.a
+    }
+  })) : [];
+
+  const graph = [
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://berryuiki.github.io/Taleno/#software",
+      "name": "Taleno",
+      "alternateName": "Taleno Markdown Editor",
+      "description": lang.metaDesc,
+      "applicationCategory": "ProductivityApplication",
+      "operatingSystem": "Windows 10+, macOS 11+, Linux (Ubuntu, Debian, Fedora, Arch)",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "softwareVersion": "0.1.7",
+      "license": "https://www.gnu.org/licenses/agpl-3.0.html",
+      "url": "https://berryuiki.github.io/Taleno/",
+      "downloadUrl": "https://berryuiki.github.io/Taleno/download.html",
+      "image": "https://berryuiki.github.io/Taleno/app-icon.svg",
+      "screenshot": "https://berryuiki.github.io/Taleno/og-preview.png",
+      "author": {
+        "@type": "Organization",
+        "name": "BerryUIKI",
+        "url": "https://github.com/BerryUIKI"
+      },
+      "featureList": lang.features ? lang.features.items.map(i => i.title) : [
+        "In-Place WYSIWYG Editing",
+        "Plugin Marketplace",
+        "Community Themes",
+        "Ripgrep Offline Search",
+        "Atomic Crash-Safe Saving"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://berryuiki.github.io/Taleno/#website",
+      "url": pageUrl,
+      "name": "Taleno",
+      "inLanguage": lang.htmlLang
+    }
+  ];
+
+  if (!isDownload && faqList.length > 0) {
+    graph.push({
+      "@type": "FAQPage",
+      "@id": `${pageUrl}#faq`,
+      "mainEntity": faqList
+    });
+  }
+
+  const json = JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": graph
+  }, null, 2);
+
+  return `  <script type="application/ld+json">\n${json}\n  </script>`;
+}
+
 function renderLangOptions(currentCode, isRoot) {
   return Object.values(languages).map(lang => {
     const isCur = lang.code === currentCode;
@@ -1270,17 +1408,27 @@ function buildIndex(lang) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${lang.title}</title>
   <meta name="description" content="${lang.metaDesc}" />
+  <meta name="keywords" content="Taleno, Markdown editor, WYSIWYG Markdown, in-place Markdown, Typora alternative, Obsidian alternative, Tauri Markdown app, local-first editor, GFM reader" />
+  <meta name="author" content="BerryUIKI" />
+${renderCanonicalTag(lang, false)}
+${renderHreflangTags(false)}
   
-  <!-- Open Graph / Twitter -->
+  <!-- Open Graph / Twitter Cards -->
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Taleno" />
+  <meta property="og:url" content="${isRoot ? 'https://berryuiki.github.io/Taleno/' : `https://berryuiki.github.io/Taleno/${lang.dir}/`}" />
   <meta property="og:title" content="${lang.title}" />
   <meta property="og:description" content="${lang.metaDesc}" />
-  <meta property="og:image" content="${iconPath}" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="https://berryuiki.github.io/Taleno/og-preview.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${lang.title}" />
   <meta name="twitter:description" content="${lang.metaDesc}" />
+  <meta name="twitter:image" content="https://berryuiki.github.io/Taleno/og-preview.png" />
 
   <link rel="icon" type="image/svg+xml" href="${iconPath}" />
+${renderJsonLd(lang, false)}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -1351,7 +1499,7 @@ ${langOptionsHtml}
         <span class="w-[6px] h-[6px] rounded-full bg-[#34C759]"></span>
         ${lang.hero.badge}
       </div>
-      <h1 class="font-display text-[64px] font-bold leading-[1.1] tracking-[-1.5px] text-ink text-center max-[768px]:text-[40px]">${lang.hero.title}</h1>
+      <h1 class="font-display text-[52px] sm:text-[64px] font-bold leading-[1.1] tracking-[-1.5px] text-ink text-center max-[768px]:text-[38px]"><span class="block text-[20px] sm:text-[26px] font-semibold text-accent tracking-normal mb-2">Taleno — In-Place WYSIWYG</span>${lang.hero.title}</h1>
       <p class="max-w-[720px] text-center text-[18px] leading-[30px] text-ink-secondary">
         ${lang.hero.subtitle}
       </p>
@@ -1754,8 +1902,27 @@ function buildDownload(lang) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${lang.downloadPage.title}</title>
   <meta name="description" content="${lang.downloadPage.metaDesc}" />
+  <meta name="keywords" content="Download Taleno, Markdown editor download, Windows Markdown app, macOS Markdown, Linux AppImage Markdown, deb, rpm" />
+  <meta name="author" content="BerryUIKI" />
+${renderCanonicalTag(lang, true)}
+${renderHreflangTags(true)}
+
+  <!-- Open Graph / Twitter Cards -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Taleno" />
+  <meta property="og:url" content="${isRoot ? 'https://berryuiki.github.io/Taleno/download.html' : `https://berryuiki.github.io/Taleno/${lang.dir}/download.html`}" />
+  <meta property="og:title" content="${lang.downloadPage.title}" />
+  <meta property="og:description" content="${lang.downloadPage.metaDesc}" />
+  <meta property="og:image" content="https://berryuiki.github.io/Taleno/og-preview.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${lang.downloadPage.title}" />
+  <meta name="twitter:description" content="${lang.downloadPage.metaDesc}" />
+  <meta name="twitter:image" content="https://berryuiki.github.io/Taleno/og-preview.png" />
 
   <link rel="icon" type="image/svg+xml" href="${iconPath}" />
+${renderJsonLd(lang, true)}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -1935,3 +2102,44 @@ for (const lang of Object.values(languages)) {
   console.log(`Generated [${lang.code}] -> ${indexPath} and ${dlPath}`);
 }
 console.log('All 9 language pages built successfully!');
+
+
+// Generate sitemap.xml and robots.txt
+function generateSitemapAndRobots() {
+  const now = new Date().toISOString().split('T')[0];
+  let xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n';
+
+  const allLangs = Object.values(languages);
+
+  // 1. Homepages
+  for (const l of allLangs) {
+    const url = l.code === 'en' ? 'https://berryuiki.github.io/Taleno/' : `https://berryuiki.github.io/Taleno/${l.dir}/`;
+    xml += `  <url>\n    <loc>${url}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>1.0</priority>\n`;
+    for (const alt of allLangs) {
+      const altUrl = alt.code === 'en' ? 'https://berryuiki.github.io/Taleno/' : `https://berryuiki.github.io/Taleno/${alt.dir}/`;
+      xml += `    <xhtml:link rel="alternate" hreflang="${alt.htmlLang}" href="${altUrl}"/>\n`;
+    }
+    xml += '  </url>\n';
+  }
+
+  // 2. Download pages
+  for (const l of allLangs) {
+    const url = l.code === 'en' ? 'https://berryuiki.github.io/Taleno/download.html' : `https://berryuiki.github.io/Taleno/${l.dir}/download.html`;
+    xml += `  <url>\n    <loc>${url}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n`;
+    for (const alt of allLangs) {
+      const altUrl = alt.code === 'en' ? 'https://berryuiki.github.io/Taleno/download.html' : `https://berryuiki.github.io/Taleno/${alt.dir}/download.html`;
+      xml += `    <xhtml:link rel="alternate" hreflang="${alt.htmlLang}" href="${altUrl}"/>\n`;
+    }
+    xml += '  </url>\n';
+  }
+
+  xml += '</urlset>\n';
+  fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), xml, 'utf8');
+  console.log('Generated sitemap.xml with 18 localized URLs.');
+
+  const robots = 'User-agent: *\nAllow: /\n\nSitemap: https://berryuiki.github.io/Taleno/sitemap.xml\n';
+  fs.writeFileSync(path.join(__dirname, 'robots.txt'), robots, 'utf8');
+  console.log('Generated robots.txt.');
+}
+
+generateSitemapAndRobots();

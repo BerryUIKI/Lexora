@@ -3,19 +3,134 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Taleno — In-Place WYSIWYG Markdown Reader & Editor</title>
-  <meta name="description" content="A minimalist in-place WYSIWYG Markdown reader & editor. Render-as-you-type with zero split panes — built on Tauri 2 + Rust + SolidJS for instant response." />
+  <title>Taleno — Free In-Place WYSIWYG Markdown Reader & Editor for Desktop</title>
+  <meta name="description" content="Taleno is a free, local-first in-place WYSIWYG Markdown reader & editor built with Tauri 2, Rust, and SolidJS. Zero split panes, plugins, themes, and offline privacy for Windows, macOS, and Linux." />
+  <meta name="keywords" content="Taleno, Markdown editor, WYSIWYG Markdown, in-place Markdown, Typora alternative, Obsidian alternative, Tauri Markdown app, local-first editor, GFM reader" />
+  <meta name="author" content="BerryUIKI" />
+  <link rel="canonical" href="https://berryuiki.github.io/Taleno/" />
+  <link rel="alternate" hreflang="x-default" href="https://berryuiki.github.io/Taleno/" />
+  <link rel="alternate" hreflang="en" href="https://berryuiki.github.io/Taleno/" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://berryuiki.github.io/Taleno/zh-CN/" />
+  <link rel="alternate" hreflang="zh-Hant" href="https://berryuiki.github.io/Taleno/zh-TW/" />
+  <link rel="alternate" hreflang="ja" href="https://berryuiki.github.io/Taleno/ja/" />
+  <link rel="alternate" hreflang="ko" href="https://berryuiki.github.io/Taleno/ko/" />
+  <link rel="alternate" hreflang="de" href="https://berryuiki.github.io/Taleno/de/" />
+  <link rel="alternate" hreflang="fr" href="https://berryuiki.github.io/Taleno/fr/" />
+  <link rel="alternate" hreflang="es" href="https://berryuiki.github.io/Taleno/es/" />
+  <link rel="alternate" hreflang="ru" href="https://berryuiki.github.io/Taleno/ru/" />
   
-  <!-- Open Graph / Twitter -->
+  <!-- Open Graph / Twitter Cards -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Taleno — In-Place WYSIWYG Markdown Reader & Editor" />
-  <meta property="og:description" content="A minimalist in-place WYSIWYG Markdown reader & editor. Render-as-you-type with zero split panes — built on Tauri 2 + Rust + SolidJS for instant response." />
-  <meta property="og:image" content="app-icon.svg" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Taleno — In-Place WYSIWYG Markdown Reader & Editor" />
-  <meta name="twitter:description" content="A minimalist in-place WYSIWYG Markdown reader & editor. Render-as-you-type with zero split panes — built on Tauri 2 + Rust + SolidJS for instant response." />
+  <meta property="og:site_name" content="Taleno" />
+  <meta property="og:url" content="https://berryuiki.github.io/Taleno/" />
+  <meta property="og:title" content="Taleno — Free In-Place WYSIWYG Markdown Reader & Editor for Desktop" />
+  <meta property="og:description" content="Taleno is a free, local-first in-place WYSIWYG Markdown reader & editor built with Tauri 2, Rust, and SolidJS. Zero split panes, plugins, themes, and offline privacy for Windows, macOS, and Linux." />
+  <meta property="og:image" content="https://berryuiki.github.io/Taleno/og-preview.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Taleno — Free In-Place WYSIWYG Markdown Reader & Editor for Desktop" />
+  <meta name="twitter:description" content="Taleno is a free, local-first in-place WYSIWYG Markdown reader & editor built with Tauri 2, Rust, and SolidJS. Zero split panes, plugins, themes, and offline privacy for Windows, macOS, and Linux." />
+  <meta name="twitter:image" content="https://berryuiki.github.io/Taleno/og-preview.png" />
 
   <link rel="icon" type="image/svg+xml" href="app-icon.svg" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://berryuiki.github.io/Taleno/#software",
+      "name": "Taleno",
+      "alternateName": "Taleno Markdown Editor",
+      "description": "Taleno is a free, local-first in-place WYSIWYG Markdown reader & editor built with Tauri 2, Rust, and SolidJS. Zero split panes, plugins, themes, and offline privacy for Windows, macOS, and Linux.",
+      "applicationCategory": "ProductivityApplication",
+      "operatingSystem": "Windows 10+, macOS 11+, Linux (Ubuntu, Debian, Fedora, Arch)",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "softwareVersion": "0.1.7",
+      "license": "https://www.gnu.org/licenses/agpl-3.0.html",
+      "url": "https://berryuiki.github.io/Taleno/",
+      "downloadUrl": "https://berryuiki.github.io/Taleno/download.html",
+      "image": "https://berryuiki.github.io/Taleno/app-icon.svg",
+      "screenshot": "https://berryuiki.github.io/Taleno/og-preview.png",
+      "author": {
+        "@type": "Organization",
+        "name": "BerryUIKI",
+        "url": "https://github.com/BerryUIKI"
+      },
+      "featureList": [
+        "Tri-State Display Modes",
+        "In-App Plugin Ecosystem",
+        "Custom & Community Themes",
+        "9-Language i18n",
+        "Syntax Highlighting",
+        "Mermaid & LaTeX",
+        "Ripgrep Full-Text Search",
+        "Crash-Safe Atomic Saving",
+        "Smart Drag & Drop",
+        "Standalone HTML Export"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://berryuiki.github.io/Taleno/#website",
+      "url": "https://berryuiki.github.io/Taleno/",
+      "name": "Taleno",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://berryuiki.github.io/Taleno/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does Taleno compare to Typora, Obsidian, and Electron-based editors?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Unlike Electron-based editors that bundle a full Chromium runtime, Taleno is engineered in Rust and Tauri 2, achieving sub-400ms cold starts and minimal RAM consumption. Unlike dual-pane tools, Taleno renders formatting directly in place as you type. All documents remain 100% offline with crash-safe atomic writes, and third-party extensions and themes can be installed with one click from the official BerryUIKI/Taleno-Plugins marketplace."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What makes Taleno unique?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Taleno provides true in-place WYSIWYG editing with zero split panes. Markdown renders live as you type, and raw syntax reveals seamlessly under your cursor. Powered by Rust and Tauri 2, it delivers native speed without Electron bulk."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my data private and secure?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "100% local-first. All documents stay strictly on your local device with zero cloud telemetry. Atomic writes ensure you never lose work even during unexpected system shutdowns."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which Markdown extensions are supported?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Taleno supports full GitHub Flavored Markdown (GFM), tables, task lists, code block syntax highlighting, Mermaid diagrams (flowcharts, sequence, class diagrams), and KaTeX math formulas."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Taleno free and open source?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Taleno is free and open-source under the GNU AGPL-3.0 license. Community contributions, bug reports, and translations are warmly welcome."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -94,9 +209,9 @@
         <span class="w-[6px] h-[6px] rounded-full bg-[#34C759]"></span>
         v0.1.7 Released · AGPL-3.0 Open Source
       </div>
-      <h1 class="font-display text-[64px] font-bold leading-[1.1] tracking-[-1.5px] text-ink text-center max-[768px]:text-[40px]">Markdown, in&nbsp;place.</h1>
+      <h1 class="font-display text-[52px] sm:text-[64px] font-bold leading-[1.1] tracking-[-1.5px] text-ink text-center max-[768px]:text-[38px]"><span class="block text-[20px] sm:text-[26px] font-semibold text-accent tracking-normal mb-2">Taleno — In-Place WYSIWYG</span>Markdown, in&nbsp;place.</h1>
       <p class="max-w-[720px] text-center text-[18px] leading-[30px] text-ink-secondary">
-        A minimalist, high-performance in-place WYSIWYG Markdown reader & editor. Render-as-you-type with zero split panes — built on Tauri 2 + Rust + SolidJS for instant response.
+        A minimalist, high-performance in-place WYSIWYG Markdown reader & editor. Render-as-you-type with zero split panes — built on Tauri 2 + Rust + SolidJS for instant response, complete privacy, and extensible plugins.
       </p>
       <div class="flex items-center gap-[12px]">
         <a href="#download" class="flex items-center gap-[8px] px-[24px] py-[12px] rounded-[8px] bg-ink text-white text-[16px] font-semibold hover:opacity-85 transition-opacity">
@@ -345,6 +460,7 @@
         </div>
       </div>
       <div class="flex-1 flex flex-col gap-[16px]">
+        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">How does Taleno compare to Typora, Obsidian, and Electron-based editors?</h3><p class="text-[14px] leading-[24px] text-ink-secondary">Unlike Electron-based editors that bundle a full Chromium runtime, Taleno is engineered in Rust and Tauri 2, achieving sub-400ms cold starts and minimal RAM consumption. Unlike dual-pane tools, Taleno renders formatting directly in place as you type. All documents remain 100% offline with crash-safe atomic writes, and third-party extensions and themes can be installed with one click from the official BerryUIKI/Taleno-Plugins marketplace.</p></div>
         <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">What makes Taleno unique?</h3><p class="text-[14px] leading-[24px] text-ink-secondary">Taleno provides true in-place WYSIWYG editing with zero split panes. Markdown renders live as you type, and raw syntax reveals seamlessly under your cursor. Powered by Rust and Tauri 2, it delivers native speed without Electron bulk.</p></div>
         <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">Is my data private and secure?</h3><p class="text-[14px] leading-[24px] text-ink-secondary">100% local-first. All documents stay strictly on your local device with zero cloud telemetry. Atomic writes ensure you never lose work even during unexpected system shutdowns.</p></div>
         <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">Which Markdown extensions are supported?</h3><p class="text-[14px] leading-[24px] text-ink-secondary">Taleno supports full GitHub Flavored Markdown (GFM), tables, task lists, code block syntax highlighting, Mermaid diagrams (flowcharts, sequence, class diagrams), and KaTeX math formulas.</p></div>
@@ -361,7 +477,7 @@
           <svg width="30" height="30" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="lgF" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4361ee"/><stop offset="1" stop-color="#3a0ca3"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#lgF)"/><rect x="120" y="96" width="272" height="320" rx="20" fill="white" opacity="0.95"/><rect x="160" y="160" width="120" height="24" rx="6" fill="#4361ee"/><rect x="160" y="210" width="192" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="240" width="160" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="270" width="180" height="14" rx="4" fill="#6c757d" opacity="0.6"/><polygon points="310,380 390,300 420,330 340,410 300,420" fill="#4cc9f0"/></svg>
           <span class="font-display text-[20px] font-bold text-white">Taleno</span>
         </div>
-        <p class="text-[14px] leading-[24px] text-white/70">A minimalist in-place WYSIWYG Markdown reader & editor. Render-as-you-type with zero split panes — built on Tauri 2 + Rust + SolidJS for instant response.</p>
+        <p class="text-[14px] leading-[24px] text-white/70">Taleno is a free, local-first in-place WYSIWYG Markdown reader & editor built with Tauri 2, Rust, and SolidJS. Zero split panes, plugins, themes, and offline privacy for Windows, macOS, and Linux.</p>
         <p class="text-[11px] leading-[18px] text-white/40 w-[380px] max-[1000px]:w-full">English · 简体中文 · 繁體中文 · 日本語 · 한국어 · Deutsch · Français · Español · Русский</p>
       </div>
       <div class="flex-1 flex flex-col gap-[12px]">

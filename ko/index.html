@@ -3,19 +3,134 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Taleno — 인플레이스 WYSIWYG 마크다운 뷰어 & 에디터</title>
-  <meta name="description" content="Tauri 2, Rust, SolidJS 로 제작된 로컬 우선 미니멀 마크다운 뷰어 및 실시간 WYSIWYG 에디터. 분할 화면 없이 입력한 위치에서 즉시 렌더링됩니다." />
+  <title>Taleno — 초고속 로컬 우선 인플레이스 WYSIWYG 마크다운 에디터</title>
+  <meta name="description" content="Taleno는 Tauri 2 + Rust + SolidJS 기반의 초경량 로컬 우선 인플레이스 WYSIWYG 마크다운 편집기입니다. 화면 분할 없는 실시간 렌더링, 플러그인 및 테마 마켓, 완벽한 오프라인 개인정보 보호를 제공합니다." />
+  <meta name="keywords" content="Taleno, Markdown editor, WYSIWYG Markdown, in-place Markdown, Typora alternative, Obsidian alternative, Tauri Markdown app, local-first editor, GFM reader" />
+  <meta name="author" content="BerryUIKI" />
+  <link rel="canonical" href="https://berryuiki.github.io/Taleno/ko/" />
+  <link rel="alternate" hreflang="x-default" href="https://berryuiki.github.io/Taleno/" />
+  <link rel="alternate" hreflang="en" href="https://berryuiki.github.io/Taleno/" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://berryuiki.github.io/Taleno/zh-CN/" />
+  <link rel="alternate" hreflang="zh-Hant" href="https://berryuiki.github.io/Taleno/zh-TW/" />
+  <link rel="alternate" hreflang="ja" href="https://berryuiki.github.io/Taleno/ja/" />
+  <link rel="alternate" hreflang="ko" href="https://berryuiki.github.io/Taleno/ko/" />
+  <link rel="alternate" hreflang="de" href="https://berryuiki.github.io/Taleno/de/" />
+  <link rel="alternate" hreflang="fr" href="https://berryuiki.github.io/Taleno/fr/" />
+  <link rel="alternate" hreflang="es" href="https://berryuiki.github.io/Taleno/es/" />
+  <link rel="alternate" hreflang="ru" href="https://berryuiki.github.io/Taleno/ru/" />
   
-  <!-- Open Graph / Twitter -->
+  <!-- Open Graph / Twitter Cards -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Taleno — 인플레이스 WYSIWYG 마크다운 뷰어 & 에디터" />
-  <meta property="og:description" content="Tauri 2, Rust, SolidJS 로 제작된 로컬 우선 미니멀 마크다운 뷰어 및 실시간 WYSIWYG 에디터. 분할 화면 없이 입력한 위치에서 즉시 렌더링됩니다." />
-  <meta property="og:image" content="../app-icon.svg" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Taleno — 인플레이스 WYSIWYG 마크다운 뷰어 & 에디터" />
-  <meta name="twitter:description" content="Tauri 2, Rust, SolidJS 로 제작된 로컬 우선 미니멀 마크다운 뷰어 및 실시간 WYSIWYG 에디터. 분할 화면 없이 입력한 위치에서 즉시 렌더링됩니다." />
+  <meta property="og:site_name" content="Taleno" />
+  <meta property="og:url" content="https://berryuiki.github.io/Taleno/ko/" />
+  <meta property="og:title" content="Taleno — 초고속 로컬 우선 인플레이스 WYSIWYG 마크다운 에디터" />
+  <meta property="og:description" content="Taleno는 Tauri 2 + Rust + SolidJS 기반의 초경량 로컬 우선 인플레이스 WYSIWYG 마크다운 편집기입니다. 화면 분할 없는 실시간 렌더링, 플러그인 및 테마 마켓, 완벽한 오프라인 개인정보 보호를 제공합니다." />
+  <meta property="og:image" content="https://berryuiki.github.io/Taleno/og-preview.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Taleno — 초고속 로컬 우선 인플레이스 WYSIWYG 마크다운 에디터" />
+  <meta name="twitter:description" content="Taleno는 Tauri 2 + Rust + SolidJS 기반의 초경량 로컬 우선 인플레이스 WYSIWYG 마크다운 편집기입니다. 화면 분할 없는 실시간 렌더링, 플러그인 및 테마 마켓, 완벽한 오프라인 개인정보 보호를 제공합니다." />
+  <meta name="twitter:image" content="https://berryuiki.github.io/Taleno/og-preview.png" />
 
   <link rel="icon" type="image/svg+xml" href="../app-icon.svg" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://berryuiki.github.io/Taleno/#software",
+      "name": "Taleno",
+      "alternateName": "Taleno Markdown Editor",
+      "description": "Taleno는 Tauri 2 + Rust + SolidJS 기반의 초경량 로컬 우선 인플레이스 WYSIWYG 마크다운 편집기입니다. 화면 분할 없는 실시간 렌더링, 플러그인 및 테마 마켓, 완벽한 오프라인 개인정보 보호를 제공합니다.",
+      "applicationCategory": "ProductivityApplication",
+      "operatingSystem": "Windows 10+, macOS 11+, Linux (Ubuntu, Debian, Fedora, Arch)",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "softwareVersion": "0.1.7",
+      "license": "https://www.gnu.org/licenses/agpl-3.0.html",
+      "url": "https://berryuiki.github.io/Taleno/",
+      "downloadUrl": "https://berryuiki.github.io/Taleno/download.html",
+      "image": "https://berryuiki.github.io/Taleno/app-icon.svg",
+      "screenshot": "https://berryuiki.github.io/Taleno/og-preview.png",
+      "author": {
+        "@type": "Organization",
+        "name": "BerryUIKI",
+        "url": "https://github.com/BerryUIKI"
+      },
+      "featureList": [
+        "3가지 디스플레이 모드",
+        "플러그인 생태계 및 마켓",
+        "커스텀 및 커뮤니티 테마",
+        "9개 국어 다국어 지원",
+        "고성능 코드 구문 강조",
+        "Mermaid 다이어그램 & LaTeX 수식",
+        "Ripgrep 전체 텍스트 검색",
+        "안전한 원자적 파일 저장",
+        "스마트 드래그 앤 드롭",
+        "독립형 HTML 내보내기"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://berryuiki.github.io/Taleno/#website",
+      "url": "https://berryuiki.github.io/Taleno/ko/",
+      "name": "Taleno",
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://berryuiki.github.io/Taleno/ko/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Taleno는 Typora, Obsidian 및 Electron 기반 에디터와 비교하여 어떤 장점이 있나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "무거운 Chromium 런타임을 포함하는 Electron 에디터와 달리, Taleno는 Rust와 Tauri 2 기반으로 개발되어 400ms 미만의 콜드 스타트와 매우 적은 메모리 사용량을 자랑합니다. 좌우 분할 화면 대신 입력 위치에서 즉시 서식이 적용되는 인플레이스 방식을 채택했으며, 모든 문서는 원자적 저장 방식으로 안전하게 보관됩니다. 또한 공식 Taleno-Plugins 마켓을 통해 플러그인과 테마를 자유롭게 확장할 수 있습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "기존 마크다운 편집기와 무엇이 다른가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Taleno 는 화면 분할 없이 글을 쓰는 위치에서 즉시 서식이 완성되는 실시간 인플레이스 WYSIWYG 방식을 채택했습니다. Electron 없이 Rust 와 Tauri 2 로 개발되어 가볍고 빠릅니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "내 데이터는 안전한가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "100% 로컬 우선입니다. 모든 문서는 사용자의 기기에만 보관되며 외부 서버로 전송되지 않습니다. 원자적 파일 저장 구조로 예기치 않은 종료 시에도 파일이 안전하게 보존됩니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "어떤 마크다운 확장 문법을 지원하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "GitHub Flavored Markdown (GFM), 표, 작업 목록, 코드 구문 강조, Mermaid 다이어그램(순서도, 시퀀스 등), KaTeX 수학 수식을 모두 지원합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "무료인가요? 기여하려면 어떻게 해야 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "네, GNU AGPL-3.0 라이선스 기반의 완전 무료 오픈소스입니다. 버그 제보, 번역, Pull Request 등 다양한 기여를 환영합니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -94,9 +209,9 @@
         <span class="w-[6px] h-[6px] rounded-full bg-[#34C759]"></span>
         v0.1.7 출시 · AGPL-3.0 오픈소스
       </div>
-      <h1 class="font-display text-[64px] font-bold leading-[1.1] tracking-[-1.5px] text-ink text-center max-[768px]:text-[40px]">입력하는 그 자리에서, 마크다운.</h1>
+      <h1 class="font-display text-[52px] sm:text-[64px] font-bold leading-[1.1] tracking-[-1.5px] text-ink text-center max-[768px]:text-[38px]"><span class="block text-[20px] sm:text-[26px] font-semibold text-accent tracking-normal mb-2">Taleno — In-Place WYSIWYG</span>입력하는 그 자리에서, 마크다운.</h1>
       <p class="max-w-[720px] text-center text-[18px] leading-[30px] text-ink-secondary">
-        미니멀하고 강력한 로컬 우선 인플레이스 WYSIWYG 마크다운 뷰어 & 에디터. 좌우 분할 창 없이 타이핑하는 즉시 아름답게 렌더링 — Tauri 2 + Rust + SolidJS 기반의 즉각적인 반응성.
+        미니멀하고 강력한 로컬 우선 인플레이스 WYSIWYG 마크다운 리더 및 편집기입니다. 화면 분할 없이 타이핑과 동시에 서식이 적용되며, Tauri 2 + Rust + SolidJS로 제작되어 초고속 응답성을 자랑합니다.
       </p>
       <div class="flex items-center gap-[12px]">
         <a href="#download" class="flex items-center gap-[8px] px-[24px] py-[12px] rounded-[8px] bg-ink text-white text-[16px] font-semibold hover:opacity-85 transition-opacity">
@@ -345,6 +460,7 @@
         </div>
       </div>
       <div class="flex-1 flex flex-col gap-[16px]">
+        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">Taleno는 Typora, Obsidian 및 Electron 기반 에디터와 비교하여 어떤 장점이 있나요?</h3><p class="text-[14px] leading-[24px] text-ink-secondary">무거운 Chromium 런타임을 포함하는 Electron 에디터와 달리, Taleno는 Rust와 Tauri 2 기반으로 개발되어 400ms 미만의 콜드 스타트와 매우 적은 메모리 사용량을 자랑합니다. 좌우 분할 화면 대신 입력 위치에서 즉시 서식이 적용되는 인플레이스 방식을 채택했으며, 모든 문서는 원자적 저장 방식으로 안전하게 보관됩니다. 또한 공식 Taleno-Plugins 마켓을 통해 플러그인과 테마를 자유롭게 확장할 수 있습니다.</p></div>
         <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">기존 마크다운 편집기와 무엇이 다른가요?</h3><p class="text-[14px] leading-[24px] text-ink-secondary">Taleno 는 화면 분할 없이 글을 쓰는 위치에서 즉시 서식이 완성되는 실시간 인플레이스 WYSIWYG 방식을 채택했습니다. Electron 없이 Rust 와 Tauri 2 로 개발되어 가볍고 빠릅니다.</p></div>
         <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">내 데이터는 안전한가요?</h3><p class="text-[14px] leading-[24px] text-ink-secondary">100% 로컬 우선입니다. 모든 문서는 사용자의 기기에만 보관되며 외부 서버로 전송되지 않습니다. 원자적 파일 저장 구조로 예기치 않은 종료 시에도 파일이 안전하게 보존됩니다.</p></div>
         <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">어떤 마크다운 확장 문법을 지원하나요?</h3><p class="text-[14px] leading-[24px] text-ink-secondary">GitHub Flavored Markdown (GFM), 표, 작업 목록, 코드 구문 강조, Mermaid 다이어그램(순서도, 시퀀스 등), KaTeX 수학 수식을 모두 지원합니다.</p></div>
@@ -361,7 +477,7 @@
           <svg width="30" height="30" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="lgF" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4361ee"/><stop offset="1" stop-color="#3a0ca3"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#lgF)"/><rect x="120" y="96" width="272" height="320" rx="20" fill="white" opacity="0.95"/><rect x="160" y="160" width="120" height="24" rx="6" fill="#4361ee"/><rect x="160" y="210" width="192" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="240" width="160" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="270" width="180" height="14" rx="4" fill="#6c757d" opacity="0.6"/><polygon points="310,380 390,300 420,330 340,410 300,420" fill="#4cc9f0"/></svg>
           <span class="font-display text-[20px] font-bold text-white">Taleno</span>
         </div>
-        <p class="text-[14px] leading-[24px] text-white/70">Tauri 2, Rust, SolidJS 로 제작된 로컬 우선 미니멀 마크다운 뷰어 및 실시간 WYSIWYG 에디터. 분할 화면 없이 입력한 위치에서 즉시 렌더링됩니다.</p>
+        <p class="text-[14px] leading-[24px] text-white/70">Taleno는 Tauri 2 + Rust + SolidJS 기반의 초경량 로컬 우선 인플레이스 WYSIWYG 마크다운 편집기입니다. 화면 분할 없는 실시간 렌더링, 플러그인 및 테마 마켓, 완벽한 오프라인 개인정보 보호를 제공합니다.</p>
         <p class="text-[11px] leading-[18px] text-white/40 w-[380px] max-[1000px]:w-full">English · 简体中文 · 繁體中文 · 日本語 · 한국어 · Deutsch · Français · Español · Русский</p>
       </div>
       <div class="flex-1 flex flex-col gap-[12px]">

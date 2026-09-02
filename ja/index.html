@@ -3,19 +3,134 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Taleno — インプレース WYSIWYG Markdown リーダー＆エディター</title>
-  <meta name="description" content="Tauri 2、Rust、SolidJS で構築された、ローカルファーストのインプレース WYSIWYG Markdown リーダー＆エディター。2画面分割を廃止し、入力位置でそのまま美しくレンダリング。" />
+  <title>Taleno — 高速ネイティブ インプレース WYSIWYG Markdown エディタ</title>
+  <meta name="description" content="Taleno は Tauri 2 + Rust + SolidJS で構築されたローカルファーストのインプレース WYSIWYG Markdown エディタです。2画面分割なしで即時組版。プラグイン、テーマ、オフライン完全対応。" />
+  <meta name="keywords" content="Taleno, Markdown editor, WYSIWYG Markdown, in-place Markdown, Typora alternative, Obsidian alternative, Tauri Markdown app, local-first editor, GFM reader" />
+  <meta name="author" content="BerryUIKI" />
+  <link rel="canonical" href="https://berryuiki.github.io/Taleno/ja/" />
+  <link rel="alternate" hreflang="x-default" href="https://berryuiki.github.io/Taleno/" />
+  <link rel="alternate" hreflang="en" href="https://berryuiki.github.io/Taleno/" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://berryuiki.github.io/Taleno/zh-CN/" />
+  <link rel="alternate" hreflang="zh-Hant" href="https://berryuiki.github.io/Taleno/zh-TW/" />
+  <link rel="alternate" hreflang="ja" href="https://berryuiki.github.io/Taleno/ja/" />
+  <link rel="alternate" hreflang="ko" href="https://berryuiki.github.io/Taleno/ko/" />
+  <link rel="alternate" hreflang="de" href="https://berryuiki.github.io/Taleno/de/" />
+  <link rel="alternate" hreflang="fr" href="https://berryuiki.github.io/Taleno/fr/" />
+  <link rel="alternate" hreflang="es" href="https://berryuiki.github.io/Taleno/es/" />
+  <link rel="alternate" hreflang="ru" href="https://berryuiki.github.io/Taleno/ru/" />
   
-  <!-- Open Graph / Twitter -->
+  <!-- Open Graph / Twitter Cards -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Taleno — インプレース WYSIWYG Markdown リーダー＆エディター" />
-  <meta property="og:description" content="Tauri 2、Rust、SolidJS で構築された、ローカルファーストのインプレース WYSIWYG Markdown リーダー＆エディター。2画面分割を廃止し、入力位置でそのまま美しくレンダリング。" />
-  <meta property="og:image" content="../app-icon.svg" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Taleno — インプレース WYSIWYG Markdown リーダー＆エディター" />
-  <meta name="twitter:description" content="Tauri 2、Rust、SolidJS で構築された、ローカルファーストのインプレース WYSIWYG Markdown リーダー＆エディター。2画面分割を廃止し、入力位置でそのまま美しくレンダリング。" />
+  <meta property="og:site_name" content="Taleno" />
+  <meta property="og:url" content="https://berryuiki.github.io/Taleno/ja/" />
+  <meta property="og:title" content="Taleno — 高速ネイティブ インプレース WYSIWYG Markdown エディタ" />
+  <meta property="og:description" content="Taleno は Tauri 2 + Rust + SolidJS で構築されたローカルファーストのインプレース WYSIWYG Markdown エディタです。2画面分割なしで即時組版。プラグイン、テーマ、オフライン完全対応。" />
+  <meta property="og:image" content="https://berryuiki.github.io/Taleno/og-preview.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Taleno — 高速ネイティブ インプレース WYSIWYG Markdown エディタ" />
+  <meta name="twitter:description" content="Taleno は Tauri 2 + Rust + SolidJS で構築されたローカルファーストのインプレース WYSIWYG Markdown エディタです。2画面分割なしで即時組版。プラグイン、テーマ、オフライン完全対応。" />
+  <meta name="twitter:image" content="https://berryuiki.github.io/Taleno/og-preview.png" />
 
   <link rel="icon" type="image/svg+xml" href="../app-icon.svg" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://berryuiki.github.io/Taleno/#software",
+      "name": "Taleno",
+      "alternateName": "Taleno Markdown Editor",
+      "description": "Taleno は Tauri 2 + Rust + SolidJS で構築されたローカルファーストのインプレース WYSIWYG Markdown エディタです。2画面分割なしで即時組版。プラグイン、テーマ、オフライン完全対応。",
+      "applicationCategory": "ProductivityApplication",
+      "operatingSystem": "Windows 10+, macOS 11+, Linux (Ubuntu, Debian, Fedora, Arch)",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "softwareVersion": "0.1.7",
+      "license": "https://www.gnu.org/licenses/agpl-3.0.html",
+      "url": "https://berryuiki.github.io/Taleno/",
+      "downloadUrl": "https://berryuiki.github.io/Taleno/download.html",
+      "image": "https://berryuiki.github.io/Taleno/app-icon.svg",
+      "screenshot": "https://berryuiki.github.io/Taleno/og-preview.png",
+      "author": {
+        "@type": "Organization",
+        "name": "BerryUIKI",
+        "url": "https://github.com/BerryUIKI"
+      },
+      "featureList": [
+        "3つの表示モード切替",
+        "プラグイン拡張機能",
+        "カスタム＆コミュニティテーマ",
+        "9言語ネイティブ対応",
+        "高速シンタックスハイライト",
+        "Mermaid & LaTeX 数式",
+        "Ripgrep 全文検索",
+        "安全なアトミック保存",
+        "直感的なドラッグ＆ドロップ",
+        "単一 HTML エクスポート"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://berryuiki.github.io/Taleno/#website",
+      "url": "https://berryuiki.github.io/Taleno/ja/",
+      "name": "Taleno",
+      "inLanguage": "ja"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://berryuiki.github.io/Taleno/ja/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Taleno は Typora や Obsidian、Electron 製エディタと何が違いますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Chromium を丸ごと内蔵する Electron エディタと異なり、Taleno は Rust と Tauri 2 で構築されており、400ms 未満の高速起動と圧倒的な省メモリを実現しています。2画面分割ではなくカーソル位置で直接レンダリングされ、ファイルはアトミック保存により破損から保護されます。さらに公式 Taleno-Plugins ハブから拡張機能やテーマをワンクリックで追加可能です。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "従来の Markdown エディターとの違いは何ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "左右に分割されたプレビュー画面がなく、入力位置でそのままレンダリングされる真のインプレース WYSIWYG を提供します。Electron を使わず Rust と Tauri 2 で構築されているため、圧倒的に高速で軽量です。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "データのプライバシーと安全性はどうなっていますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "100% ローカルファーストです。すべての文書はお手元のデバイスにのみ保存され、クラウドへの無断送信はありません。アトミック書き込みにより急な電源断でもファイルを破損から守ります。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "どのような Markdown 拡張構文に対応していますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "GitHub Flavored Markdown (GFM)、テーブル、タスクリスト、コードブロック構文ハイライト、Mermaid 図表（フローチャート・シーケンス図等）、KaTeX 数式に対応しています。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "無料で利用できますか？ 貢献方法は？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "はい、GNU AGPL-3.0 ライセンスに基づく完全無料のオープンソースソフトウェアです。GitHub での Issue 報告、翻訳、Pull Request を大歓迎します。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -94,9 +209,9 @@
         <span class="w-[6px] h-[6px] rounded-full bg-[#34C759]"></span>
         v0.1.7 リリース · AGPL-3.0 オープンソース
       </div>
-      <h1 class="font-display text-[64px] font-bold leading-[1.1] tracking-[-1.5px] text-ink text-center max-[768px]:text-[40px]">その場で整う、Markdown。</h1>
+      <h1 class="font-display text-[52px] sm:text-[64px] font-bold leading-[1.1] tracking-[-1.5px] text-ink text-center max-[768px]:text-[38px]"><span class="block text-[20px] sm:text-[26px] font-semibold text-accent tracking-normal mb-2">Taleno — In-Place WYSIWYG</span>その場で整う、Markdown。</h1>
       <p class="max-w-[720px] text-center text-[18px] leading-[30px] text-ink-secondary">
-        ミニマリストで超高速なインプレース WYSIWYG Markdown リーダー＆エディター。左右分割プレビューを排除し、タイピングと同時にその場でレンダリング — Tauri 2 + Rust + SolidJS によるミリ秒単位の応答性。
+        ミニマルで高速なローカルファースト WYSIWYG Markdown リーダー＆エディタ。画面分割不要のインプレース即時レンダリング。Tauri 2 + Rust + SolidJS によるミリ秒単位の応答性と拡張性。
       </p>
       <div class="flex items-center gap-[12px]">
         <a href="#download" class="flex items-center gap-[8px] px-[24px] py-[12px] rounded-[8px] bg-ink text-white text-[16px] font-semibold hover:opacity-85 transition-opacity">
@@ -345,6 +460,7 @@
         </div>
       </div>
       <div class="flex-1 flex flex-col gap-[16px]">
+        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">Taleno は Typora や Obsidian、Electron 製エディタと何が違いますか？</h3><p class="text-[14px] leading-[24px] text-ink-secondary">Chromium を丸ごと内蔵する Electron エディタと異なり、Taleno は Rust と Tauri 2 で構築されており、400ms 未満の高速起動と圧倒的な省メモリを実現しています。2画面分割ではなくカーソル位置で直接レンダリングされ、ファイルはアトミック保存により破損から保護されます。さらに公式 Taleno-Plugins ハブから拡張機能やテーマをワンクリックで追加可能です。</p></div>
         <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">従来の Markdown エディターとの違いは何ですか？</h3><p class="text-[14px] leading-[24px] text-ink-secondary">左右に分割されたプレビュー画面がなく、入力位置でそのままレンダリングされる真のインプレース WYSIWYG を提供します。Electron を使わず Rust と Tauri 2 で構築されているため、圧倒的に高速で軽量です。</p></div>
         <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">データのプライバシーと安全性はどうなっていますか？</h3><p class="text-[14px] leading-[24px] text-ink-secondary">100% ローカルファーストです。すべての文書はお手元のデバイスにのみ保存され、クラウドへの無断送信はありません。アトミック書き込みにより急な電源断でもファイルを破損から守ります。</p></div>
         <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">どのような Markdown 拡張構文に対応していますか？</h3><p class="text-[14px] leading-[24px] text-ink-secondary">GitHub Flavored Markdown (GFM)、テーブル、タスクリスト、コードブロック構文ハイライト、Mermaid 図表（フローチャート・シーケンス図等）、KaTeX 数式に対応しています。</p></div>
@@ -361,7 +477,7 @@
           <svg width="30" height="30" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="lgF" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4361ee"/><stop offset="1" stop-color="#3a0ca3"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#lgF)"/><rect x="120" y="96" width="272" height="320" rx="20" fill="white" opacity="0.95"/><rect x="160" y="160" width="120" height="24" rx="6" fill="#4361ee"/><rect x="160" y="210" width="192" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="240" width="160" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="270" width="180" height="14" rx="4" fill="#6c757d" opacity="0.6"/><polygon points="310,380 390,300 420,330 340,410 300,420" fill="#4cc9f0"/></svg>
           <span class="font-display text-[20px] font-bold text-white">Taleno</span>
         </div>
-        <p class="text-[14px] leading-[24px] text-white/70">Tauri 2、Rust、SolidJS で構築された、ローカルファーストのインプレース WYSIWYG Markdown リーダー＆エディター。2画面分割を廃止し、入力位置でそのまま美しくレンダリング。</p>
+        <p class="text-[14px] leading-[24px] text-white/70">Taleno は Tauri 2 + Rust + SolidJS で構築されたローカルファーストのインプレース WYSIWYG Markdown エディタです。2画面分割なしで即時組版。プラグイン、テーマ、オフライン完全対応。</p>
         <p class="text-[11px] leading-[18px] text-white/40 w-[380px] max-[1000px]:w-full">English · 简体中文 · 繁體中文 · 日本語 · 한국어 · Deutsch · Français · Español · Русский</p>
       </div>
       <div class="flex-1 flex flex-col gap-[12px]">
