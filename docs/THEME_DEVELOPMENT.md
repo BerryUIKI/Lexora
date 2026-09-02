@@ -4,7 +4,25 @@ This guide explains how to design, package, test, and publish custom themes and 
 
 ---
 
-## 🎨 Theme Architecture
+## 🎨 Theme Categories: Built-in vs External Themes
+
+Themes in Lexora are divided into two distinct categories:
+
+1. **Built-in Themes**:
+   - Included by default with the software (e.g., `Lexora`, `GitHub`, `Solarized`).
+   - Require no installation, ship bundled with the app binary, and **cannot be uninstalled** via the GUI.
+   - Serve as reliable, offline fallback presets.
+2. **External Themes (Community Skins)**:
+   - Developed by the community and hosted exclusively in the [`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins) repository.
+   - Users can freely choose to **install**, **apply**, or **uninstall** them on demand via options within the theme settings GUI.
+   - Stored in `%APPDATA%/Lexora/themes/<theme-id>/` on the user's machine.
+
+> [!IMPORTANT]
+> All external themes and community skins must be submitted to the [`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins) repository. Please **do not** submit external themes to the core `Lexora` software repository.
+
+---
+
+## 🏗️ Theme Architecture
 
 Lexora uses a design-token-driven CSS architecture. When an active theme is applied, Lexora dynamically overrides design tokens without restarting the app, modifying configuration files, or triggering full DOM reconstructs.
 

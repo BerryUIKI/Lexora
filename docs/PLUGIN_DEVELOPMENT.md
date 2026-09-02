@@ -191,9 +191,13 @@ Lexora's architecture prioritizes user data protection and stability:
 
 To make your plugin discoverable in Lexora's built-in **Marketplace**:
 
+> [!IMPORTANT]
+> **Repository Submission Rule**:
+> All external plugins must be submitted to the [**BerryUIKI/Lexora-Plugins**](https://github.com/BerryUIKI/Lexora-Plugins) repository. Do **not** submit third-party plugins as Pull Requests to the core `Lexora` repository.
+
 1. Fork the official [**BerryUIKI/Lexora-Plugins**](https://github.com/BerryUIKI/Lexora-Plugins) repository.
 2. Add your plugin under `plugins/<plugin-id>/`.
 3. Register your plugin in `plugins.json`.
-4. Submit a Pull Request targeting the **`dev`** branch.
+4. Submit a Pull Request targeting the **`dev`** branch of `BerryUIKI/Lexora-Plugins`.
 
 See the [Lexora-Plugins Submission Guidelines](https://github.com/BerryUIKI/Lexora-Plugins/blob/dev/SUBMISSION_GUIDELINES.md) for full review requirements.
