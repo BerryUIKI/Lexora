@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Taleno — Editor Markdown WYSIWYG en el lugar nativo y ligero</title>
-  <meta name="description" content="Taleno es un editor Markdown WYSIWYG local-first creado con Tauri 2, Rust y SolidJS. Sin pantalla dividida, plugins, temas y total privacidad offline para Windows, macOS y Linux." />
+  <title>Taleno — Lector y Editor Markdown In-Place Rápido y Limpio</title>
+  <meta name="description" content="Taleno es un editor y lector Markdown local, gratuito y sin panel dividido. Formato directo mientras escribes, 100% privado y sin conexión, inicio instantáneo para Windows, macOS y Linux." />
   <meta name="keywords" content="Taleno, Markdown editor, WYSIWYG Markdown, in-place Markdown, Typora alternative, Obsidian alternative, Tauri Markdown app, local-first editor, GFM reader" />
   <meta name="author" content="BerryUIKI" />
   <link rel="canonical" href="https://berryuiki.github.io/Taleno/es/" />
@@ -23,14 +23,14 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Taleno" />
   <meta property="og:url" content="https://berryuiki.github.io/Taleno/es/" />
-  <meta property="og:title" content="Taleno — Editor Markdown WYSIWYG en el lugar nativo y ligero" />
-  <meta property="og:description" content="Taleno es un editor Markdown WYSIWYG local-first creado con Tauri 2, Rust y SolidJS. Sin pantalla dividida, plugins, temas y total privacidad offline para Windows, macOS y Linux." />
+  <meta property="og:title" content="Taleno — Lector y Editor Markdown In-Place Rápido y Limpio" />
+  <meta property="og:description" content="Taleno es un editor y lector Markdown local, gratuito y sin panel dividido. Formato directo mientras escribes, 100% privado y sin conexión, inicio instantáneo para Windows, macOS y Linux." />
   <meta property="og:image" content="https://berryuiki.github.io/Taleno/og-preview.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Taleno — Editor Markdown WYSIWYG en el lugar nativo y ligero" />
-  <meta name="twitter:description" content="Taleno es un editor Markdown WYSIWYG local-first creado con Tauri 2, Rust y SolidJS. Sin pantalla dividida, plugins, temas y total privacidad offline para Windows, macOS y Linux." />
+  <meta name="twitter:title" content="Taleno — Lector y Editor Markdown In-Place Rápido y Limpio" />
+  <meta name="twitter:description" content="Taleno es un editor y lector Markdown local, gratuito y sin panel dividido. Formato directo mientras escribes, 100% privado y sin conexión, inicio instantáneo para Windows, macOS y Linux." />
   <meta name="twitter:image" content="https://berryuiki.github.io/Taleno/og-preview.png" />
 
   <link rel="icon" type="image/svg+xml" href="../app-icon.svg" />
@@ -43,7 +43,7 @@
       "@id": "https://berryuiki.github.io/Taleno/#software",
       "name": "Taleno",
       "alternateName": "Taleno Markdown Editor",
-      "description": "Taleno es un editor Markdown WYSIWYG local-first creado con Tauri 2, Rust y SolidJS. Sin pantalla dividida, plugins, temas y total privacidad offline para Windows, macOS y Linux.",
+      "description": "Taleno es un editor y lector Markdown local, gratuito y sin panel dividido. Formato directo mientras escribes, 100% privado y sin conexión, inicio instantáneo para Windows, macOS y Linux.",
       "applicationCategory": "ProductivityApplication",
       "operatingSystem": "Windows 10+, macOS 11+, Linux (Ubuntu, Debian, Fedora, Arch)",
       "offers": {
@@ -51,7 +51,7 @@
         "price": "0",
         "priceCurrency": "USD"
       },
-      "softwareVersion": "0.1.7",
+      "softwareVersion": "0.1.8",
       "license": "https://www.gnu.org/licenses/agpl-3.0.html",
       "url": "https://berryuiki.github.io/Taleno/",
       "downloadUrl": "https://berryuiki.github.io/Taleno/download.html",
@@ -63,16 +63,16 @@
         "url": "https://github.com/BerryUIKI"
       },
       "featureList": [
-        "Tres modos de visualización",
-        "Ecosistema de plugins",
-        "Temas y personalización",
-        "Internacionalización (9 idiomas)",
-        "Resaltado de sintaxis",
-        "Mermaid y fórmulas LaTeX",
-        "Búsqueda global Ripgrep",
-        "Guardado atómico seguro",
-        "Arrastrar y soltar inteligente",
-        "Exportación a HTML autónomo"
+        "Tres modos de vista",
+        "Extensiones con un clic",
+        "Temas elegantes",
+        "En tu idioma",
+        "Resaltado de código claro",
+        "Diagramas y fórmulas matemáticas",
+        "Búsqueda veloz en todas tus notas",
+        "Tus ideas siempre a salvo",
+        "Arrastrar y soltar natural",
+        "Exportar a HTML independiente"
       ]
     },
     {
@@ -88,42 +88,42 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "¿Qué ventajas tiene Taleno frente a Typora, Obsidian y editores basados en Electron ?",
+          "name": "¿Qué hace diferente a Taleno frente a otros editores?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "A diferencia de los editores basados en Electron que consumen abundante RAM, Taleno está programado en Rust y Tauri 2, arrancando en menos de 400 ms con un uso mínimo de recursos. En lugar de doble pantalla, renderiza directamente en el lugar de escritura. Tus documentos se guardan localmente con guardado atómico contra fallos, y puedes instalar extensiones y temas desde el repositorio oficial Taleno-Plugins sin depender de la nube."
+            "text": "Muchas aplicaciones te obligan a trabajar con pantallas divididas o resultan pesadas y consumen mucha batería. Taleno da formato directamente en el texto mientras escribes, arranca en una fracción de segundo y consume poquísima memoria."
           }
         },
         {
           "@type": "Question",
-          "name": "¿Qué hace diferente a Taleno de otros editores?",
+          "name": "¿Puedo abrir mis notas Markdown actuales?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Taleno ofrece edición WYSIWYG real en el mismo lugar donde escribes, sin paneles divididos. Desarrollado en Rust y Tauri 2, es ligero, rápido y no depende del sobrepeso de Electron."
+            "text": "¡Sí, con total normalidad! Taleno utiliza archivos Markdown estándar (.md). Podrás abrir y guardar notas creadas en Obsidian, Typora, Notion o VS Code sin problemas."
           }
         },
         {
           "@type": "Question",
-          "name": "¿Mis datos están seguros?",
+          "name": "¿Están mis notas a salvo y privadas?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "100% local-first. Todos tus documentos se guardan exclusivamente en tu equipo sin envío a la nube. El guardado atómico protege tus textos de cierres inesperados."
+            "text": "Totalmente. Tus archivos se guardan únicamente en tu ordenador. No requiere crear cuenta, no sube datos a la nube y funciona al 100% sin internet."
           }
         },
         {
           "@type": "Question",
-          "name": "¿Qué funciones de Markdown están soportadas?",
+          "name": "¿Se pueden instalar temas y plugins?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "GitHub Flavored Markdown (GFM), tablas, listas de tareas, resaltado de código, diagramas Mermaid y fórmulas matemáticas KaTeX."
+            "text": "¡Sí! Puedes cambiar entre temas claros y oscuros o descargar aspectos populares como Dracula o Nord desde el menú de ajustes en un solo clic."
           }
         },
         {
           "@type": "Question",
-          "name": "¿Es gratuito y de código abierto?",
+          "name": "¿Taleno es gratis?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Sí, Taleno es software libre bajo licencia GNU AGPL-3.0. Agradecemos comentarios, traducciones y colaboraciones en GitHub."
+            "text": "Sí, Taleno es software libre y de código abierto (GNU AGPL-3.0), sin planes de pago, anuncios ni funciones bloqueadas."
           }
         }
       ]
@@ -168,9 +168,9 @@
     <nav class="hidden lg:flex items-center gap-[28px] text-[14px] text-ink-secondary">
       <a href="#features" class="hover:text-ink transition-colors">Características</a>
       <a href="#download" class="hover:text-ink transition-colors">Descargar</a>
-      <a href="#architecture" class="hover:text-ink transition-colors">Arquitectura</a>
+      <a href="#architecture" class="hover:text-ink transition-colors">Rendimiento</a>
       <a href="#shortcuts" class="hover:text-ink transition-colors">Atajos</a>
-      <a href="#faq" class="hover:text-ink transition-colors">Preguntas Frecuentes</a>
+      <a href="#faq" class="hover:text-ink transition-colors">Preguntas</a>
     </nav>
     <div class="flex items-center gap-[10px]">
       <div class="relative" id="langSwitcher">
@@ -207,36 +207,36 @@
     <section class="bg-bg pt-[88px] pb-[72px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex flex-col items-center gap-[28px]">
       <div class="flex items-center gap-[8px] px-[14px] py-[7px] rounded-full bg-bg-subtle border border-border text-[13px] text-ink-secondary">
         <span class="w-[6px] h-[6px] rounded-full bg-[#34C759]"></span>
-        v0.1.7 publicado · Código abierto AGPL-3.0
+        ${LATEST_VERSION_TAG} disponible · 100% Libre y Código Abierto
       </div>
-      <h1 class="font-display text-[52px] sm:text-[64px] font-bold leading-[1.1] tracking-[-1.5px] text-ink text-center max-[768px]:text-[38px]"><span class="block text-[20px] sm:text-[26px] font-semibold text-accent tracking-normal mb-2">Taleno — In-Place WYSIWYG</span>Markdown, directamente en su lugar.</h1>
+      <h1 class="font-display text-[52px] sm:text-[64px] font-bold leading-[1.1] tracking-[-1.5px] text-ink text-center max-[768px]:text-[38px]"><span class="block text-[20px] sm:text-[26px] font-semibold text-accent tracking-normal mb-2">Taleno — In-Place WYSIWYG</span>Markdown, natural y sencillo.</h1>
       <p class="max-w-[720px] text-center text-[18px] leading-[30px] text-ink-secondary">
-        Un editor y lector Markdown WYSIWYG directo, minimalista y de alto rendimiento. Formato instantáneo sin paneles divididos — desarrollado con Tauri 2, Rust y SolidJS para una respuesta fluida y privacidad total.
+        Escribe directamente sobre el texto maquetado sin ventanas divididas. Taleno se abre al instante, mantiene todas tus notas seguras en tu ordenador y te ofrece un espacio despejado para pensar y crear.
       </p>
       <div class="flex items-center gap-[12px]">
         <a href="#download" class="flex items-center gap-[8px] px-[24px] py-[12px] rounded-[8px] bg-ink text-white text-[16px] font-semibold hover:opacity-85 transition-opacity">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Descargar Ahora
+          Descargar Taleno
         </a>
         <a href="https://github.com/BerryUIKI/Taleno" target="_blank" rel="noopener" class="flex items-center gap-[8px] px-[24px] py-[12px] rounded-[8px] bg-bg border border-border text-[16px] font-semibold text-ink hover:bg-bg-subtle transition-colors">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5 4-1.4 6.8-5.2 6.8-9.7C22 6.6 17.5 2 12 2z" fill="#0D0D0F"/></svg>
-          Ver en GitHub
+          Repositorio GitHub
         </a>
       </div>
       <div class="flex items-center gap-[36px] text-[14px] text-ink-tertiary max-[768px]:flex-wrap max-[768px]:justify-center">
-        <span class="flex items-center gap-[8px]"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="#8F8F94"/></svg>Inicio <400ms</span>
-        <span class="flex items-center gap-[8px]"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="7" height="16" rx="1.5" stroke="#8F8F94" stroke-width="1.8"/><rect x="14" y="4" width="7" height="16" rx="1.5" stroke="#8F8F94" stroke-width="1.8"/></svg>Sin paneles divididos</span>
-        <span class="flex items-center gap-[8px]"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="#8F8F94" stroke-width="1.8"/><path d="M3 12h18M12 3c2.5 2.4 3.8 5.5 3.8 9S14.5 18.6 12 21c-2.5-2.4-3.8-5.5-3.8-9S9.5 5.4 12 3z" stroke="#8F8F94" stroke-width="1.8"/></svg>Plugins y Temas</span>
-        <span class="flex items-center gap-[8px]"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3a7 7 0 0 1 7 7c0 1.5-.5 2.9-1.3 4M5.3 7.3A7 7 0 0 0 5 10a7 7 0 0 0 3.5 6.1M3 3l18 18" stroke="#8F8F94" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>9 idiomas</span>
+        <span class="flex items-center gap-[8px]"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="#8F8F94"/></svg>Abre al instante</span>
+        <span class="flex items-center gap-[8px]"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="7" height="16" rx="1.5" stroke="#8F8F94" stroke-width="1.8"/><rect x="14" y="4" width="7" height="16" rx="1.5" stroke="#8F8F94" stroke-width="1.8"/></svg>Sin pantallas divididas</span>
+        <span class="flex items-center gap-[8px]"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="#8F8F94" stroke-width="1.8"/><path d="M3 12h18M12 3c2.5 2.4 3.8 5.5 3.8 9S14.5 18.6 12 21c-2.5-2.4-3.8-5.5-3.8-9S9.5 5.4 12 3z" stroke="#8F8F94" stroke-width="1.8"/></svg>100% Privado y Offline</span>
+        <span class="flex items-center gap-[8px]"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3a7 7 0 0 1 7 7c0 1.5-.5 2.9-1.3 4M5.3 7.3A7 7 0 0 0 5 10a7 7 0 0 0 3.5 6.1M3 3l18 18" stroke="#8F8F94" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Completamente gratis</span>
       </div>
 
       <!-- Real UI Mockup -->
       <div class="w-full h-[620px] max-[1200px]:h-[480px] max-[768px]:h-[300px] rounded-[16px] bg-bg border border-border shot-shadow overflow-hidden flex flex-col">
         <div class="flex items-center justify-between px-[16px] h-[34px] bg-[#F6F6F7] border-b border-border">
           <div class="flex items-center gap-[18px] text-[12px] text-ink-secondary">
-            <span>Archivo</span><span>Editar</span><span>Ver</span><span>Ventana</span><span>Ayuda</span>
+            <span>Archivo</span><span>Edición</span><span>Ver</span><span>Ventana</span><span>Ayuda</span>
           </div>
-          <span class="text-[12px] text-ink-secondary">Taleno — README.md</span>
+          <span class="text-[12px] text-ink-secondary">Taleno — Escribir con total tranquilidad.md</span>
           <div class="flex items-center gap-[14px]">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="#636366" stroke-width="1.8"/><path d="M16.5 16.5L21 21" stroke="#636366" stroke-width="1.8" stroke-linecap="round"/></svg>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3" stroke="#636366" stroke-width="1.8"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1" stroke="#636366" stroke-width="1.8" stroke-linecap="round"/></svg>
@@ -252,8 +252,8 @@
         </div>
         <div class="flex-1 flex min-h-0">
           <aside class="w-[224px] max-[768px]:hidden shrink-0 bg-bg-subtle border-r border-border p-[16px] flex flex-col gap-[6px]">
-            <span class="text-[11px] font-semibold text-ink-tertiary pt-[8px]">Esquema</span>
-            <span class="text-[12px] text-ink-secondary">- Introducción</span>
+            <span class="text-[11px] font-semibold text-ink-tertiary pt-[8px]">Esquema de notas</span>
+            <span class="text-[12px] text-ink-secondary">- Céntrate en tus palabras</span>
             <span class="text-[12px] text-ink-secondary">- Características</span>
             <span class="text-[12px] text-ink-secondary">- Atajos</span>
             <span class="text-[11px] font-semibold text-ink-tertiary pt-[10px]">Espacio de trabajo</span>
@@ -261,24 +261,24 @@
             <span class="text-[12px] text-ink-secondary pl-[4px]">src/</span>
           </aside>
           <div class="flex-1 p-[32px] flex flex-col gap-[10px] overflow-hidden">
-            <h2 class="font-display text-[22px] font-bold text-ink"># Introducción</h2>
-            <p class="text-[13px] leading-[22px] text-ink-secondary">Taleno elimina la doble pantalla al renderizar Markdown en el lugar exacto con una tipografía limpia.</p>
-            <p class="text-[13px] leading-[22px] text-ink-secondary">Sin división de pantalla · WYSIWYG in-situ · Búsqueda global ripgrep.</p>
+            <h2 class="font-display text-[22px] font-bold text-ink"># Céntrate en tus palabras</h2>
+            <p class="text-[13px] leading-[22px] text-ink-secondary">Olvídate de los editores con dos ventanas donde escribes código a la izquierda y miras la vista previa a la derecha. En Taleno, lo que ves es lo que obtienes.</p>
+            <p class="text-[13px] leading-[22px] text-ink-secondary">WYSIWYG en el lugar · Búsqueda global instantánea · Guardado seguro.</p>
             <div class="pt-[8px]">
               <div class="flex border-y border-border">
-                <span class="w-[180px] py-[6px] text-[11px] font-semibold text-ink">Tiempo de inicio</span>
-                <span class="w-[160px] py-[6px] text-[11px] font-semibold text-ink">< 400 ms</span>
-                <span class="flex-1 py-[6px] text-[11px] font-semibold text-ink">Arranque instantáneo</span>
+                <span class="w-[180px] py-[6px] text-[11px] font-semibold text-ink">Inicio</span>
+                <span class="w-[160px] py-[6px] text-[11px] font-semibold text-ink">< 0,4 s</span>
+                <span class="flex-1 py-[6px] text-[11px] font-semibold text-ink">Listo al instante</span>
               </div>
               <div class="flex border-b border-border">
-                <span class="w-[180px] py-[5px] text-[11px] text-ink-secondary">Tiempo de inicio</span>
-                <span class="w-[160px] py-[5px] text-[11px] text-ink-secondary">< 400 ms</span>
-                <span class="flex-1 py-[5px] text-[11px] text-ink-secondary">Arranque instantáneo</span>
+                <span class="w-[180px] py-[5px] text-[11px] text-ink-secondary">Inicio</span>
+                <span class="w-[160px] py-[5px] text-[11px] text-ink-secondary">< 0,4 s</span>
+                <span class="flex-1 py-[5px] text-[11px] text-ink-secondary">Listo al instante</span>
               </div>
               <div class="flex">
-                <span class="w-[180px] py-[5px] text-[11px] text-ink-secondary">Búsqueda de texto</span>
-                <span class="w-[160px] py-[5px] text-[11px] text-ink-secondary">ripgrep</span>
-                <span class="flex-1 py-[5px] text-[11px] text-ink-secondary">Todo el espacio</span>
+                <span class="w-[180px] py-[5px] text-[11px] text-ink-secondary">Búsqueda</span>
+                <span class="w-[160px] py-[5px] text-[11px] text-ink-secondary">Instantánea</span>
+                <span class="flex-1 py-[5px] text-[11px] text-ink-secondary">Toda la carpeta</span>
               </div>
             </div>
           </div>
@@ -289,7 +289,7 @@
             <span class="font-semibold text-accent">Escritura</span>
             <span class="text-ink-tertiary">Código</span>
           </div>
-          <span class="text-[11px] text-ink-tertiary">Lín 1, Col 1  ·  1.420 palabras  ·  UTF-8  ·  LF</span>
+          <span class="text-[11px] text-ink-tertiary">Lín 1, Col 1  ·  1.420 palabras  ·  UTF-8  ·  Guardado</span>
         </div>
       </div>
     </section>
@@ -297,21 +297,21 @@
     <!-- ═══════════ Features ═══════════ -->
     <section id="features" class="bg-bg-subtle py-[96px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex flex-col items-center gap-[48px]">
       <div class="flex flex-col items-center gap-[12px]">
-        <span class="font-display text-[12px] font-semibold tracking-[2px] text-accent">CARACTERÍSTICAS CLAVE</span>
-        <h2 class="text-[40px] font-bold text-ink max-[768px]:text-[28px]">Escritura enfocada, sin distracciones</h2>
-        <p class="max-w-[600px] text-center text-[16px] leading-[26px] text-ink-secondary">Renderizado en tiempo real. Desde el esquema del documento y pestañas hasta la búsqueda ripgrep, todo está diseñado para una escritura fluida.</p>
+        <span class="font-display text-[12px] font-semibold tracking-[2px] text-accent">DISEÑADO PARA ESCRIBIR</span>
+        <h2 class="text-[40px] font-bold text-ink max-[768px]:text-[28px]">Todo lo que necesitas para redactar, sin distracciones</h2>
+        <p class="max-w-[600px] text-center text-[16px] leading-[26px] text-ink-secondary">Desde notas diarias y apuntes de estudio hasta artículos completos: Taleno te da un entorno tranquilo, fluido y confiable.</p>
       </div>
       <div class="grid grid-cols-5 gap-[16px] w-full max-[1280px]:grid-cols-3 max-[860px]:grid-cols-2 max-[640px]:grid-cols-1">
-        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#0D0D0F" stroke-width="1.8" stroke-linejoin="round"/><path d="M2 12l10 5 10-5M2 17l10 5 10-5" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Tres modos de visualización</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Alterna al instante entre modo Lectura (solo lectura), Escritura (WYSIWYG in-situ) y Código (código fuente sincronizado).</p></div>
-        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 3v4m6-4v4M5 7h14a2 2 0 0 1 2 2v7a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V9a2 2 0 0 1 2-2z" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 11v4m-2-2h4" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Ecosistema de plugins</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Explora, instala y actualiza extensiones desde el repositorio oficial Taleno-Plugins en un entorno JS aislado y seguro.</p></div>
-        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z" stroke="#0D0D0F" stroke-width="1.8"/><circle cx="7.5" cy="10.5" r="1.5" fill="#0D0D0F"/><circle cx="12" cy="7.5" r="1.5" fill="#0D0D0F"/><circle cx="16.5" cy="10.5" r="1.5" fill="#0D0D0F"/><circle cx="9" cy="15.5" r="1.5" fill="#0D0D0F"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Temas y personalización</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Ajustes predefinidos y catálogo de temas comunitarios (Dracula, Nord, Catppuccin) con previsualización en vivo.</p></div>
-        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="#0D0D0F" stroke-width="1.8"/><path d="M3 12h18M12 3c2.5 2.4 3.8 5.5 3.8 9S14.5 18.6 12 21c-2.5-2.4-3.8-5.5-3.8-9S9.5 5.4 12 3z" stroke="#0D0D0F" stroke-width="1.8"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Internacionalización (9 idiomas)</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Detecta automáticamente el idioma de tu sistema entre 9 lenguas con cambio instantáneo.</p></div>
-        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Resaltado de sintaxis</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Motor syntect de alto rendimiento con etiquetas de lenguaje y botón de copia con un clic.</p></div>
-        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16M4 4l7 8-7 8M4 20h16" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Mermaid y fórmulas LaTeX</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Visualización interactiva de diagramas de flujo, secuencia y clases Mermaid, además de fórmulas KaTeX.</p></div>
-        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="#0D0D0F" stroke-width="1.8"/><path d="M16.5 16.5L21 21" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Búsqueda global Ripgrep</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Búsqueda ultra rápida en todo el espacio de trabajo (Ctrl+Shift+F) y buscar/reemplazar en el documento (Ctrl+F/H).</p></div>
-        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" stroke="#0D0D0F" stroke-width="1.8" stroke-linejoin="round"/><path d="M17 21v-8H7v8M7 3v5h8" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Guardado atómico seguro</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Escritura atómica (.tmp rename) y seguimiento de cambios que previenen la pérdida accidental de datos.</p></div>
-        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 3l14 9-6 1-3 6-5-16z" stroke="#0D0D0F" stroke-width="1.8" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Arrastrar y soltar inteligente</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Arrastra archivos a la ventana para abrirlos, a las pestañas o al texto para insertar enlaces Markdown.</p></div>
-        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v13m0 0l-4.5-4.5M12 16l4.5-4.5M4 21h16" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Exportación a HTML autónomo</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Un atajo (Ctrl+E) para exportar archivos HTML independientes y listos para compartir sin conexión.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#0D0D0F" stroke-width="1.8" stroke-linejoin="round"/><path d="M2 12l10 5 10-5M2 17l10 5 10-5" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Tres modos de vista</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Alterna con un atajo: lectura relajada, escritura con formato instantáneo o código Markdown puro.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 3v4m6-4v4M5 7h14a2 2 0 0 1 2 2v7a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V9a2 2 0 0 1 2-2z" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 11v4m-2-2h4" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Extensiones con un clic</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Añade fácilmente metas de palabras, marcas de tiempo o cuadros de aviso desde la galería de plugins integrada.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z" stroke="#0D0D0F" stroke-width="1.8"/><circle cx="7.5" cy="10.5" r="1.5" fill="#0D0D0F"/><circle cx="12" cy="7.5" r="1.5" fill="#0D0D0F"/><circle cx="16.5" cy="10.5" r="1.5" fill="#0D0D0F"/><circle cx="9" cy="15.5" r="1.5" fill="#0D0D0F"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Temas elegantes</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Cuida tu vista con temas claros y oscuros, o aplica estilos populares como Dracula, Nord y Catppuccin con previsualización en vivo.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="#0D0D0F" stroke-width="1.8"/><path d="M3 12h18M12 3c2.5 2.4 3.8 5.5 3.8 9S14.5 18.6 12 21c-2.5-2.4-3.8-5.5-3.8-9S9.5 5.4 12 3z" stroke="#0D0D0F" stroke-width="1.8"/></svg></div><h3 class="text-[16px] font-semibold text-ink">En tu idioma</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Detecta automáticamente el idioma de tu sistema entre 9 lenguas disponibles, ajustable en cualquier momento.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Resaltado de código claro</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Colorea la sintaxis de más de 100 lenguajes de programación e incluye botón de copia rápida.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16M4 4l7 8-7 8M4 20h16" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Diagramas y fórmulas matemáticas</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Genera diagramas de flujo con Mermaid y escribe fórmulas matemáticas con KaTeX en tiempo real.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="#0D0D0F" stroke-width="1.8"/><path d="M16.5 16.5L21 21" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Búsqueda veloz en todas tus notas</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Presiona Ctrl+Mayús+F para localizar cualquier palabra entre cientos de notas en cuestión de milisegundos.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" stroke="#0D0D0F" stroke-width="1.8" stroke-linejoin="round"/><path d="M17 21v-8H7v8M7 3v5h8" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Tus ideas siempre a salvo</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Protección continua en segundo plano y aviso de confirmación antes de cerrar documentos no guardados.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 3l14 9-6 1-3 6-5-16z" stroke="#0D0D0F" stroke-width="1.8" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Arrastrar y soltar natural</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Arrastra archivos a la ventana para abrirlos, suéltalos en las pestañas o añade imágenes directamente en el texto.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[24px] flex flex-col gap-[12px]"><div class="w-[40px] h-[40px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v13m0 0l-4.5-4.5M12 16l4.5-4.5M4 21h16" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="text-[16px] font-semibold text-ink">Exportar a HTML independiente</h3><p class="text-[13px] leading-[21px] text-ink-secondary">Pulsa Ctrl+E para convertir cualquier nota en una página web limpia y autónoma lista para compartir.</p></div>
       </div>
     </section>
 
@@ -319,18 +319,18 @@
     <section id="download" class="bg-bg py-[96px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex flex-col items-center gap-[40px]">
       <div class="flex flex-col items-center gap-[12px]">
         <span class="font-display text-[12px] font-semibold tracking-[2px] text-accent">DESCARGA</span>
-        <h2 class="text-[40px] font-bold text-ink max-[768px]:text-[28px]">Descarga gratuita, empieza ahora</h2>
-        <p class="max-w-[600px] text-center text-[16px] leading-[26px] text-ink-secondary">Detecta automáticamente tu sistema operativo y recomienda el instalador para Windows, macOS y Linux.</p>
+        <h2 class="text-[40px] font-bold text-ink max-[768px]:text-[28px]">Descarga gratuita, lista en segundos</h2>
+        <p class="max-w-[600px] text-center text-[16px] leading-[26px] text-ink-secondary">Detectamos automáticamente tu dispositivo para recomendarte el instalador idóneo para Windows, macOS o Linux.</p>
       </div>
       <div class="grid grid-cols-3 gap-[16px] w-full max-[1000px]:grid-cols-1">
         <!-- Windows card -->
-        <div id="os-win" class="os-card bg-bg border-2 border-accent rounded-[12px] p-[28px] flex flex-col gap-[16px]">
-          <span class="os-badge w-fit px-[10px] py-[4px] rounded-full bg-accent text-white text-[11px] font-semibold tracking-[1px]">RECOMENDADO PARA TU SISTEMA</span>
+        <div id="os-win" class="os-card bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[16px] transition-all">
+          <span class="os-badge hidden w-fit px-[10px] py-[4px] rounded-full bg-accent text-white text-[11px] font-semibold tracking-[1px]">RECOMENDADO PARA TU SISTEMA</span>
           <div class="flex items-center gap-[14px]">
             <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5.5L10.5 4.3v7.2H3zM10.5 11.5v7.2L3 17.5v-6zM11.5 4.1L21 2.8v8.7h-9.5zM21 11.5v8.7l-9.5-1.3v-7.4z" fill="#0D0D0F"/></svg></div>
             <div><h3 class="font-display text-[20px] font-semibold text-ink">Windows</h3><p class="os-detected text-[12px] text-ink-tertiary">Windows x86_64</p></div>
           </div>
-          <a id="win-btn" href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Windows_x86_64.exe" class="flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-accent text-white text-[15px] font-semibold hover:opacity-90 transition-opacity">
+          <a id="win-btn" href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Windows_x86_64.exe" class="os-btn flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-ink text-white text-[15px] font-semibold hover:opacity-90 transition-all">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Descargar para Windows (.exe)
           </a>
@@ -346,7 +346,7 @@
             <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.4 12.6c0-2.2 1.8-3.2 1.9-3.3-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.6.8-3.3.8-.7 0-1.7-.8-2.8-.8-1.5 0-2.8.8-3.6 2.1-1.5 2.7-.4 6.6 1.1 8.8.7 1 1.6 2.2 2.7 2.1 1.1 0 1.5-.7 2.8-.7s1.7.7 2.8.7c1.2 0 1.9-1 2.6-2 .8-1.2 1.2-2.4 1.2-2.4s-2.2-.9-2.2-3.6zM14.6 6.2c.6-.7 1-1.7.9-2.7-.9 0-1.9.6-2.5 1.3-.6.6-1 1.6-.9 2.6 1 .1 1.9-.5 2.5-1.2z" fill="#0D0D0F"/></svg></div>
             <div><h3 class="font-display text-[20px] font-semibold text-ink">macOS</h3><p class="os-detected text-[12px] text-ink-tertiary">Apple Silicon / Intel</p></div>
           </div>
-          <a id="mac-btn" href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_macOS_aarch64.dmg" class="flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-ink text-white text-[15px] font-semibold hover:opacity-85 transition-opacity">
+          <a id="mac-btn" href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_macOS_aarch64.dmg" class="os-btn flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-ink text-white text-[15px] font-semibold hover:opacity-85 transition-all">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Descargar para Apple Silicon (.dmg)
           </a>
@@ -363,7 +363,7 @@
             <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="16" rx="2" stroke="#0D0D0F" stroke-width="1.8"/><path d="M7 9l3 3-3 3M13 15h4" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div><h3 class="font-display text-[20px] font-semibold text-ink">Linux</h3><p class="os-detected text-[12px] text-ink-tertiary">x86_64</p></div>
           </div>
-          <a id="linux-btn" href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Linux_x86_64.AppImage" class="flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-ink text-white text-[15px] font-semibold hover:opacity-85 transition-opacity">
+          <a id="linux-btn" href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Linux_x86_64.AppImage" class="os-btn flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-ink text-white text-[15px] font-semibold hover:opacity-85 transition-all">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Descargar AppImage
           </a>
@@ -374,33 +374,33 @@
           </div>
         </div>
       </div>
-      <a href="download.html" class="flex items-center justify-center gap-[8px] py-[14px] w-full rounded-[8px] border border-border bg-bg text-[15px] font-medium text-ink hover:bg-bg-subtle transition-colors">Ver todos los paquetes y sumas de verificación →</a>
+      <a href="download.html" class="flex items-center justify-center gap-[8px] py-[14px] w-full rounded-[8px] border border-border bg-bg text-[15px] font-medium text-ink hover:bg-bg-subtle transition-colors">Ver todos los instaladores en la página de descargas →</a>
     </section>
 
     <!-- ═══════════ Architecture ═══════════ -->
     <section id="architecture" class="bg-bg-subtle py-[96px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex flex-col items-center gap-[48px]">
       <div class="flex flex-col items-center gap-[12px]">
-        <span class="font-display text-[12px] font-semibold tracking-[2px] text-accent">ARQUITECTURA</span>
-        <h2 class="text-[40px] font-bold text-ink max-[768px]:text-[28px]">Motor en Rust y frontend ligero en SolidJS</h2>
-        <p class="max-w-[620px] text-center text-[16px] leading-[26px] text-ink-secondary">Tauri 2 conecta un backend seguro en Rust con una interfaz webview en SolidJS — sin pausas de recolección de basura y latencia menor a 16ms.</p>
+        <span class="font-display text-[12px] font-semibold tracking-[2px] text-accent">RENDIMIENTO</span>
+        <h2 class="text-[40px] font-bold text-ink max-[768px]:text-[28px]">Diseñado para ser veloz y cuidar tu batería</h2>
+        <p class="max-w-[620px] text-center text-[16px] leading-[26px] text-ink-secondary">Al prescindir de navegadores pesados, Taleno ofrece respuesta inmediata al teclado, sin tirones y con un gasto de batería mínimo.</p>
       </div>
       <div class="w-full bg-bg border border-border rounded-[16px] p-[48px] max-[768px]:p-[24px] flex items-center justify-between gap-[24px]">
         <div class="flex-1 flex flex-col gap-[10px]">
-          <span class="font-display text-[11px] font-semibold tracking-[1.5px] text-accent">FRONTEND</span>
-          <span class="font-display text-[18px] font-semibold text-ink">SolidJS + Webview</span>
-          <div class="flex flex-wrap gap-[8px]"><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Señales reactivas</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Milkdown / ProseMirror</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">i18n 9 idiomas</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">IPC tipado</span></div>
+          <span class="font-display text-[11px] font-semibold tracking-[1.5px] text-accent">Interfaz fluida</span>
+          <span class="font-display text-[18px] font-semibold text-ink">Ligereza moderna</span>
+          <div class="flex flex-wrap gap-[8px]"><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Respuesta inmediata</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Sin bloqueos</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">9 idiomas</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Temas instantáneos</span></div>
         </div>
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="shrink-0 max-[768px]:hidden"><path d="M4 12h15m0 0l-5.5-5.5M19 12l-5.5 5.5" stroke="#A6A6AC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <div class="flex-1 flex flex-col gap-[10px]">
-          <span class="font-display text-[11px] font-semibold tracking-[1.5px] text-accent">PUENTE IPC</span>
-          <span class="font-display text-[18px] font-semibold text-ink">Tauri 2 Core</span>
-          <div class="flex flex-wrap gap-[8px]"><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Comandos zero-copy</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Bus de eventos</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Seguridad por permisos</span></div>
+          <span class="font-display text-[11px] font-semibold tracking-[1.5px] text-accent">Conexión optimizada</span>
+          <span class="font-display text-[18px] font-semibold text-ink">Enlace eficiente</span>
+          <div class="flex flex-wrap gap-[8px]"><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Consumo mínimo de RAM</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Inicio al instante</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Entorno seguro</span></div>
         </div>
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="shrink-0 max-[768px]:hidden"><path d="M4 12h15m0 0l-5.5-5.5M19 12l-5.5 5.5" stroke="#A6A6AC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <div class="flex-1 flex flex-col gap-[10px]">
-          <span class="font-display text-[11px] font-semibold tracking-[1.5px] text-accent">NÚCLEO RUST</span>
-          <span class="font-display text-[18px] font-semibold text-ink">Motor nativo</span>
-          <div class="flex flex-wrap gap-[8px]"><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">pulldown-cmark AST</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Resaltado syntect</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Monitor notify</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">I/O atómico</span></div>
+          <span class="font-display text-[11px] font-semibold tracking-[1.5px] text-accent">Núcleo robusto</span>
+          <span class="font-display text-[18px] font-semibold text-ink">Motor fiable</span>
+          <div class="flex flex-wrap gap-[8px]"><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Guardado anti-caídas</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Búsqueda instantánea</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Cero rastreo en la nube</span><span class="px-[10px] py-[5px] rounded-[6px] bg-bg-soft text-[12px] text-ink-secondary">Markdown puro</span></div>
         </div>
       </div>
     </section>
@@ -409,32 +409,32 @@
     <section id="shortcuts" class="bg-bg py-[96px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex flex-col items-center gap-[48px]">
       <div class="flex flex-col items-center gap-[12px]">
         <span class="font-display text-[12px] font-semibold tracking-[2px] text-accent">ATAJOS DE TECLADO</span>
-        <h2 class="text-[40px] font-bold text-ink max-[768px]:text-[28px]">Todo el control desde tu teclado</h2>
-        <p class="max-w-[600px] text-center text-[16px] leading-[26px] text-ink-secondary">Compatibilidad con todos los atajos habituales de Markdown para dar formato, navegar y organizar documentos sin tocar el ratón.</p>
+        <h2 class="text-[40px] font-bold text-ink max-[768px]:text-[28px]">Tus manos siempre en las teclas</h2>
+        <p class="max-w-[600px] text-center text-[16px] leading-[26px] text-ink-secondary">Aplica estilos, organiza notas y navega sin necesidad de recurrir al ratón.</p>
       </div>
       <div class="grid grid-cols-3 gap-[16px] w-full max-[1000px]:grid-cols-1">
         <div class="bg-bg-subtle border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px]">
-          <h3 class="text-[16px] font-semibold text-ink">Documento y Archivo</h3>
+          <h3 class="text-[16px] font-semibold text-ink">Documentos y archivos</h3>
           <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Nuevo documento</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+N</span></div>
           <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Abrir archivo</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+O</span></div>
-          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Guardar documento</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+S</span></div>
-          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Guardar como...</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+Shift+S</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Guardar</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+S</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Guardar como...</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+Mayús+S</span></div>
           <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Exportar a HTML</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+E</span></div>
         </div>
         <div class="bg-bg-subtle border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px]">
-          <h3 class="text-[16px] font-semibold text-ink">Formato</h3>
+          <h3 class="text-[16px] font-semibold text-ink">Texto y formato</h3>
           <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Negrita</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+B</span></div>
           <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Cursiva</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+I</span></div>
           <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Encabezados 1–6</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+1~6</span></div>
-          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Párrafo estándar</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+0</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Párrafo normal</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+0</span></div>
           <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Insertar enlace</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+K</span></div>
         </div>
         <div class="bg-bg-subtle border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px]">
-          <h3 class="text-[16px] font-semibold text-ink">Navegación y Vista</h3>
-          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Cambio rápido de archivo</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+P</span></div>
-          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Buscar en el documento</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+F</span></div>
-          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Reemplazar en el documento</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+H</span></div>
-          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Buscar en espacio de trabajo</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+Shift+F</span></div>
+          <h3 class="text-[16px] font-semibold text-ink">Navegación y búsqueda</h3>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Selector rápido de archivo</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+P</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Buscar en la nota</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+F</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Reemplazar palabras</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+H</span></div>
+          <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Buscar en todas las notas</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+Mayús+F</span></div>
           <div class="flex items-center justify-between"><span class="text-[14px] text-ink-secondary">Cambiar modo de vista</span><span class="px-[10px] py-[4px] rounded-[6px] bg-bg border border-border text-[12px] text-ink font-mono">Ctrl+/</span></div>
         </div>
       </div>
@@ -445,26 +445,26 @@
       <div class="w-[380px] max-[1000px]:w-full flex flex-col gap-[32px]">
         <div class="flex flex-col gap-[12px]">
           <span class="font-display text-[12px] font-semibold tracking-[2px] text-accent">PREGUNTAS FRECUENTES</span>
-          <h2 class="font-display text-[36px] font-bold text-ink">Preguntas frecuentes (FAQ)</h2>
-          <p class="text-[15px] leading-[25px] text-ink-secondary">¿Tienes alguna duda o sugerencia? Abre una incidencia o participa en las discusiones en GitHub.</p>
+          <h2 class="font-display text-[36px] font-bold text-ink">Respuestas a tus dudas</h2>
+          <p class="text-[15px] leading-[25px] text-ink-secondary">¿Tienes preguntas o sugerencias? Te esperamos en GitHub para conversar.</p>
         </div>
         <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px]">
           <div class="flex items-center justify-between">
-            <h3 class="text-[16px] font-semibold text-ink">Última versión</h3>
-            <span class="px-[8px] py-[3px] rounded-full bg-bg-tag text-[12px] text-accent font-semibold">v0.1.7</span>
+            <h3 class="text-[16px] font-semibold text-ink">Novedades de la versión</h3>
+            <span data-version-tag class="px-[8px] py-[3px] rounded-full bg-bg-tag text-[12px] text-accent font-semibold">${LATEST_VERSION_TAG}</span>
           </div>
-          <div class="flex items-center gap-[10px]"><span class="w-[5px] h-[5px] rounded-full bg-accent"></span><span class="text-[14px] text-ink-secondary">Mercado de extensiones integrado (Taleno-Plugins hub)</span></div>
-          <div class="flex items-center gap-[10px]"><span class="w-[5px] h-[5px] rounded-full bg-accent"></span><span class="text-[14px] text-ink-secondary">Motor de temas comunitarios con paletas en tiempo real</span></div>
-          <div class="flex items-center gap-[10px]"><span class="w-[5px] h-[5px] rounded-full bg-accent"></span><span class="text-[14px] text-ink-secondary">Actualizaciones automáticas con notas de versión localizadas</span></div>
-          <div class="flex items-center gap-[10px]"><span class="w-[5px] h-[5px] rounded-full bg-accent"></span><span class="text-[14px] text-ink-secondary">Rebranding completo a Taleno y mejoras de rendimiento</span></div>
+          <div class="flex items-center gap-[10px]"><span class="w-[5px] h-[5px] rounded-full bg-accent"></span><span class="text-[14px] text-ink-secondary">Aviso de confirmación al cerrar documentos sin guardar</span></div>
+          <div class="flex items-center gap-[10px]"><span class="w-[5px] h-[5px] rounded-full bg-accent"></span><span class="text-[14px] text-ink-secondary">Botones de acceso rápido en la barra de título para plugins, temas e idiomas</span></div>
+          <div class="flex items-center gap-[10px]"><span class="w-[5px] h-[5px] rounded-full bg-accent"></span><span class="text-[14px] text-ink-secondary">Insignia de versión abajo a la izquierda con comprobación de actualización directa</span></div>
+          <div class="flex items-center gap-[10px]"><span class="w-[5px] h-[5px] rounded-full bg-accent"></span><span class="text-[14px] text-ink-secondary">Doble clic en la barra de pestañas crea exactamente un nuevo documento</span></div>
         </div>
       </div>
       <div class="flex-1 flex flex-col gap-[16px]">
-        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">¿Qué ventajas tiene Taleno frente a Typora, Obsidian y editores basados en Electron ?</h3><p class="text-[14px] leading-[24px] text-ink-secondary">A diferencia de los editores basados en Electron que consumen abundante RAM, Taleno está programado en Rust y Tauri 2, arrancando en menos de 400 ms con un uso mínimo de recursos. En lugar de doble pantalla, renderiza directamente en el lugar de escritura. Tus documentos se guardan localmente con guardado atómico contra fallos, y puedes instalar extensiones y temas desde el repositorio oficial Taleno-Plugins sin depender de la nube.</p></div>
-        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">¿Qué hace diferente a Taleno de otros editores?</h3><p class="text-[14px] leading-[24px] text-ink-secondary">Taleno ofrece edición WYSIWYG real en el mismo lugar donde escribes, sin paneles divididos. Desarrollado en Rust y Tauri 2, es ligero, rápido y no depende del sobrepeso de Electron.</p></div>
-        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">¿Mis datos están seguros?</h3><p class="text-[14px] leading-[24px] text-ink-secondary">100% local-first. Todos tus documentos se guardan exclusivamente en tu equipo sin envío a la nube. El guardado atómico protege tus textos de cierres inesperados.</p></div>
-        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">¿Qué funciones de Markdown están soportadas?</h3><p class="text-[14px] leading-[24px] text-ink-secondary">GitHub Flavored Markdown (GFM), tablas, listas de tareas, resaltado de código, diagramas Mermaid y fórmulas matemáticas KaTeX.</p></div>
-        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">¿Es gratuito y de código abierto?</h3><p class="text-[14px] leading-[24px] text-ink-secondary">Sí, Taleno es software libre bajo licencia GNU AGPL-3.0. Agradecemos comentarios, traducciones y colaboraciones en GitHub.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">¿Qué hace diferente a Taleno frente a otros editores?</h3><p class="text-[14px] leading-[24px] text-ink-secondary">Muchas aplicaciones te obligan a trabajar con pantallas divididas o resultan pesadas y consumen mucha batería. Taleno da formato directamente en el texto mientras escribes, arranca en una fracción de segundo y consume poquísima memoria.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">¿Puedo abrir mis notas Markdown actuales?</h3><p class="text-[14px] leading-[24px] text-ink-secondary">¡Sí, con total normalidad! Taleno utiliza archivos Markdown estándar (.md). Podrás abrir y guardar notas creadas en Obsidian, Typora, Notion o VS Code sin problemas.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">¿Están mis notas a salvo y privadas?</h3><p class="text-[14px] leading-[24px] text-ink-secondary">Totalmente. Tus archivos se guardan únicamente en tu ordenador. No requiere crear cuenta, no sube datos a la nube y funciona al 100% sin internet.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">¿Se pueden instalar temas y plugins?</h3><p class="text-[14px] leading-[24px] text-ink-secondary">¡Sí! Puedes cambiar entre temas claros y oscuros o descargar aspectos populares como Dracula o Nord desde el menú de ajustes en un solo clic.</p></div>
+        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[10px]"><h3 class="text-[16px] font-semibold text-ink">¿Taleno es gratis?</h3><p class="text-[14px] leading-[24px] text-ink-secondary">Sí, Taleno es software libre y de código abierto (GNU AGPL-3.0), sin planes de pago, anuncios ni funciones bloqueadas.</p></div>
       </div>
     </section>
   </main>
@@ -477,7 +477,7 @@
           <svg width="30" height="30" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="lgF" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4361ee"/><stop offset="1" stop-color="#3a0ca3"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#lgF)"/><rect x="120" y="96" width="272" height="320" rx="20" fill="white" opacity="0.95"/><rect x="160" y="160" width="120" height="24" rx="6" fill="#4361ee"/><rect x="160" y="210" width="192" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="240" width="160" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="270" width="180" height="14" rx="4" fill="#6c757d" opacity="0.6"/><polygon points="310,380 390,300 420,330 340,410 300,420" fill="#4cc9f0"/></svg>
           <span class="font-display text-[20px] font-bold text-white">Taleno</span>
         </div>
-        <p class="text-[14px] leading-[24px] text-white/70">Taleno es un editor Markdown WYSIWYG local-first creado con Tauri 2, Rust y SolidJS. Sin pantalla dividida, plugins, temas y total privacidad offline para Windows, macOS y Linux.</p>
+        <p class="text-[14px] leading-[24px] text-white/70">Taleno es un editor y lector Markdown local, gratuito y sin panel dividido. Formato directo mientras escribes, 100% privado y sin conexión, inicio instantáneo para Windows, macOS y Linux.</p>
         <p class="text-[11px] leading-[18px] text-white/40 w-[380px] max-[1000px]:w-full">English · 简体中文 · 繁體中文 · 日本語 · 한국어 · Deutsch · Français · Español · Русский</p>
       </div>
       <div class="flex-1 flex flex-col gap-[12px]">
@@ -485,7 +485,7 @@
         <a href="#download" class="text-[13px] text-white/60 hover:text-white transition-colors">Descargar</a>
         <a href="#features" class="text-[13px] text-white/60 hover:text-white transition-colors">Características</a>
         <a href="#shortcuts" class="text-[13px] text-white/60 hover:text-white transition-colors">Atajos</a>
-        <a href="#faq" class="text-[13px] text-white/60 hover:text-white transition-colors">Preguntas Frecuentes</a>
+        <a href="#faq" class="text-[13px] text-white/60 hover:text-white transition-colors">Preguntas</a>
       </div>
       <div class="flex-1 flex flex-col gap-[12px]">
         <h4 class="text-[14px] font-semibold text-white">Resources</h4>
@@ -527,26 +527,73 @@
 
     
 
-    // OS detection: highlight recommended card
-    const ua = navigator.userAgent.toLowerCase();
-    let os = 'win';
-    if (ua.includes('mac')) os = 'macos';
-    else if (ua.includes('linux')) os = 'linux';
+    // Dynamic Auto-Update Version Number from GitHub Releases
+    (function autoUpdateVersion() {
+      const cached = sessionStorage.getItem('taleno_latest_release');
+      if (cached) applyVersion(cached);
 
-    document.querySelectorAll('.os-card').forEach(c => {
-      c.classList.remove('border-2', 'border-accent');
-      c.classList.add('border', 'border-border');
-      const b = c.querySelector('.os-badge');
-      if (b) b.classList.add('hidden');
-    });
+      fetch('https://api.github.com/repos/BerryUIKI/Taleno/releases/latest')
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(data => {
+          if (data && data.tag_name) {
+            sessionStorage.setItem('taleno_latest_release', data.tag_name);
+            applyVersion(data.tag_name);
+          }
+        })
+        .catch(() => {});
 
-    const card = document.getElementById('os-' + os);
-    if (card) {
-      card.classList.remove('border', 'border-border');
-      card.classList.add('border-2', 'border-accent');
-      const badge = card.querySelector('.os-badge');
-      if (badge) badge.classList.remove('hidden');
+      function applyVersion(tag) {
+        const clean = tag.replace(/^v/, '');
+        document.querySelectorAll('[data-version-tag]').forEach(el => {
+          el.textContent = el.textContent.replace(/v?\d+\.\d+\.\d+/g, tag);
+        });
+      }
+    })();
+
+    // Multi-signal OS detection & dynamic card highlighting
+    function detectAndHighlightOS() {
+      const platform = (navigator.userAgentData?.platform || navigator.platform || '').toLowerCase();
+      const ua = (navigator.userAgent || '').toLowerCase();
+      let os = 'win';
+
+      if (platform.includes('mac') || ua.includes('macintosh') || ua.includes('mac os') || ua.includes('darwin')) {
+        os = 'macos';
+      } else if (platform.includes('linux') || ua.includes('linux') || ua.includes('x11')) {
+        os = 'linux';
+      } else if (platform.includes('win') || ua.includes('windows')) {
+        os = 'win';
+      }
+
+      // Reset all cards to neutral
+      document.querySelectorAll('.os-card').forEach(c => {
+        c.classList.remove('border-2', 'border-accent', 'shadow-md', 'scale-[1.01]');
+        c.classList.add('border', 'border-border');
+        const badge = c.querySelector('.os-badge');
+        if (badge) badge.classList.add('hidden');
+        const btn = c.querySelector('.os-btn');
+        if (btn) {
+          btn.classList.remove('bg-accent');
+          btn.classList.add('bg-ink');
+        }
+      });
+
+      // Highlight the recommended OS card
+      const targetCard = document.getElementById('os-' + os);
+      if (targetCard) {
+        targetCard.classList.remove('border', 'border-border');
+        targetCard.classList.add('border-2', 'border-accent', 'shadow-md', 'scale-[1.01]');
+        const badge = targetCard.querySelector('.os-badge');
+        if (badge) badge.classList.remove('hidden');
+        const btn = targetCard.querySelector('.os-btn');
+        if (btn) {
+          btn.classList.remove('bg-ink');
+          btn.classList.add('bg-accent');
+        }
+      }
     }
+
+    detectAndHighlightOS();
+    document.addEventListener('DOMContentLoaded', detectAndHighlightOS);
   </script>
 </body>
 </html>

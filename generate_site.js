@@ -1,6 +1,9 @@
-// generate_site.js — Builds static landing & download pages for all 9 languages
+// generate_site.js — Builds user-first landing & download pages for all 9 languages
 const fs = require('fs');
 const path = require('path');
+
+const LATEST_VERSION = '0.1.8';
+const LATEST_VERSION_TAG = 'v' + LATEST_VERSION;
 
 const languages = {
   'en': {
@@ -8,130 +11,142 @@ const languages = {
     dir: '',
     name: 'English',
     htmlLang: 'en',
-    title: 'Taleno — Free In-Place WYSIWYG Markdown Reader & Editor for Desktop',
-    metaDesc: 'Taleno is a free, local-first in-place WYSIWYG Markdown reader & editor built with Tauri 2, Rust, and SolidJS. Zero split panes, plugins, themes, and offline privacy for Windows, macOS, and Linux.',
-    nav: { features: 'Features', download: 'Download', architecture: 'Architecture', shortcuts: 'Shortcuts', faq: 'FAQ & Notes', github: 'GitHub' },
+    title: 'Taleno — Clean, Fast In-Place Markdown Reader & Editor',
+    metaDesc: 'Taleno is a free, lightweight Markdown reader and editor where you type directly into the formatted text. No dual split panes, 100% private and offline, with instant startup and beautiful themes for Windows, macOS, and Linux.',
+    nav: { features: 'Features', download: 'Download', architecture: 'Why Taleno', shortcuts: 'Shortcuts', faq: 'FAQ', github: 'GitHub' },
     selectLang: 'Select display language',
     hero: {
-      badge: 'v0.1.7 Released · AGPL-3.0 Open Source',
-      title: 'Markdown, in&nbsp;place.',
-      subtitle: 'A minimalist, high-performance in-place WYSIWYG Markdown reader & editor. Render-as-you-type with zero split panes — built on Tauri 2 + Rust + SolidJS for instant response, complete privacy, and extensible plugins.',
-      downloadBtn: 'Download Now',
-      githubBtn: 'View on GitHub',
-      chips: ['<400ms cold start', 'Zero split panes', 'Plugins & Themes', '9 languages']
+      badge: '${LATEST_VERSION_TAG} Released · 100% Free & Open Source',
+      title: 'Markdown, beautifully simple.',
+      subtitle: 'Type directly into the finished page with zero clunky split screens. Taleno opens in the blink of an eye, keeps all your files strictly private on your computer, and lets you focus entirely on your thoughts.',
+      downloadBtn: 'Download Taleno',
+      githubBtn: 'GitHub Repository',
+      chips: ['Opens in an instant', 'No split screens', '100% Offline & Private', '9 Languages']
     },
     mockup: {
       menu: ['File', 'Edit', 'View', 'Window', 'Help'],
-      title: 'Taleno — README.md',
-      outline: 'Outline',
-      workspace: 'Workspace',
-      introTitle: '# Introduction',
-      introP1: 'Taleno eliminates split-screen previews by rendering Markdown directly in place with pure typography.',
-      introP2: 'Zero split-panes · In-place WYSIWYG · Full-text ripgrep search.',
-      metrics: ['Startup Time', '< 400 ms', 'Instant Cold Start', 'Full-text Search', 'ripgrep', 'Whole Workspace'],
-      modes: ['Reading', 'Writing', 'Code'],
-      status: 'Ln 1, Col 1  ·  1,420 words  ·  UTF-8  ·  LF'
+      title: 'Taleno — Welcome to effortless writing.md',
+      outline: 'Document Outline',
+      workspace: 'Workspace Notes',
+      introTitle: '# Focus on what you want to say',
+      introP1: 'Forget confusing dual-pane editors where you write raw text on the left and squint at a preview on the right. In Taleno, what you see is what you get.',
+      introP2: 'Headings, lists, bold text, and tables format live beneath your fingers as you type.',
+      metrics: ['Startup Time', 'Under 0.4s', 'Instant launch', 'Smart Search', 'Instant', 'Entire workspace'],
+      modes: ['Reading', 'Writing', 'Source'],
+      status: 'Ln 1, Col 1  ·  1,420 words  ·  UTF-8  ·  Saved'
     },
     features: {
-      tag: 'CORE FEATURES',
-      title: 'Focused writing, zero distractions',
-      subtitle: 'Render-as-you-type. From outline and multi-tabs to ripgrep search, everything is tuned for clean, productive writing.',
+      tag: 'DESIGNED FOR WRITERS & THINKERS',
+      title: 'Everything you need to write, nothing to distract you',
+      subtitle: 'From daily notes and study outlines to long-form articles, Taleno gives you a peaceful, responsive writing space.',
       items: [
-        { title: 'Tri-State Display Modes', desc: 'Reading / Writing / Code modes with synchronized line numbers and hotkey switching.' },
-        { title: 'In-App Plugin Ecosystem', desc: 'Browse, install, and update plugins directly from the BerryUIKI/Taleno-Plugins hub with a sandboxed JS runtime.' },
-        { title: 'Custom & Community Themes', desc: 'Built-in presets plus external community themes marketplace with live color swatches and instant styling.' },
-        { title: '9-Language i18n', desc: 'UI auto-detects system locale across 9 native languages with instant runtime switching.' },
-        { title: 'Syntax Highlighting', desc: 'Syntect-powered syntax highlighting with language tags and one-click code copy button.' },
-        { title: 'Mermaid & LaTeX', desc: 'Live interactive flowcharts, sequence diagrams, class diagrams, and KaTeX math formulas.' },
-        { title: 'Ripgrep Full-Text Search', desc: 'Instant whole-workspace search (Ctrl+Shift+F) and in-document Find & Replace (Ctrl+F/H).' },
-        { title: 'Crash-Safe Atomic Saving', desc: 'Atomic file writes (.tmp rename pattern) and real-time dirty-state tracking protect your edits.' },
-        { title: 'Smart Drag & Drop', desc: 'Drop files into window to open, onto tab bar for new tabs, or into text to insert formatted links.' },
-        { title: 'Standalone HTML Export', desc: 'One shortcut (Ctrl+E) to export self-contained, beautifully styled offline HTML files.' }
+        { title: 'Three Flexible Views', desc: 'Switch in one click: a clean reading view for relaxed browsing, an interactive writing view, or raw Markdown source code.' },
+        { title: 'One-Click Plugins', desc: 'Easily add helpful tools like word goals, timestamp shortcuts, or callout blocks from the built-in plugin gallery.' },
+        { title: 'Comfortable Themes', desc: 'Built-in day and night themes, plus popular community styles like Dracula, Nord, and Catppuccin with instant live preview.' },
+        { title: 'Speaks Your Language', desc: 'Automatically matches your system language across 9 languages, switchable at any time.' },
+        { title: 'Crisp Code Highlighting', desc: 'Neat, colorful syntax highlighting for over 100 programming languages, complete with a one-click copy button.' },
+        { title: 'Diagrams & Math Formulas', desc: 'Draw flowcharts and sequence diagrams with Mermaid, or insert crystal-clear mathematical equations with KaTeX.' },
+        { title: 'Find Anything Instantly', desc: 'Search across all notes in your folder in milliseconds, or quickly find and replace words in the active document.' },
+        { title: 'Never Lose Your Words', desc: 'Continuous background safety and smart safeguards prompt you before closing unsaved documents, keeping your work safe.' },
+        { title: 'Effortless Drag & Drop', desc: 'Drop text files into the window to open them, drag onto tabs to multitask, or drop images directly into your text.' },
+        { title: 'Share as Clean HTML', desc: 'Turn any note into a self-contained, beautifully styled web page with a single keyboard shortcut (Ctrl+E).' }
       ]
     },
     downloadSec: {
-      tag: 'DOWNLOAD',
-      title: 'Free download, get started now',
-      subtitle: 'Automatically detects your operating system and highlights the recommended installer for Windows, macOS, and Linux.',
+      tag: 'GET TALENO',
+      title: 'Free download, ready in seconds',
+      subtitle: 'We automatically detect your device and highlight the recommended installer for Windows, macOS, and Linux.',
       recommended: 'RECOMMENDED FOR YOUR SYSTEM',
       winBtn: 'Download for Windows (.exe)',
       macBtn: 'Download for Apple Silicon (.dmg)',
       macIntelBtn: 'Intel Mac (.dmg)',
       linuxBtn: 'Download AppImage',
-      otherDownloads: 'View All Packages & Checksums on Downloads Page →'
+      otherDownloads: 'View All Installers & Checksums on Downloads Page →'
     },
     arch: {
-      tag: 'ARCHITECTURE',
-      title: 'Rust core, lightweight frontend',
-      subtitle: 'Tauri 2 bridges a memory-safe Rust backend with a fine-grained reactive SolidJS webview — zero GC pauses and under 16ms input latency.',
-      frontend: 'FRONTEND',
-      frontendTitle: 'SolidJS + Webview',
-      frontendChips: ['Reactive UI Signals', 'Milkdown / ProseMirror', '9-Locale i18n', 'Plugin Sandbox & Themes'],
-      ipc: 'IPC BRIDGE',
-      ipcTitle: 'Tauri 2 Core',
-      ipcChips: ['Zero-Copy Commands', 'Event Channel Bus', 'Scoped Capabilities'],
-      rust: 'RUST BACKEND',
-      rustTitle: 'Native Engine',
-      rustChips: ['pulldown-cmark AST', 'syntect Highlight', 'Atomic Write I/O', 'Marketplace Services']
+      tag: 'UNDER THE HOOD',
+      title: 'Engineered for speed, crafted for battery life',
+      subtitle: 'Taleno combines a native system core with modern UI engineering to give you instant keystroke response, zero lag, and virtually no battery drain.',
+      frontend: 'SMOOTH INTERFACE',
+      frontendTitle: 'Fluid, Responsive UI',
+      frontendChips: ['Instant Keystrokes', 'Zero Typing Lag', '9 Languages', 'Themes & Plugins'],
+      ipc: 'LIGHTWEIGHT BRIDGE',
+      ipcTitle: 'Native Integration',
+      ipcChips: ['Low Memory Footprint', 'Ultra-fast Startup', 'Sandboxed Security'],
+      rust: 'HIGH-PERFORMANCE CORE',
+      rustTitle: 'Rock-Solid Engine',
+      rustChips: ['Crash-safe Auto-save', 'Instant Search', 'Zero Cloud Tracking', 'Pure Markdown']
     },
     shortcuts: {
-      tag: 'SHORTCUTS',
-      title: 'Keep your hands on the keys',
-      subtitle: 'All standard Markdown shortcuts are supported — format, navigate, and manage documents seamlessly without leaving the keyboard.',
-      doc: 'Document & File',
-      edit: 'Formatting',
-      nav: 'Navigation & View',
+      tag: 'KEYBOARD SHORTCUTS',
+      title: 'Keep your hands on the keyboard',
+      subtitle: 'Format headings, search notes, and manage tabs without reaching for the mouse.',
+      doc: 'Files & Documents',
+      edit: 'Text & Formatting',
+      nav: 'Navigation & Search',
       items: [
         { group: 'doc', label: 'New document', key: 'Ctrl+N' },
         { group: 'doc', label: 'Open file', key: 'Ctrl+O' },
         { group: 'doc', label: 'Save document', key: 'Ctrl+S' },
         { group: 'doc', label: 'Save As...', key: 'Ctrl+Shift+S' },
-        { group: 'doc', label: 'Export to HTML', key: 'Ctrl+E' },
-        { group: 'edit', label: 'Bold', key: 'Ctrl+B' },
-        { group: 'edit', label: 'Italic', key: 'Ctrl+I' },
+        { group: 'doc', label: 'Export as HTML', key: 'Ctrl+E' },
+        { group: 'edit', label: 'Bold text', key: 'Ctrl+B' },
+        { group: 'edit', label: 'Italic text', key: 'Ctrl+I' },
         { group: 'edit', label: 'Headings 1–6', key: 'Ctrl+1~6' },
-        { group: 'edit', label: 'Paragraph (Body text)', key: 'Ctrl+0' },
+        { group: 'edit', label: 'Regular paragraph', key: 'Ctrl+0' },
         { group: 'edit', label: 'Insert link', key: 'Ctrl+K' },
         { group: 'nav', label: 'Quick file switcher', key: 'Ctrl+P' },
         { group: 'nav', label: 'Find in document', key: 'Ctrl+F' },
-        { group: 'nav', label: 'Replace in document', key: 'Ctrl+H' },
-        { group: 'nav', label: 'Workspace search', key: 'Ctrl+Shift+F' },
-        { group: 'nav', label: 'Toggle display mode', key: 'Ctrl+/' }
+        { group: 'nav', label: 'Replace words', key: 'Ctrl+H' },
+        { group: 'nav', label: 'Search all notes', key: 'Ctrl+Shift+F' },
+        { group: 'nav', label: 'Switch view mode', key: 'Ctrl+/' }
       ]
     },
     faq: {
-      tag: 'FAQ',
-      title: 'Frequently asked questions',
-      subtitle: 'Have a question or feedback? Open an issue or start a discussion on our GitHub repository.',
-      changelogTitle: 'Latest Release',
-      changelogVer: 'v0.1.7',
+      tag: 'QUESTIONS & ANSWERS',
+      title: 'Everything you need to know',
+      subtitle: 'Need help or want to suggest an idea? Join our friendly community on GitHub.',
+      changelogTitle: 'Latest Version',
+      changelogVer: '${LATEST_VERSION_TAG}',
       changelogItems: [
-        'In-app Plugin Marketplace (BerryUIKI/Taleno-Plugins)',
-        'Custom & Community Themes engine with live swatches',
-        'Integrated background auto-updater with localized notes',
-        'Full rebranding to Taleno with performance polish'
+        'Unsaved changes prompt to prevent accidental data loss',
+        'Quick title bar access for plugins, themes, and languages',
+        'Interactive version indicator with in-place update checks',
+        'Refined single-document creation on tab bar double-click'
       ],
       items: [
         {
-          q: 'How does Taleno compare to Typora, Obsidian, and Electron-based editors?',
-          a: 'Unlike Electron-based editors that bundle a full Chromium runtime, Taleno is engineered in Rust and Tauri 2, achieving sub-400ms cold starts and minimal RAM consumption. Unlike dual-pane tools, Taleno renders formatting directly in place as you type. All documents remain 100% offline with crash-safe atomic writes, and third-party extensions and themes can be installed with one click from the official BerryUIKI/Taleno-Plugins marketplace.'
+          q: 'Why choose Taleno over traditional Markdown editors?',
+          a: 'Most editors either clutter your screen with two separate panes (one for writing, one for viewing) or feel heavy and sluggish. Taleno renders your Markdown formatting directly in place as you type, launches in a fraction of a second, and uses almost no memory. Your screen stays clean, and your writing stays uninterrupted.'
         },
-        { q: 'What makes Taleno unique?', a: 'Taleno provides true in-place WYSIWYG editing with zero split panes. Markdown renders live as you type, and raw syntax reveals seamlessly under your cursor. Powered by Rust and Tauri 2, it delivers native speed without Electron bulk.' },
-        { q: 'Is my data private and secure?', a: '100% local-first. All documents stay strictly on your local device with zero cloud telemetry. Atomic writes ensure you never lose work even during unexpected system shutdowns.' },
-        { q: 'Which Markdown extensions are supported?', a: 'Taleno supports full GitHub Flavored Markdown (GFM), tables, task lists, code block syntax highlighting, Mermaid diagrams (flowcharts, sequence, class diagrams), and KaTeX math formulas.' },
-        { q: 'Is Taleno free and open source?', a: 'Yes. Taleno is free and open-source under the GNU AGPL-3.0 license. Community contributions, bug reports, and translations are warmly welcome.' }
+        {
+          q: 'Will my existing Markdown notes work?',
+          a: 'Yes, 100%. Taleno uses standard, pure Markdown files (.md). You can open documents created in Obsidian, Typora, Notion, or VS Code, and vice versa. There are no proprietary databases or hidden lock-ins.'
+        },
+        {
+          q: 'Are my notes kept private and offline?',
+          a: 'Completely. Your files stay on your computer where they belong. Taleno never uploads your writing to any servers, requires no login or account, and functions flawlessly without an internet connection.'
+        },
+        {
+          q: 'Can I customize the look and feel?',
+          a: 'Absolutely! You can choose from built-in clean light and dark themes or install popular community palettes like Dracula, Nord, and Catppuccin with a single click in Settings.'
+        },
+        {
+          q: 'Is Taleno free?',
+          a: 'Yes, Taleno is 100% free and open source under the GNU AGPL-3.0 license. There are no paywalls, ads, or artificial feature limits.'
+        }
       ]
     },
     downloadPage: {
-      title: 'Download Taleno — All Platforms',
-      metaDesc: 'Download Taleno for Windows, macOS and Linux. Direct links to release assets — no redirects.',
-      tag: 'v0.1.7 · Latest release',
+      title: 'Download Taleno — Clean In-Place Markdown Editor',
+      metaDesc: 'Download Taleno for Windows, macOS, and Linux. Free, lightweight in-place WYSIWYG Markdown editor with instant launch and complete privacy.',
+      tag: '${LATEST_VERSION_TAG} · Latest Official Release',
       heading: 'Download Taleno',
-      subheading: 'Every button links straight to the release asset — the download starts immediately, no redirects. We auto-detect your OS on the homepage.',
-      backHome: '← Back to home',
-      note: 'Asset naming follows <span class="font-medium text-ink-secondary">Taleno_&lt;OS&gt;_&lt;architecture&gt;</span> without embedded versions — <span class="font-mono">releases/latest/download</span> links always point to the newest build.',
-      allReleases: 'All releases & source archives',
-      viewGh: 'View on GitHub'
+      subheading: 'Direct links straight from GitHub Releases. Choose your platform below and start writing in seconds.',
+      backHome: '← Back to Overview',
+      note: 'All downloads are official standalone packages hosted on GitHub Releases. When an update is released, your installed app can check and update seamlessly.',
+      allReleases: 'View All Releases & Changelog',
+      viewGh: 'View GitHub Repository'
     }
   },
 
@@ -140,130 +155,142 @@ const languages = {
     dir: 'zh-CN',
     name: '简体中文',
     htmlLang: 'zh-CN',
-    title: 'Taleno — 极速原生原位所见即所得 Markdown 阅读与编辑器',
-    metaDesc: 'Taleno 是一款基于 Tauri 2 + Rust + SolidJS 构建的本地优先原位所见即所得 Markdown 阅读与编辑器。彻底告别双栏分屏，打字即时排版，支持插件市场、社区主题与离线隐私保护。',
-    nav: { features: '核心特性', download: '下载安装', architecture: '技术架构', shortcuts: '快捷键', faq: '常见问题', github: 'GitHub' },
+    title: 'Taleno — 极简流畅的原位所见即所得 Markdown 阅读与编辑器',
+    metaDesc: 'Taleno 是一款免费轻快的本地优先 Markdown 阅读与编辑器。告别左右分屏，光标处直接排版；秒速启动、100% 离线隐私保护，支持个性化主题与实用插件，适用于 Windows、macOS 与 Linux。',
+    nav: { features: '功能特色', download: '免费下载', architecture: '为什么轻快', shortcuts: '快捷键', faq: '常见问答', github: 'GitHub' },
     selectLang: '选择界面显示语言',
     hero: {
-      badge: 'v0.1.7 正式发布 · AGPL-3.0 开源协议',
-      title: '原位排版，所见即所得。',
-      subtitle: '极简、极速的本地优先 Markdown 原位所见即所得阅读与编辑器。告别传统双栏分屏，打字即时排版——基于 Tauri 2 + Rust + SolidJS 打造毫秒级流畅响应，支持扩展插件与个性化主题。',
-      downloadBtn: '立即下载',
+      badge: '${LATEST_VERSION_TAG} 正式发布 · 100% 免费开源',
+      title: '所见即所得，落笔即成文。',
+      subtitle: '专为纯粹创作打造的原位 Markdown 编辑器。告别“左边写代码、右边看预览”的传统分屏，打字即时排版。秒速开启、不占内存、文档完全保存在本地磁盘，更有丰富主题与实用扩展，让记录成为一种享受。',
+      downloadBtn: '免费下载 Taleno',
       githubBtn: 'GitHub 开源仓库',
-      chips: ['<400ms 极速冷启动', '无需分屏原位渲染', '插件与主题生态', '9 种原生语言']
+      chips: ['毫秒级瞬时秒开', '告别分屏原位排版', '100% 本地离线隐私', '完全免费开源']
     },
     mockup: {
       menu: ['文件', '编辑', '视图', '窗口', '帮助'],
-      title: 'Taleno — README.md',
-      outline: '大纲目录',
-      workspace: '工作区',
-      introTitle: '# 项目简介',
-      introP1: 'Taleno 彻底摒弃了传统“左边写代码、右边看预览”的分屏模式，采用极简沉浸的原位即时排版。',
-      introP2: '零分屏 · 原位所见即所得 · Ripgrep 全局全文本搜索。',
-      metrics: ['冷启动耗时', '< 400 毫秒', '毫秒级极速就绪', '全文搜索', 'ripgrep', '工作区全局秒搜'],
-      modes: ['阅读', '写作', '源码'],
-      status: '第 1 行, 第 1 列  ·  1,420 字  ·  UTF-8  ·  LF'
+      title: 'Taleno — 开启沉浸自然的写作体验.md',
+      outline: '文档大纲目录',
+      workspace: '工作区笔记',
+      introTitle: '# 专注表达，让排版自然发生',
+      introP1: '不再需要在两个窗口之间来回分心对齐。在 Taleno 中，你输入标题、列表、粗体或代码时，优美优雅的排版就在光标下方实时展现。',
+      introP2: '原位所见即所得 · 极速全文搜索 · 本地安全防护。',
+      metrics: ['冷启动耗时', '低于 0.4 秒', '瞬时秒开就绪', '全库搜索', '毫秒级响应', '整个文件夹秒搜'],
+      modes: ['阅读视图', '写作视图', '源码视图'],
+      status: '第 1 行, 第 1 列  ·  1,420 字  ·  UTF-8  ·  已保存'
     },
     features: {
-      tag: '核心特性',
-      title: '专注纯粹写作，告别一切干扰',
-      subtitle: '所见即所得打字排版。从文档大纲、多标签页到工作区全文搜索，所有设计皆为高效沉浸的写作体验而生。',
+      tag: '贴心设计，专注纯粹创作',
+      title: '只保留写作所需的一切，去除所有杂乱干扰',
+      subtitle: '从日常备忘、读书笔记到长篇撰写，Taleno 为你营造安静、流畅且安心的记录空间。',
       items: [
-        { title: '三态模式自由切换', desc: '一键无缝切换阅读模式（只读浏览）、写作模式（原位所见即所得）与源码模式（行号同步）。' },
-        { title: '插件生态市场', desc: '内置官方 Taleno-Plugins 扩展市场，一键获取、安装与更新，安全沙箱运行时，自由定制快捷命令与状态栏。' },
-        { title: '社区主题与换肤', desc: '内置经典配色并支持一键安装 Dracula、Nord、Catppuccin 等社区皮肤，实时色块预览并原位即时生效。' },
-        { title: '9 种语言国际化支持', desc: '内置 9 国本地化语言，根据系统环境全自动识别，随时在菜单中即时无缝切换。' },
-        { title: '高性能代码高亮', desc: '基于 syntect 原生引擎打造，支持上百种编程语言高亮、语言徽标与一键复制功能。' },
-        { title: 'Mermaid 图表与 LaTeX 数学', desc: '原生支持流程图、时序图、类图等 Mermaid 图表实时渲染，以及 KaTeX 行内/多行数学公式。' },
-        { title: 'Ripgrep 全局全文秒搜', desc: '毫秒级工作区全文本快速搜索（Ctrl+Shift+F）与文档内查找替换（Ctrl+F/H）。' },
-        { title: '崩溃级安全原子保存', desc: '采用临时文件原子覆写（.tmp rename）机制与实时脏状态追踪，从根源杜绝数据损坏或丢失。' },
-        { title: '智能拖拽交互', desc: '拖入文件立即打开、拖到标签栏新建标签页、拖入文字区域自动生成规范 Markdown 超链接。' },
-        { title: '单文件独立 HTML 导出', desc: '一键快捷键（Ctrl+E）导出样式完整、无需外链依赖的独立离线 HTML 网页。' }
+        { title: '三种视图一键切换', desc: '按下快捷键随心切换：安享沉浸阅读的无干扰视图、随写随排的原位写作模式，以及完全掌控语法的源码视图。' },
+        { title: '一键扩展插件市场', desc: '内置官方插件库，字数目标、自动时间戳、提示信息卡片等实用小工具，点一下即可安装使用。' },
+        { title: '舒适主题与个性换肤', desc: '提供护眼的明暗配色方案，更支持一键换上 Dracula、Nord、Catppuccin 等经典社区主题，实时预览生效。' },
+        { title: '原生多语言支持', desc: '内置 9 种语言界面，自动识别电脑系统语言，也能在菜单中随时自由切换。' },
+        { title: '清晰代码语法高亮', desc: '内置百余种编程语言的彩色语法高亮，附带语言类型小标签和一键复制代码块功能。' },
+        { title: '流程图表与公式渲染', desc: '支持 Mermaid 流程图与时序图绘制，以及 KaTeX 数学公式实时排版，理工科与学术笔记同样得心应手。' },
+        { title: '毫秒级笔记全文搜索', desc: '无论文件夹里有多少篇文档，按下 Ctrl+Shift+F 瞬间找到关键词，文档内查找替换同样丝滑。' },
+        { title: '贴心防丢与未保存提醒', desc: '底层原子安全保存，关闭未保存文档时主动弹出确认窗口，即使电脑意外断电也绝不损坏文字。' },
+        { title: '直观好用的拖拽交互', desc: '把 Markdown 文件拖进窗口直接阅读，拖到标签栏新建文档，拖入图片自动插入对应格式。' },
+        { title: '一键导出独立 HTML', desc: '随时按下 Ctrl+E，将当前笔记导出为排版精致、无需连网即可直接发送给同事朋友的独立网页。' }
       ]
     },
     downloadSec: {
-      tag: '下载安装',
-      title: '免费下载，即刻开启沉浸写作',
-      subtitle: '自动识别您的操作系统，智能推荐适配 Windows、macOS 与 Linux 的最新安装包。',
-      recommended: '当前操作系统推荐',
+      tag: '立即获取',
+      title: '免费下载，几秒钟即可就绪',
+      subtitle: '系统将自动检测您的电脑设备，并智能推荐适合 Windows、macOS 或 Linux 的安装包。',
+      recommended: '当前电脑推荐安装版本',
       winBtn: '下载 Windows 安装包 (.exe)',
       macBtn: '下载 Apple Silicon 安装镜像 (.dmg)',
       macIntelBtn: 'Intel Mac (.dmg)',
       linuxBtn: '下载通用 AppImage',
-      otherDownloads: '前往完整下载列表查看全部安装包与校验码 →'
+      otherDownloads: '前往下载页查看全部安装包与校验码 →'
     },
     arch: {
-      tag: '技术架构',
-      title: 'Rust 系统级内核，轻量 SolidJS 前端',
-      subtitle: '基于 Tauri 2 构建，Rust 原生后端与 SolidJS 细粒度响应式前端深度协作——内存安全、零垃圾回收卡顿、击键延迟低于 16ms。',
-      frontend: '前端层',
-      frontendTitle: 'SolidJS + Webview',
-      frontendChips: ['细粒度响应式 Signals', 'Milkdown / ProseMirror', '9 语言 i18n 引擎', '插件沙箱与主题引擎'],
-      ipc: 'IPC 通信桥',
-      ipcTitle: 'Tauri 2 核心桥接',
-      ipcChips: ['零拷贝 Commands', '异步 Event 事件总线', '最小权限安全能力管控'],
-      rust: '系统内核',
-      rustTitle: 'Rust 原生引擎',
-      rustChips: ['pulldown-cmark AST 解析', 'syntect 语法高亮', '原子级文件 I/O 写入', '扩展市场本地服务']
+      tag: '为什么如此轻快',
+      title: '极速响应，省电低耗，远离卡顿',
+      subtitle: 'Taleno 摒弃了传统笨重庞大的浏览器内核包袱，以现代原生技术打造，带来零延迟的击键反馈与超低电量消耗。',
+      frontend: '丝滑流畅界面',
+      frontendTitle: '现代轻量化前端',
+      frontendChips: ['打字毫无延迟', '告别卡顿掉帧', '9 国语言切换', '精美主题换肤'],
+      ipc: '高效原生桥梁',
+      ipcTitle: '极简原生连接',
+      ipcChips: ['超小内存占用', '秒开无需等待', '安全沙箱防护'],
+      rust: '坚固系统内核',
+      rustTitle: '可靠系统引擎',
+      rustChips: ['断电防丢数据保护', '全局秒速查找', '纯本地零隐私上传', '标准通用格式']
     },
     shortcuts: {
-      tag: '常用快捷键',
+      tag: '快捷按键',
       title: '双手无需离开键盘',
-      subtitle: '支持所有主流 Markdown 常用快捷键，格式排版、文件管理与全局搜索皆可在指尖瞬间完成。',
-      doc: '文档与文件',
-      edit: '排版与格式',
-      nav: '导航与视图',
+      subtitle: '排版文本、查找笔记、管理标签页，一切操作尽在指尖完成。',
+      doc: '文档与文件管理',
+      edit: '排版与文字格式',
+      nav: '快速导航与搜索',
       items: [
         { group: 'doc', label: '新建文档', key: 'Ctrl+N' },
         { group: 'doc', label: '打开文件', key: 'Ctrl+O' },
         { group: 'doc', label: '保存当前文档', key: 'Ctrl+S' },
         { group: 'doc', label: '另存为...', key: 'Ctrl+Shift+S' },
-        { group: 'doc', label: '导出为 HTML', key: 'Ctrl+E' },
-        { group: 'edit', label: '加粗', key: 'Ctrl+B' },
-        { group: 'edit', label: '斜体', key: 'Ctrl+I' },
+        { group: 'doc', label: '导出为 HTML 网页', key: 'Ctrl+E' },
+        { group: 'edit', label: '文字加粗', key: 'Ctrl+B' },
+        { group: 'edit', label: '斜体样式', key: 'Ctrl+I' },
         { group: 'edit', label: '1~6 级标题', key: 'Ctrl+1~6' },
-        { group: 'edit', label: '正文段落', key: 'Ctrl+0' },
+        { group: 'edit', label: '恢复正文段落', key: 'Ctrl+0' },
         { group: 'edit', label: '插入超链接', key: 'Ctrl+K' },
         { group: 'nav', label: '快速文件切换器', key: 'Ctrl+P' },
         { group: 'nav', label: '文档内查找', key: 'Ctrl+F' },
         { group: 'nav', label: '文档内替换', key: 'Ctrl+H' },
-        { group: 'nav', label: '工作区全文搜索', key: 'Ctrl+Shift+F' },
-        { group: 'nav', label: '切换显示模式', key: 'Ctrl+/' }
+        { group: 'nav', label: '文件夹全局全文搜索', key: 'Ctrl+Shift+F' },
+        { group: 'nav', label: '切换浏览/写作模式', key: 'Ctrl+/' }
       ]
     },
     faq: {
-      tag: '常见问题',
-      title: '常见问题解答',
-      subtitle: '有疑问或建议？欢迎前往 GitHub 提交 Issue 或参与讨论交流。',
-      changelogTitle: '最新版本',
-      changelogVer: 'v0.1.7',
+      tag: '常见问答',
+      title: '你关心的都在这里',
+      subtitle: '有任何疑问或改进建议？欢迎随时前往 GitHub 与我们交流。',
+      changelogTitle: '最新版本动态',
+      changelogVer: '${LATEST_VERSION_TAG}',
       changelogItems: [
-        '内置插件扩展市场（Taleno-Plugins 官方源）',
-        '社区主题换肤引擎与实时调色板预览',
-        '全自动后台更新检测与本地化更新日志',
-        '全面品牌升级为 Taleno 与性能调优'
+        '新增未保存文档关闭确认弹窗，全方位防止误关丢字',
+        '标题栏新增插件市场、主题换肤与多语言快捷入口',
+        '底部状态栏最左侧集成版本号，支持原位快速检测更新',
+        '优化标签栏双击新建文档交互，防抖精准创建单份文档'
       ],
       items: [
         {
-          q: 'Taleno 与 Typora、Obsidian 及 Electron 编辑器相比有何优势？',
-          a: '与内置完整 Chromium 的 Electron 编辑器相比，Taleno 采用 Rust + Tauri 2 原生架构，冷启动耗时低于 400 毫秒，内存占用极低。相比传统双栏分屏，Taleno 提供纯粹的光标处即时排版。所有文件 100% 本地存储并享有底层原子级防崩溃保护，同时支持通过官方 Taleno-Plugins 市场自由获取扩展插件与个性化主题，零专有云端绑定。'
+          q: '相比其他 Markdown 工具，Taleno 的最大亮点是什么？',
+          a: '很多笔记工具不是左右双栏分屏显得杂乱，就是安装包庞大、打字发热卡顿。Taleno 彻底做到了光标处原位即时渲染，打开只需零点几秒，内存占用极低。界面清爽干净，让你全身心投入到思路本身。'
         },
-        { q: 'Taleno 与传统 Markdown 编辑器有何不同？', a: 'Taleno 采用彻底的原位所见即所得渲染，告别左右分屏。打字时光标所在处即时排版，无 Electron 的笨重包袱，冷启动仅需数百毫秒，带来极致轻快的原生桌面体验。' },
-        { q: '我的文档数据安全吗？', a: '100% 本地优先。所有文档均完整保存在您的本地磁盘中，不上传任何云端服务器。配合底层原子写入机制，即便电脑突发断电也不会损坏文件。' },
-        { q: '支持哪些 Markdown 扩展语法？', a: '完整支持 GitHub Flavored Markdown (GFM)、表格、任务列表、代码高亮、Mermaid 图表（流程图、时序图、类图等）以及 KaTeX 数学公式渲染。' },
-        { q: 'Taleno 是否免费开源？如何参与贡献？', a: '是的，Taleno 基于 GNU AGPL-3.0 协议完全免费且开源。欢迎提交 Issue 反馈缺陷、参与多语言翻译或发起 Pull Request。' }
+        {
+          q: '我以前在其他软件里写的 Markdown 笔记能直接用吗？',
+          a: '完全可以！Taleno 严格遵循通用的标准 Markdown 规范（.md 文件）。无论是从 Obsidian、Typora、Notion 导出的笔记，还是 GitHub 上的文档，都能直接双击打开并保存，没有任何私有格式绑定。'
+        },
+        {
+          q: '我的笔记安全吗？会不会被上传到云端？',
+          a: '绝对安全。Taleno 100% 采用本地优先机制，所有笔记和文件只存放在你自己的电脑硬盘上，不强制注册账号，不收集文档内容，无网络也能完全正常使用。'
+        },
+        {
+          q: '是否支持更换主题与安装插件？',
+          a: '支持！你可以在设置界面自由选择内置的浅色/深色主题，也可以一键下载 Dracula、Nord 等经典社区皮肤。想要扩展字数统计、提示块等功能，也能在内置的插件市场随心挑选。'
+        },
+        {
+          q: 'Taleno 是免费的吗？',
+          a: '是的，Taleno 基于开源协议完全免费供所有人使用，没有任何付费门槛、无弹出广告，也无任何功能限制。'
+        }
       ]
     },
     downloadPage: {
-      title: '下载 Taleno — 全平台安装包',
-      metaDesc: '下载适用于 Windows、macOS 和 Linux 的 Taleno。官方直链下载，无跳转极速就绪。',
-      tag: 'v0.1.7 · 最新正式版',
-      heading: '下载 Taleno',
-      subheading: '所有下载按钮均直接指向 GitHub Releases 最新安装包资源，点击即刻开始下载。',
-      backHome: '← 返回首页',
-      note: '安装包命名遵循 <span class="font-medium text-ink-secondary">Taleno_&lt;系统&gt;_&lt;架构&gt;</span> 规范，<span class="font-mono">releases/latest/download</span> 链接将始终指向最新构建版本。',
-      allReleases: '查看历史版本与源码归档',
-      viewGh: 'GitHub 开源仓库'
+      title: '下载 Taleno — 极速沉浸原位 Markdown 编辑器',
+      metaDesc: '免费下载适用于 Windows、macOS 和 Linux 的 Taleno 官方正式安装包。纯本地无上传、毫秒级秒开、原位所见即所得。',
+      tag: '${LATEST_VERSION_TAG} · 最新官方正式版',
+      heading: '免费下载 Taleno',
+      subheading: '官方直连 GitHub Releases 镜像，点击即刻高速下载，几秒钟内开启顺畅写作。',
+      backHome: '← 返回首页概览',
+      note: '所有下载链接均为官方构建发布的安装包，软件内置原地更新检查，后续版本发布后可直接在软件内轻松更新。',
+      allReleases: '查看历史版本与更新日志',
+      viewGh: '前往 GitHub 开源主页'
     }
   },
 
@@ -272,130 +299,142 @@ const languages = {
     dir: 'zh-TW',
     name: '繁體中文',
     htmlLang: 'zh-TW',
-    title: 'Taleno — 極速原生原位所見即所得 Markdown 閱讀與編輯器',
-    metaDesc: 'Taleno 是一款基於 Tauri 2 + Rust + SolidJS 建置的本機優先原位所見即所得 Markdown 閱讀與編輯器。告別雙欄分屏，即時排版，支援外掛市場、社群佈景與離線隱私保護。',
-    nav: { features: '核心特色', download: '下載安裝', architecture: '技術架構', shortcuts: '快捷鍵', faq: '常見問題', github: 'GitHub' },
+    title: 'Taleno — 極簡流暢的原位所見即所得 Markdown 閱讀與編輯器',
+    metaDesc: 'Taleno 是一款免費輕快的本地優先 Markdown 閱讀與編輯器。告別左右雙欄分屏，游標處直接排版；秒速啟動、100% 離線隱私保護，支援個人化主題與實用外掛，適用於 Windows、macOS 與 Linux。',
+    nav: { features: '功能特色', download: '免費下載', architecture: '為何輕快', shortcuts: '快捷鍵', faq: '常見問答', github: 'GitHub' },
     selectLang: '選擇介面顯示語言',
     hero: {
-      badge: 'v0.1.7 正式發布 · AGPL-3.0 開源協議',
-      title: '原位排版，所見即所得。',
-      subtitle: '極簡、極速的本機優先 Markdown 原位所見即所得閱讀與編輯器。告別傳統雙欄分屏，打字即時排版——基於 Tauri 2 + Rust + SolidJS 打造毫秒級流暢響應，支援擴充外掛與個人化佈景。',
-      downloadBtn: '立即下載',
-      githubBtn: 'GitHub 開源儲存庫',
-      chips: ['<400ms 極速冷啟動', '無需分屏原位渲染', '外掛與主題生態', '9 種原生語言']
+      badge: '${LATEST_VERSION_TAG} 正式發布 · 100% 免費開源',
+      title: '所見即所得，落筆即成文。',
+      subtitle: '專為純粹創作打造的原位 Markdown 編輯器。告別「左邊寫代碼、右邊看預覽」的傳統分屏，打字即時排版。秒速開啟、不佔記憶體、文件完全儲存於本地磁碟，更有豐富主題與實用擴充，讓記錄成為一種享受。',
+      downloadBtn: '免費下載 Taleno',
+      githubBtn: 'GitHub 開源專案',
+      chips: ['毫秒級瞬時秒開', '告別分屏原位排版', '100% 本地離線隱私', '完全免費開源']
     },
     mockup: {
       menu: ['檔案', '編輯', '檢視', '視窗', '說明'],
-      title: 'Taleno — README.md',
-      outline: '大綱目錄',
-      workspace: '工作區',
-      introTitle: '# 專案簡介',
-      introP1: 'Taleno 徹底摒棄了傳統“左邊寫程式碼、右邊看預覽”的分割視窗模式，採用極簡沉浸的原位即時排版。',
-      introP2: '零分割視窗 · 原位所見即所得 · Ripgrep 全域全文本搜尋。',
-      metrics: ['冷啟動耗時', '< 400 毫秒', '毫秒級極速就緒', '全文搜尋', 'ripgrep', '工作區全域秒搜'],
-      modes: ['閱讀', '寫作', '源碼'],
-      status: '第 1 行, 第 1 列  ·  1,420 字  ·  UTF-8  ·  LF'
+      title: 'Taleno — 開啟沉浸自然的寫作體驗.md',
+      outline: '文件大綱目錄',
+      workspace: '工作區筆記',
+      introTitle: '# 專注表達，讓排版自然發生',
+      introP1: '不再需要在兩個視窗之間來回分心對齊。在 Taleno 中，輸入標題、清單、粗體或代碼時，優雅的排版就在游標下方即時展現。',
+      introP2: '原位所見即所得 · 極速全文搜尋 · 本地安全防護。',
+      metrics: ['冷啟動耗時', '低於 0.4 秒', '瞬時秒開就緒', '全庫搜尋', '毫秒級響應', '整個資料夾秒搜'],
+      modes: ['閱讀檢視', '寫作檢視', '原始碼檢視'],
+      status: '第 1 行, 第 1 列  ·  1,420 字  ·  UTF-8  ·  已儲存'
     },
     features: {
-      tag: '核心特色',
-      title: '專注純粹寫作，告別一切干擾',
-      subtitle: '所見即所得打字排版。從文件大綱、多分頁到工作區全文搜尋，所有設計皆為高效沉浸的寫作體驗而生。',
+      tag: '貼心設計，專注純粹創作',
+      title: '只保留寫作所需的一切，去除所有雜亂干擾',
+      subtitle: '從日常備忘、讀書筆記到長篇撰寫，Taleno 為你營造安靜、流暢且安心的記錄空間。',
       items: [
-        { title: '三態模式自由切換', desc: '一鍵無縫切換閱讀模式（唯讀瀏覽）、寫作模式（原位所見即所得）與源碼模式（行號同步）。' },
-        { title: '外掛生態市場', desc: '內建官方 Taleno-Plugins 擴充市場，一鍵取得、安裝與更新，安全沙箱執行環境，自由自訂命令與狀態列。' },
-        { title: '社群佈景與外觀', desc: '內建經典配色並支援安裝 Dracula、Nord、Catppuccin 等社群佈景，即時色塊預覽並原位即時套用。' },
-        { title: '9 種語言國際化支援', desc: '內建 9 國在地化語言，依據系統環境全自動辨識，隨時在選單中即時無縫切換。' },
-        { title: '高效能程式碼高亮', desc: '基於 syntect 原生引擎打造，支援上百種程式語言高亮、語言標籤與一鍵複製功能。' },
-        { title: 'Mermaid 圖表與 LaTeX 數學', desc: '原生支援流程圖、循序圖、類別圖等 Mermaid 圖表即時渲染，以及 KaTeX 行內/多行數學公式。' },
-        { title: 'Ripgrep 全域全文秒搜', desc: '毫秒級工作區全文字快速搜尋（Ctrl+Shift+F）與文件內尋找取代（Ctrl+F/H）。' },
-        { title: '當機級安全原子儲存', desc: '採用暫存檔原子覆寫（.tmp rename）機制與即時中繼狀態追蹤，從根本杜絕資料損壞或遺失。' },
-        { title: '智慧拖曳互動', desc: '拖入檔案立即開啟、拖到分頁列新增分頁、拖入文字區域自動產生規範 Markdown 超連結。' },
-        { title: '單一檔案獨立 HTML 匯出', desc: '一鍵快捷鍵（Ctrl+E）匯出樣式完整、無需外部依賴的獨立離線 HTML 網頁。' }
+        { title: '三種檢視一鍵切換', desc: '按下快捷鍵隨心切換：安享沉浸閱讀的無干擾檢視、隨寫隨排的原位寫作模式，以及完全掌控語法的原始碼檢視。' },
+        { title: '一鍵擴充外掛市場', desc: '內建官方外掛庫，字數目標、自動時間戳記、提示資訊卡片等實用小工具，點一下即可安裝使用。' },
+        { title: '舒適主題與個性換膚', desc: '提供護眼的明暗色彩配置，更支援一鍵換上 Dracula、Nord、Catppuccin 等經典社群主題，即時預覽生效。' },
+        { title: '原生多語言支援', desc: '內建 9 種語言介面，自動辨識電腦系統語言，也能在選單中隨時自由切換。' },
+        { title: '清晰代碼語法高亮', desc: '內建百餘種程式語言的彩色語法高亮，附帶語言類型小標籤和一鍵複製代碼區塊功能。' },
+        { title: '流程圖表與公式渲染', desc: '支援 Mermaid 流程圖與時序圖繪製，以及 KaTeX 數學公式即時排版，理工科與學術筆記同樣得心應手。' },
+        { title: '毫秒級筆記全文搜尋', desc: '無論資料夾裡有多少篇文件，按下 Ctrl+Shift+F 瞬間找到關鍵字，文件內尋找替換同樣滑順。' },
+        { title: '貼心防丟與未儲存提醒', desc: '底層原子安全儲存，關閉未儲存文件時主動彈出確認視窗，即使電腦意外斷電也絕不損壞文字。' },
+        { title: '直覺好用的拖曳互動', desc: '把 Markdown 檔案拖進視窗直接閱讀，拖到分頁列新建文件，拖入圖片自動插入對應格式。' },
+        { title: '一鍵匯出獨立 HTML', desc: '隨時按下 Ctrl+E，將當前筆記匯出為排版精緻、無需連線即可直接發送給同事朋友的獨立網頁。' }
       ]
     },
     downloadSec: {
-      tag: '下載安裝',
-      title: '免費下載，即刻開啟沉浸寫作',
-      subtitle: '自動識別您的作業系統，智慧推薦適配 Windows、macOS 與 Linux 的最新安裝套件。',
-      recommended: '目前作業系統推薦',
+      tag: '立即取得',
+      title: '免費下載，幾秒鐘即可就緒',
+      subtitle: '系統將自動辨識您的電腦裝置，並智慧推薦適合 Windows、macOS 或 Linux 的安裝套件。',
+      recommended: '當前電腦推薦安裝版本',
       winBtn: '下載 Windows 安裝套件 (.exe)',
-      macBtn: '下載 Apple Silicon 安裝映像檔 (.dmg)',
+      macBtn: '下載 Apple Silicon 安裝映像 (.dmg)',
       macIntelBtn: 'Intel Mac (.dmg)',
       linuxBtn: '下載通用 AppImage',
-      otherDownloads: '前往完整下載清單查看全部安裝套件與校驗碼 →'
+      otherDownloads: '前往下載頁檢視全部安裝套件與校驗碼 →'
     },
     arch: {
-      tag: '技術架構',
-      title: 'Rust 系統級核心，輕量 SolidJS 前端',
-      subtitle: '基於 Tauri 2 構建，Rust 原生後端與 SolidJS 細粒度響應式前端深度協作——記憶體安全、零垃圾回收卡頓、按鍵延遲低於 16ms。',
-      frontend: '前端層',
-      frontendTitle: 'SolidJS + Webview',
-      frontendChips: ['細粒度響應式 Signals', 'Milkdown / ProseMirror', '9 語言 i18n 引擎', '外掛沙箱與佈景引擎'],
-      ipc: 'IPC 通訊橋',
-      ipcTitle: 'Tauri 2 核心橋接',
-      ipcChips: ['零複製 Commands', '非同步 Event 事件匯流排', '最小權限安全能力管控'],
-      rust: '系統核心',
-      rustTitle: 'Rust 原生引擎',
-      rustChips: ['pulldown-cmark AST 解析', 'syntect 語法高亮', 'notify 檔案系統監聽', '原子級檔案 I/O 寫入']
+      tag: '為何如此輕快',
+      title: '極速響應，省電低耗，遠離卡頓',
+      subtitle: 'Taleno 摒棄了傳統笨重龐大的瀏覽器核心包袱，以現代原生技術打造，帶來零延遲的擊鍵回饋與超低電量消耗。',
+      frontend: '絲滑流暢介面',
+      frontendTitle: '現代輕量化前端',
+      frontendChips: ['打字毫無延遲', '告別卡頓掉影', '9 國語言切換', '精美主題換膚'],
+      ipc: '高效原生橋樑',
+      ipcTitle: '極簡原生連接',
+      ipcChips: ['超小記憶體佔用', '秒開無需等待', '安全沙箱防護'],
+      rust: '堅固系統核心',
+      rustTitle: '可靠系統引擎',
+      rustChips: ['斷電防丟資料保護', '全域秒速尋找', '純本地零隱私上傳', '標準通用格式']
     },
     shortcuts: {
-      tag: '常用快捷鍵',
+      tag: '快捷按鍵',
       title: '雙手無需離開鍵盤',
-      subtitle: '支援所有主流 Markdown 常用快捷鍵，格式排版、檔案管理與全域搜尋皆可在指尖瞬間完成。',
-      doc: '文件與檔案',
-      edit: '排版與格式',
-      nav: '導覽與檢視',
+      subtitle: '排版文字、尋找筆記、管理分頁列，一切操作盡在指尖完成。',
+      doc: '文件與檔案管理',
+      edit: '排版與文字格式',
+      nav: '快速導覽與搜尋',
       items: [
-        { group: 'doc', label: '新增文件', key: 'Ctrl+N' },
+        { group: 'doc', label: '新建文件', key: 'Ctrl+N' },
         { group: 'doc', label: '開啟檔案', key: 'Ctrl+O' },
-        { group: 'doc', label: '儲存目前文件', key: 'Ctrl+S' },
+        { group: 'doc', label: '儲存當前文件', key: 'Ctrl+S' },
         { group: 'doc', label: '另存新檔...', key: 'Ctrl+Shift+S' },
-        { group: 'doc', label: '匯出為 HTML', key: 'Ctrl+E' },
-        { group: 'edit', label: '粗體', key: 'Ctrl+B' },
-        { group: 'edit', label: '斜體', key: 'Ctrl+I' },
+        { group: 'doc', label: '匯出為 HTML 網頁', key: 'Ctrl+E' },
+        { group: 'edit', label: '文字粗體', key: 'Ctrl+B' },
+        { group: 'edit', label: '斜體樣式', key: 'Ctrl+I' },
         { group: 'edit', label: '1~6 級標題', key: 'Ctrl+1~6' },
-        { group: 'edit', label: '本文段落', key: 'Ctrl+0' },
+        { group: 'edit', label: '恢復內文段落', key: 'Ctrl+0' },
         { group: 'edit', label: '插入超連結', key: 'Ctrl+K' },
         { group: 'nav', label: '快速檔案切換器', key: 'Ctrl+P' },
         { group: 'nav', label: '文件內尋找', key: 'Ctrl+F' },
-        { group: 'nav', label: '文件內取代', key: 'Ctrl+H' },
-        { group: 'nav', label: '工作區全文搜尋', key: 'Ctrl+Shift+F' },
-        { group: 'nav', label: '切換顯示模式', key: 'Ctrl+/' }
+        { group: 'nav', label: '文件內替換', key: 'Ctrl+H' },
+        { group: 'nav', label: '資料夾全域全文搜尋', key: 'Ctrl+Shift+F' },
+        { group: 'nav', label: '切換瀏覽/寫作模式', key: 'Ctrl+/' }
       ]
     },
     faq: {
-      tag: '常見問題',
-      title: '常見問題解答',
-      subtitle: '有疑問或建議？歡迎前往 GitHub 提交 Issue 或參與討論交流。',
-      changelogTitle: '最新版本',
-      changelogVer: 'v0.1.7',
+      tag: '常見問答',
+      title: '你關心的都在這裡',
+      subtitle: '有任何疑問或改進建議？歡迎隨時前往 GitHub 與我們交流。',
+      changelogTitle: '最新版本動態',
+      changelogVer: '${LATEST_VERSION_TAG}',
       changelogItems: [
-        '內建外掛擴充市場（Taleno-Plugins 官方源）',
-        '社群佈景主題引擎與即時調色盤預覽',
-        '全自動後台更新偵測與在地化更新日誌',
-        '全面品牌升級為 Taleno 與效能調優'
+        '新增未儲存文件關閉確認視窗，全方位防止誤關丟字',
+        '標題列新增外掛市場、主題換膚與多語言快捷入口',
+        '底部狀態列最左側整合版本號，支援原位快速檢查更新',
+        '最佳化分頁列雙擊新建文件互動，防抖精準建立單份文件'
       ],
       items: [
         {
-          q: 'Taleno 與 Typora、Obsidian 及 Electron 編輯器相比有何優勢？',
-          a: '與封裝完整 Chromium 執行環境的 Electron 編輯器相比，Taleno 採用 Rust 與 Tauri 2 原生架構，冷啟動低於 400 毫秒且記憶體極度輕巧。相較於雙欄預覽，Taleno 提供純粹的原位即時排版。所有檔案 100% 本機儲存並享有不可部分完成（原子級）防損壞機制，同時可透過官方 Taleno-Plugins 市場自由取得外掛與佈景主題。'
+          q: '相比其他 Markdown 工具，Taleno 的最大亮點是什麼？',
+          a: '許多筆記工具不是左右雙欄分屏顯得雜亂，就是安裝套件龐大、打字發熱卡頓。Taleno 徹底做到了游標處原位即時渲染，開啟只需零點幾秒，記憶體佔用極低。介面清爽乾淨，讓你全身心投入到思路本身。'
         },
-        { q: 'Taleno 與傳統 Markdown 編輯器有何不同？', a: 'Taleno 採用徹底的原位所見即所得渲染，告別左右分割視窗。打字時游標所在處即時排版，無 Electron 的沉重包袱，冷啟動僅需數百毫秒，帶來極致輕快的原生桌面體驗。' },
-        { q: '我的文件資料安全嗎？', a: '100% 本機優先。所有文件均完整儲存在您的本機磁碟中，不傳送任何雲端伺服器。配合底層原子寫入機制，即便電腦突發斷電也不會損壞檔案。' },
-        { q: '支援哪些 Markdown 擴充語法？', a: '完整支援 GitHub Flavored Markdown (GFM)、表格、任務清單、程式碼高亮、Mermaid 圖表（流程圖、循序圖、類別圖等）以及 KaTeX 數學公式渲染。' },
-        { q: 'Taleno 是否免費開源？如何參與貢獻？', a: '是的，Taleno 基於 GNU AGPL-3.0 協議完全免費且開源。歡迎提交 Issue 反饋缺陷、參與多語言翻譯或發起 Pull Request。' }
+        {
+          q: '我以前在其他軟體裡寫的 Markdown 筆記能直接用嗎？',
+          a: '完全可以！Taleno 嚴格遵循通用的標準 Markdown 規範（.md 檔案）。無論是從 Obsidian、Typora、Notion 匯出的筆記，還是 GitHub 上的文件，都能直接雙擊開啟並儲存，沒有任何私有格式綁定。'
+        },
+        {
+          q: '我的筆記安全嗎？會不會被上傳到雲端？',
+          a: '絕對安全。Taleno 100% 採用本地優先機制，所有筆記和檔案只存放在你自己的電腦硬碟上，不強制註冊帳號，不收集文件內容，無網路也能完全正常使用。'
+        },
+        {
+          q: '是否支援更換主題與安裝外掛？',
+          a: '支援！你可以在設定介面自由選擇內建的淺色/深色主題，也可以一鍵下載 Dracula、Nord 等經典社群外觀。想要擴充字數統計、提示區塊等功能，也能在內建的外掛市場隨心挑選。'
+        },
+        {
+          q: 'Taleno 是免費的嗎？',
+          a: '是的，Taleno 基於開源協議完全免費供所有人使用，沒有任何付費門檻、無彈出廣告，也無任何功能限制。'
+        }
       ]
     },
     downloadPage: {
-      title: '下載 Taleno — 全平台安裝套件',
-      metaDesc: '下載適用於 Windows、macOS 和 Linux 的 Taleno。官方直鏈下載，無跳轉極速就緒。',
-      tag: 'v0.1.7 · 最新正式版',
-      heading: '下載 Taleno',
-      subheading: '所有下載按鈕均直接指向 GitHub Releases 最新安裝套件資源，點擊即刻開始下載。',
-      backHome: '← 返回首頁',
-      note: '安裝套件命名遵循 <span class="font-medium text-ink-secondary">Taleno_&lt;系統&gt;_&lt;架構&gt;</span> 規範，<span class="font-mono">releases/latest/download</span> 連結將始終指向最新建置版本。',
-      allReleases: '查看歷史版本與原始碼歸檔',
-      viewGh: 'GitHub 開源儲存庫'
+      title: '下載 Taleno — 極速沉浸原位 Markdown 編輯器',
+      metaDesc: '免費下載適用於 Windows、macOS 和 Linux 的 Taleno 官方正式安裝套件。純本地無上傳、毫秒級秒開、原位所見即所得。',
+      tag: '${LATEST_VERSION_TAG} · 最新官方正式版',
+      heading: '免費下載 Taleno',
+      subheading: '官方直連 GitHub Releases 鏡像，點擊即刻高速下載，幾秒鐘內開啟順暢寫作。',
+      backHome: '← 返回首頁概覽',
+      note: '所有下載連結均為官方建置發布的安裝套件，軟體內建原地更新檢查，後續版本發布後可直接在軟體內輕鬆更新。',
+      allReleases: '檢視歷史版本與更新日誌',
+      viewGh: '前往 GitHub 開源主頁'
     }
   },
 
@@ -404,130 +443,142 @@ const languages = {
     dir: 'ja',
     name: '日本語',
     htmlLang: 'ja',
-    title: 'Taleno — 高速ネイティブ インプレース WYSIWYG Markdown エディタ',
-    metaDesc: 'Taleno は Tauri 2 + Rust + SolidJS で構築されたローカルファーストのインプレース WYSIWYG Markdown エディタです。2画面分割なしで即時組版。プラグイン、テーマ、オフライン完全対応。',
-    nav: { features: '機能', download: 'ダウンロード', architecture: 'アーキテクチャ', shortcuts: 'ショートカット', faq: 'よくある質問', github: 'GitHub' },
-    selectLang: '言語を選択',
+    title: 'Taleno — 軽快でシンプルなその場 WYSIWYG Markdown エディタ',
+    metaDesc: 'Taleno は、2分割プレビュー画面を排し、入力したその場で美しく書式が整う無料・高速・完全ローカルの Markdown エディタです。オフライン対応、高速起動、テーマ・プラグイン拡張に対応。Windows・macOS・Linux 対応。',
+    nav: { features: '機能と特徴', download: 'ダウンロード', architecture: '軽快さの秘密', shortcuts: 'ショートカット', faq: 'よくある質問', github: 'GitHub' },
+    selectLang: '表示言語を選択',
     hero: {
-      badge: 'v0.1.7 リリース · AGPL-3.0 オープンソース',
-      title: 'その場で整う、Markdown。',
-      subtitle: 'ミニマルで高速なローカルファースト WYSIWYG Markdown リーダー＆エディタ。画面分割不要のインプレース即時レンダリング。Tauri 2 + Rust + SolidJS によるミリ秒単位の応答性と拡張性。',
-      downloadBtn: '今すぐダウンロード',
-      githubBtn: 'GitHub で見る',
-      chips: ['<400ms 高速起動', '分割不要のインプレース', '拡張機能とテーマ', '9言語対応']
+      badge: '${LATEST_VERSION_TAG} リリース · 100% 無料・オープンソース',
+      title: '思考をそのまま、美しい文章に。',
+      subtitle: '左右の2画面分割に別れを告げましょう。Taleno は入力と同時にその場で組版される、シンプルで軽快な Markdown エディタです。一瞬で起動し、すべての文書はローカルに安全に保存されます。',
+      downloadBtn: 'Taleno をダウンロード',
+      githubBtn: 'GitHub リポジトリ',
+      chips: ['一瞬で起動', '2画面分割なし', '100% ローカル保存', '完全無料']
     },
     mockup: {
       menu: ['ファイル', '編集', '表示', 'ウィンドウ', 'ヘルプ'],
-      title: 'Taleno — README.md',
-      outline: 'アウトライン',
+      title: 'Taleno — 自然で心地よい執筆体験へ.md',
+      outline: '目次アウトライン',
       workspace: 'ワークスペース',
-      introTitle: '# はじめに',
-      introP1: 'Taleno は画面分割プレビューを排除し、入力位置で直接リアルタイムにタイポグラフィを描画します。',
-      introP2: '分割画面ゼロ · インプレース WYSIWYG · Ripgrep 全文検索。',
-      metrics: ['起動時間', '< 400 ms', '瞬時のコールドスタート', '全文検索', 'ripgrep', 'ワークスペース全体秒速検索'],
-      modes: ['閲覧', '執筆', 'ソース'],
-      status: '行 1, 列 1  ·  1,420 文字  ·  UTF-8  ·  LF'
+      introTitle: '# 思考の邪魔をしない、純粋な執筆空間',
+      introP1: '左で書いて右で確認する煩わしさはもう不要です。Taleno では、見出しやリスト、強調を入力した瞬間にカーソル位置で美しく整形されます。',
+      introP2: 'その場 WYSIWYG · 高速全文検索 · 安心の自動保存。',
+      metrics: ['起動時間', '0.4秒未満', '瞬時に作業開始', '全体検索', '瞬時表示', 'フォルダ全体を検索'],
+      modes: ['閲覧モード', '編集モード', 'ソースモード'],
+      status: '1行, 1列  ·  1,420 文字  ·  UTF-8  ·  保存済み'
     },
     features: {
-      tag: '主な機能',
-      title: 'ノイズのない、純粋な執筆体験',
-      subtitle: 'タイピングと同時にレンダリング。目次アウトライン、マルチタブ、ワークスペース全文検索まで、すべてが快適な執筆のために設計されています。',
+      tag: '書き手のためのデザイン',
+      title: '書くことに集中できる、快適な機能の数々',
+      subtitle: '日々のメモ、学習記録、本格的な論文執筆まで。Taleno は静かで心地よい空間を提供します。',
       items: [
-        { title: '3つの表示モード切替', desc: '閲覧モード（読み取り専用）、執筆モード（インプレース WYSIWYG）、ソースモード（行番号同期）をワンクリック切替。' },
-        { title: 'プラグイン拡張機能', desc: '公式 Taleno-Plugins ハブと連携し、ワンクリックでインストール・更新。安全な JS サンドボックス環境。' },
-        { title: 'カスタム＆コミュニティテーマ', desc: '内蔵プリセットに加え、Dracula、Nord、Catppuccin などのコミュニティテーマをカラーパレットで即時適用。' },
-        { title: '9言語ネイティブ対応', desc: 'OS設定に合わせて自動認識。英語、日本語、中国語、韓国語、ドイツ語など9言語を瞬時に切り替え可能。' },
-        { title: '高速シンタックスハイライト', desc: 'syntect ネイティブエンジンにより、多数の言語に対応した高精度コードブロック描画とワンクリックコピーを提供。' },
-        { title: 'Mermaid & LaTeX 数式', desc: 'フローチャート、シーケンス図、クラス図などの Mermaid 図表および KaTeX による数式をリアルタイム描画。' },
-        { title: 'Ripgrep 全文検索', desc: 'ワークスペース全体の超高速検索（Ctrl+Shift+F）および文書内の一括検索・置換（Ctrl+F/H）を搭載。' },
-        { title: '安全なアトミック保存', desc: '一時ファイル書き込み（.tmp rename）と編集状態追跡により、クラッシュ時もデータを保護します。' },
-        { title: '直感的なドラッグ＆ドロップ', desc: 'ウィンドウへのファイルドロップで開く、タブバーへのドロップで新規タブ、本文へのドロップでリンク挿入。' },
-        { title: '単一 HTML エクスポート', desc: 'ショートカットキー（Ctrl+E）1つで、スタイル完全内蔵のオフライン HTML ファイルとして書き出し。' }
+        { title: '3つの表示モード', desc: '快適に読書できる閲覧モード、直感的な編集モード、構文を細かく整えるソースモードをショートカットで自在に切り替え。' },
+        { title: 'ワンクリック拡張機能', desc: '目標文字数カウンターやタイムスタンプ挿入など、便利なプラグインをマーケットからワンクリックで追加可能。' },
+        { title: '美しいテーマ着せ替え', desc: '目に優しいライト・ダークテーマに加え、Dracula、Nord、Catppuccin などの人気テーマをリアルタイムプレビューで適用できます。' },
+        { title: '9言語ネイティブ対応', desc: 'OS の言語設定を自動認識。日本語を含む9つの言語に最初から対応しています。' },
+        { title: '見やすいコードハイライト', desc: '100以上のプログラミング言語に対応したシンタックスハイライト。コードブロックのコピーもワンクリックです。' },
+        { title: '図表＆数式レンダリング', desc: 'Mermaid によるフローチャートやシーケンス図、KaTeX による数式の美しい組版をリアルタイムに行えます。' },
+        { title: 'フォルダ全体の超高速検索', desc: 'メモの数が増えても心配無用。Ctrl+Shift+F でワークスペース全体から目的の言葉を瞬時に検索できます。' },
+        { title: '安心のデータ保護設計', desc: '未保存のままウィンドウを閉じる際には確認ダイアログでお知らせ。突然の電源断でもファイルを安全に守ります。' },
+        { title: '直感的なドラッグ＆ドロップ', desc: 'ファイルをウィンドウに放り込むだけで閲覧開始。タブバーにドラッグして新規タブ、文章中への画像挿入もスムーズです。' },
+        { title: '綺麗な HTML への書き出し', desc: 'Ctrl+E を押すだけで、レイアウトが整った単一の HTML ファイルとしてエクスポート。共有や提出も簡単です。' }
       ]
     },
     downloadSec: {
       tag: 'ダウンロード',
-      title: '無料ダウンロードですぐに始める',
-      subtitle: 'お使いのOSを自動検出し、Windows、macOS、Linux に最適なインストーラーをハイライト表示します。',
-      recommended: 'お使いのOSに推奨',
-      winBtn: 'Windows 用インストーラー (.exe)',
-      macBtn: 'Apple Silicon 用 DMG (.dmg)',
-      macIntelBtn: 'Intel Mac (.dmg)',
-      linuxBtn: 'Linux 用 AppImage',
-      otherDownloads: 'すべてのパッケージ一覧とチェックサムを確認 →'
+      title: '無料ダウンロード、数秒で準備完了',
+      subtitle: 'お使いのパソコンを自動判定し、Windows、macOS、Linux に最適なインストーラーをおすすめします。',
+      recommended: 'お使いのシステムにおすすめ',
+      winBtn: 'Windows 版をダウンロード (.exe)',
+      macBtn: 'Apple Silicon Mac 版 (.dmg)',
+      macIntelBtn: 'Intel Mac 版 (.dmg)',
+      linuxBtn: 'Linux AppImage をダウンロード',
+      otherDownloads: 'すべてのファイルと検証ハッシュを見る →'
     },
     arch: {
-      tag: 'アーキテクチャ',
-      title: 'Rust ネイティブコア × 軽量 SolidJS フロントエンド',
-      subtitle: 'Tauri 2 を基盤に、メモリ安全な Rust バックエンドと細粒度リアクティブな SolidJS が連携 — GC 停止なし、タイピング遅延 16ms 未満。',
-      frontend: 'フロントエンド',
-      frontendTitle: 'SolidJS + Webview',
-      frontendChips: ['細粒度リアクティブ Signals', 'Milkdown / ProseMirror', '9言語 i18n エンジン', '型安全 IPC ラッパー'],
-      ipc: 'IPC ブリッジ',
-      ipcTitle: 'Tauri 2 Core',
-      ipcChips: ['ゼロコピー Commands', '非同期 Event バス', '最小権限ケーパビリティ'],
-      rust: 'バックエンド',
-      rustTitle: 'Rust ネイティブエンジン',
-      rustChips: ['pulldown-cmark AST', 'syntect ハイライト', 'notify ファイル監視', 'アトミックファイル I/O']
+      tag: '軽快さの秘密',
+      title: '驚くほど速く、バッテリーにも優しい設計',
+      subtitle: '従来の重厚なブラウザエンジンを丸ごと抱え込む構造を見直し、タイピングの遅延をゼロにし、メモリ消費を最小限に抑えました。',
+      frontend: 'なめらかな UI',
+      frontendTitle: '軽快なフロントエンド',
+      frontendChips: ['タイピング遅延ゼロ', 'カクつきなし', '多言語対応', 'テーマ切り替え'],
+      ipc: '軽量な内部連携',
+      ipcTitle: '効率的な設計',
+      ipcChips: ['低メモリ消費', '一瞬で起動', '安全なサンドボックス'],
+      rust: '堅牢なネイティブコア',
+      rustTitle: '安心のシステム基盤',
+      rustChips: ['データ消失防止', '高速全文検索', 'クラウド非送信', '標準 Markdown']
     },
     shortcuts: {
-      tag: 'ショートカット',
-      title: 'キーボードから手を離さない',
-      subtitle: '標準的な Markdown ショートカットを網羅。書式設定、ファイル操作、検索まで指先だけで完結します。',
-      doc: 'ドキュメント操作',
-      edit: '書式設定',
-      nav: 'ナビゲーション & 表示',
+      tag: 'ショートカットキー',
+      title: 'キーボードから手を離さずに操作',
+      subtitle: '見出し設定、書式変更、ノート検索もすべて指先ひとつで完了します。',
+      doc: '文書・ファイル操作',
+      edit: '書式・スタイル',
+      nav: '検索・ナビゲーション',
       items: [
         { group: 'doc', label: '新規ドキュメント', key: 'Ctrl+N' },
         { group: 'doc', label: 'ファイルを開く', key: 'Ctrl+O' },
-        { group: 'doc', label: '上書き保存', key: 'Ctrl+S' },
+        { group: 'doc', label: '保存', key: 'Ctrl+S' },
         { group: 'doc', label: '名前を付けて保存...', key: 'Ctrl+Shift+S' },
-        { group: 'doc', label: 'HTML エクスポート', key: 'Ctrl+E' },
-        { group: 'edit', label: '太字 (Bold)', key: 'Ctrl+B' },
-        { group: 'edit', label: '斜体 (Italic)', key: 'Ctrl+I' },
-        { group: 'edit', label: '見出し 1〜6', key: 'Ctrl+1~6' },
-        { group: 'edit', label: '本文段落', key: 'Ctrl+0' },
+        { group: 'doc', label: 'HTML 書き出し', key: 'Ctrl+E' },
+        { group: 'edit', label: '太字', key: 'Ctrl+B' },
+        { group: 'edit', label: '斜体', key: 'Ctrl+I' },
+        { group: 'edit', label: '見出し 1〜6', key: 'Ctrl+1〜6' },
+        { group: 'edit', label: '標準段落に戻す', key: 'Ctrl+0' },
         { group: 'edit', label: 'リンク挿入', key: 'Ctrl+K' },
-        { group: 'nav', label: 'クイックファイル切替', key: 'Ctrl+P' },
+        { group: 'nav', label: 'ファイルクイック切替', key: 'Ctrl+P' },
         { group: 'nav', label: '文書内検索', key: 'Ctrl+F' },
         { group: 'nav', label: '文書内置換', key: 'Ctrl+H' },
-        { group: 'nav', label: 'ワークスペース全文検索', key: 'Ctrl+Shift+F' },
+        { group: 'nav', label: 'フォルダ全体検索', key: 'Ctrl+Shift+F' },
         { group: 'nav', label: '表示モード切替', key: 'Ctrl+/' }
       ]
     },
     faq: {
-      tag: 'FAQ',
-      title: 'よくある質問',
-      subtitle: 'ご不明な点や改善要望がありましたら、GitHub の Issue や Discussion でお気軽にお知らせください。',
-      changelogTitle: '最新リリース',
-      changelogVer: 'v0.1.7',
+      tag: 'よくある質問',
+      title: '疑問にお答えします',
+      subtitle: 'ご質問や機能のリクエストは、お気軽に GitHub リポジトリまでお寄せください。',
+      changelogTitle: '最新リリースの変更点',
+      changelogVer: '${LATEST_VERSION_TAG}',
       changelogItems: [
-        'アプリ内プラグインマーケットプレイスの追加',
-        'カスタム＆コミュニティテーマエンジンとライブプレビュー',
-        '多言語対応の自動バックグラウンド更新',
-        'Taleno への全面リブランディングとパフォーマンス改善'
+        '未保存ドキュメントを閉じる際の安全確認ダイアログを追加',
+        'タイトルバーにプラグイン・テーマ・言語のクイックボタンを新設',
+        'ステータスバー左端にバージョン表示を配置（その場で更新確認可能）',
+        'タブバーのダブルクリックで新規ドキュメントを確実に1つ作成'
       ],
       items: [
         {
-          q: 'Taleno は Typora や Obsidian、Electron 製エディタと何が違いますか？',
-          a: 'Chromium を丸ごと内蔵する Electron エディタと異なり、Taleno は Rust と Tauri 2 で構築されており、400ms 未満の高速起動と圧倒的な省メモリを実現しています。2画面分割ではなくカーソル位置で直接レンダリングされ、ファイルはアトミック保存により破損から保護されます。さらに公式 Taleno-Plugins ハブから拡張機能やテーマをワンクリックで追加可能です。'
+          q: '他の Markdown エディタとの大きな違いは何ですか？',
+          a: '多くのエディタは「左に入力、右にプレビュー」という2画面分割を必要とし、アプリ自体も重くなりがちです。Taleno は打ったその場で綺麗なレイアウトになり、起動も一瞬。画面がすっきりして執筆に没頭できます。'
         },
-        { q: '従来の Markdown エディターとの違いは何ですか？', a: '左右に分割されたプレビュー画面がなく、入力位置でそのままレンダリングされる真のインプレース WYSIWYG を提供します。Electron を使わず Rust と Tauri 2 で構築されているため、圧倒的に高速で軽量です。' },
-        { q: 'データのプライバシーと安全性はどうなっていますか？', a: '100% ローカルファーストです。すべての文書はお手元のデバイスにのみ保存され、クラウドへの無断送信はありません。アトミック書き込みにより急な電源断でもファイルを破損から守ります。' },
-        { q: 'どのような Markdown 拡張構文に対応していますか？', a: 'GitHub Flavored Markdown (GFM)、テーブル、タスクリスト、コードブロック構文ハイライト、Mermaid 図表（フローチャート・シーケンス図等）、KaTeX 数式に対応しています。' },
-        { q: '無料で利用できますか？ 貢献方法は？', a: 'はい、GNU AGPL-3.0 ライセンスに基づく完全無料のオープンソースソフトウェアです。GitHub での Issue 報告、翻訳、Pull Request を大歓迎します。' }
+        {
+          q: 'すでに書いた Markdown ファイルはそのまま開けますか？',
+          a: 'はい、完全に互換性があります。Taleno は標準的な純粋な .md ファイルを使用します。Obsidian や Typora、Notion などで作成した文書もそのまま開いて編集できます。'
+        },
+        {
+          q: 'ノートの内容が外部サーバーに送信されることはありますか？',
+          a: '一切ありません。すべての文書はお使いのパソコン内にのみ保存されます。アカウント登録も不要で、オフライン環境でも完全にご利用いただけます。'
+        },
+        {
+          q: 'テーマやプラグインは利用できますか？',
+          a: 'はい！設定画面からお好みのライト/ダークテーマを選択できるほか、Dracula などのコミュニティテーマや便利なプラグインをワンクリックで導入できます。'
+        },
+        {
+          q: '利用料金はかかりますか？',
+          a: '完全無料です。オープンソース（GNU AGPL-3.0）として公開されており、有料プランや広告、機能制限などは一切ありません。'
+        }
       ]
     },
     downloadPage: {
-      title: 'Taleno ダウンロード — 全プラットフォーム',
-      metaDesc: 'Windows、macOS、Linux 用の Taleno をダウンロード。リダイレクトなしの公式ダイレクトリンク。',
-      tag: 'v0.1.7 · 最新リリース',
-      heading: 'Taleno のダウンロード',
-      subheading: 'すべてのダウンロードボタンは GitHub Releases の最新アセットに直結しており、クリック後すぐにダウンロードが始まります。',
-      backHome: '← トップページに戻る',
-      note: 'ファイル名は <span class="font-medium text-ink-secondary">Taleno_&lt;OS&gt;_&lt;アーキテクチャ&gt;</span> の命名規則に従い、<span class="font-mono">releases/latest/download</span> リンクから常に最新版を入手できます。',
-      allReleases: '過去のリリースとソースコード',
-      viewGh: 'GitHub リポジトリ'
+      title: 'Taleno のダウンロード — 軽快なその場 Markdown エディタ',
+      metaDesc: 'Windows、macOS、Linux 向けの Taleno 公式インストーラーをダウンロード。完全ローカル、瞬時起動、その場 WYSIWYG。',
+      tag: '${LATEST_VERSION_TAG} · 最新公式リリース',
+      heading: 'Taleno をダウンロード',
+      subheading: 'GitHub Releases の公式直接リンクです。プラットフォームを選択して、快適な執筆を始めましょう。',
+      backHome: '← ホームへ戻る',
+      note: 'ダウンロードファイルはすべて公式ビルドです。アプリ内からも直接ワンクリックで更新チェックが行えます。',
+      allReleases: 'すべてのリリースと更新履歴を見る',
+      viewGh: 'GitHub リポジトリへ'
     }
   },
 
@@ -536,130 +587,142 @@ const languages = {
     dir: 'ko',
     name: '한국어',
     htmlLang: 'ko',
-    title: 'Taleno — 초고속 로컬 우선 인플레이스 WYSIWYG 마크다운 에디터',
-    metaDesc: 'Taleno는 Tauri 2 + Rust + SolidJS 기반의 초경량 로컬 우선 인플레이스 WYSIWYG 마크다운 편집기입니다. 화면 분할 없는 실시간 렌더링, 플러그인 및 테마 마켓, 완벽한 오프라인 개인정보 보호를 제공합니다.',
-    nav: { features: '주요 기능', download: '다운로드', architecture: '아키텍처', shortcuts: '단축키', faq: '자주 묻는 질문', github: 'GitHub' },
-    selectLang: '언어 선택',
+    title: 'Taleno — 가볍고 빠른 인플레이스 WYSIWYG 마크다운 에디터',
+    metaDesc: 'Taleno는 분할 화면 없이 입력한 자리에서 바로 완성된 서식이 적용되는 무료 로컬 마크다운 리더 및 에디터입니다. 100% 오프라인 개인정보 보호, 빠른 실행, 다양한 테마와 플러그인을 지원합니다. Windows, macOS, Linux 지원.',
+    nav: { features: '주요 기능', download: '다운로드', architecture: '가벼운 이유', shortcuts: '단축키', faq: '자주 묻는 질문', github: 'GitHub' },
+    selectLang: '표시 언어 선택',
     hero: {
-      badge: 'v0.1.7 출시 · AGPL-3.0 오픈소스',
-      title: '입력하는 그 자리에서, 마크다운.',
-      subtitle: '미니멀하고 강력한 로컬 우선 인플레이스 WYSIWYG 마크다운 리더 및 편집기입니다. 화면 분할 없이 타이핑과 동시에 서식이 적용되며, Tauri 2 + Rust + SolidJS로 제작되어 초고속 응답성을 자랑합니다.',
-      downloadBtn: '지금 다운로드',
-      githubBtn: 'GitHub 에서 보기',
-      chips: ['<400ms 초고속 콜드스타트', '분할 화면 없는 인플레이스', '플러그인 및 테마', '9개 언어 지원']
+      badge: '${LATEST_VERSION_TAG} 정식 출시 · 100% 무료 및 오픈 소스',
+      title: '생각을 그대로, 아름다운 글이 되도록.',
+      subtitle: '번거로운 좌우 2분할 화면 없이 입력과 동시에 그 자리에서 깔끔하게 정돈되는 미니멀 마크다운 에디터입니다. 눈 깜짝할 사이에 켜지고, 모든 문서는 컴퓨터에 안전하게 보관됩니다.',
+      downloadBtn: 'Taleno 무료 다운로드',
+      githubBtn: 'GitHub 저장소',
+      chips: ['순식간에 실행', '화면 분할 없음', '100% 로컬 저장', '완전 무료 오픈소스']
     },
     mockup: {
       menu: ['파일', '편집', '보기', '창', '도움말'],
-      title: 'Taleno — README.md',
-      outline: '문서 개요',
-      workspace: '워크스페이스',
-      introTitle: '# 프로젝트 소개',
-      introP1: 'Taleno 는 번거로운 화면 분할 미리보기를 없애고, 입력한 위치에서 곧바로 깔끔하게 서식을 렌더링합니다.',
-      introP2: '분할창 제로 · 인플레이스 WYSIWYG · Ripgrep 전체 텍스트 검색.',
-      metrics: ['시작 시간', '< 400 ms', '초고속 실행', '전체 검색', 'ripgrep', '워크스페이스 전체 검색'],
-      modes: ['읽기', '쓰기', '소스'],
-      status: '1행, 1열  ·  1,420 단어  ·  UTF-8  ·  LF'
+      title: 'Taleno — 자연스럽고 편안한 글쓰기.md',
+      outline: '문서 목차',
+      workspace: '작업 공간 노트',
+      introTitle: '# 생각에만 집중할 수 있는 순수한 공간',
+      introP1: '왼쪽에서 마크다운 코드를 쓰고 오른쪽에서 미리보기를 번갈아 볼 필요가 없습니다. 제목, 목록, 굵은 글씨를 입력하면 커서 아래에서 즉시 예쁘게 다듬어집니다.',
+      introP2: '인플레이스 WYSIWYG · 초고속 전체 검색 · 안전한 자동 저장.',
+      metrics: ['시작 속도', '0.4초 미만', '순식간에 준비 완료', '전체 검색', '즉각 반응', '폴더 전체 초고속 검색'],
+      modes: ['읽기 모드', '작성 모드', '소스 모드'],
+      status: '1행, 1열  ·  1,420 단어  ·  UTF-8  ·  저장됨'
     },
     features: {
-      tag: '주요 기능',
-      title: '방해 요소 없는 순수한 글쓰기',
-      subtitle: '타이핑과 동시에 이뤄지는 실시간 서식 렌더링. 개요, 다중 탭부터 전체 텍스트 검색까지 오직 글쓰기 경험에 집중합니다.',
+      tag: '작성자를 위한 세심한 설계',
+      title: '글쓰기에 꼭 필요한 것만, 방해 요소는 제로',
+      subtitle: '가벼운 메모부터 깊이 있는 논문이나 블로그 초안까지, Taleno는 고요하고 쾌적한 기록 공간을 만듭니다.',
       items: [
-        { title: '3가지 디스플레이 모드', desc: '읽기 모드(보기 전용), 쓰기 모드(인플레이스 WYSIWYG), 코드 모드(줄 번호 동기화)를 단축키로 자유롭게 전환.' },
-        { title: '플러그인 생태계 및 마켓', desc: '공식 Taleno-Plugins 허브에서 원클릭으로 플러그인을 탐색, 설치 및 업데이트하는 안전한 JS 샌드박스 런타임.' },
-        { title: '커스텀 및 커뮤니티 테마', desc: '내장 프리셋과 함께 Dracula, Nord, Catppuccin 등 커뮤니티 테마를 실시간 컬러 스와치로 즉시 전환.' },
-        { title: '9개 국어 다국어 지원', desc: '운영체제 언어를 자동으로 감지하며 메뉴에서 언제든 9개 언어로 즉시 전환 가능합니다.' },
-        { title: '고성능 코드 구문 강조', desc: 'syntect 엔진 기반으로 수백 가지 프로그래밍 언어의 코드 블록 강조 및 원클릭 복사를 지원합니다.' },
-        { title: 'Mermaid 다이어그램 & LaTeX 수식', desc: '플로우차트, 시퀀스, 클래스 다이어그램 등 Mermaid 차트와 KaTeX 수학 수식을 실시간 렌더링.' },
-        { title: 'Ripgrep 전체 텍스트 검색', desc: '워크스페이스 전체를 밀리초 단위로 검색(Ctrl+Shift+F)하고 문서 내 찾기/바꾸기(Ctrl+F/H)를 지원합니다.' },
-        { title: '안전한 원자적 파일 저장', desc: '임시 파일 교체(.tmp rename) 방식과 실시간 미저장 상태 추적으로 데이터 유실을 방지합니다.' },
-        { title: '스마트 드래그 앤 드롭', desc: '파일을 창으로 끌어다 열기, 탭 바로 끌어 새 탭 열기, 본문으로 끌어 마크다운 링크 자동 삽입.' },
-        { title: '독립형 HTML 내보내기', desc: '단축키(Ctrl+E) 한 번으로 모든 스타일이 내장된 독립 실행형 오프라인 HTML 파일로 내보냅니다.' }
+        { title: '3가지 화면 모드', desc: '차분하게 글을 읽는 뷰 모드, 직관적인 작성 모드, 세밀하게 문법을 다루는 소스 모드를 단축키 하나로 전환합니다.' },
+        { title: '원클릭 플러그인 확장', desc: '목표 글자수 카운터, 자동 타임스탬프 등 유용한 도구를 내장 플러그인 갤러리에서 손쉽게 추가할 수 있습니다.' },
+        { title: '편안한 테마 스킨', desc: '눈이 편한 라이트/다크 테마는 물론, Dracula, Nord, Catppuccin 등 인기 커뮤니티 테마를 실시간 미리보기로 적용합니다.' },
+        { title: '9개 국어 지원', desc: '운영체제의 언어를 자동으로 감지하며, 언제든 메뉴에서 자유롭게 원하는 언어로 변경할 수 있습니다.' },
+        { title: '선명한 코드 강조', desc: '100여 개 프로그래밍 언어의 구문 강조와 원클릭 코드 복사 버튼을 제공합니다.' },
+        { title: '다이어그램 및 수식 지원', desc: 'Mermaid 플로우차트와 시퀀스 다이어그램, KaTeX를 통한 정교한 수학 수식을 실시간으로 렌더링합니다.' },
+        { title: '폴더 전체 초고속 검색', desc: '노트가 아무리 많아도 Ctrl+Shift+F 한 번이면 원하는 단어가 포함된 문서를 순식간에 찾아냅니다.' },
+        { title: '안심 데이터 보호', desc: '저장되지 않은 문서 닫기 시 확인 창을 띄워 실수를 방지하며, 정전 시에도 글이 유실되지 않도록 보호합니다.' },
+        { title: '손쉬운 드래그 앤 드롭', desc: '마크다운 파일을 창 안으로 끌어와 열고, 탭 표시줄에 놓아 새 탭을 만들며, 이미지를 본문에 바로 삽입하세요.' },
+        { title: '깔끔한 독립 HTML 내보내기', desc: 'Ctrl+E 단축키로 서식이 완벽히 포함된 단일 웹페이지 파일로 내보내어 동료나 친구에게 손쉽게 공유할 수 있습니다.' }
       ]
     },
     downloadSec: {
       tag: '다운로드',
-      title: '무료 다운로드로 지금 바로 시작하세요',
-      subtitle: '사용 중인 운영체제를 자동 감지하여 Windows, macOS, Linux 에 가장 알맞은 설치 파일을 추천합니다.',
-      recommended: '현재 운영체제 추천',
-      winBtn: 'Windows 설치 파일 (.exe)',
-      macBtn: 'Apple Silicon 설치 파일 (.dmg)',
-      macIntelBtn: 'Intel Mac (.dmg)',
+      title: '무료 다운로드, 몇 초면 준비 완료',
+      subtitle: '접속한 기기를 자동으로 인식하여 Windows, macOS, Linux에 알맞은 설치 프로그램을 추천해 드립니다.',
+      recommended: '현재 운영체제 권장 버전',
+      winBtn: 'Windows 버전 다운로드 (.exe)',
+      macBtn: 'Apple Silicon Mac 버전 (.dmg)',
+      macIntelBtn: 'Intel Mac 버전 (.dmg)',
       linuxBtn: 'Linux AppImage 다운로드',
-      otherDownloads: '모든 플랫폼 설치 파일 및 체크섬 보기 →'
+      otherDownloads: '모든 설치 파일 및 해시값 보기 →'
     },
     arch: {
-      tag: '아키텍처',
-      title: 'Rust 코어와 가벼운 SolidJS 프론트엔드',
-      subtitle: 'Tauri 2 를 기반으로 메모리 안전한 Rust 백엔드와 반응형 SolidJS 웹뷰가 결합 — GC 지연 없는 16ms 미만의 입력 레이턴시.',
-      frontend: '프론트엔드',
-      frontendTitle: 'SolidJS + Webview',
-      frontendChips: ['반응형 Signals', 'Milkdown / ProseMirror', '9개 언어 i18n 엔진', '타입 안전 IPC'],
-      ipc: 'IPC 브리지',
-      ipcTitle: 'Tauri 2 코어',
-      ipcChips: ['Zero-Copy Commands', '비동기 Event 버스', '최소 권한 보안'],
-      rust: '백엔드',
-      rustTitle: 'Rust 네이티브 엔진',
-      rustChips: ['pulldown-cmark AST', 'syntect 구문 강조', 'notify 파일 감시', '원자적 파일 I/O']
+      tag: '가벼운 이유',
+      title: '빠른 반응 속도, 낮은 배터리 소모',
+      subtitle: '무거운 브라우저 엔진 대신 현대적인 네이티브 설계를 적용하여 타이핑 딜레이를 없애고 메모리 사용량을 최소화했습니다.',
+      frontend: '매끄러운 인터페이스',
+      frontendTitle: '부드러운 반응형 프론트엔드',
+      frontendChips: ['타이핑 딜레이 제로', '화면 버벅임 없음', '9개 국어 전환', '테마 실시간 변경'],
+      ipc: '가벼운 내부 연결',
+      ipcTitle: '효율적인 구조',
+      ipcChips: ['초소형 메모리 점유', '순식간에 켜짐', '안전한 샌드박스'],
+      rust: '견고한 시스템 코어',
+      rustTitle: '신뢰할 수 있는 엔진',
+      rustChips: ['문서 유실 방지 보호', '초고속 전체 검색', '클라우드 전송 제로', '표준 마크다운']
     },
     shortcuts: {
-      tag: '단축키',
-      title: '키보드만으로 모든 조작을 완성하세요',
-      subtitle: '자주 쓰이는 모든 마크다운 단축키를 기본 지원하여 손을 떼지 않고 빠르게 문서를 작성할 수 있습니다.',
-      doc: '문서 및 파일',
-      edit: '서식 지정',
-      nav: '탐색 및 보기',
+      tag: '편리한 단축키',
+      title: '키보드에서 손을 뗄 필요 없이',
+      subtitle: '제목 지정, 글자 서식 변경, 노트 검색까지 손끝에서 빠르게 완성됩니다.',
+      doc: '문서 및 파일 관리',
+      edit: '글꼴 및 서식',
+      nav: '빠른 탐색 및 검색',
       items: [
-        { group: 'doc', label: '새 문서', key: 'Ctrl+N' },
+        { group: 'doc', label: '새 문서 만들기', key: 'Ctrl+N' },
         { group: 'doc', label: '파일 열기', key: 'Ctrl+O' },
         { group: 'doc', label: '문서 저장', key: 'Ctrl+S' },
         { group: 'doc', label: '다른 이름으로 저장...', key: 'Ctrl+Shift+S' },
-        { group: 'doc', label: 'HTML 로 내보내기', key: 'Ctrl+E' },
-        { group: 'edit', label: '굵게', key: 'Ctrl+B' },
+        { group: 'doc', label: 'HTML 파일로 내보내기', key: 'Ctrl+E' },
+        { group: 'edit', label: '굵은 글씨', key: 'Ctrl+B' },
         { group: 'edit', label: '기울임꼴', key: 'Ctrl+I' },
-        { group: 'edit', label: '제목 1~6', key: 'Ctrl+1~6' },
-        { group: 'edit', label: '본문 단락', key: 'Ctrl+0' },
+        { group: 'edit', label: '1~6단계 제목', key: 'Ctrl+1~6' },
+        { group: 'edit', label: '일반 본문 단락', key: 'Ctrl+0' },
         { group: 'edit', label: '링크 삽입', key: 'Ctrl+K' },
         { group: 'nav', label: '빠른 파일 전환', key: 'Ctrl+P' },
         { group: 'nav', label: '문서 내 찾기', key: 'Ctrl+F' },
-        { group: 'nav', label: '문서 내 바꾸기', key: 'Ctrl+H' },
-        { group: 'nav', label: '워크스페이스 전체 검색', key: 'Ctrl+Shift+F' },
-        { group: 'nav', label: '표시 모드 전환', key: 'Ctrl+/' }
+        { group: 'nav', label: '단어 바꾸기', key: 'Ctrl+H' },
+        { group: 'nav', label: '폴더 전체 내용 검색', key: 'Ctrl+Shift+F' },
+        { group: 'nav', label: '화면 모드 전환', key: 'Ctrl+/' }
       ]
     },
     faq: {
-      tag: 'FAQ',
-      title: '자주 묻는 질문',
-      subtitle: '궁금한 점이나 건의사항이 있으신가요? GitHub 저장소에서 이슈를 생성하거나 토론에 참여하세요.',
-      changelogTitle: '최신 릴리스',
-      changelogVer: 'v0.1.7',
+      tag: '자주 묻는 질문',
+      title: '궁금한 점을 확인해 보세요',
+      subtitle: '문의 사항이나 새로운 기능 제안은 GitHub 저장소에 언제든 남겨주세요.',
+      changelogTitle: '최신 버전 변경 사항',
+      changelogVer: '${LATEST_VERSION_TAG}',
       changelogItems: [
-        '인앱 플러그인 마켓플레이스 탑재 (Taleno-Plugins)',
-        '커스텀 및 커뮤니티 테마 엔진과 실시간 색상 미리보기',
-        '다국어 릴리스 노트를 지원하는 자동 백그라운드 업데이트',
-        'Taleno 브랜드 전면 개편 및 성능 최적화'
+        '저장되지 않은 문서 닫기 시 확인 알림창 추가 (실수 방지)',
+        '제목 표시줄에 플러그인, 테마, 언어 빠른 설정 버튼 추가',
+        '상태 표시줄 좌측 끝에 버전 배지 배치 (원클릭 업데이트 확인)',
+        '탭 표시줄 더블클릭 시 새 문서가 정확히 1개 생성되도록 개선'
       ],
       items: [
         {
-          q: 'Taleno는 Typora, Obsidian 및 Electron 기반 에디터와 비교하여 어떤 장점이 있나요?',
-          a: '무거운 Chromium 런타임을 포함하는 Electron 에디터와 달리, Taleno는 Rust와 Tauri 2 기반으로 개발되어 400ms 미만의 콜드 스타트와 매우 적은 메모리 사용량을 자랑합니다. 좌우 분할 화면 대신 입력 위치에서 즉시 서식이 적용되는 인플레이스 방식을 채택했으며, 모든 문서는 원자적 저장 방식으로 안전하게 보관됩니다. 또한 공식 Taleno-Plugins 마켓을 통해 플러그인과 테마를 자유롭게 확장할 수 있습니다.'
+          q: '기존 마크다운 편집기와 어떻게 다른가요?',
+          a: '많은 편집기는 좌우로 나뉜 2분할 화면을 사용해 답답하거나 앱이 무거워 느려지기 쉽습니다. Taleno는 타이핑하는 즉시 그 자리에서 서식이 적용되며, 1초도 안 되어 바로 실행되고 메모리도 거의 차지하지 않습니다.'
         },
-        { q: '기존 마크다운 편집기와 무엇이 다른가요?', a: 'Taleno 는 화면 분할 없이 글을 쓰는 위치에서 즉시 서식이 완성되는 실시간 인플레이스 WYSIWYG 방식을 채택했습니다. Electron 없이 Rust 와 Tauri 2 로 개발되어 가볍고 빠릅니다.' },
-        { q: '내 데이터는 안전한가요?', a: '100% 로컬 우선입니다. 모든 문서는 사용자의 기기에만 보관되며 외부 서버로 전송되지 않습니다. 원자적 파일 저장 구조로 예기치 않은 종료 시에도 파일이 안전하게 보존됩니다.' },
-        { q: '어떤 마크다운 확장 문법을 지원하나요?', a: 'GitHub Flavored Markdown (GFM), 표, 작업 목록, 코드 구문 강조, Mermaid 다이어그램(순서도, 시퀀스 등), KaTeX 수학 수식을 모두 지원합니다.' },
-        { q: '무료인가요? 기여하려면 어떻게 해야 하나요?', a: '네, GNU AGPL-3.0 라이선스 기반의 완전 무료 오픈소스입니다. 버그 제보, 번역, Pull Request 등 다양한 기여를 환영합니다.' }
+        {
+          q: '기존에 작성해 둔 마크다운 파일을 그대로 쓸 수 있나요?',
+          a: '네, 100% 호환됩니다! Taleno는 표준 마크다운 파일(.md) 형식을 사용합니다. Obsidian, Typora, Notion 등에서 작성한 글을 그대로 열고 저장할 수 있습니다.'
+        },
+        {
+          q: '내 글이 외부 서버로 유출될 위험은 없나요?',
+          a: '전혀 없습니다. Taleno는 100% 로컬 전용으로 작동하여 모든 문서는 사용자의 컴퓨터에만 안전하게 저장됩니다. 계정 가입도 필요 없으며 인터넷이 없는 곳에서도 완벽히 작동합니다.'
+        },
+        {
+          q: '테마와 플러그인을 바꿀 수 있나요?',
+          a: '네! 설정에서 기본 라이트/다크 테마 외에도 Dracula, Nord 같은 인기 커뮤니티 스킨을 바로 내려받아 쓸 수 있으며, 유용한 플러그인도 쉽게 추가할 수 있습니다.'
+        },
+        {
+          q: 'Taleno는 무료인가요?',
+          a: '네, Taleno는 오픈 소스(GNU AGPL-3.0)로 누구나 무료로 사용할 수 있으며 유료 결제나 광고, 기능 제한이 일체 없습니다.'
+        }
       ]
     },
     downloadPage: {
-      title: 'Taleno 다운로드 — 모든 플랫폼',
-      metaDesc: 'Windows, macOS, Linux 용 Taleno 다운로드. 리디렉션 없는 공식 직접 링크.',
-      tag: 'v0.1.7 · 최신 릴리스',
-      heading: 'Taleno 다운로드',
-      subheading: '모든 다운로드 버튼은 GitHub Releases 최신 빌드 자산으로 직접 연결되어 즉시 다운로드가 시작됩니다.',
-      backHome: '← 메인으로 돌아가기',
-      note: '배포 파일은 <span class="font-medium text-ink-secondary">Taleno_&lt;운영체제&gt;_&lt;아키텍처&gt;</span> 명명 규칙을 따르며, <span class="font-mono">releases/latest/download</span> 링크는 항상 최신 빌드를 제공합니다.',
-      allReleases: '이전 릴리스 및 소스코드 아카이브',
-      viewGh: 'GitHub 저장소'
+      title: 'Taleno 다운로드 — 가볍고 쾌적한 마크다운 에디터',
+      metaDesc: 'Windows, macOS, Linux용 Taleno 공식 버전을 다운로드하세요. 완전 로컬 저장, 순식간에 실행, 분할 없는 인플레이스 WYSIWYG.',
+      tag: '${LATEST_VERSION_TAG} · 최신 공식 정식 버전',
+      heading: 'Taleno 무료 다운로드',
+      subheading: 'GitHub Releases 공식 직접 링크입니다. 플랫폼을 선택하여 가볍고 편안한 글쓰기를 시작하세요.',
+      backHome: '← 메인 화면으로 돌아가기',
+      note: '모든 파일은 공식 빌드 설치 파일이며, 앱 내에서도 클릭 한 번으로 간편하게 최신 버전을 확인할 수 있습니다.',
+      allReleases: '모든 버전 및 릴리스 내역 보기',
+      viewGh: 'GitHub 저장소 둘러보기'
     }
   },
 
@@ -668,130 +731,142 @@ const languages = {
     dir: 'de',
     name: 'Deutsch',
     htmlLang: 'de',
-    title: 'Taleno — Schneller In-Place WYSIWYG Markdown-Editor für Desktop',
-    metaDesc: 'Taleno ist ein minimalistischer, lokaler In-Place WYSIWYG Markdown-Editor auf Basis von Tauri 2, Rust und SolidJS. Keine geteilten Bildschirme, Plugins, Themes und 100% Offline-Datenschutz für Windows, Mac und Linux.',
-    nav: { features: 'Funktionen', download: 'Download', architecture: 'Architektur', shortcuts: 'Tastenkürzel', faq: 'FAQ & Hinweise', github: 'GitHub' },
-    selectLang: 'Sprache auswählen',
+    title: 'Taleno — Schneller, ablenkungsfreier In-Place Markdown-Editor',
+    metaDesc: 'Taleno ist ein kostenloser, lokaler Markdown-Reader & Editor ohne geteilte Fenster. Formatierung direkt beim Tippen, 100% Privatsphäre offline, sofortiger Start und ansprechende Themes für Windows, macOS und Linux.',
+    nav: { features: 'Funktionen', download: 'Download', architecture: 'Warum so schnell', shortcuts: 'Tastenkombinationen', faq: 'FAQ', github: 'GitHub' },
+    selectLang: 'Anzeigesprache wählen',
     hero: {
-      badge: 'v0.1.7 veröffentlicht · AGPL-3.0 Open Source',
-      title: 'Markdown, direkt am Platz.',
-      subtitle: 'Ein minimalistischer, performanter In-Place WYSIWYG Markdown-Editor. Formatierung direkt beim Tippen ohne geteilte Fenster — entwickelt mit Tauri 2, Rust und SolidJS für verzögerungsfreies Schreiben und maximale Privatsphäre.',
-      downloadBtn: 'Jetzt herunterladen',
-      githubBtn: 'Auf GitHub ansehen',
-      chips: ['<400ms Kaltstart', 'Keine Split-Screens', 'Plugins & Themes', '9 Sprachen']
+      badge: '${LATEST_VERSION_TAG} veröffentlicht · 100% Kostenlos & Open Source',
+      title: 'Markdown, wunderbar einfach.',
+      subtitle: 'Schreibe direkt im formatierten Dokument – ganz ohne unübersichtliche geteilte Fenster. Taleno öffnet blitzschnell, speichert alle Notizen sicher auf deinem Computer und lässt dich ungestört schreiben.',
+      downloadBtn: 'Taleno herunterladen',
+      githubBtn: 'GitHub-Repository',
+      chips: ['Startet blitzschnell', 'Keine geteilten Fenster', '100% Offline & Privat', 'Vollständig kostenlos']
     },
     mockup: {
       menu: ['Datei', 'Bearbeiten', 'Ansicht', 'Fenster', 'Hilfe'],
-      title: 'Taleno — README.md',
+      title: 'Taleno — Willkommen zum entspannten Schreiben.md',
       outline: 'Gliederung',
       workspace: 'Arbeitsbereich',
-      introTitle: '# Einführung',
-      introP1: 'Taleno verzichtet vollständig auf geteilte Vorschaubildschirme und formatiert Markdown direkt am Cursor.',
-      introP2: 'Keine Split-Panes · In-Place WYSIWYG · Ripgrep-Volltextsuche.',
-      metrics: ['Startzeit', '< 400 ms', 'Sofort einsatzbereit', 'Volltextsuche', 'ripgrep', 'Im gesamten Arbeitsbereich'],
+      introTitle: '# Konzentriere dich auf deine Gedanken',
+      introP1: 'Vergiss unübersichtliche Editoren mit zwei Fenstern. In Taleno formatieren sich Überschriften, Listen und Fettschrift direkt unter deinem Cursor, während du tippst.',
+      introP2: 'In-Place WYSIWYG · Blitzschnelle Volltextsuche · Schutz vor Datenverlust.',
+      metrics: ['Startzeit', 'Unter 0,4 Sek.', 'Sofort einsatzbereit', 'Globale Suche', 'Reaktionsschnell', 'Gesamter Ordner'],
       modes: ['Lesen', 'Schreiben', 'Quellcode'],
-      status: 'Zl 1, Sp 1  ·  1.420 Wörter  ·  UTF-8  ·  LF'
+      status: 'Zl 1, Sp 1  ·  1.420 Wörter  ·  UTF-8  ·  Gespeichert'
     },
     features: {
-      tag: 'KERNFUNKTIONEN',
-      title: 'Fokussiertes Schreiben ohne Ablenkung',
-      subtitle: 'Echtzeit-Formatierung beim Tippen. Von Gliederung und Tabs bis hin zur Volltextsuche ist alles für ein sauberes Schreiberlebnis optimiert.',
+      tag: 'FÜR AUTOREN ENTWICKELT',
+      title: 'Alles, was du zum Schreiben brauchst – ohne Ablenkung',
+      subtitle: 'Ob kurze Gedanken, Lernnotizen oder lange Artikel: Taleno bietet dir einen ruhigen, zuverlässigen Ort für deine Texte.',
       items: [
-        { title: 'Drei Anzeigemodi', desc: 'Nahtloses Umschalten zwischen Lese-Modus, In-Place-Schreibmodus und synchronisiertem Quellcode-Modus.' },
-        { title: 'In-App Plugin-Marktplatz', desc: 'Erweiterungen aus dem offiziellen Taleno-Plugins-Hub mit einem Klick installieren und sicher in einer JS-Sandbox ausführen.' },
-        { title: 'Community-Themes & Design', desc: 'Integrierte Voreinstellungen plus externer Theme-Marktplatz (Dracula, Nord, Catppuccin) mit Live-Farbfeldvorschau.' },
-        { title: '9 Sprachen (i18n)', desc: 'Erkennt automatisch Ihre Systemsprache und unterstützt 9 Sprachen mit sofortigem Wechsel.' },
-        { title: 'Syntax-Hervorhebung', desc: 'Leistungsstarke syntect-Hervorhebung mit Sprach-Tags und Ein-Klick-Code-Kopierfunktion.' },
-        { title: 'Mermaid & LaTeX', desc: 'Interaktive Flussdiagramme, Sequenzdiagramme und KaTeX-Mathematikformeln in Echtzeit.' },
-        { title: 'Ripgrep-Volltextsuche', desc: 'Blitzschnelle arbeitsbereichsweite Suche (Ctrl+Shift+F) und Suchen & Ersetzen im Dokument (Ctrl+F/H).' },
-        { title: 'Absturzsicheres Speichern', desc: 'Atomare Dateischreibvorgänge (.tmp rename) und Dirty-State-Tracking schützen Ihre Texte vor Datenverlust.' },
-        { title: 'Intelligentes Drag & Drop', desc: 'Dateien durch Ziehen öffnen, neue Tabs erstellen oder automatisch Markdown-Links einfügen.' },
-        { title: 'Eigenständiger HTML-Export', desc: 'Ein Tastenkürzel (Ctrl+E) exportiert vollformatierte, eigenständige Offline-HTML-Dateien.' }
+        { title: 'Drei flexible Ansichten', desc: 'Mit einem Klick umschalten: ruhiger Lesemodus, direkte In-Place-Schreibansicht oder roher Markdown-Quelltext.' },
+        { title: 'Einfache Plugins', desc: 'Erweitere deinen Editor um Wortziele, Zeitstempel oder Hinweisboxen mit nur einem Klick aus der Galerie.' },
+        { title: 'Angenehme Themes', desc: 'Schone deine Augen mit hellen und dunklen Stilen oder installiere beliebte Themes wie Dracula, Nord und Catppuccin.' },
+        { title: 'Spricht deine Sprache', desc: 'Erkennt automatisch deine Systemsprache in 9 Sprachen und lässt sich jederzeit umstellen.' },
+        { title: 'Klares Code-Highlighting', desc: 'Farbliche Syntaxhervorhebung für über 100 Programmiersprachen inklusive praktischer Kopierfunktion.' },
+        { title: 'Diagramme & Formeln', desc: 'Erstelle Ablaufdiagramme mit Mermaid und binde mathematische Formeln mit KaTeX in Echtzeit ein.' },
+        { title: 'Sofortige Notizsuche', desc: 'Egal wie viele Dateien du hast: Mit Strg+Umschalt+F durchsuchst du all deine Notizen in Millisekunden.' },
+        { title: 'Kein Datenverlust', desc: 'Sichere Hintergrundspeicherung und intelligente Abfragen vor dem Schließen ungespeicherter Tabs schützen jedes deiner Worte.' },
+        { title: 'Intuitive Bedienung', desc: 'Dateien einfach ins Fenster ziehen, auf die Tableiste ablegen oder Bilder direkt im Text platzieren.' },
+        { title: 'Als sauberes HTML exportieren', desc: 'Mit Strg+E jede Notiz in eine eigenständige, hübsch gestaltete Webseite für Freunde oder Kollegen verwandeln.' }
       ]
     },
     downloadSec: {
       tag: 'DOWNLOAD',
-      title: 'Kostenlos herunterladen & sofort starten',
-      subtitle: 'Erkennt automatisch Ihr Betriebssystem und empfiehlt das passende Paket für Windows, macOS und Linux.',
-      recommended: 'FÜR IHR SYSTEM EMPFOHLEN',
-      winBtn: 'Download für Windows (.exe)',
-      macBtn: 'Download für Apple Silicon (.dmg)',
-      macIntelBtn: 'Intel Mac (.dmg)',
-      linuxBtn: 'Download AppImage',
-      otherDownloads: 'Alle Pakete & Prüfsummen auf der Download-Seite anzeigen →'
+      title: 'Kostenlos herunterladen, in Sekunden startklar',
+      subtitle: 'Dein Betriebssystem wird automatisch erkannt und das passende Paket für Windows, macOS oder Linux hervorgehoben.',
+      recommended: 'FÜR DEIN SYSTEM EMPFOHLEN',
+      winBtn: 'Für Windows herunterladen (.exe)',
+      macBtn: 'Für Apple Silicon Mac (.dmg)',
+      macIntelBtn: 'Für Intel Mac (.dmg)',
+      linuxBtn: 'AppImage für Linux',
+      otherDownloads: 'Alle Installationsdateien auf der Download-Seite ansehen →'
     },
     arch: {
-      tag: 'ARCHITEKTUR',
-      title: 'Rust-Kern & leichtgewichtiges SolidJS-Frontend',
-      subtitle: 'Tauri 2 verbindet ein speichersicheres Rust-Backend mit einer reaktiven SolidJS-Webview — keine GC-Pausen und unter 16ms Eingabelatenz.',
-      frontend: 'FRONTEND',
-      frontendTitle: 'SolidJS + Webview',
-      frontendChips: ['Feingranulare Signals', 'Milkdown / ProseMirror', '9-Sprachen i18n', 'Typsichere IPC'],
-      ipc: 'IPC-BRÜCKE',
-      ipcTitle: 'Tauri 2 Core',
-      ipcChips: ['Zero-Copy Commands', 'Asynchroner Event-Bus', 'Sichere Capabilities'],
-      rust: 'RUST-KERN',
-      rustTitle: 'Native Engine',
-      rustChips: ['pulldown-cmark AST', 'syntect Highlighter', 'notify File Watcher', 'Atomare Datei-I/O']
+      tag: 'WARUM SO SCHNELL',
+      title: 'Enorme Geschwindigkeit, minimaler Akkuverbrauch',
+      subtitle: 'Taleno verzichtet auf schwerfällige Browser-Ballaste und setzt auf moderne native Technologie – für verzögerungsfreies Tippen und leise Lüfter.',
+      frontend: 'Flüssige Oberfläche',
+      frontendTitle: 'Moderne Leichtigkeit',
+      frontendChips: ['Tippen ohne Verzögerung', 'Kein Ruckeln', '9 Sprachen', 'Echtzeit-Themes'],
+      ipc: 'Schlanke Architektur',
+      ipcTitle: 'Effiziente Verbindung',
+      ipcChips: ['Sehr wenig RAM', 'Sofortiger Start', 'Sichere Sandbox'],
+      rust: 'Solider Systemkern',
+      rustTitle: 'Zuverlässiger Motor',
+      rustChips: ['Schutz vor Abstürzen', 'Blitzschnelle Suche', 'Keine Cloud-Übertragung', 'Standard-Markdown']
     },
     shortcuts: {
-      tag: 'TASTENKÜRZEL',
-      title: 'Alle Tastenkombinationen im Griff',
-      subtitle: 'Unterstützt alle gängigen Markdown-Shortcuts — formatieren, navigieren und verwalten Sie Dokumente ohne die Maus.',
-      doc: 'Dokument & Datei',
-      edit: 'Formatierung',
-      nav: 'Navigation & Ansicht',
+      tag: 'TASTATURBEFEHLE',
+      title: 'Die Hände bleiben auf den Tasten',
+      subtitle: 'Formatieren, Suchen und Navigieren gelingt mühelos über bewährte Tastenkombinationen.',
+      doc: 'Dateien & Dokumente',
+      edit: 'Text & Formatierung',
+      nav: 'Navigation & Suche',
       items: [
-        { group: 'doc', label: 'Neues Dokument', key: 'Ctrl+N' },
-        { group: 'doc', label: 'Datei öffnen', key: 'Ctrl+O' },
-        { group: 'doc', label: 'Dokument speichern', key: 'Ctrl+S' },
-        { group: 'doc', label: 'Speichern unter...', key: 'Ctrl+Shift+S' },
-        { group: 'doc', label: 'Als HTML exportieren', key: 'Ctrl+E' },
-        { group: 'edit', label: 'Fett', key: 'Ctrl+B' },
-        { group: 'edit', label: 'Kursiv', key: 'Ctrl+I' },
-        { group: 'edit', label: 'Überschriften 1–6', key: 'Ctrl+1~6' },
-        { group: 'edit', label: 'Absatz (Standardtext)', key: 'Ctrl+0' },
-        { group: 'edit', label: 'Link einfügen', key: 'Ctrl+K' },
-        { group: 'nav', label: 'Schnelle Dateiauswahl', key: 'Ctrl+P' },
-        { group: 'nav', label: 'Im Dokument suchen', key: 'Ctrl+F' },
-        { group: 'nav', label: 'Im Dokument ersetzen', key: 'Ctrl+H' },
-        { group: 'nav', label: 'Arbeitsbereich durchsuchen', key: 'Ctrl+Shift+F' },
-        { group: 'nav', label: 'Anzeigemodus wechseln', key: 'Ctrl+/' }
+        { group: 'doc', label: 'Neues Dokument', key: 'Strg+N' },
+        { group: 'doc', label: 'Datei öffnen', key: 'Strg+O' },
+        { group: 'doc', label: 'Speichern', key: 'Strg+S' },
+        { group: 'doc', label: 'Speichern unter...', key: 'Strg+Umschalt+S' },
+        { group: 'doc', label: 'Als HTML exportieren', key: 'Strg+E' },
+        { group: 'edit', label: 'Fett', key: 'Strg+B' },
+        { group: 'edit', label: 'Kursiv', key: 'Strg+I' },
+        { group: 'edit', label: 'Überschriften 1–6', key: 'Strg+1~6' },
+        { group: 'edit', label: 'Normaler Absatz', key: 'Strg+0' },
+        { group: 'edit', label: 'Link einfügen', key: 'Strg+K' },
+        { group: 'nav', label: 'Schnellwechsler', key: 'Strg+P' },
+        { group: 'nav', label: 'Im Dokument suchen', key: 'Strg+F' },
+        { group: 'nav', label: 'Ersetzen', key: 'Strg+H' },
+        { group: 'nav', label: 'Alle Notizen durchsuchen', key: 'Strg+Umschalt+F' },
+        { group: 'nav', label: 'Ansichtsmodus wechseln', key: 'Strg+/' }
       ]
     },
     faq: {
-      tag: 'FAQ',
-      title: 'Häufig gestellte Fragen (FAQ)',
-      subtitle: 'Haben Sie Fragen oder Anregungen? Eröffnen Sie gerne ein Issue oder eine Diskussion auf GitHub.',
-      changelogTitle: 'Neueste Version',
-      changelogVer: 'v0.1.7',
+      tag: 'FRAGEN & ANTWORTEN',
+      title: 'Häufig gestellte Fragen',
+      subtitle: 'Hast du Fragen oder Vorschläge? Besuche unser Repository auf GitHub.',
+      changelogTitle: 'Neuerungen der Version',
+      changelogVer: '${LATEST_VERSION_TAG}',
       changelogItems: [
-        'In-App Plugin-Marktplatz (Taleno-Plugins Hub)',
-        'Community-Themes-Engine mit Live-Farbpalettenvorschau',
-        'Automatische Hintergrund-Updates mit lokalisierten Hinweisen',
-        'Vollständiges Rebranding zu Taleno & Performance-Optimierung'
+        'Sicherheitsabfrage beim Schließen ungespeicherter Dokumente',
+        'Schnellzugriff in der Titelleiste für Plugins, Themes und Sprachen',
+        'Versionsanzeige unten links mit direkter Update-Prüfung',
+        'Zuverlässiges Erstellen einzelner Dokumente per Doppelklick'
       ],
       items: [
         {
-          q: 'Wie schneidet Taleno im Vergleich zu Typora, Obsidian und Electron-Editoren ab?',
-          a: 'Im Gegensatz zu ressourcenhungrigen Electron-Apps basiert Taleno auf Rust und Tauri 2, startet in unter 400 ms und verbraucht minimalen Arbeitsspeicher. Anstelle von zweigeteilten Fenstern formatiert Taleno Text direkt an der Cursorposition. Ihre Notizen bleiben zu 100% lokal mit atomarem Schreibschutz, und über den offiziellen Taleno-Plugins-Hub können Plugins und Themes jederzeit ohne Cloud-Zwang nachgerüstet werden.'
+          q: 'Was unterscheidet Taleno von anderen Editoren?',
+          a: 'Viele Markdown-Editoren teilen den Bildschirm in zwei Hälften oder fühlen sich schwerfällig an. Taleno formatiert direkt im Text während des Schreibens, startet in unter einer Sekunde und verbraucht kaum Arbeitsspeicher.'
         },
-        { q: 'Was unterscheidet Taleno von anderen Markdown-Editoren?', a: 'Taleno bietet echtes In-Place-WYSIWYG ohne geteilte Bildschirme. Markdown formatiert sich direkt beim Tippen. Entwickelt mit Rust und Tauri 2 ist es blitzschnell und frei von Electron-Ballast.' },
-        { q: 'Sind meine Daten sicher und privat?', a: '100% lokal zuerst. Alle Dateien verbleiben vollständig auf Ihrem Gerät. Atomare Schreibvorgänge schützen Ihre Texte zuverlässig vor Beschädigung.' },
-        { q: 'Welche Markdown-Erweiterungen werden unterstützt?', a: 'GitHub Flavored Markdown (GFM), Tabellen, Aufgabenlisten, Quellcode-Hervorhebung, Mermaid-Diagramme und KaTeX-Mathematikformeln.' },
-        { q: 'Ist Taleno kostenlos und quelloffen?', a: 'Ja. Taleno ist unter der GNU AGPL-3.0 Lizenz frei und quelloffen verfügbar. Beiträge, Übersetzungen und Fehlerberichte sind jederzeit willkommen.' }
+        {
+          q: 'Kann ich meine bestehenden Markdown-Notizen öffnen?',
+          a: 'Ja, uneingeschränkt! Taleno verwendet reine Standard-Markdown-Dateien (.md). Deine Notizen aus Obsidian, Typora, Notion oder VS Code lassen sich direkt öffnen und bearbeiten.'
+        },
+        {
+          q: 'Bleiben meine Notizen privat?',
+          a: 'Zu 100 %. Alle Dokumente verbleiben ausschließlich auf deiner Festplatte. Es gibt keinen Cloud-Zwang, keine Benutzerkonten und Taleno funktioniert komplett offline.'
+        },
+        {
+          q: 'Kann ich das Aussehen anpassen?',
+          a: 'Ja! Wähle in den Einstellungen aus hellen und dunklen Themes oder lade beliebte Stile wie Dracula oder Nord mit einem Klick herunter.'
+        },
+        {
+          q: 'Ist Taleno wirklich kostenlos?',
+          a: 'Ja, Taleno ist freie Open-Source-Software (GNU AGPL-3.0) ohne versteckte Abos, Werbung oder Funktionseinschränkungen.'
+        }
       ]
     },
     downloadPage: {
-      title: 'Taleno herunterladen — Alle Plattformen',
-      metaDesc: 'Laden Sie Taleno für Windows, macOS und Linux herunter. Direkte Download-Links ohne Weiterleitungen.',
-      tag: 'v0.1.7 · Neueste Version',
-      heading: 'Taleno herunterladen',
-      subheading: 'Jeder Download-Link verweist direkt auf die Release-Dateien von GitHub — der Download startet sofort ohne Weiterleitungen.',
-      backHome: '← Zurück zur Startseite',
-      note: 'Die Dateinamen folgen dem Muster <span class="font-medium text-ink-secondary">Taleno_&lt;OS&gt;_&lt;Architektur&gt;</span>, wodurch <span class="font-mono">releases/latest/download</span> stets auf die neueste Version verweist.',
-      allReleases: 'Alle Versionen & Quellcode-Archive',
-      viewGh: 'Auf GitHub ansehen'
+      title: 'Taleno herunterladen — Schneller In-Place Markdown-Editor',
+      metaDesc: 'Lade Taleno für Windows, macOS und Linux herunter. Schnell, unkompliziert, komplett offline und ohne geteilte Fenster.',
+      tag: '${LATEST_VERSION_TAG} · Neueste offizielle Version',
+      heading: 'Taleno kostenlos herunterladen',
+      subheading: 'Direkte Download-Links von GitHub Releases. Wähle dein System und fange in wenigen Augenblicken an zu schreiben.',
+      backHome: '← Zurück zur Übersicht',
+      note: 'Alle Downloads sind offizielle Pakete. Zukünftige Updates können bequem direkt in der Anwendung geprüft werden.',
+      allReleases: 'Alle Versionen & Änderungsprotokoll',
+      viewGh: 'GitHub-Repository ansehen'
     }
   },
 
@@ -800,130 +875,142 @@ const languages = {
     dir: 'fr',
     name: 'Français',
     htmlLang: 'fr',
-    title: 'Taleno — Éditeur Markdown WYSIWYG direct et fluide pour bureau',
-    metaDesc: "Taleno est un éditeur Markdown WYSIWYG direct local-first développé avec Tauri 2, Rust et SolidJS. Zéro écran scindé, marketplace d'extensions, thèmes personnalisés et confidentialité hors ligne pour Windows, macOS et Linux.",
-    nav: { features: 'Fonctionnalités', download: 'Télécharger', architecture: 'Architecture', shortcuts: 'Raccourcis', faq: 'FAQ & Notes', github: 'GitHub' },
+    title: 'Taleno — Éditeur Markdown In-Place Rapide et Épuré',
+    metaDesc: 'Taleno est un éditeur et lecteur Markdown local, gratuit et sans double volet. Mise en page directe sous le curseur, respect absolu de la vie privée hors ligne, démarrage instantané pour Windows, macOS et Linux.',
+    nav: { features: 'Fonctionnalités', download: 'Télécharger', architecture: 'Performances', shortcuts: 'Raccourcis', faq: 'FAQ', github: 'GitHub' },
     selectLang: 'Choisir la langue',
     hero: {
-      badge: 'v0.1.7 disponible · Open Source AGPL-3.0',
-      title: 'Le Markdown, directement sur place.',
-      subtitle: 'Un lecteur et éditeur Markdown WYSIWYG direct, minimaliste et ultra-rapide. Mise en page en direct sans double panneau — conçu avec Tauri 2, Rust et SolidJS pour une fluidité instantanée et une totale confidentialité.',
-      downloadBtn: 'Télécharger',
-      githubBtn: 'Voir sur GitHub',
-      chips: ['Démarrage <400ms', 'Sans panneau scindé', 'Plugins & Thèmes', '9 langues']
+      badge: '${LATEST_VERSION_TAG} disponible · 100% Gratuit et Open Source',
+      title: 'Le Markdown, en toute simplicité.',
+      subtitle: 'Écrivez directement dans votre document mis en forme, sans écran séparé. Taleno s’ouvre en un éclair, conserve tous vos écrits en sécurité sur votre ordinateur et vous offre un espace d’écriture fluide et apaisant.',
+      downloadBtn: 'Télécharger Taleno',
+      githubBtn: 'Dépôt GitHub',
+      chips: ['Démarrage instantané', 'Zéro écran scindé', '100% Hors ligne et Privé', 'Totalement gratuit']
     },
     mockup: {
       menu: ['Fichier', 'Édition', 'Affichage', 'Fenêtre', 'Aide'],
-      title: 'Taleno — README.md',
+      title: 'Taleno — Écrire l’esprit libre.md',
       outline: 'Plan du document',
-      workspace: 'Espace de travail',
-      introTitle: '# Introduction',
-      introP1: 'Taleno élimine le double affichage en rendant le Markdown directement sur place avec une typographie soignée.',
-      introP2: 'Zéro panneau divisé · WYSIWYG in-situ · Recherche textuelle ripgrep.',
-      metrics: ['Temps de lancement', '< 400 ms', 'Démarrage instantané', 'Recherche textuelle', 'ripgrep', 'Espace entier'],
-      modes: ['Lecture', 'Écriture', 'Code'],
-      status: 'Lg 1, Col 1  ·  1 420 mots  ·  UTF-8  ·  LF'
+      workspace: 'Espace de notes',
+      introTitle: '# Concentrez-vous sur vos idées',
+      introP1: 'Oubliez les éditeurs à deux colonnes où vous tapez du code brut à gauche pour regarder un aperçu à droite. Avec Taleno, ce que vous tapez prend forme directement sous vos yeux.',
+      introP2: 'WYSIWYG en place · Recherche plein texte ultra-rapide · Protection automatique.',
+      metrics: ['Démarrage', '< 0,4 s', 'Prêt instantanément', 'Recherche', 'Instantanée', 'Tout le dossier'],
+      modes: ['Lecture', 'Écriture', 'Code source'],
+      status: 'Lg 1, Col 1  ·  1 420 mots  ·  UTF-8  ·  Enregistré'
     },
     features: {
-      tag: 'FONCTIONNALITÉS CLÉS',
-      title: 'Écriture focalisée, zéro distraction',
-      subtitle: 'Rendu instantané à la frappe. Du plan dynamique aux onglets multiples et à la recherche globale, tout est pensé pour le confort d\'écriture.',
+      tag: 'CONÇU POUR CEUX QUI ÉCRIVENT',
+      title: 'Tout pour écrire, rien pour vous distraire',
+      subtitle: 'Notes rapides, fiches d’étude ou récits au long cours : Taleno vous procure un environnement calme, réactif et fiable.',
       items: [
-        { title: 'Trois modes d\'affichage', desc: 'Basculez d\'un clic entre le mode Lecture (lecture seule), Écriture (WYSIWYG direct) et Code (numéros de ligne synchronisés).' },
-        { title: 'Écosystème d\'extensions', desc: 'Parcourez, installez et mettez à jour des extensions depuis le hub officiel Taleno-Plugins dans un bac à sable JS sécurisé.' },
-        { title: 'Thèmes personnalisés & communauté', desc: 'Préréglages intégrés et marketplace de thèmes communautaires (Dracula, Nord, Catppuccin) avec aperçu immédiat.' },
-        { title: 'Internationalisation (9 langues)', desc: 'Détection automatique de la langue système parmi 9 langues avec changement instantané en direct.' },
-        { title: 'Coloration syntaxique', desc: 'Coloration ultra-rapide via syntect avec étiquettes de langage et bouton de copie en un clic.' },
-        { title: 'Mermaid & Formules LaTeX', desc: 'Rendu en direct de diagrammes Mermaid (flux, séquence, classes) et de formules mathématiques KaTeX.' },
-        { title: 'Recherche globale Ripgrep', desc: 'Recherche textuelle instantanée dans tout l\'espace de travail (Ctrl+Shift+F) et recherche/remplacement (Ctrl+F/H).' },
-        { title: 'Sauvegarde atomique sécurisée', desc: 'Écritures atomiques (.tmp rename) et suivi des modifications pour ne jamais perdre une seule ligne de texte.' },
-        { title: 'Glisser-déposer intelligent', desc: 'Glissez des fichiers pour les ouvrir, déposez sur la barre d\'onglets ou insérez des liens formatés.' },
-        { title: 'Export HTML autonome', desc: 'Un raccourci (Ctrl+E) pour générer des fichiers HTML autonomes, élégamment stylisés et lisibles hors-ligne.' }
+        { title: 'Trois vues selon vos envies', desc: 'Passez d’un raccourci d’un mode lecture confortable à un mode d’écriture fluide ou au code source brut.' },
+        { title: 'Extensions en un clic', desc: 'Ajoutez facilement des objectifs de mots ou des blocs d’encadrés depuis la galerie de plugins intégrée.' },
+        { title: 'Thèmes soignés', desc: 'Des thèmes clairs et sombres reposants, avec aperçu direct de palettes populaires comme Dracula, Nord ou Catppuccin.' },
+        { title: 'Adapté à votre langue', desc: 'Détection automatique de la langue de votre système parmi 9 langues natives, modifiable à tout moment.' },
+        { title: 'Coloration de code nette', desc: 'Mise en valeur claire de la syntaxe pour plus de 100 langages informatiques avec copie en un clic.' },
+        { title: 'Schémas et équations', desc: 'Générez des graphiques Mermaid et affichez des formules mathématiques KaTeX impeccables sans friction.' },
+        { title: 'Recherche globale éclair', desc: 'Retrouvez n’importe quel mot parmi des centaines de notes en un clin d’œil avec Ctrl+Maj+F.' },
+        { title: 'Vos écrits toujours protégés', desc: 'Enregistrement sécurisé en arrière-plan et confirmation avant de fermer des documents non enregistrés.' },
+        { title: 'Glisser-déposer naturel', desc: 'Glissez des fichiers pour les lire, déposez-les sur la barre d’onglets ou insérez des images directement dans le texte.' },
+        { title: 'Export HTML autonome', desc: 'Transformez n’importe quelle note en une page web élégante et autonome prête à être partagée d’un simple raccourci (Ctrl+E).' }
       ]
     },
     downloadSec: {
       tag: 'TÉLÉCHARGEMENT',
-      title: 'Téléchargement gratuit, commencez dès maintenant',
-      subtitle: 'Détecte automatiquement votre système d\'exploitation et vous recommande le paquet idéal pour Windows, macOS et Linux.',
+      title: 'Téléchargement gratuit, prêt en quelques secondes',
+      subtitle: 'Votre système est détecté automatiquement pour vous recommander l’installateur adapté à Windows, macOS ou Linux.',
       recommended: 'RECOMMANDÉ POUR VOTRE SYSTÈME',
       winBtn: 'Télécharger pour Windows (.exe)',
-      macBtn: 'Télécharger pour Apple Silicon (.dmg)',
-      macIntelBtn: 'Intel Mac (.dmg)',
+      macBtn: 'Télécharger pour Mac Apple Silicon (.dmg)',
+      macIntelBtn: 'Mac Intel (.dmg)',
       linuxBtn: 'Télécharger AppImage',
-      otherDownloads: 'Voir tous les paquets et sommes de contrôle →'
+      otherDownloads: 'Voir tous les installeurs sur la page de téléchargement →'
     },
     arch: {
-      tag: 'ARCHITECTURE',
-      title: 'Cœur Rust & frontend SolidJS ultra-léger',
-      subtitle: 'Tauri 2 associe un backend Rust sécurisé à une webview réactive SolidJS — aucune pause de ramasse-miettes et latence de frappe inférieure à 16ms.',
-      frontend: 'FRONTEND',
-      frontendTitle: 'SolidJS + Webview',
-      frontendChips: ['Signaux réactifs', 'Milkdown / ProseMirror', 'i18n 9 langues', 'IPC typé'],
-      ipc: 'PONT IPC',
-      ipcTitle: 'Tauri 2 Core',
-      ipcChips: ['Commandes zéro-copie', 'Bus d\'événements', 'Sécurité par capacités'],
-      rust: 'CŒUR RUST',
-      rustTitle: 'Moteur natif',
-      rustChips: ['pulldown-cmark AST', 'Coloration syntect', 'Surveillance notify', 'I/O atomique']
+      tag: 'PERFORMANCES',
+      title: 'Pensé pour la vitesse, économe en batterie',
+      subtitle: 'En évitant les architectures lourdes des navigateurs complets, Taleno offre une réactivité sans latence et ménage la batterie de votre ordinateur.',
+      frontend: 'Interface réactive',
+      frontendTitle: 'Légèreté moderne',
+      frontendChips: ['Zéro délai de frappe', 'Fluide en permanence', '9 langues', 'Thèmes instantanés'],
+      ipc: 'Liaison optimisée',
+      ipcTitle: 'Connexion directe',
+      ipcChips: ['Mémoire minime', 'Ouverture immédiate', 'Sécurité renforcée'],
+      rust: 'Moteur robuste',
+      rustTitle: 'Cœur système fiable',
+      rustChips: ['Sauvegarde anti-crash', 'Recherche instantanée', 'Zéro pistage cloud', 'Markdown standard']
     },
     shortcuts: {
-      tag: 'RACCOURCIS',
-      title: 'Gardez vos mains sur le clavier',
-      subtitle: 'Tous les raccourcis Markdown standards sont pris en charge pour formater, naviguer et organiser vos textes sans toucher la souris.',
-      doc: 'Document & Fichier',
-      edit: 'Formatage',
-      nav: 'Navigation & Vue',
+      tag: 'RACCOURCIS CLAVIER',
+      title: 'Gardez les mains sur le clavier',
+      subtitle: 'Structurez, formatez et parcourez vos notes facilement sans toucher à la souris.',
+      doc: 'Fichiers et documents',
+      edit: 'Texte et mise en forme',
+      nav: 'Navigation et recherche',
       items: [
         { group: 'doc', label: 'Nouveau document', key: 'Ctrl+N' },
         { group: 'doc', label: 'Ouvrir un fichier', key: 'Ctrl+O' },
-        { group: 'doc', label: 'Enregistrer le document', key: 'Ctrl+S' },
-        { group: 'doc', label: 'Enregistrer sous...', key: 'Ctrl+Shift+S' },
+        { group: 'doc', label: 'Enregistrer', key: 'Ctrl+S' },
+        { group: 'doc', label: 'Enregistrer sous...', key: 'Ctrl+Maj+S' },
         { group: 'doc', label: 'Exporter en HTML', key: 'Ctrl+E' },
         { group: 'edit', label: 'Gras', key: 'Ctrl+B' },
         { group: 'edit', label: 'Italique', key: 'Ctrl+I' },
-        { group: 'edit', label: 'Titres 1–6', key: 'Ctrl+1~6' },
-        { group: 'edit', label: 'Paragraphe (Corps)', key: 'Ctrl+0' },
+        { group: 'edit', label: 'Titres 1 à 6', key: 'Ctrl+1~6' },
+        { group: 'edit', label: 'Paragraphe normal', key: 'Ctrl+0' },
         { group: 'edit', label: 'Insérer un lien', key: 'Ctrl+K' },
-        { group: 'nav', label: 'Sélecteur rapide de fichier', key: 'Ctrl+P' },
-        { group: 'nav', label: 'Rechercher dans le texte', key: 'Ctrl+F' },
-        { group: 'nav', label: 'Remplacer dans le texte', key: 'Ctrl+H' },
-        { group: 'nav', label: 'Recherche dans l\'espace', key: 'Ctrl+Shift+F' },
-        { group: 'nav', label: 'Changer de mode', key: 'Ctrl+/' }
+        { group: 'nav', label: 'Sélecteur rapide', key: 'Ctrl+P' },
+        { group: 'nav', label: 'Rechercher dans la note', key: 'Ctrl+F' },
+        { group: 'nav', label: 'Remplacer', key: 'Ctrl+H' },
+        { group: 'nav', label: 'Rechercher partout', key: 'Ctrl+Maj+F' },
+        { group: 'nav', label: 'Changer de mode de vue', key: 'Ctrl+/' }
       ]
     },
     faq: {
-      tag: 'FAQ',
-      title: 'Foire aux questions (FAQ)',
-      subtitle: 'Une question ou une suggestion ? N\'hésitez pas à ouvrir un ticket ou à participer aux discussions sur GitHub.',
-      changelogTitle: 'Dernière version',
-      changelogVer: 'v0.1.7',
+      tag: 'FOIRE AUX QUESTIONS',
+      title: 'Tout ce que vous voulez savoir',
+      subtitle: 'Une question ou une suggestion ? Venez échanger avec nous sur GitHub.',
+      changelogTitle: 'Nouveautés de la version',
+      changelogVer: '${LATEST_VERSION_TAG}',
       changelogItems: [
-        'Marketplace de plugins intégrée (hub Taleno-Plugins)',
-        'Moteur de thèmes communautaires avec nuanciers en direct',
-        'Mises à jour automatiques en arrière-plan avec notes traduites',
-        'Nouveau nom Taleno et optimisations de performance'
+        'Alerte de confirmation à la fermeture de documents non enregistrés',
+        'Boutons d’accès direct aux extensions, thèmes et langues en barre de titre',
+        'Indicateur de version en bas à gauche avec vérification sans pop-up',
+        'Correction du double-clic sur onglets pour créer un document unique'
       ],
       items: [
         {
-          q: 'Quels sont les avantages de Taleno face à Typora, Obsidian et aux éditeurs Electron ?',
-          a: 'Contrairement aux applications Electron qui embarquent un moteur Chromium lourd, Taleno est développé en Rust et Tauri 2, garantissant un démarrage en moins de 400 ms et une consommation de mémoire minimale. Sans aucun panneau scindé, le texte se met en page directement là où vous tapez. Tous vos fichiers restent 100% locaux avec écriture atomique sécurisée, et vous pouvez installer des extensions et thèmes depuis le hub officiel Taleno-Plugins.'
+          q: 'Pourquoi préférer Taleno à d’autres éditeurs ?',
+          a: 'La plupart des éditeurs vous imposent un écran coupé en deux ou se révèlent lourds et lents. Taleno met en page directement vos mots à mesure que vous tapez, démarre instantanément et consomme très peu de ressources.'
         },
-        { q: 'En quoi Taleno est-il différent des autres éditeurs ?', a: 'Taleno offre un rendu WYSIWYG direct sans panneau divisé. Le texte se met en page au fur et à mesure que vous tapez. Construit en Rust et Tauri 2, il démarre en quelques millisecondes sans la lourdeur d\'Electron.' },
-        { q: 'Mes données sont-elles protégées ?', a: '100% local-first. Tous vos documents restent sur votre machine sans aucune transmission dans le cloud. L\'écriture atomique protège vos textes contre toute corruption.' },
-        { q: 'Quelles extensions Markdown sont supportées ?', a: 'GitHub Flavored Markdown (GFM), tableaux, listes de tâches, coloration de code, diagrammes Mermaid et formules mathématiques KaTeX.' },
-        { q: 'Taleno est-il gratuit et open source ?', a: 'Oui, Taleno est entièrement libre et gratuit sous licence GNU AGPL-3.0. Les retours de bugs, traductions et contributions sont les bienvenus.' }
+        {
+          q: 'Puis-je ouvrir mes fichiers Markdown existants ?',
+          a: 'Absolument ! Taleno lit et écrit des fichiers Markdown universels (.md). Vos notes créées dans Obsidian, Typora, Notion ou VS Code s’ouvrent sans aucune conversion ni verrouillage.'
+        },
+        {
+          q: 'Mes écrits restent-ils privés ?',
+          a: 'Oui, à 100 %. Tous vos fichiers restent sur votre disque dur. Aucun compte requis, aucune synchronisation imposée, et l’application fonctionne parfaitement hors connexion.'
+        },
+        {
+          q: 'Puis-je personnaliser les thèmes ?',
+          a: 'Oui ! Choisissez parmi des thèmes clairs et sombres intégrés ou téléchargez des styles renommés comme Dracula ou Nord en un clic dans les préférences.'
+        },
+        {
+          q: 'Taleno est-il gratuit ?',
+          a: 'Oui, Taleno est un logiciel libre et gratuit sous licence GNU AGPL-3.0, sans publicité, abonnement ni fonctionnalités bridées.'
+        }
       ]
     },
     downloadPage: {
-      title: 'Télécharger Taleno — Toutes plateformes',
-      metaDesc: 'Téléchargez Taleno pour Windows, macOS et Linux. Liens directs officiels sans redirection.',
-      tag: 'v0.1.7 · Dernière version',
+      title: 'Télécharger Taleno — Éditeur Markdown Rapide et Épuré',
+      metaDesc: 'Téléchargez Taleno pour Windows, macOS et Linux. Léger, sécurisé, 100% hors ligne et sans écran séparé.',
+      tag: '${LATEST_VERSION_TAG} · Dernière version officielle',
       heading: 'Télécharger Taleno',
-      subheading: 'Chaque lien pointe directement vers les fichiers d\'installation de GitHub Releases. Le téléchargement démarre immédiatement.',
-      backHome: '← Retour à l\'accueil',
-      note: 'Les fichiers sont nommés selon le schéma <span class="font-medium text-ink-secondary">Taleno_&lt;OS&gt;_&lt;Architecture&gt;</span> et le lien <span class="font-mono">releases/latest/download</span> pointe toujours vers la version la plus récente.',
-      allReleases: 'Toutes les versions et sources',
-      viewGh: 'Dépôt GitHub'
+      subheading: 'Liens directs depuis GitHub Releases. Choisissez votre plateforme et commencez à écrire en quelques secondes.',
+      backHome: '← Retour à l’accueil',
+      note: 'Tous les téléchargements sont des paquets officiels. La recherche de mise à jour s’effectue en un clic directement depuis l’application.',
+      allReleases: 'Voir toutes les versions et notes de publication',
+      viewGh: 'Voir le projet sur GitHub'
     }
   },
 
@@ -932,130 +1019,142 @@ const languages = {
     dir: 'es',
     name: 'Español',
     htmlLang: 'es',
-    title: 'Taleno — Editor Markdown WYSIWYG en el lugar nativo y ligero',
-    metaDesc: 'Taleno es un editor Markdown WYSIWYG local-first creado con Tauri 2, Rust y SolidJS. Sin pantalla dividida, plugins, temas y total privacidad offline para Windows, macOS y Linux.',
-    nav: { features: 'Características', download: 'Descargar', architecture: 'Arquitectura', shortcuts: 'Atajos', faq: 'Preguntas Frecuentes', github: 'GitHub' },
+    title: 'Taleno — Lector y Editor Markdown In-Place Rápido y Limpio',
+    metaDesc: 'Taleno es un editor y lector Markdown local, gratuito y sin panel dividido. Formato directo mientras escribes, 100% privado y sin conexión, inicio instantáneo para Windows, macOS y Linux.',
+    nav: { features: 'Características', download: 'Descargar', architecture: 'Rendimiento', shortcuts: 'Atajos', faq: 'Preguntas', github: 'GitHub' },
     selectLang: 'Seleccionar idioma',
     hero: {
-      badge: 'v0.1.7 publicado · Código abierto AGPL-3.0',
-      title: 'Markdown, directamente en su lugar.',
-      subtitle: 'Un editor y lector Markdown WYSIWYG directo, minimalista y de alto rendimiento. Formato instantáneo sin paneles divididos — desarrollado con Tauri 2, Rust y SolidJS para una respuesta fluida y privacidad total.',
-      downloadBtn: 'Descargar Ahora',
-      githubBtn: 'Ver en GitHub',
-      chips: ['Inicio <400ms', 'Sin paneles divididos', 'Plugins y Temas', '9 idiomas']
+      badge: '${LATEST_VERSION_TAG} disponible · 100% Libre y Código Abierto',
+      title: 'Markdown, natural y sencillo.',
+      subtitle: 'Escribe directamente sobre el texto maquetado sin ventanas divididas. Taleno se abre al instante, mantiene todas tus notas seguras en tu ordenador y te ofrece un espacio despejado para pensar y crear.',
+      downloadBtn: 'Descargar Taleno',
+      githubBtn: 'Repositorio GitHub',
+      chips: ['Abre al instante', 'Sin pantallas divididas', '100% Privado y Offline', 'Completamente gratis']
     },
     mockup: {
-      menu: ['Archivo', 'Editar', 'Ver', 'Ventana', 'Ayuda'],
-      title: 'Taleno — README.md',
-      outline: 'Esquema',
+      menu: ['Archivo', 'Edición', 'Ver', 'Ventana', 'Ayuda'],
+      title: 'Taleno — Escribir con total tranquilidad.md',
+      outline: 'Esquema de notas',
       workspace: 'Espacio de trabajo',
-      introTitle: '# Introducción',
-      introP1: 'Taleno elimina la doble pantalla al renderizar Markdown en el lugar exacto con una tipografía limpia.',
-      introP2: 'Sin división de pantalla · WYSIWYG in-situ · Búsqueda global ripgrep.',
-      metrics: ['Tiempo de inicio', '< 400 ms', 'Arranque instantáneo', 'Búsqueda de texto', 'ripgrep', 'Todo el espacio'],
+      introTitle: '# Céntrate en tus palabras',
+      introP1: 'Olvídate de los editores con dos ventanas donde escribes código a la izquierda y miras la vista previa a la derecha. En Taleno, lo que ves es lo que obtienes.',
+      introP2: 'WYSIWYG en el lugar · Búsqueda global instantánea · Guardado seguro.',
+      metrics: ['Inicio', '< 0,4 s', 'Listo al instante', 'Búsqueda', 'Instantánea', 'Toda la carpeta'],
       modes: ['Lectura', 'Escritura', 'Código'],
-      status: 'Lín 1, Col 1  ·  1.420 palabras  ·  UTF-8  ·  LF'
+      status: 'Lín 1, Col 1  ·  1.420 palabras  ·  UTF-8  ·  Guardado'
     },
     features: {
-      tag: 'CARACTERÍSTICAS CLAVE',
-      title: 'Escritura enfocada, sin distracciones',
-      subtitle: 'Renderizado en tiempo real. Desde el esquema del documento y pestañas hasta la búsqueda ripgrep, todo está diseñado para una escritura fluida.',
+      tag: 'DISEÑADO PARA ESCRIBIR',
+      title: 'Todo lo que necesitas para redactar, sin distracciones',
+      subtitle: 'Desde notas diarias y apuntes de estudio hasta artículos completos: Taleno te da un entorno tranquilo, fluido y confiable.',
       items: [
-        { title: 'Tres modos de visualización', desc: 'Alterna al instante entre modo Lectura (solo lectura), Escritura (WYSIWYG in-situ) y Código (código fuente sincronizado).' },
-        { title: 'Ecosistema de plugins', desc: 'Explora, instala y actualiza extensiones desde el repositorio oficial Taleno-Plugins en un entorno JS aislado y seguro.' },
-        { title: 'Temas y personalización', desc: 'Ajustes predefinidos y catálogo de temas comunitarios (Dracula, Nord, Catppuccin) con previsualización en vivo.' },
-        { title: 'Internacionalización (9 idiomas)', desc: 'Detecta automáticamente el idioma de tu sistema entre 9 lenguas con cambio instantáneo.' },
-        { title: 'Resaltado de sintaxis', desc: 'Motor syntect de alto rendimiento con etiquetas de lenguaje y botón de copia con un clic.' },
-        { title: 'Mermaid y fórmulas LaTeX', desc: 'Visualización interactiva de diagramas de flujo, secuencia y clases Mermaid, además de fórmulas KaTeX.' },
-        { title: 'Búsqueda global Ripgrep', desc: 'Búsqueda ultra rápida en todo el espacio de trabajo (Ctrl+Shift+F) y buscar/reemplazar en el documento (Ctrl+F/H).' },
-        { title: 'Guardado atómico seguro', desc: 'Escritura atómica (.tmp rename) y seguimiento de cambios que previenen la pérdida accidental de datos.' },
-        { title: 'Arrastrar y soltar inteligente', desc: 'Arrastra archivos a la ventana para abrirlos, a las pestañas o al texto para insertar enlaces Markdown.' },
-        { title: 'Exportación a HTML autónomo', desc: 'Un atajo (Ctrl+E) para exportar archivos HTML independientes y listos para compartir sin conexión.' }
+        { title: 'Tres modos de vista', desc: 'Alterna con un atajo: lectura relajada, escritura con formato instantáneo o código Markdown puro.' },
+        { title: 'Extensiones con un clic', desc: 'Añade fácilmente metas de palabras, marcas de tiempo o cuadros de aviso desde la galería de plugins integrada.' },
+        { title: 'Temas elegantes', desc: 'Cuida tu vista con temas claros y oscuros, o aplica estilos populares como Dracula, Nord y Catppuccin con previsualización en vivo.' },
+        { title: 'En tu idioma', desc: 'Detecta automáticamente el idioma de tu sistema entre 9 lenguas disponibles, ajustable en cualquier momento.' },
+        { title: 'Resaltado de código claro', desc: 'Colorea la sintaxis de más de 100 lenguajes de programación e incluye botón de copia rápida.' },
+        { title: 'Diagramas y fórmulas matemáticas', desc: 'Genera diagramas de flujo con Mermaid y escribe fórmulas matemáticas con KaTeX en tiempo real.' },
+        { title: 'Búsqueda veloz en todas tus notas', desc: 'Presiona Ctrl+Mayús+F para localizar cualquier palabra entre cientos de notas en cuestión de milisegundos.' },
+        { title: 'Tus ideas siempre a salvo', desc: 'Protección continua en segundo plano y aviso de confirmación antes de cerrar documentos no guardados.' },
+        { title: 'Arrastrar y soltar natural', desc: 'Arrastra archivos a la ventana para abrirlos, suéltalos en las pestañas o añade imágenes directamente en el texto.' },
+        { title: 'Exportar a HTML independiente', desc: 'Pulsa Ctrl+E para convertir cualquier nota en una página web limpia y autónoma lista para compartir.' }
       ]
     },
     downloadSec: {
       tag: 'DESCARGA',
-      title: 'Descarga gratuita, empieza ahora',
-      subtitle: 'Detecta automáticamente tu sistema operativo y recomienda el instalador para Windows, macOS y Linux.',
+      title: 'Descarga gratuita, lista en segundos',
+      subtitle: 'Detectamos automáticamente tu dispositivo para recomendarte el instalador idóneo para Windows, macOS o Linux.',
       recommended: 'RECOMENDADO PARA TU SISTEMA',
       winBtn: 'Descargar para Windows (.exe)',
       macBtn: 'Descargar para Apple Silicon (.dmg)',
-      macIntelBtn: 'Intel Mac (.dmg)',
+      macIntelBtn: 'Mac con Intel (.dmg)',
       linuxBtn: 'Descargar AppImage',
-      otherDownloads: 'Ver todos los paquetes y sumas de verificación →'
+      otherDownloads: 'Ver todos los instaladores en la página de descargas →'
     },
     arch: {
-      tag: 'ARQUITECTURA',
-      title: 'Motor en Rust y frontend ligero en SolidJS',
-      subtitle: 'Tauri 2 conecta un backend seguro en Rust con una interfaz webview en SolidJS — sin pausas de recolección de basura y latencia menor a 16ms.',
-      frontend: 'FRONTEND',
-      frontendTitle: 'SolidJS + Webview',
-      frontendChips: ['Señales reactivas', 'Milkdown / ProseMirror', 'i18n 9 idiomas', 'IPC tipado'],
-      ipc: 'PUENTE IPC',
-      ipcTitle: 'Tauri 2 Core',
-      ipcChips: ['Comandos zero-copy', 'Bus de eventos', 'Seguridad por permisos'],
-      rust: 'NÚCLEO RUST',
-      rustTitle: 'Motor nativo',
-      rustChips: ['pulldown-cmark AST', 'Resaltado syntect', 'Monitor notify', 'I/O atómico']
+      tag: 'RENDIMIENTO',
+      title: 'Diseñado para ser veloz y cuidar tu batería',
+      subtitle: 'Al prescindir de navegadores pesados, Taleno ofrece respuesta inmediata al teclado, sin tirones y con un gasto de batería mínimo.',
+      frontend: 'Interfaz fluida',
+      frontendTitle: 'Ligereza moderna',
+      frontendChips: ['Respuesta inmediata', 'Sin bloqueos', '9 idiomas', 'Temas instantáneos'],
+      ipc: 'Conexión optimizada',
+      ipcTitle: 'Enlace eficiente',
+      ipcChips: ['Consumo mínimo de RAM', 'Inicio al instante', 'Entorno seguro'],
+      rust: 'Núcleo robusto',
+      rustTitle: 'Motor fiable',
+      rustChips: ['Guardado anti-caídas', 'Búsqueda instantánea', 'Cero rastreo en la nube', 'Markdown puro']
     },
     shortcuts: {
       tag: 'ATAJOS DE TECLADO',
-      title: 'Todo el control desde tu teclado',
-      subtitle: 'Compatibilidad con todos los atajos habituales de Markdown para dar formato, navegar y organizar documentos sin tocar el ratón.',
-      doc: 'Documento y Archivo',
-      edit: 'Formato',
-      nav: 'Navegación y Vista',
+      title: 'Tus manos siempre en las teclas',
+      subtitle: 'Aplica estilos, organiza notas y navega sin necesidad de recurrir al ratón.',
+      doc: 'Documentos y archivos',
+      edit: 'Texto y formato',
+      nav: 'Navegación y búsqueda',
       items: [
         { group: 'doc', label: 'Nuevo documento', key: 'Ctrl+N' },
         { group: 'doc', label: 'Abrir archivo', key: 'Ctrl+O' },
-        { group: 'doc', label: 'Guardar documento', key: 'Ctrl+S' },
-        { group: 'doc', label: 'Guardar como...', key: 'Ctrl+Shift+S' },
+        { group: 'doc', label: 'Guardar', key: 'Ctrl+S' },
+        { group: 'doc', label: 'Guardar como...', key: 'Ctrl+Mayús+S' },
         { group: 'doc', label: 'Exportar a HTML', key: 'Ctrl+E' },
         { group: 'edit', label: 'Negrita', key: 'Ctrl+B' },
         { group: 'edit', label: 'Cursiva', key: 'Ctrl+I' },
         { group: 'edit', label: 'Encabezados 1–6', key: 'Ctrl+1~6' },
-        { group: 'edit', label: 'Párrafo estándar', key: 'Ctrl+0' },
+        { group: 'edit', label: 'Párrafo normal', key: 'Ctrl+0' },
         { group: 'edit', label: 'Insertar enlace', key: 'Ctrl+K' },
-        { group: 'nav', label: 'Cambio rápido de archivo', key: 'Ctrl+P' },
-        { group: 'nav', label: 'Buscar en el documento', key: 'Ctrl+F' },
-        { group: 'nav', label: 'Reemplazar en el documento', key: 'Ctrl+H' },
-        { group: 'nav', label: 'Buscar en espacio de trabajo', key: 'Ctrl+Shift+F' },
+        { group: 'nav', label: 'Selector rápido de archivo', key: 'Ctrl+P' },
+        { group: 'nav', label: 'Buscar en la nota', key: 'Ctrl+F' },
+        { group: 'nav', label: 'Reemplazar palabras', key: 'Ctrl+H' },
+        { group: 'nav', label: 'Buscar en todas las notas', key: 'Ctrl+Mayús+F' },
         { group: 'nav', label: 'Cambiar modo de vista', key: 'Ctrl+/' }
       ]
     },
     faq: {
       tag: 'PREGUNTAS FRECUENTES',
-      title: 'Preguntas frecuentes (FAQ)',
-      subtitle: '¿Tienes alguna duda o sugerencia? Abre una incidencia o participa en las discusiones en GitHub.',
-      changelogTitle: 'Última versión',
-      changelogVer: 'v0.1.7',
+      title: 'Respuestas a tus dudas',
+      subtitle: '¿Tienes preguntas o sugerencias? Te esperamos en GitHub para conversar.',
+      changelogTitle: 'Novedades de la versión',
+      changelogVer: '${LATEST_VERSION_TAG}',
       changelogItems: [
-        'Mercado de extensiones integrado (Taleno-Plugins hub)',
-        'Motor de temas comunitarios con paletas en tiempo real',
-        'Actualizaciones automáticas con notas de versión localizadas',
-        'Rebranding completo a Taleno y mejoras de rendimiento'
+        'Aviso de confirmación al cerrar documentos sin guardar',
+        'Botones de acceso rápido en la barra de título para plugins, temas e idiomas',
+        'Insignia de versión abajo a la izquierda con comprobación de actualización directa',
+        'Doble clic en la barra de pestañas crea exactamente un nuevo documento'
       ],
       items: [
         {
-          q: '¿Qué ventajas tiene Taleno frente a Typora, Obsidian y editores basados en Electron ?',
-          a: 'A diferencia de los editores basados en Electron que consumen abundante RAM, Taleno está programado en Rust y Tauri 2, arrancando en menos de 400 ms con un uso mínimo de recursos. En lugar de doble pantalla, renderiza directamente en el lugar de escritura. Tus documentos se guardan localmente con guardado atómico contra fallos, y puedes instalar extensiones y temas desde el repositorio oficial Taleno-Plugins sin depender de la nube.'
+          q: '¿Qué hace diferente a Taleno frente a otros editores?',
+          a: 'Muchas aplicaciones te obligan a trabajar con pantallas divididas o resultan pesadas y consumen mucha batería. Taleno da formato directamente en el texto mientras escribes, arranca en una fracción de segundo y consume poquísima memoria.'
         },
-        { q: '¿Qué hace diferente a Taleno de otros editores?', a: 'Taleno ofrece edición WYSIWYG real en el mismo lugar donde escribes, sin paneles divididos. Desarrollado en Rust y Tauri 2, es ligero, rápido y no depende del sobrepeso de Electron.' },
-        { q: '¿Mis datos están seguros?', a: '100% local-first. Todos tus documentos se guardan exclusivamente en tu equipo sin envío a la nube. El guardado atómico protege tus textos de cierres inesperados.' },
-        { q: '¿Qué funciones de Markdown están soportadas?', a: 'GitHub Flavored Markdown (GFM), tablas, listas de tareas, resaltado de código, diagramas Mermaid y fórmulas matemáticas KaTeX.' },
-        { q: '¿Es gratuito y de código abierto?', a: 'Sí, Taleno es software libre bajo licencia GNU AGPL-3.0. Agradecemos comentarios, traducciones y colaboraciones en GitHub.' }
+        {
+          q: '¿Puedo abrir mis notas Markdown actuales?',
+          a: '¡Sí, con total normalidad! Taleno utiliza archivos Markdown estándar (.md). Podrás abrir y guardar notas creadas en Obsidian, Typora, Notion o VS Code sin problemas.'
+        },
+        {
+          q: '¿Están mis notas a salvo y privadas?',
+          a: 'Totalmente. Tus archivos se guardan únicamente en tu ordenador. No requiere crear cuenta, no sube datos a la nube y funciona al 100% sin internet.'
+        },
+        {
+          q: '¿Se pueden instalar temas y plugins?',
+          a: '¡Sí! Puedes cambiar entre temas claros y oscuros o descargar aspectos populares como Dracula o Nord desde el menú de ajustes en un solo clic.'
+        },
+        {
+          q: '¿Taleno es gratis?',
+          a: 'Sí, Taleno es software libre y de código abierto (GNU AGPL-3.0), sin planes de pago, anuncios ni funciones bloqueadas.'
+        }
       ]
     },
     downloadPage: {
-      title: 'Descargar Taleno — Todas las plataformas',
-      metaDesc: 'Descarga Taleno para Windows, macOS y Linux. Enlaces directos oficiales sin redirecciones.',
-      tag: 'v0.1.7 · Última versión',
+      title: 'Descargar Taleno — Editor Markdown Rápido e In-Place',
+      metaDesc: 'Descarga Taleno para Windows, macOS y Linux. Ligero, privado, sin ventanas divididas y listo en segundos.',
+      tag: '${LATEST_VERSION_TAG} · Última versión oficial',
       heading: 'Descargar Taleno',
-      subheading: 'Cada enlace descarga directamente el paquete oficial desde GitHub Releases sin esperas ni redirecciones.',
+      subheading: 'Descarga directa desde GitHub Releases. Selecciona tu sistema operativo y empieza a redactar en instantes.',
       backHome: '← Volver al inicio',
-      note: 'Los archivos siguen el formato <span class="font-medium text-ink-secondary">Taleno_&lt;OS&gt;_&lt;Arquitectura&gt;</span> y el enlace <span class="font-mono">releases/latest/download</span> siempre apunta a la versión más reciente.',
-      allReleases: 'Ver todas las versiones y código fuente',
-      viewGh: 'Repositorio en GitHub'
+      note: 'Todos los enlaces corresponden a paquetes oficiales. Las nuevas versiones se pueden consultar con un clic desde el propio editor.',
+      allReleases: 'Ver todas las versiones y cambios',
+      viewGh: 'Ver repositorio en GitHub'
     }
   },
 
@@ -1064,130 +1163,142 @@ const languages = {
     dir: 'ru',
     name: 'Русский',
     htmlLang: 'ru',
-    title: 'Taleno — Быстрый WYSIWYG Markdown-редактор без разделения экрана',
-    metaDesc: 'Taleno — быстрый локальный WYSIWYG Markdown-редактор на Tauri 2, Rust и SolidJS. Рендеринг на месте без разделения экрана, плагины, темы и полная приватность без интернета для Windows, macOS и Linux.',
-    nav: { features: 'Возможности', download: 'Скачать', architecture: 'Архитектура', shortcuts: 'Горячие клавиши', faq: 'Вопросы и ответы', github: 'GitHub' },
+    title: 'Taleno — Быстрый и лаконичный In-Place Markdown-редактор',
+    metaDesc: 'Taleno — бесплатный легковесный Markdown-редактор без двойного экрана. Оформление сразу под курсором, 100% приватность офлайн, мгновенный запуск для Windows, macOS и Linux.',
+    nav: { features: 'Возможности', download: 'Скачать', architecture: 'Скорость', shortcuts: 'Горячие клавиши', faq: 'Вопросы', github: 'GitHub' },
     selectLang: 'Выбрать язык',
     hero: {
-      badge: 'Релиз v0.1.7 · Open Source AGPL-3.0',
-      title: 'Markdown прямо на месте.',
-      subtitle: 'Минималистичный и производительный WYSIWYG Markdown-редактор. Мгновенное форматирование на месте без разделения экрана — создан на Tauri 2, Rust и SolidJS для быстрой работы, приватности и расширения плагинами.',
-      downloadBtn: 'Скачать сейчас',
-      githubBtn: 'Открыть на GitHub',
-      chips: ['Старт <400мс', 'Без разделения экрана', 'Плагины и темы', '9 языков']
+      badge: '${LATEST_VERSION_TAG} релиз · 100% Бесплатно и Open Source',
+      title: 'Markdown, легко и естественно.',
+      subtitle: 'Пишите сразу в красиво оформленном тексте без громоздких раздельных окон. Taleno открывается за доли секунды, надежно хранит все файлы на вашем компьютере и помогает сосредоточиться на творчестве.',
+      downloadBtn: 'Скачать Taleno',
+      githubBtn: 'Репозиторий GitHub',
+      chips: ['Мгновенный старт', 'Без разделения экрана', '100% Офлайн и Приватно', 'Полностью бесплатно']
     },
     mockup: {
       menu: ['Файл', 'Правка', 'Вид', 'Окно', 'Справка'],
-      title: 'Taleno — README.md',
-      outline: 'Оглавление',
-      workspace: 'Рабочая область',
-      introTitle: '# Введение',
-      introP1: 'Taleno избавляет от раздельного экрана, форматируя текст прямо по месту ввода с безупречной типографикой.',
-      introP2: 'Без сплит-экрана · Интерактивный WYSIWYG · Полнотекстовый поиск ripgrep.',
-      metrics: ['Время запуска', '< 400 мс', 'Мгновенный старт', 'Полнотекстовый поиск', 'ripgrep', 'По всей рабочей области'],
-      modes: ['Чтение', 'Запись', 'Исходник'],
-      status: 'Стр 1, Кол 1  ·  1 420 слов  ·  UTF-8  ·  LF'
+      title: 'Taleno — Пространство для спокойного письма.md',
+      outline: 'Оглавление заметки',
+      workspace: 'Папка заметок',
+      introTitle: '# Сосредоточьтесь на мыслях, а не на коде',
+      introP1: 'Забудьте о разделенных окнах, где слева пишется исходный код, а справа отображается предпросмотр. В Taleno форматирование происходит прямо под вашими пальцами.',
+      introP2: 'WYSIWYG на месте · Мгновенный поиск по всем заметкам · Защита от потери данных.',
+      metrics: ['Время запуска', 'Менее 0,4 с', 'Мгновенно готов', 'Поиск заметок', 'Моментально', 'По всей папке'],
+      modes: ['Чтение', 'Письмо', 'Исходный код'],
+      status: 'Стр 1, Кол 1  ·  1 420 слов  ·  UTF-8  ·  Сохранено'
     },
     features: {
-      tag: 'КЛЮЧЕВЫЕ ВОЗМОЖНОСТИ',
-      title: 'Чистое письмо без отвлекающих факторов',
-      subtitle: 'Форматирование в реальном времени. От структуры документа и вкладок до поиска ripgrep — всё подчинено идеальному процессу работы с текстом.',
+      tag: 'СОЗДАН ДЛЯ ТЕХ, КТО ПИШЕТ',
+      title: 'Всё необходимое для текста, ничего лишнего',
+      subtitle: 'От быстрых ежедневных записей до объемных статей: Taleno создаёт спокойную, быструю и надёжную рабочую среду.',
       items: [
-        { title: 'Три режима отображения', desc: 'Быстрое переключение между режимом Чтения (только чтение), Записи (интерактивный WYSIWYG) и Кода (с синхронизацией строк).' },
-        { title: 'Экосистема плагинов', desc: 'Установка и обновление плагинов в один клик из официального каталога Taleno-Plugins в безопасной JS-песочнице.' },
-        { title: 'Темы оформления', desc: 'Встроенные пресеты и каталог тем от сообщества (Dracula, Nord, Catppuccin) с живым предпросмотром палитр.' },
-        { title: 'Локализация на 9 языков', desc: 'Автоматическое определение системного языка среди 9 доступных с возможностью мгновенной смены.' },
-        { title: 'Подсветка синтаксиса', desc: 'Встроенный высокопроизводительный движок syntect с бейджами языков и копированием кода в один клик.' },
-        { title: 'Диаграммы Mermaid и формулы LaTeX', desc: 'Прямой рендеринг блок-схем, диаграмм последовательностей Mermaid и математических формул KaTeX.' },
-        { title: 'Полнотекстовый поиск Ripgrep', desc: 'Мгновенный поиск по всей рабочей области (Ctrl+Shift+F) и поиск/замена в текущем документе (Ctrl+F/H).' },
-        { title: 'Безопасное атомарное сохранение', desc: 'Атомарная запись через .tmp и отслеживание несохраненных правок защищают текст от сбоев питания.' },
-        { title: 'Умное перетаскивание Drag & Drop', desc: 'Открытие файлов перетаскиванием в окно, открытие новых вкладок и быстрая вставка Markdown-ссылок.' },
-        { title: 'Автономный экспорт в HTML', desc: 'Экспорт одной комбинацией клавиш (Ctrl+E) в самодостаточный HTML-документ со всеми стилями.' }
+        { title: 'Три режима просмотра', desc: 'Переключайтесь в один клик: удобное чтение, живое оформление в процессе письма или чистый Markdown-код.' },
+        { title: 'Плагины в один клик', desc: 'Легко подключайте цели по количеству слов, вставку времени или информационные блоки из встроенной галереи.' },
+        { title: 'Приятные темы оформления', desc: 'Уютные светлые и тёмные темы, а также поддержка стилей Dracula, Nord и Catppuccin с мгновенным предпросмотром.' },
+        { title: 'На вашем родном языке', desc: 'Автоматически определяет язык вашей системы среди 9 доступных с возможностью переключения в любой момент.' },
+        { title: 'Четкая подсветка кода', desc: 'Подсветка синтаксиса для более чем 100 языков программирования с удобной кнопкой копирования.' },
+        { title: 'Схемы и математические формулы', desc: 'Создавайте диаграммы Mermaid и вставляйте аккуратные формулы KaTeX прямо в тексте.' },
+        { title: 'Мгновенный поиск по заметкам', desc: 'Нажмите Ctrl+Shift+F и найдите нужное слово среди сотен документов за доли секунды.' },
+        { title: 'Надежная защита от потерь', desc: 'Фоновое сохранение и предупреждение при закрытии несохраненных документов сохранят каждое написанное слово.' },
+        { title: 'Удобное перетаскивание файлов', desc: 'Перетаскивайте файлы в окно для чтения, на панель вкладок для открытия или вставляйте картинки прямо в текст.' },
+        { title: 'Экспорт в аккуратный HTML', desc: 'Превращайте заметки в готовые самостоятельные веб-страницы нажатием одной комбинации (Ctrl+E).' }
       ]
     },
     downloadSec: {
       tag: 'СКАЧАТЬ',
-      title: 'Скачать бесплатно и начать работу',
-      subtitle: 'Автоматически определяет вашу операционную систему и рекомендует подходящий установщик для Windows, macOS и Linux.',
-      recommended: 'РЕКОМЕНДОВАНО ДЛЯ ВАШЕЙ СИСТЕМЫ',
+      title: 'Бесплатная загрузка, готов за пару секунд',
+      subtitle: 'Мы автоматически определим вашу систему и предложим оптимальный установочный файл для Windows, macOS или Linux.',
+      recommended: 'РЕКОМЕНДУЕТСЯ ДЛЯ ВАШЕЙ СИСТЕМЫ',
       winBtn: 'Скачать для Windows (.exe)',
       macBtn: 'Скачать для Apple Silicon (.dmg)',
-      macIntelBtn: 'Intel Mac (.dmg)',
+      macIntelBtn: 'Для Intel Mac (.dmg)',
       linuxBtn: 'Скачать AppImage',
-      otherDownloads: 'Посмотреть все сборки и контрольные суммы →'
+      otherDownloads: 'Посмотреть все файлы на странице загрузок →'
     },
     arch: {
-      tag: 'АРХИТЕКТУРА',
-      title: 'Ядро на Rust и легковесный интерфейс SolidJS',
-      subtitle: 'Tauri 2 связывает безопасный Rust-бэкенд с реактивным SolidJS-интерфейсом — без задержек сборщика мусора и с откликом ввода менее 16 мс.',
-      frontend: 'ФРОНТЕНД',
-      frontendTitle: 'SolidJS + Webview',
-      frontendChips: ['Реактивные сигналы', 'Milkdown / ProseMirror', 'i18n на 9 языках', 'Типизированный IPC'],
-      ipc: 'IPC-МОСТ',
-      ipcTitle: 'Tauri 2 Core',
-      ipcChips: ['Zero-Copy команды', 'Шина событий Event', 'Минимальные права доступа'],
-      rust: 'RUST-ЯДРО',
-      rustTitle: 'Нативный движок',
-      rustChips: ['pulldown-cmark AST', 'Подсветка syntect', 'Слежение notify', 'Атомарный I/O']
+      tag: 'СКОРОСТЬ И НАДЕЖНОСТЬ',
+      title: 'Создан для максимальной скорости и экономии батареи',
+      subtitle: 'Taleno не обременен тяжелыми браузерными движками, обеспечивая моментальный отклик при вводе текста и минимальную нагрузку на ноутбук.',
+      frontend: 'Плавный интерфейс',
+      frontendTitle: 'Современная легкость',
+      frontendChips: ['Без задержек при вводе', 'Плавная работа', '9 языков', 'Мгновенные темы'],
+      ipc: 'Прямая связь',
+      ipcTitle: 'Эффективная архитектура',
+      ipcChips: ['Минимум оперативной памяти', 'Мгновенный старт', 'Безопасность'],
+      rust: 'Надежное системное ядро',
+      rustTitle: 'Мощный движок',
+      rustChips: ['Защита от сбоев', 'Молниеносный поиск', 'Полная приватность', 'Чистый Markdown']
     },
     shortcuts: {
       tag: 'ГОРЯЧИЕ КЛАВИШИ',
-      title: 'Все под рукой на клавиатуре',
-      subtitle: 'Поддержка всех стандартных комбинаций Markdown — форматируйте, перемещайтесь и управляйте документами без мыши.',
-      doc: 'Документ и Файл',
-      edit: 'Форматирование',
-      nav: 'Навигация и Вид',
+      title: 'Держите руки на клавиатуре',
+      subtitle: 'Форматируйте заголовки, находите нужные заметки и управляйте вкладками без мыши.',
+      doc: 'Файлы и документы',
+      edit: 'Текст и стили',
+      nav: 'Навигация и поиск',
       items: [
         { group: 'doc', label: 'Новый документ', key: 'Ctrl+N' },
         { group: 'doc', label: 'Открыть файл', key: 'Ctrl+O' },
-        { group: 'doc', label: 'Сохранить документ', key: 'Ctrl+S' },
+        { group: 'doc', label: 'Сохранить', key: 'Ctrl+S' },
         { group: 'doc', label: 'Сохранить как...', key: 'Ctrl+Shift+S' },
         { group: 'doc', label: 'Экспорт в HTML', key: 'Ctrl+E' },
         { group: 'edit', label: 'Полужирный', key: 'Ctrl+B' },
         { group: 'edit', label: 'Курсив', key: 'Ctrl+I' },
         { group: 'edit', label: 'Заголовки 1–6', key: 'Ctrl+1~6' },
-        { group: 'edit', label: 'Обычный абзац', key: 'Ctrl+0' },
+        { group: 'edit', label: 'Обычный текст', key: 'Ctrl+0' },
         { group: 'edit', label: 'Вставить ссылку', key: 'Ctrl+K' },
-        { group: 'nav', label: 'Быстрый выбор файлов', key: 'Ctrl+P' },
-        { group: 'nav', label: 'Найти в документе', key: 'Ctrl+F' },
-        { group: 'nav', label: 'Заменить в документе', key: 'Ctrl+H' },
-        { group: 'nav', label: 'Поиск по рабочей области', key: 'Ctrl+Shift+F' },
-        { group: 'nav', label: 'Сменить режим', key: 'Ctrl+/' }
+        { group: 'nav', label: 'Быстрый переход к файлу', key: 'Ctrl+P' },
+        { group: 'nav', label: 'Найти в заметке', key: 'Ctrl+F' },
+        { group: 'nav', label: 'Заменить слова', key: 'Ctrl+H' },
+        { group: 'nav', label: 'Поиск по всем заметкам', key: 'Ctrl+Shift+F' },
+        { group: 'nav', label: 'Сменить режим просмотра', key: 'Ctrl+/' }
       ]
     },
     faq: {
       tag: 'ВОПРОСЫ И ОТВЕТЫ',
       title: 'Часто задаваемые вопросы',
-      subtitle: 'Есть вопросы или предложения? Создайте Issue или присоединяйтесь к обсуждениям на GitHub.',
-      changelogTitle: 'Последний релиз',
-      changelogVer: 'v0.1.7',
+      subtitle: 'Есть вопросы или предложения? Ждем вас в нашем сообществе на GitHub.',
+      changelogTitle: 'Что нового в этой версии',
+      changelogVer: '${LATEST_VERSION_TAG}',
       changelogItems: [
-        'Встроенный каталог плагинов (хаб Taleno-Plugins)',
-        'Поддержка тем сообщества с живым предпросмотром палитр',
-        'Автоматические обновления в фоне с описанием на родном языке',
-        'Полный ребрендинг в Taleno и оптимизация скорости'
+        'Диалог подтверждения при закрытии несохраненных заметок',
+        'Кнопки быстрого доступа к плагинам, темам и языкам в заголовке',
+        'Индикатор версии в левом нижнем углу со встроенной проверкой обновлений',
+        'Двойной клик по панели вкладок надежно создает один новый документ'
       ],
       items: [
         {
-          q: 'В чем преимущества Taleno перед Typora, Obsidian и редакторами на базе Electron?',
-          a: 'В отличие от тяжелых Electron-приложений, Taleno создан на Rust и Tauri 2, запускаясь быстрее чем за 400 мс и потребляя минимум оперативной памяти. Вместо неудобного разделения экрана форматирование применяется прямо в месте ввода. Все файлы хранятся строго локально с атомарной защитой от сбоев, а через каталог Taleno-Plugins можно в один клик устанавливать плагины и темы без привязки к проприетарным облакам.'
+          q: 'Чем Taleno отличается от других Markdown-редакторов?',
+          a: 'Многие редакторы делят экран на две половины или работают медленно, сильно расходуя память. Taleno форматирует текст прямо на месте в процессе набора, открывается за мгновение и практически не нагружает систему.'
         },
-        { q: 'Чем Taleno отличается от других Markdown-редакторов?', a: 'Taleno форматирует текст непосредственно в месте ввода без разделения экрана на код и превью. Благодаря Rust и Tauri 2 приложение мгновенно запускается и не тратит лишнюю память.' },
-        { q: 'Безопасны ли мои данные?', a: '100% локально. Все файлы сохраняются исключительно на вашем диске и не передаются в облако. Атомарная запись защитит документы от повреждения при сбоях.' },
-        { q: 'Какие расширения Markdown поддерживаются?', a: 'GitHub Flavored Markdown (GFM), таблицы, списки задач, подсветка синтаксиса, диаграммы Mermaid и математические формулы KaTeX.' },
-        { q: 'Taleno бесплатна? Как я могу помочь?', a: 'Да, Taleno полностью бесплатна и открыта под лицензией GNU AGPL-3.0. Мы рады сообщениям об ошибках, переводам и Pull Request на GitHub.' }
+        {
+          q: 'Смогу ли я открыть свои старые Markdown-заметки?',
+          a: 'Да, на 100%! Taleno работает со стандартными файлами .md. Все заметки, написанные в Obsidian, Typora, Notion или VS Code, открываются и сохраняются без каких-либо проблем.'
+        },
+        {
+          q: 'Остаются ли мои заметки конфиденциальными?',
+          a: 'Абсолютно. Все документы хранятся исключительно на вашем жестком диске. Регистрация не требуется, данные в облако не отправляются, программа прекрасно работает без интернета.'
+        },
+        {
+          q: 'Можно ли менять темы и ставить плагины?',
+          a: 'Да! В настройках можно выбрать светлую или темную тему, а также в один клик установить популярные варианты вроде Dracula или Nord.'
+        },
+        {
+          q: 'Taleno действительно бесплатный?',
+          a: 'Да, Taleno — полностью бесплатный проект с открытым исходным кодом (GNU AGPL-3.0). Здесь нет рекламы, подписок или скрытых ограничений.'
+        }
       ]
     },
     downloadPage: {
-      title: 'Скачать Taleno — Все платформы',
-      metaDesc: 'Скачайте Taleno для Windows, macOS и Linux. Прямые официальные ссылки без перенаправлений.',
-      tag: 'v0.1.7 · Последний релиз',
+      title: 'Скачать Taleno — Быстрый и удобный Markdown-редактор',
+      metaDesc: 'Скачайте Taleno для Windows, macOS и Linux. Легковесный, без разделения экрана, 100% офлайн и с мгновенным стартом.',
+      tag: '${LATEST_VERSION_TAG} · Последний официальный релиз',
       heading: 'Скачать Taleno',
-      subheading: 'Все ссылки ведут напрямую к файлам GitHub Releases. Загрузка начинается моментально без задержек.',
-      backHome: '← На главную',
-      note: 'Файлы имеют имена <span class="font-medium text-ink-secondary">Taleno_&lt;ОС&gt;_&lt;Архитектура&gt;</span>, а ссылка <span class="font-mono">releases/latest/download</span> всегда скачивает свежую версию.',
-      allReleases: 'Все релизы и архивы исходного кода',
-      viewGh: 'Репозиторий GitHub'
+      subheading: 'Прямые ссылки из официальных релизов GitHub. Выберите вашу платформу и начните писать с комфортом.',
+      backHome: '← Вернуться на главную',
+      note: 'Все файлы — официальные сборки. Проверить наличие новых версий можно прямо внутри приложения одним кликом.',
+      allReleases: 'Все релизы и история изменений',
+      viewGh: 'Страница проекта на GitHub'
     }
   }
 };
@@ -1325,7 +1436,7 @@ function renderJsonLd(lang, isDownload = false) {
         "price": "0",
         "priceCurrency": "USD"
       },
-      "softwareVersion": "0.1.7",
+      "softwareVersion": "0.1.8",
       "license": "https://www.gnu.org/licenses/agpl-3.0.html",
       "url": "https://berryuiki.github.io/Taleno/",
       "downloadUrl": "https://berryuiki.github.io/Taleno/download.html",
@@ -1619,13 +1730,13 @@ ${langOptionsHtml}
       </div>
       <div class="grid grid-cols-3 gap-[16px] w-full max-[1000px]:grid-cols-1">
         <!-- Windows card -->
-        <div id="os-win" class="os-card bg-bg border-2 border-accent rounded-[12px] p-[28px] flex flex-col gap-[16px]">
-          <span class="os-badge w-fit px-[10px] py-[4px] rounded-full bg-accent text-white text-[11px] font-semibold tracking-[1px]">${lang.downloadSec.recommended}</span>
+        <div id="os-win" class="os-card bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[16px] transition-all">
+          <span class="os-badge hidden w-fit px-[10px] py-[4px] rounded-full bg-accent text-white text-[11px] font-semibold tracking-[1px]">${lang.downloadSec.recommended}</span>
           <div class="flex items-center gap-[14px]">
             <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5.5L10.5 4.3v7.2H3zM10.5 11.5v7.2L3 17.5v-6zM11.5 4.1L21 2.8v8.7h-9.5zM21 11.5v8.7l-9.5-1.3v-7.4z" fill="#0D0D0F"/></svg></div>
             <div><h3 class="font-display text-[20px] font-semibold text-ink">Windows</h3><p class="os-detected text-[12px] text-ink-tertiary">Windows x86_64</p></div>
           </div>
-          <a id="win-btn" href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Windows_x86_64.exe" class="flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-accent text-white text-[15px] font-semibold hover:opacity-90 transition-opacity">
+          <a id="win-btn" href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Windows_x86_64.exe" class="os-btn flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-ink text-white text-[15px] font-semibold hover:opacity-90 transition-all">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             ${lang.downloadSec.winBtn}
           </a>
@@ -1641,7 +1752,7 @@ ${langOptionsHtml}
             <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.4 12.6c0-2.2 1.8-3.2 1.9-3.3-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.6.8-3.3.8-.7 0-1.7-.8-2.8-.8-1.5 0-2.8.8-3.6 2.1-1.5 2.7-.4 6.6 1.1 8.8.7 1 1.6 2.2 2.7 2.1 1.1 0 1.5-.7 2.8-.7s1.7.7 2.8.7c1.2 0 1.9-1 2.6-2 .8-1.2 1.2-2.4 1.2-2.4s-2.2-.9-2.2-3.6zM14.6 6.2c.6-.7 1-1.7.9-2.7-.9 0-1.9.6-2.5 1.3-.6.6-1 1.6-.9 2.6 1 .1 1.9-.5 2.5-1.2z" fill="#0D0D0F"/></svg></div>
             <div><h3 class="font-display text-[20px] font-semibold text-ink">macOS</h3><p class="os-detected text-[12px] text-ink-tertiary">Apple Silicon / Intel</p></div>
           </div>
-          <a id="mac-btn" href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_macOS_aarch64.dmg" class="flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-ink text-white text-[15px] font-semibold hover:opacity-85 transition-opacity">
+          <a id="mac-btn" href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_macOS_aarch64.dmg" class="os-btn flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-ink text-white text-[15px] font-semibold hover:opacity-85 transition-all">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             ${lang.downloadSec.macBtn}
           </a>
@@ -1658,7 +1769,7 @@ ${langOptionsHtml}
             <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="16" rx="2" stroke="#0D0D0F" stroke-width="1.8"/><path d="M7 9l3 3-3 3M13 15h4" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div><h3 class="font-display text-[20px] font-semibold text-ink">Linux</h3><p class="os-detected text-[12px] text-ink-tertiary">x86_64</p></div>
           </div>
-          <a id="linux-btn" href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Linux_x86_64.AppImage" class="flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-ink text-white text-[15px] font-semibold hover:opacity-85 transition-opacity">
+          <a id="linux-btn" href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Linux_x86_64.AppImage" class="os-btn flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-ink text-white text-[15px] font-semibold hover:opacity-85 transition-all">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             ${lang.downloadSec.linuxBtn}
           </a>
@@ -1734,7 +1845,7 @@ ${langOptionsHtml}
         <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px]">
           <div class="flex items-center justify-between">
             <h3 class="text-[16px] font-semibold text-ink">${lang.faq.changelogTitle}</h3>
-            <span class="px-[8px] py-[3px] rounded-full bg-bg-tag text-[12px] text-accent font-semibold">${lang.faq.changelogVer}</span>
+            <span data-version-tag class="px-[8px] py-[3px] rounded-full bg-bg-tag text-[12px] text-accent font-semibold">${lang.faq.changelogVer}</span>
           </div>
           ${lang.faq.changelogItems.map(item => `<div class="flex items-center gap-[10px]"><span class="w-[5px] h-[5px] rounded-full bg-accent"></span><span class="text-[14px] text-ink-secondary">${item}</span></div>`).join('\n          ')}
         </div>
@@ -1863,26 +1974,73 @@ ${langOptionsHtml}
       }
     })();` : ''}
 
-    // OS detection: highlight recommended card
-    const ua = navigator.userAgent.toLowerCase();
-    let os = 'win';
-    if (ua.includes('mac')) os = 'macos';
-    else if (ua.includes('linux')) os = 'linux';
+    // Dynamic Auto-Update Version Number from GitHub Releases
+    (function autoUpdateVersion() {
+      const cached = sessionStorage.getItem('taleno_latest_release');
+      if (cached) applyVersion(cached);
 
-    document.querySelectorAll('.os-card').forEach(c => {
-      c.classList.remove('border-2', 'border-accent');
-      c.classList.add('border', 'border-border');
-      const b = c.querySelector('.os-badge');
-      if (b) b.classList.add('hidden');
-    });
+      fetch('https://api.github.com/repos/BerryUIKI/Taleno/releases/latest')
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(data => {
+          if (data && data.tag_name) {
+            sessionStorage.setItem('taleno_latest_release', data.tag_name);
+            applyVersion(data.tag_name);
+          }
+        })
+        .catch(() => {});
 
-    const card = document.getElementById('os-' + os);
-    if (card) {
-      card.classList.remove('border', 'border-border');
-      card.classList.add('border-2', 'border-accent');
-      const badge = card.querySelector('.os-badge');
-      if (badge) badge.classList.remove('hidden');
+      function applyVersion(tag) {
+        const clean = tag.replace(/^v/, '');
+        document.querySelectorAll('[data-version-tag]').forEach(el => {
+          el.textContent = el.textContent.replace(/v?\\d+\\.\\d+\\.\\d+/g, tag);
+        });
+      }
+    })();
+
+    // Multi-signal OS detection & dynamic card highlighting
+    function detectAndHighlightOS() {
+      const platform = (navigator.userAgentData?.platform || navigator.platform || '').toLowerCase();
+      const ua = (navigator.userAgent || '').toLowerCase();
+      let os = 'win';
+
+      if (platform.includes('mac') || ua.includes('macintosh') || ua.includes('mac os') || ua.includes('darwin')) {
+        os = 'macos';
+      } else if (platform.includes('linux') || ua.includes('linux') || ua.includes('x11')) {
+        os = 'linux';
+      } else if (platform.includes('win') || ua.includes('windows')) {
+        os = 'win';
+      }
+
+      // Reset all cards to neutral
+      document.querySelectorAll('.os-card').forEach(c => {
+        c.classList.remove('border-2', 'border-accent', 'shadow-md', 'scale-[1.01]');
+        c.classList.add('border', 'border-border');
+        const badge = c.querySelector('.os-badge');
+        if (badge) badge.classList.add('hidden');
+        const btn = c.querySelector('.os-btn');
+        if (btn) {
+          btn.classList.remove('bg-accent');
+          btn.classList.add('bg-ink');
+        }
+      });
+
+      // Highlight the recommended OS card
+      const targetCard = document.getElementById('os-' + os);
+      if (targetCard) {
+        targetCard.classList.remove('border', 'border-border');
+        targetCard.classList.add('border-2', 'border-accent', 'shadow-md', 'scale-[1.01]');
+        const badge = targetCard.querySelector('.os-badge');
+        if (badge) badge.classList.remove('hidden');
+        const btn = targetCard.querySelector('.os-btn');
+        if (btn) {
+          btn.classList.remove('bg-ink');
+          btn.classList.add('bg-accent');
+        }
+      }
     }
+
+    detectAndHighlightOS();
+    document.addEventListener('DOMContentLoaded', detectAndHighlightOS);
   </script>
 </body>
 </html>`;
@@ -1982,10 +2140,13 @@ ${langOptionsHtml}
       <!-- Platform matrix -->
       <div class="grid grid-cols-3 gap-[16px] w-full pt-[16px] max-[1000px]:grid-cols-1">
         <!-- Windows -->
-        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px]">
-          <div class="flex items-center gap-[14px]">
-            <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5.5L10.5 4.3v7.2H3zM10.5 11.5v7.2L3 17.5v-6zM11.5 4.1L21 2.8v8.7h-9.5zM21 11.5v8.7l-9.5-1.3v-7.4z" fill="#0D0D0F"/></svg></div>
-            <div><h2 class="font-display text-[20px] font-semibold text-ink">Windows</h2><p class="text-[12px] text-ink-tertiary">x86_64</p></div>
+        <div id="dl-os-win" class="dl-os-card bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px] transition-all">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-[14px]">
+              <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5.5L10.5 4.3v7.2H3zM10.5 11.5v7.2L3 17.5v-6zM11.5 4.1L21 2.8v8.7h-9.5zM21 11.5v8.7l-9.5-1.3v-7.4z" fill="#0D0D0F"/></svg></div>
+              <div><h2 class="font-display text-[20px] font-semibold text-ink">Windows</h2><p class="text-[12px] text-ink-tertiary">x86_64</p></div>
+            </div>
+            <span class="dl-os-badge hidden px-[10px] py-[3px] rounded-full bg-accent text-white text-[11px] font-semibold tracking-[1px]">${lang.downloadSec.recommended}</span>
           </div>
           <a href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Windows_x86_64.exe" class="flex items-center justify-between px-[14px] py-[11px] rounded-[8px] bg-bg-soft border border-border hover:border-accent hover:bg-bg-tag transition-colors">
             <span class="text-[13px] font-medium text-ink">Setup (.exe)</span><span class="text-[10px] text-ink-tertiary font-mono">Taleno_Windows_x86_64.exe</span>
@@ -1995,10 +2156,13 @@ ${langOptionsHtml}
           </a>
         </div>
         <!-- macOS -->
-        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px]">
-          <div class="flex items-center gap-[14px]">
-            <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.4 12.6c0-2.2 1.8-3.2 1.9-3.3-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.6.8-3.3.8-.7 0-1.7-.8-2.8-.8-1.5 0-2.8.8-3.6 2.1-1.5 2.7-.4 6.6 1.1 8.8.7 1 1.6 2.2 2.7 2.1 1.1 0 1.5-.7 2.8-.7s1.7.7 2.8.7c1.2 0 1.9-1 2.6-2 .8-1.2 1.2-2.4 1.2-2.4s-2.2-.9-2.2-3.6zM14.6 6.2c.6-.7 1-1.7.9-2.7-.9 0-1.9.6-2.5 1.3-.6.6-1 1.6-.9 2.6 1 .1 1.9-.5 2.5-1.2z" fill="#0D0D0F"/></svg></div>
-            <div><h2 class="font-display text-[20px] font-semibold text-ink">macOS</h2><p class="text-[12px] text-ink-tertiary">Apple Silicon / Intel</p></div>
+        <div id="dl-os-macos" class="dl-os-card bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px] transition-all">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-[14px]">
+              <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.4 12.6c0-2.2 1.8-3.2 1.9-3.3-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.6.8-3.3.8-.7 0-1.7-.8-2.8-.8-1.5 0-2.8.8-3.6 2.1-1.5 2.7-.4 6.6 1.1 8.8.7 1 1.6 2.2 2.7 2.1 1.1 0 1.5-.7 2.8-.7s1.7.7 2.8.7c1.2 0 1.9-1 2.6-2 .8-1.2 1.2-2.4 1.2-2.4s-2.2-.9-2.2-3.6zM14.6 6.2c.6-.7 1-1.7.9-2.7-.9 0-1.9.6-2.5 1.3-.6.6-1 1.6-.9 2.6 1 .1 1.9-.5 2.5-1.2z" fill="#0D0D0F"/></svg></div>
+              <div><h2 class="font-display text-[20px] font-semibold text-ink">macOS</h2><p class="text-[12px] text-ink-tertiary">Apple Silicon / Intel</p></div>
+            </div>
+            <span class="dl-os-badge hidden px-[10px] py-[3px] rounded-full bg-accent text-white text-[11px] font-semibold tracking-[1px]">${lang.downloadSec.recommended}</span>
           </div>
           <a href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_macOS_aarch64.dmg" class="flex items-center justify-between px-[14px] py-[11px] rounded-[8px] bg-bg-soft border border-border hover:border-accent hover:bg-bg-tag transition-colors">
             <span class="text-[13px] font-medium text-ink">Apple Silicon (DMG)</span><span class="text-[10px] text-ink-tertiary font-mono">Taleno_macOS_aarch64.dmg</span>
@@ -2009,10 +2173,13 @@ ${langOptionsHtml}
           <a href="#macos-gatekeeper" class="text-[12px] leading-[18px] text-accent hover:underline">${gatekeeper.link}</a>
         </div>
         <!-- Linux -->
-        <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px]">
-          <div class="flex items-center gap-[14px]">
-            <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="16" rx="2" stroke="#0D0D0F" stroke-width="1.8"/><path d="M7 9l3 3-3 3M13 15h4" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div><h2 class="font-display text-[20px] font-semibold text-ink">Linux</h2><p class="text-[12px] text-ink-tertiary">x86_64</p></div>
+        <div id="dl-os-linux" class="dl-os-card bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px] transition-all">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-[14px]">
+              <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="16" rx="2" stroke="#0D0D0F" stroke-width="1.8"/><path d="M7 9l3 3-3 3M13 15h4" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div><h2 class="font-display text-[20px] font-semibold text-ink">Linux</h2><p class="text-[12px] text-ink-tertiary">x86_64</p></div>
+            </div>
+            <span class="dl-os-badge hidden px-[10px] py-[3px] rounded-full bg-accent text-white text-[11px] font-semibold tracking-[1px]">${lang.downloadSec.recommended}</span>
           </div>
           <a href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Linux_x86_64.AppImage" class="flex items-center justify-between px-[14px] py-[11px] rounded-[8px] bg-bg-soft border border-border hover:border-accent hover:bg-bg-tag transition-colors">
             <span class="text-[13px] font-medium text-ink">AppImage</span><span class="text-[10px] text-ink-tertiary font-mono">Taleno_Linux_x86_64.AppImage</span>
@@ -2082,6 +2249,57 @@ ${langOptionsHtml}
       menu.classList.toggle('hidden');
     });
     document.addEventListener('click', () => menu.classList.add('hidden'));
+
+    // Dynamic Auto-Update Version Number
+    (function autoUpdateVersion() {
+      const cached = sessionStorage.getItem('taleno_latest_release');
+      if (cached) applyVersion(cached);
+
+      fetch('https://api.github.com/repos/BerryUIKI/Taleno/releases/latest')
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(data => {
+          if (data && data.tag_name) {
+            sessionStorage.setItem('taleno_latest_release', data.tag_name);
+            applyVersion(data.tag_name);
+          }
+        })
+        .catch(() => {});
+
+      function applyVersion(tag) {
+        document.querySelectorAll('[data-version-tag]').forEach(el => {
+          el.textContent = el.textContent.replace(/v?\\d+\\.\\d+\\.\\d+/g, tag);
+        });
+      }
+    })();
+
+    // OS detection for Download Page matrix
+    (function highlightDownloadPlatform() {
+      const p = (navigator.userAgentData?.platform || navigator.platform || '').toLowerCase();
+      const u = (navigator.userAgent || '').toLowerCase();
+      let os = 'win';
+      if (p.includes('mac') || u.includes('macintosh') || u.includes('mac os') || u.includes('darwin')) {
+        os = 'macos';
+      } else if (p.includes('linux') || u.includes('linux') || u.includes('x11')) {
+        os = 'linux';
+      } else if (p.includes('win') || u.includes('windows')) {
+        os = 'win';
+      }
+
+      document.querySelectorAll('.dl-os-card').forEach(c => {
+        c.classList.remove('border-2', 'border-accent', 'shadow-md', 'scale-[1.01]');
+        c.classList.add('border', 'border-border');
+        const b = c.querySelector('.dl-os-badge');
+        if (b) b.classList.add('hidden');
+      });
+
+      const active = document.getElementById('dl-os-' + os);
+      if (active) {
+        active.classList.remove('border', 'border-border');
+        active.classList.add('border-2', 'border-accent', 'shadow-md', 'scale-[1.01]');
+        const badge = active.querySelector('.dl-os-badge');
+        if (badge) badge.classList.remove('hidden');
+      }
+    })();
   </script>
 </body>
 </html>`;
