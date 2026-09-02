@@ -230,6 +230,7 @@ pnpm tauri build
 | [MILESTONES.md](docs/MILESTONES.md) | Milestones & schedule |
 | [NEXT_STEPS.md](docs/NEXT_STEPS.md) | Phase 2 implementation blueprint |
 | [PLUGIN_DEVELOPMENT.md](docs/PLUGIN_DEVELOPMENT.md) | Plugin developer guide, APIs & standards |
+| [THEME_DEVELOPMENT.md](docs/THEME_DEVELOPMENT.md) | Theme & skin developer guide, CSS tokens & palette spec |
 
 ---
 

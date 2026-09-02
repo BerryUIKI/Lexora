@@ -17,6 +17,7 @@ import { UpdateModal } from "./components/Updater/UpdateModal";
 import { SettingsModal } from "./components/Settings/SettingsModal";
 import type { SettingsTabId } from "./types/plugin";
 import { syncPlugins } from "./store/plugins";
+import { syncCustomThemes } from "./store/customThemes";
 import { scheduleAutomaticUpdateCheck } from "./lib/updater";
 import {
   currentDocument,
@@ -219,6 +220,7 @@ const App: Component = () => {
 
     cancelAutomaticUpdateCheck = scheduleAutomaticUpdateCheck();
     syncPlugins().catch((err) => console.warn("Plugin sync error:", err));
+    syncCustomThemes().catch((err) => console.warn("Theme sync error:", err));
   });
 
   // Set up auto-save interval (every 30 seconds for dirty files with path)

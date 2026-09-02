@@ -127,6 +127,19 @@ export interface TranslationDictionary {
     noMarketplacePlugins: string;
     marketplaceOffline: string;
     retryMarketplace: string;
+    customThemes: string;
+    customThemesDescription: string;
+    builtInThemes: string;
+    openThemesFolder: string;
+    activeTheme: string;
+    applyTheme: string;
+    appliedTheme: string;
+    defaultTheme: string;
+    noCustomThemesInstalled: string;
+    searchThemes: string;
+    noThemesFound: string;
+    installTheme: string;
+    uninstallTheme: string;
   };
   window: {
     minimize: string;

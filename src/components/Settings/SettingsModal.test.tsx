@@ -10,6 +10,12 @@ import {
   setTheme,
 } from "../../store/settings";
 import { plugins, setPluginFilterQuery, pluginSubTab, setPluginSubTab } from "../../store/plugins";
+import {
+  setInstalledThemes,
+  setActiveTheme,
+  setThemeSubTab,
+  themeSubTab,
+} from "../../store/customThemes";
 import { SettingsModal } from "./SettingsModal";
 
 describe("SettingsModal", () => {
@@ -23,6 +29,7 @@ describe("SettingsModal", () => {
     container = undefined;
     setPluginFilterQuery("");
     setPluginSubTab("installed");
+    setThemeSubTab("installed");
   });
 
   it("selects themes and keeps element shadows opt-in", () => {
@@ -162,5 +169,51 @@ describe("SettingsModal", () => {
     // Verify sub-tab state switched
     expect(pluginSubTab()).toBe("marketplace");
   });
+
+  it("renders custom themes section and switches to theme marketplace", () => {
+    setInstalledThemes([
+      {
+        id: "dracula",
+        name: "Dracula",
+        version: "1.0.0",
+        description: "A dark gothic theme",
+        author: "Dracula Team",
+        type: "dark",
+        accentColor: "#bd93f9",
+        backgroundColor: "#282a36",
+        textColor: "#f8f8f2",
+        entryFile: "theme.css",
+      },
+    ]);
+
+    container = document.createElement("div");
+    document.body.append(container);
+
+    dispose = render(
+      () => (
+        <SettingsModal
+          isOpen={true}
+          initialTab="theme"
+          onClose={() => undefined}
+        />
+      ),
+      container
+    );
+
+    // Verify Dracula is rendered
+    expect(container.textContent).toContain("Dracula");
+    expect(container.textContent).toContain("Custom & Community Themes");
+
+    // Click Marketplace sub-tab inside Themes
+    const buttons = Array.from(container.querySelectorAll("button"));
+    const marketplaceBtn = buttons.find(
+      (btn) => btn.textContent?.trim() === "Marketplace"
+    );
+    expect(marketplaceBtn).toBeTruthy();
+    marketplaceBtn?.click();
+
+    expect(themeSubTab()).toBe("marketplace");
+  });
 });
+
 

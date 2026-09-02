@@ -291,4 +291,55 @@ export async function updatePlugin(
   });
 }
 
+/**
+ * List all installed custom themes.
+ */
+export async function listThemes(): Promise<any[]> {
+  return invoke<any[]>("list_themes");
+}
+
+/**
+ * Read the CSS stylesheet of an installed theme.
+ */
+export async function readThemeCss(themeId: string): Promise<string> {
+  return invoke<string>("read_theme_css", { themeId });
+}
+
+/**
+ * Open the user's themes folder in the OS file explorer.
+ */
+export async function openThemesFolder(): Promise<void> {
+  return invoke<void>("open_themes_folder");
+}
+
+/**
+ * Fetch available themes from the remote registry.
+ */
+export async function fetchMarketplaceThemes(): Promise<any[]> {
+  return invoke<any[]>("fetch_marketplace_themes");
+}
+
+/**
+ * Install a remote theme into the user's themes directory.
+ */
+export async function installTheme(
+  themeId: string,
+  rawBaseUrl: string,
+  entryFile?: string
+): Promise<any> {
+  return invoke<any>("install_theme", {
+    themeId,
+    rawBaseUrl,
+    entryFile,
+  });
+}
+
+/**
+ * Uninstall a theme from the user's themes directory.
+ */
+export async function uninstallTheme(themeId: string): Promise<void> {
+  return invoke<void>("uninstall_theme", { themeId });
+}
+
+
 

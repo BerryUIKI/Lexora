@@ -408,4 +408,10 @@ All commands, UI elements, and event listeners registered through `ctx` are trac
 - For comprehensive plugin developer instructions, see [Plugin Development Handbook](PLUGIN_DEVELOPMENT.md).
 - Official plugin registry and community submission hub: [BerryUIKI/Lexora-Plugins](https://github.com/BerryUIKI/Lexora-Plugins).
 
+### 9.6 Custom Themes & Skins Architecture
+- Custom themes are managed under `%APPDATA%/Lexora/themes/<theme-id>/`.
+- Themes provide a `theme.json` metadata file and a `theme.css` token override stylesheet that dynamically configures the CSS variables on `:root` without full DOM re-renders or application restarts.
+- For complete theme styling instructions and palette references, see [Theme Development Handbook](THEME_DEVELOPMENT.md).
+
+
 

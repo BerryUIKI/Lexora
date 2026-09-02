@@ -41,6 +41,25 @@ import {
   isPluginBusy,
   getInstalledPlugin,
 } from "../../store/plugins";
+import {
+  installedThemes,
+  activeCustomThemeId,
+  setActiveTheme,
+  syncCustomThemes,
+  themeSubTab,
+  setThemeSubTab,
+  marketplaceThemes,
+  isFetchingThemes,
+  themeError,
+  themeFilterQuery,
+  setThemeFilterQuery,
+  fetchThemes,
+  installCommunityTheme,
+  uninstallCustomTheme,
+  isThemeInstalled,
+  isThemeBusy,
+  openThemesFolder,
+} from "../../store/customThemes";
 import type { SettingsTabId } from "../../types/plugin";
 import { openPluginsFolder } from "../../lib/tauri/commands";
 import { t } from "../../i18n";
@@ -75,7 +94,10 @@ export const SettingsModal: Component<SettingsModalProps> = (props) => {
     if (props.isOpen && event.key === "Escape") props.onClose();
   };
 
-  onMount(() => window.addEventListener("keydown", handleKeyDown));
+  onMount(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    syncCustomThemes();
+  });
   onCleanup(() => window.removeEventListener("keydown", handleKeyDown));
 
   const filteredPlugins = createMemo(() => {
@@ -99,6 +121,30 @@ export const SettingsModal: Component<SettingsModalProps> = (props) => {
         p.description.toLowerCase().includes(q) ||
         p.author.toLowerCase().includes(q) ||
         p.tags?.some((tag) => tag.toLowerCase().includes(q))
+    );
+  });
+
+  const filteredCustomThemes = createMemo(() => {
+    const q = themeFilterQuery().trim().toLowerCase();
+    if (!q) return installedThemes();
+    return installedThemes().filter(
+      (item) =>
+        item.name.toLowerCase().includes(q) ||
+        item.description.toLowerCase().includes(q) ||
+        item.author.toLowerCase().includes(q) ||
+        item.tags?.some((tag) => tag.toLowerCase().includes(q))
+    );
+  });
+
+  const filteredMarketplaceThemes = createMemo(() => {
+    const q = themeFilterQuery().trim().toLowerCase();
+    if (!q) return marketplaceThemes();
+    return marketplaceThemes().filter(
+      (item) =>
+        item.name.toLowerCase().includes(q) ||
+        item.description.toLowerCase().includes(q) ||
+        item.author.toLowerCase().includes(q) ||
+        item.tags?.some((tag) => tag.toLowerCase().includes(q))
     );
   });
 
@@ -293,6 +339,374 @@ export const SettingsModal: Component<SettingsModalProps> = (props) => {
                         }`}
                       />
                     </button>
+                  </div>
+
+                  {/* Custom & Community Themes Section */}
+                  <div class="border-t border-[var(--color-border)] pt-6 space-y-4">
+                    <div class="flex items-center justify-between flex-wrap gap-3">
+                      <div>
+                        <h3 class="text-sm font-semibold">{t("settings.customThemes")}</h3>
+                        <p class="mt-0.5 text-xs text-[var(--color-text-secondary)]">
+                          {t("settings.customThemesDescription")}
+                        </p>
+                      </div>
+
+                      {/* Theme sub-tab pills */}
+                      <div class="inline-flex rounded-lg border border-[var(--color-border)] p-0.5 bg-[var(--color-bg-secondary)]">
+                        <button
+                          class={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${
+                            themeSubTab() === "installed"
+                              ? "bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] shadow-xs"
+                              : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
+                          }`}
+                          onClick={() => setThemeSubTab("installed")}
+                        >
+                          {t("settings.installedTab")} ({installedThemes().length})
+                        </button>
+                        <button
+                          class={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${
+                            themeSubTab() === "marketplace"
+                              ? "bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] shadow-xs"
+                              : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
+                          }`}
+                          onClick={() => {
+                            setThemeSubTab("marketplace");
+                            if (marketplaceThemes().length === 0) {
+                              fetchThemes();
+                            }
+                          }}
+                        >
+                          {t("settings.marketplaceTab")}
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Action & Filter Bar */}
+                    <div class="flex items-center gap-3">
+                      <div class="relative flex-1">
+                        <input
+                          type="text"
+                          class="w-full px-3 py-1.5 pl-8 text-xs rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-secondary)] text-[var(--color-text-primary)] placeholder-[var(--color-text-secondary)] focus:outline-none focus:border-[var(--color-accent)]"
+                          placeholder={t("settings.searchThemes")}
+                          value={themeFilterQuery()}
+                          onInput={(e) => setThemeFilterQuery(e.currentTarget.value)}
+                        />
+                        <svg
+                          class="w-3.5 h-3.5 absolute left-2.5 top-2 text-[var(--color-text-secondary)]"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <circle cx="11" cy="11" r="8" />
+                          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                      </div>
+
+                      <button
+                        class="px-3 py-1.5 text-xs font-medium rounded-lg border border-[var(--color-border)] hover:bg-[var(--color-hover)] text-[var(--color-text-primary)] transition-colors flex items-center gap-1.5 flex-shrink-0"
+                        onClick={() => openThemesFolder()}
+                        title={t("settings.openThemesFolder")}
+                      >
+                        <svg
+                          class="w-3.5 h-3.5 text-[var(--color-accent)]"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                        </svg>
+                        <span>{t("settings.openThemesFolder")}</span>
+                      </button>
+
+                      <button
+                        class="px-3 py-1.5 text-xs font-medium rounded-lg border border-[var(--color-border)] hover:bg-[var(--color-hover)] text-[var(--color-text-primary)] transition-colors flex items-center gap-1.5 flex-shrink-0"
+                        onClick={() => {
+                          if (themeSubTab() === "marketplace") {
+                            fetchThemes();
+                          } else {
+                            syncCustomThemes();
+                          }
+                        }}
+                        disabled={isFetchingThemes()}
+                        title={t("settings.reloadPlugins")}
+                      >
+                        <svg
+                          class={`w-3.5 h-3.5 ${isFetchingThemes() ? "animate-spin text-[var(--color-accent)]" : ""}`}
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+                        </svg>
+                      </button>
+                    </div>
+
+                    {/* Installed SubTab */}
+                    <Show when={themeSubTab() === "installed"}>
+                      <div class="space-y-3">
+                        {/* Default / None Option */}
+                        <div
+                          class={`flex items-center justify-between gap-4 p-3.5 rounded-xl border transition-all ${
+                            activeCustomThemeId() === null
+                              ? "border-[var(--color-accent)] bg-[var(--color-hover)] ring-2 ring-[var(--color-accent)]/20"
+                              : "border-[var(--color-border)] bg-[var(--color-bg-primary)] hover:border-[var(--color-border-hover,var(--color-border))]"
+                          }`}
+                        >
+                          <div class="space-y-0.5">
+                            <div class="flex items-center gap-2">
+                              <span class="font-semibold text-xs text-[var(--color-text-primary)]">
+                                {t("settings.defaultTheme")} ({t("settings.builtInThemes")})
+                              </span>
+                              <Show when={activeCustomThemeId() === null}>
+                                <span class="px-1.5 py-0.2 text-[10px] rounded bg-[var(--color-accent)]/10 text-[var(--color-accent)] border border-[var(--color-accent)]/20 font-medium">
+                                  {t("settings.appliedTheme")}
+                                </span>
+                              </Show>
+                            </div>
+                            <p class="text-[11px] text-[var(--color-text-secondary)]">
+                              Use native Lexora theme styling without custom CSS overrides.
+                            </p>
+                          </div>
+                          <Show when={activeCustomThemeId() !== null}>
+                            <button
+                              class="px-3 py-1 text-xs font-medium rounded-lg border border-[var(--color-border)] hover:bg-[var(--color-hover)] text-[var(--color-text-primary)]"
+                              onClick={() => setActiveTheme(null)}
+                            >
+                              {t("settings.applyTheme")}
+                            </button>
+                          </Show>
+                        </div>
+
+                        {/* Installed custom themes list */}
+                        <Show
+                          when={filteredCustomThemes().length > 0}
+                          fallback={
+                            <div class="p-6 text-center rounded-xl border border-dashed border-[var(--color-border)] text-[var(--color-text-secondary)] text-xs">
+                              {themeFilterQuery().trim()
+                                ? t("settings.noThemesFound")
+                                : t("settings.noCustomThemesInstalled")}
+                            </div>
+                          }
+                        >
+                          <For each={filteredCustomThemes()}>
+                            {(customTheme) => {
+                              const isActive = () => activeCustomThemeId() === customTheme.id;
+                              const busy = () => isThemeBusy(customTheme.id);
+
+                              return (
+                                <div
+                                  class={`flex items-start justify-between gap-4 p-3.5 rounded-xl border transition-all ${
+                                    isActive()
+                                      ? "border-[var(--color-accent)] bg-[var(--color-hover)] ring-2 ring-[var(--color-accent)]/20"
+                                      : "border-[var(--color-border)] bg-[var(--color-bg-primary)] hover:border-[var(--color-border-hover,var(--color-border))]"
+                                  }`}
+                                >
+                                  <div class="space-y-1.5 flex-1 min-w-0">
+                                    <div class="flex items-center gap-2 flex-wrap">
+                                      {/* Color swatch indicator */}
+                                      <div class="flex items-center gap-1 p-0.5 rounded border border-[var(--color-border)] bg-black/10">
+                                        <div
+                                          class="w-3 h-3 rounded-xs"
+                                          style={{ "background-color": customTheme.backgroundColor }}
+                                          title={`Background: ${customTheme.backgroundColor}`}
+                                        />
+                                        <div
+                                          class="w-3 h-3 rounded-xs"
+                                          style={{ "background-color": customTheme.accentColor }}
+                                          title={`Accent: ${customTheme.accentColor}`}
+                                        />
+                                        <div
+                                          class="w-3 h-3 rounded-xs"
+                                          style={{ "background-color": customTheme.textColor }}
+                                          title={`Text: ${customTheme.textColor}`}
+                                        />
+                                      </div>
+
+                                      <span class="font-semibold text-xs text-[var(--color-text-primary)]">
+                                        {customTheme.name}
+                                      </span>
+                                      <span class="px-1.5 py-0.5 text-[10px] font-mono rounded bg-[var(--color-hover)] text-[var(--color-text-secondary)] border border-[var(--color-border)]">
+                                        v{customTheme.version}
+                                      </span>
+                                      <span class="text-[11px] text-[var(--color-text-secondary)]">
+                                        • {customTheme.author}
+                                      </span>
+                                      <Show when={isActive()}>
+                                        <span class="px-1.5 py-0.2 text-[10px] rounded bg-[var(--color-accent)]/10 text-[var(--color-accent)] border border-[var(--color-accent)]/20 font-medium">
+                                          {t("settings.appliedTheme")}
+                                        </span>
+                                      </Show>
+                                    </div>
+                                    <p class="text-xs leading-relaxed text-[var(--color-text-secondary)]">
+                                      {customTheme.description}
+                                    </p>
+                                  </div>
+
+                                  <div class="flex items-center gap-2 flex-shrink-0 pt-0.5">
+                                    <Show when={!isActive()}>
+                                      <button
+                                        class="px-3 py-1.5 text-xs font-medium rounded-lg bg-[var(--color-accent)] text-white hover:opacity-90 transition-opacity"
+                                        onClick={() => setActiveTheme(customTheme.id)}
+                                      >
+                                        {t("settings.applyTheme")}
+                                      </button>
+                                    </Show>
+
+                                    <button
+                                      class="px-2.5 py-1.5 text-xs font-medium rounded-lg border border-red-500/30 hover:bg-red-500/10 text-red-600 dark:text-red-400 transition-colors disabled:opacity-50"
+                                      onClick={() => uninstallCustomTheme(customTheme.id)}
+                                      disabled={busy()}
+                                      title={t("settings.uninstallTheme")}
+                                    >
+                                      {busy() ? t("settings.uninstalling") : t("settings.uninstallTheme")}
+                                    </button>
+                                  </div>
+                                </div>
+                              );
+                            }}
+                          </For>
+                        </Show>
+                      </div>
+                    </Show>
+
+                    {/* Marketplace SubTab */}
+                    <Show when={themeSubTab() === "marketplace"}>
+                      <div class="space-y-3">
+                        <Show when={themeError()}>
+                          <div class="p-3 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 text-xs flex items-center justify-between gap-3">
+                            <span>{t("settings.marketplaceOffline")}</span>
+                            <button
+                              class="px-2.5 py-1 text-[11px] font-medium rounded-md bg-[var(--color-bg-primary)] border border-[var(--color-border)] hover:bg-[var(--color-hover)] text-[var(--color-text-primary)]"
+                              onClick={() => fetchThemes()}
+                            >
+                              {t("settings.retryMarketplace")}
+                            </button>
+                          </div>
+                        </Show>
+
+                        <Show when={isFetchingThemes()}>
+                          <div class="p-8 text-center text-xs text-[var(--color-text-secondary)] space-y-2">
+                            <svg
+                              class="w-5 h-5 mx-auto animate-spin text-[var(--color-accent)]"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            >
+                              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+                            </svg>
+                            <p>{t("settings.installing")}</p>
+                          </div>
+                        </Show>
+
+                        <Show when={!isFetchingThemes()}>
+                          <Show
+                            when={filteredMarketplaceThemes().length > 0}
+                            fallback={
+                              <div class="p-8 text-center rounded-xl border border-dashed border-[var(--color-border)] text-[var(--color-text-secondary)] text-xs">
+                                {t("settings.noThemesFound")}
+                              </div>
+                            }
+                          >
+                            <For each={filteredMarketplaceThemes()}>
+                              {(remoteTheme) => {
+                                const installed = () => isThemeInstalled(remoteTheme.id);
+                                const isActive = () => activeCustomThemeId() === remoteTheme.id;
+                                const busy = () => isThemeBusy(remoteTheme.id);
+
+                                return (
+                                  <div class="flex items-start justify-between gap-4 p-3.5 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-primary)] hover:border-[var(--color-border-hover,var(--color-border))] transition-colors">
+                                    <div class="space-y-1.5 flex-1 min-w-0">
+                                      <div class="flex items-center gap-2 flex-wrap">
+                                        {/* Color swatches */}
+                                        <div class="flex items-center gap-1 p-0.5 rounded border border-[var(--color-border)] bg-black/10">
+                                          <div
+                                            class="w-3 h-3 rounded-xs"
+                                            style={{ "background-color": remoteTheme.backgroundColor }}
+                                            title={`Background: ${remoteTheme.backgroundColor}`}
+                                          />
+                                          <div
+                                            class="w-3 h-3 rounded-xs"
+                                            style={{ "background-color": remoteTheme.accentColor }}
+                                            title={`Accent: ${remoteTheme.accentColor}`}
+                                          />
+                                          <div
+                                            class="w-3 h-3 rounded-xs"
+                                            style={{ "background-color": remoteTheme.textColor }}
+                                            title={`Text: ${remoteTheme.textColor}`}
+                                          />
+                                        </div>
+
+                                        <span class="font-semibold text-xs text-[var(--color-text-primary)]">
+                                          {remoteTheme.name}
+                                        </span>
+                                        <span class="px-1.5 py-0.5 text-[10px] font-mono rounded bg-[var(--color-hover)] text-[var(--color-text-secondary)] border border-[var(--color-border)]">
+                                          v{remoteTheme.version}
+                                        </span>
+                                        <span class="text-[11px] text-[var(--color-text-secondary)]">
+                                          • {remoteTheme.author}
+                                        </span>
+                                        <Show when={installed()}>
+                                          <span class="px-1.5 py-0.2 text-[10px] rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-medium">
+                                            {t("settings.installedBadge")}
+                                          </span>
+                                        </Show>
+                                      </div>
+                                      <p class="text-xs leading-relaxed text-[var(--color-text-secondary)]">
+                                        {remoteTheme.description}
+                                      </p>
+                                    </div>
+
+                                    <div class="flex items-center gap-2 flex-shrink-0 pt-0.5">
+                                      <Show when={!installed()}>
+                                        <button
+                                          class="px-3 py-1.5 text-xs font-medium rounded-lg bg-[var(--color-accent)] text-white hover:opacity-90 transition-opacity disabled:opacity-50"
+                                          onClick={() => installCommunityTheme(remoteTheme)}
+                                          disabled={busy()}
+                                        >
+                                          {busy() ? t("settings.installing") : t("settings.installTheme")}
+                                        </button>
+                                      </Show>
+
+                                      <Show when={installed() && !isActive()}>
+                                        <button
+                                          class="px-3 py-1.5 text-xs font-medium rounded-lg bg-[var(--color-accent)] text-white hover:opacity-90 transition-opacity"
+                                          onClick={() => setActiveTheme(remoteTheme.id)}
+                                        >
+                                          {t("settings.applyTheme")}
+                                        </button>
+                                      </Show>
+
+                                      <Show when={installed()}>
+                                        <button
+                                          class="px-2.5 py-1.5 text-xs font-medium rounded-lg border border-red-500/30 hover:bg-red-500/10 text-red-600 dark:text-red-400 transition-colors disabled:opacity-50"
+                                          onClick={() => uninstallCustomTheme(remoteTheme.id)}
+                                          disabled={busy()}
+                                          title={t("settings.uninstallTheme")}
+                                        >
+                                          {busy() ? t("settings.uninstalling") : t("settings.uninstallTheme")}
+                                        </button>
+                                      </Show>
+                                    </div>
+                                  </div>
+                                );
+                              }}
+                            </For>
+                          </Show>
+                        </Show>
+                      </div>
+                    </Show>
                   </div>
                 </div>
               </Show>
