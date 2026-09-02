@@ -40,7 +40,7 @@ describe("TabBar", () => {
     expect(onNewTab).toHaveBeenCalledTimes(1);
   });
 
-  it("calls onNewTab on rapid successive clicks in empty tab bar area", () => {
+  it("calls onNewTab exactly once even if double-clicks arrive in rapid succession", () => {
     const onNewTab = vi.fn();
 
     container = document.createElement("div");
@@ -51,8 +51,8 @@ describe("TabBar", () => {
     const emptyArea = container.querySelector<HTMLDivElement>('[data-tab-empty="true"]');
     expect(emptyArea).toBeTruthy();
 
-    emptyArea?.dispatchEvent(new MouseEvent("click", { button: 0, bubbles: true }));
-    emptyArea?.dispatchEvent(new MouseEvent("click", { button: 0, bubbles: true }));
+    emptyArea?.dispatchEvent(new MouseEvent("dblclick", { bubbles: true }));
+    emptyArea?.dispatchEvent(new MouseEvent("dblclick", { bubbles: true }));
     expect(onNewTab).toHaveBeenCalledTimes(1);
   });
 

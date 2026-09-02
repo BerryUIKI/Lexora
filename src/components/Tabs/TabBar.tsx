@@ -10,7 +10,7 @@ export interface TabBarProps {
 }
 
 export const TabBar: Component<TabBarProps> = (props) => {
-  let lastClickTime = 0;
+  let lastNewTabTime = 0;
 
   const handleSelectTab = (tabId: string) => {
     if (selectTab(tabId)) {
@@ -18,15 +18,12 @@ export const TabBar: Component<TabBarProps> = (props) => {
     }
   };
 
-  const handleEmptyAreaClick = (e: MouseEvent) => {
-    if (e.button !== 0) return;
+  const handleCreateNewTab = () => {
     const now = Date.now();
-    if (now - lastClickTime < 350) {
-      props.onNewTab();
-      lastClickTime = 0;
-    } else {
-      lastClickTime = now;
-    }
+    // Guard against multiple events in rapid succession (guarantees exactly 1 tab per double click)
+    if (now - lastNewTabTime < 400) return;
+    lastNewTabTime = now;
+    props.onNewTab();
   };
 
   return (
@@ -44,7 +41,7 @@ export const TabBar: Component<TabBarProps> = (props) => {
       onDblClick={(e) => {
         const target = e.target as HTMLElement;
         if (!target.closest("[data-tab-item]") && !target.closest("button")) {
-          props.onNewTab();
+          handleCreateNewTab();
         }
       }}
     >
@@ -93,10 +90,9 @@ export const TabBar: Component<TabBarProps> = (props) => {
       <div
         data-tab-empty="true"
         class="flex-1 h-full cursor-default select-none"
-        onClick={handleEmptyAreaClick}
         onDblClick={(e) => {
           e.stopPropagation();
-          props.onNewTab();
+          handleCreateNewTab();
         }}
         title="Double-click to create new document"
       />

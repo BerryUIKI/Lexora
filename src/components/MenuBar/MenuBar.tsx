@@ -238,67 +238,6 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
             <span class="text-xs font-bold tracking-tight text-[var(--color-text-primary)]">Taleno</span>
           </button>
 
-          {/* Software Version Indicator & In-Place Update Check Button (next to Taleno title) */}
-          <button
-            class={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-mono transition-all select-none cursor-pointer no-drag mr-1 ${
-              isUpdateAvailable()
-                ? "bg-[var(--color-accent)] text-white font-semibold shadow-xs animate-pulse hover:opacity-90"
-                : inPlaceCheckStatus() === "up_to_date"
-                ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-medium"
-                : "hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
-            }`}
-            onClick={(e) => {
-              e.stopPropagation();
-              if (isUpdateAvailable()) {
-                setUpdateModalOpen(true);
-              } else {
-                void checkForUpdatesInPlace();
-              }
-            }}
-            title={
-              isUpdateAvailable()
-                ? `${t("statusBar.updateAvailable")}: v${updateInfo()?.latestVersion} (${t("update.downloadUpdate")})`
-                : inPlaceCheckStatus() === "checking"
-                ? t("statusBar.checkingUpdates")
-                : inPlaceCheckStatus() === "up_to_date"
-                ? t("statusBar.upToDate")
-                : `Taleno v${appVersion()} — ${t("help.checkForUpdates")}`
-            }
-            aria-label={
-              isUpdateAvailable()
-                ? `${t("statusBar.updateAvailable")}: v${updateInfo()?.latestVersion}`
-                : `Taleno v${appVersion()}`
-            }
-            data-menu-quick="version"
-          >
-            <Show when={inPlaceCheckStatus() === "checking"}>
-              <svg class="w-3 h-3 animate-spin flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" stroke-opacity="0.25" />
-                <path d="M12 2a10 10 0 0 1 10 10" />
-              </svg>
-            </Show>
-            <Show when={inPlaceCheckStatus() === "up_to_date"}>
-              <svg class="w-3 h-3 text-emerald-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-            </Show>
-            <Show when={isUpdateAvailable() && inPlaceCheckStatus() !== "checking"}>
-              <svg class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <line x1="12" y1="19" x2="12" y2="5" />
-                <polyline points="5 12 12 5 19 12" />
-              </svg>
-            </Show>
-            <span>
-              {inPlaceCheckStatus() === "checking"
-                ? t("statusBar.checkingUpdates")
-                : inPlaceCheckStatus() === "up_to_date"
-                ? t("statusBar.upToDate")
-                : isUpdateAvailable()
-                ? `↑ v${updateInfo()?.latestVersion || appVersion()}`
-                : `v${appVersion()}`}
-            </span>
-          </button>
-
           {/* Menu: File */}
           <div class="relative">
             <button
@@ -801,16 +740,16 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
           </div>
         </div>
 
-        {/* Center: Draggable Region with Document Title Breadcrumb */}
+        {/* Center: Draggable Region with Document Title Breadcrumb & Version */}
         <div
           data-tauri-drag-region
           class="flex-1 flex items-center justify-center h-full px-4 text-xs text-[var(--color-text-secondary)] font-medium truncate cursor-default select-none"
           onMouseDown={handleStartDrag}
         >
-          <div class="flex items-center gap-1.5 truncate" data-tauri-drag-region>
+          <div class="flex items-center gap-1.5 truncate pointer-events-auto" data-tauri-drag-region>
             <Show
               when={hasDoc()}
-              fallback={<span class="opacity-60 font-normal" data-tauri-drag-region>Taleno</span>}
+              fallback={<span class="opacity-75 font-semibold text-[var(--color-text-primary)]" data-tauri-drag-region>Taleno</span>}
             >
               <span class="text-[var(--color-text-primary)] font-semibold truncate" data-tauri-drag-region>
                 {doc().filename}
@@ -821,6 +760,68 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
               <span class="opacity-40 text-[10px]" data-tauri-drag-region>&bull;</span>
               <span class="text-[11px] capitalize opacity-80" data-tauri-drag-region>{displayMode()}</span>
             </Show>
+
+            {/* Software Version Indicator & In-Place Update Check Button (next to central title) */}
+            <button
+              class={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-mono transition-all select-none cursor-pointer no-drag ml-1 ${
+                isUpdateAvailable()
+                  ? "bg-[var(--color-accent)] text-white font-semibold shadow-xs animate-pulse hover:opacity-90"
+                  : inPlaceCheckStatus() === "up_to_date"
+                  ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-medium"
+                  : "hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
+              }`}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (isUpdateAvailable()) {
+                  setUpdateModalOpen(true);
+                } else {
+                  void checkForUpdatesInPlace();
+                }
+              }}
+              title={
+                isUpdateAvailable()
+                  ? `${t("statusBar.updateAvailable")}: v${updateInfo()?.latestVersion} (${t("update.downloadUpdate")})`
+                  : inPlaceCheckStatus() === "checking"
+                  ? t("statusBar.checkingUpdates")
+                  : inPlaceCheckStatus() === "up_to_date"
+                  ? t("statusBar.upToDate")
+                  : `Taleno v${appVersion()} — ${t("help.checkForUpdates")}`
+              }
+              aria-label={
+                isUpdateAvailable()
+                  ? `${t("statusBar.updateAvailable")}: v${updateInfo()?.latestVersion}`
+                  : `Taleno v${appVersion()}`
+              }
+              data-menu-quick="version"
+              data-tauri-drag-region="false"
+            >
+              <Show when={inPlaceCheckStatus() === "checking"}>
+                <svg class="w-3 h-3 animate-spin flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" stroke-opacity="0.25" />
+                  <path d="M12 2a10 10 0 0 1 10 10" />
+                </svg>
+              </Show>
+              <Show when={inPlaceCheckStatus() === "up_to_date"}>
+                <svg class="w-3 h-3 text-emerald-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </Show>
+              <Show when={isUpdateAvailable() && inPlaceCheckStatus() !== "checking"}>
+                <svg class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <line x1="12" y1="19" x2="12" y2="5" />
+                  <polyline points="5 12 12 5 19 12" />
+                </svg>
+              </Show>
+              <span>
+                {inPlaceCheckStatus() === "checking"
+                  ? t("statusBar.checkingUpdates")
+                  : inPlaceCheckStatus() === "up_to_date"
+                  ? t("statusBar.upToDate")
+                  : isUpdateAvailable()
+                  ? `↑ v${updateInfo()?.latestVersion || appVersion()}`
+                  : `v${appVersion()}`}
+              </span>
+            </button>
           </div>
         </div>
 
