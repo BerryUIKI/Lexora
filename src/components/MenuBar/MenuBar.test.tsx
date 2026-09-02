@@ -66,6 +66,11 @@ describe("MenuBar Title Bar Quick Access", () => {
     expect(versionBtn).toBeTruthy();
     expect(versionBtn?.textContent).toContain("v0.1.7");
 
+    // Verify versionBtn is immediately adjacent to the Taleno brand button
+    const brandBtn = container.querySelector<HTMLButtonElement>('button[title*="Taleno"], button[title*="Welcome"]');
+    expect(brandBtn).toBeTruthy();
+    expect(brandBtn?.nextElementSibling).toBe(versionBtn);
+
     pluginsBtn?.click();
     expect(onOpenSettings).toHaveBeenCalledWith("plugins");
 

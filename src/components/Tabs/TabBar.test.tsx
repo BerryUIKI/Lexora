@@ -33,10 +33,26 @@ describe("TabBar", () => {
 
     dispose = render(() => <TabBar onNewTab={onNewTab} />, container);
 
-    const emptyArea = container.querySelector<HTMLDivElement>("[data-tauri-drag-region]");
+    const emptyArea = container.querySelector<HTMLDivElement>('[data-tab-empty="true"]');
     expect(emptyArea).toBeTruthy();
 
     emptyArea?.dispatchEvent(new MouseEvent("dblclick", { bubbles: true }));
+    expect(onNewTab).toHaveBeenCalledTimes(1);
+  });
+
+  it("calls onNewTab on rapid successive clicks in empty tab bar area", () => {
+    const onNewTab = vi.fn();
+
+    container = document.createElement("div");
+    document.body.append(container);
+
+    dispose = render(() => <TabBar onNewTab={onNewTab} />, container);
+
+    const emptyArea = container.querySelector<HTMLDivElement>('[data-tab-empty="true"]');
+    expect(emptyArea).toBeTruthy();
+
+    emptyArea?.dispatchEvent(new MouseEvent("click", { button: 0, bubbles: true }));
+    emptyArea?.dispatchEvent(new MouseEvent("click", { button: 0, bubbles: true }));
     expect(onNewTab).toHaveBeenCalledTimes(1);
   });
 

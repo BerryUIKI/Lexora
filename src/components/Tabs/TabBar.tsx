@@ -1,6 +1,5 @@
 import { Component, For, Show } from "solid-js";
 import { openTabs, activeTabId, closeTab, selectTab } from "../../store/files";
-import { startDrag } from "../../lib/tauri/commands";
 
 export interface TabBarProps {
   onNewTab: () => void;
@@ -10,9 +9,22 @@ export interface TabBarProps {
 }
 
 export const TabBar: Component<TabBarProps> = (props) => {
+  let lastClickTime = 0;
+
   const handleSelectTab = (tabId: string) => {
     if (selectTab(tabId)) {
       props.onSelectTab?.();
+    }
+  };
+
+  const handleEmptyAreaClick = (e: MouseEvent) => {
+    if (e.button !== 0) return;
+    const now = Date.now();
+    if (now - lastClickTime < 350) {
+      props.onNewTab();
+      lastClickTime = 0;
+    } else {
+      lastClickTime = now;
     }
   };
 
@@ -72,17 +84,16 @@ export const TabBar: Component<TabBarProps> = (props) => {
         }}
       </For>
 
-      {/* Draggable empty area */}
+      {/* Empty Tab Bar Area: double-click to create new document */}
       <div
-        data-tauri-drag-region
-        class="flex-1 h-full cursor-default"
-        onMouseDown={async (e) => {
-          if (e.button === 0 && !(e.target as HTMLElement).closest("button, .no-drag")) {
-            try {
-              await startDrag();
-            } catch {}
-          }
+        data-tab-empty="true"
+        class="flex-1 h-full cursor-default select-none"
+        onClick={handleEmptyAreaClick}
+        onDblClick={(e) => {
+          e.stopPropagation();
+          props.onNewTab();
         }}
+        title="Double-click to create new document"
       />
 
       {/* New tab button aligned to the far edge of the full-width strip */}
