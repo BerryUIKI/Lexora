@@ -18,7 +18,7 @@ import {
   isWindowMaximized,
   startDrag,
 } from "../../lib/tauri/commands";
-import { t, SUPPORTED_LOCALES, localeSetting, setLocale } from "../../i18n";
+import { t, SUPPORTED_LOCALES, localeSetting, setLocale, currentLocale } from "../../i18n";
 import { AboutModal } from "./AboutModal";
 import { LanguageModal } from "./LanguageModal";
 
@@ -48,6 +48,19 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
   const [aboutOpen, setAboutOpen] = createSignal(false);
   const [isMaximized, setIsMaximized] = createSignal(false);
   const [langModalOpen, setLangModalOpen] = createSignal(false);
+
+  const localeBadge = () => {
+    const code = currentLocale();
+    if (code.startsWith("zh-CN")) return "简";
+    if (code.startsWith("zh-TW")) return "繁";
+    if (code.startsWith("ja")) return "JA";
+    if (code.startsWith("ko")) return "KO";
+    if (code.startsWith("de")) return "DE";
+    if (code.startsWith("fr")) return "FR";
+    if (code.startsWith("es")) return "ES";
+    if (code.startsWith("ru")) return "RU";
+    return "EN";
+  };
 
   const doc = () => currentDocument();
   const hasDoc = () =>
@@ -736,15 +749,69 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
         <div class="flex items-center h-full pointer-events-auto flex-shrink-0" data-tauri-drag-region="false">
           {/* Quick Search Palette */}
           <button
-            class="p-1.5 mr-0.5 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+            class="p-1.5 mr-0.5 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors cursor-pointer"
             onClick={props.onOpenQuickSwitcher}
             title={`${t("view.quickSwitcher")} (Ctrl+P)`}
+            aria-label={`${t("view.quickSwitcher")} (Ctrl+P)`}
           >
-            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <circle cx="11" cy="11" r="8" />
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
           </button>
+
+          {/* Quick Plugins Marketplace Access */}
+          <button
+            class="p-1.5 mr-0.5 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors cursor-pointer"
+            onClick={() => props.onOpenSettings?.("plugins")}
+            title={t("menu.pluginsQuick")}
+            aria-label={t("menu.pluginsQuick")}
+            data-menu-quick="plugins"
+          >
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m7.5 4.27 9 5.15" />
+              <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
+              <path d="m3.3 7 8.7 5 8.7-5" />
+              <path d="M12 22V12" />
+            </svg>
+          </button>
+
+          {/* Quick Themes Settings Access */}
+          <button
+            class="p-1.5 mr-0.5 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors cursor-pointer"
+            onClick={() => (props.onOpenSettings ? props.onOpenSettings("theme") : props.onOpenThemeSettings())}
+            title={t("menu.themesQuick")}
+            aria-label={t("menu.themesQuick")}
+            data-menu-quick="theme"
+          >
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
+              <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
+              <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
+              <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
+              <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
+            </svg>
+          </button>
+
+          {/* Quick Language Selector */}
+          <button
+            class="flex items-center gap-1 px-1.5 py-1 mr-0.5 rounded hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors cursor-pointer"
+            onClick={() => setLangModalOpen(true)}
+            title={t("menu.languageQuick")}
+            aria-label={t("menu.languageQuick")}
+            data-menu-quick="language"
+          >
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+              <path d="M2 12h20" />
+            </svg>
+            <span class="text-[10px] font-mono font-semibold px-1 rounded bg-[var(--color-hover)] text-[var(--color-text-primary)] border border-[var(--color-border)] leading-tight">
+              {localeBadge()}
+            </span>
+          </button>
+
+          <div class="h-3.5 w-px bg-[var(--color-border)] mx-1" />
 
           {/* Official website */}
           <button

@@ -15,9 +15,12 @@ import { setAutomaticUpdateChecks } from "../store/settings";
 import { setLocale } from "../i18n";
 import {
   checkForUpdates,
+  checkForUpdatesInPlace,
   downloadProgress,
   installPendingUpdate,
   isCheckingUpdate,
+  inPlaceCheckStatus,
+  isUpdateAvailable,
   isAutomaticCheckDue,
   resetUpdaterForTests,
   updateInfo,
@@ -103,5 +106,26 @@ describe("native updater", () => {
     await installPendingUpdate();
     expect(downloadProgress()).toBe(100);
     expect(mocks.relaunch).toHaveBeenCalledOnce();
+  });
+
+  it("checks updates in-place without opening a modal and highlights available updates", async () => {
+    mocks.check.mockResolvedValue({
+      currentVersion: "0.1.7",
+      version: "0.1.8",
+      date: "2026-09-02T00:00:00Z",
+      body: "v0.1.8 release",
+      downloadAndInstall: mocks.downloadAndInstall,
+    });
+
+    const promise = checkForUpdatesInPlace();
+    expect(isCheckingUpdate()).toBe(true);
+    expect(inPlaceCheckStatus()).toBe("checking");
+    expect(updateModalOpen()).toBe(false);
+
+    await promise;
+    expect(isCheckingUpdate()).toBe(false);
+    expect(inPlaceCheckStatus()).toBe("update_available");
+    expect(isUpdateAvailable()).toBe(true);
+    expect(updateModalOpen()).toBe(false);
   });
 });

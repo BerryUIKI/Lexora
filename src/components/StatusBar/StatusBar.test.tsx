@@ -49,4 +49,14 @@ describe("StatusBar", () => {
     expect(themeButton?.textContent?.trim()).toBe("");
     expect(themeButton?.getAttribute("aria-label")).toContain("Toggle Theme");
   });
+
+  it("renders the version indicator and allows checking for updates", () => {
+    container = document.createElement("div");
+    document.body.append(container);
+    dispose = render(() => <StatusBar />, container);
+
+    const versionButton = container.querySelector<HTMLButtonElement>('[data-status-section="version"]');
+    expect(versionButton).toBeTruthy();
+    expect(versionButton?.textContent).toContain("v0.1.7");
+  });
 });

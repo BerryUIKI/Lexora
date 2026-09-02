@@ -31,6 +31,9 @@ export interface TranslationDictionary {
     help: string;
     preferences: string;
     plugins: string;
+    pluginsQuick: string;
+    themesQuick: string;
+    languageQuick: string;
     language: string;
     languageSubtitle: string;
     autoLanguage: string;
@@ -191,6 +194,9 @@ export interface TranslationDictionary {
     encoding: string;
     format: string;
     toggleTheme: string;
+    checkingUpdates: string;
+    upToDate: string;
+    updateAvailable: string;
   };
   update: {
     checking: string;

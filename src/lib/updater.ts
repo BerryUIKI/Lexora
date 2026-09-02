@@ -26,13 +26,42 @@ export interface UpdateInfo {
   errorMessage?: string;
 }
 
+export type InPlaceCheckStatus =
+  | "idle"
+  | "checking"
+  | "up_to_date"
+  | "update_available"
+  | "error";
+
 const [updateModalOpen, setUpdateModalOpen] = createSignal(false);
 const [updateInfo, setUpdateInfo] = createSignal<UpdateInfo | null>(null);
 const [isCheckingUpdate, setIsCheckingUpdate] = createSignal(false);
 const [updatePhase, setUpdatePhase] = createSignal<UpdatePhase>("idle");
 const [downloadProgress, setDownloadProgress] = createSignal(0);
+const [appVersion, setAppVersion] = createSignal("0.1.7");
+const [inPlaceCheckStatus, setInPlaceCheckStatus] = createSignal<InPlaceCheckStatus>("idle");
+
+if (typeof window !== "undefined") {
+  try {
+    const verPromise = getVersion();
+    if (verPromise && typeof verPromise.then === "function") {
+      verPromise
+        .then((ver) => {
+          if (ver) setAppVersion(ver);
+        })
+        .catch(() => {
+          // Fallback remains default
+        });
+    }
+  } catch {
+    // Ignore in non-Tauri or test contexts
+  }
+}
 
 let pendingUpdate: Update | null = null;
+
+export const isUpdateAvailable = () =>
+  updateInfo()?.status === "update_available" || inPlaceCheckStatus() === "update_available";
 
 export {
   updateModalOpen,
@@ -41,6 +70,10 @@ export {
   isCheckingUpdate,
   updatePhase,
   downloadProgress,
+  appVersion,
+  setAppVersion,
+  inPlaceCheckStatus,
+  setInPlaceCheckStatus,
 };
 
 export function compareVersions(remoteTag: string, localVersion: string): number {
@@ -123,7 +156,10 @@ export async function checkForUpdates(manual = false): Promise<void> {
       publishedAt: update.date || "",
       isManualCheck: manual,
     });
-    setUpdateModalOpen(true);
+    setInPlaceCheckStatus("update_available");
+    if (manual) {
+      setUpdateModalOpen(true);
+    }
   } catch (error) {
     console.warn("Update check failed:", error);
     if (manual) {
@@ -190,10 +226,66 @@ export async function installPendingUpdate(): Promise<void> {
   }
 }
 
+/** In-place version check triggered by clicking the version number in the GUI. Does not open a modal window. */
+export async function checkForUpdatesInPlace(): Promise<void> {
+  if (isCheckingUpdate()) return;
+  setIsCheckingUpdate(true);
+  setInPlaceCheckStatus("checking");
+
+  try {
+    const update = await check({ timeout: 30_000 });
+    const currentVersion = update?.currentVersion || (await getVersion());
+    recordSuccessfulCheck();
+
+    if (!update) {
+      pendingUpdate = null;
+      setInPlaceCheckStatus("up_to_date");
+      setUpdateInfo({
+        status: "up_to_date",
+        currentVersion,
+        latestVersion: currentVersion,
+        releaseNotes: "",
+        publishedAt: "",
+        isManualCheck: false,
+      });
+      setTimeout(() => {
+        if (inPlaceCheckStatus() === "up_to_date") {
+          setInPlaceCheckStatus("idle");
+        }
+      }, 3500);
+      return;
+    }
+
+    pendingUpdate = update;
+    setInPlaceCheckStatus("update_available");
+    setUpdateInfo({
+      status: "update_available",
+      currentVersion: update.currentVersion,
+      latestVersion: update.version,
+      releaseNotes: t("update.localizedReleaseNotes", {
+        version: update.version,
+      }),
+      publishedAt: update.date || "",
+      isManualCheck: false,
+    });
+  } catch (error) {
+    console.warn("In-place update check failed:", error);
+    setInPlaceCheckStatus("error");
+    setTimeout(() => {
+      if (inPlaceCheckStatus() === "error") {
+        setInPlaceCheckStatus("idle");
+      }
+    }, 3500);
+  } finally {
+    setIsCheckingUpdate(false);
+  }
+}
+
 export function resetUpdaterForTests(): void {
   pendingUpdate = null;
   setUpdatePhase("idle");
   setDownloadProgress(0);
   setUpdateInfo(null);
   setUpdateModalOpen(false);
+  setInPlaceCheckStatus("idle");
 }
