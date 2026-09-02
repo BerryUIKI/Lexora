@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.8] - 2026-09-02
+
+### Added
+- **Unsaved Document Close Confirmation Flow**:
+  - Interactive close confirmation dialog (`CloseConfirmModal`) prompting when closing unsaved documents.
+  - Three-way action choice: **Save** (<kbd>Enter</kbd>), **Don't Save** (<kbd>Alt+D</kbd>), and **Cancel** (<kbd>Esc</kbd>).
+  - Intercepts tab close buttons, `File ➔ Close Tab` (<kbd>Ctrl+W</kbd>), window close buttons, and native OS window close requests (`onCloseRequested`).
+- **Title Bar Quick Access Actions**:
+  - Added dedicated quick action buttons on the title bar for Plugins Marketplace (<kbd>Ctrl+Shift+X</kbd>), Themes (<kbd>Ctrl+,</kbd>), and Language modal.
+- **Status Bar Version Indicator**:
+  - Interactive version badge placed at the far left corner of the bottom status bar (`[v0.1.8] | ...`).
+  - Supports in-place update check (with spinner and up-to-date checkmark) and highlight notification when updates are available.
+- **Tab Bar Interactions**:
+  - Double-clicking on empty tab bar space creates a new document (throttled to guarantee exactly one document per action).
+
+### Changed
+- **Fixed Settings Dialog Dimensions**:
+  - Locked Settings Modal container to a fixed height (`h-[620px] max-h-[85vh]`), preventing layout resizing when switching between Theme, Plugin, and Update tabs.
+- **Localization**:
+  - Added localized confirmation dialog strings and action titles across all 9 supported languages (`en`, `zh-CN`, `zh-TW`, `ja`, `ko`, `de`, `fr`, `es`, `ru`).
+
 ## [0.1.7] - 2026-09-02
 
 ### Added
