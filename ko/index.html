@@ -205,9 +205,9 @@
   <main>
     <!-- ═══════════ Hero ═══════════ -->
     <section class="bg-bg pt-[88px] pb-[72px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex flex-col items-center gap-[28px]">
-      <div class="flex items-center gap-[8px] px-[14px] py-[7px] rounded-full bg-bg-subtle border border-border text-[13px] text-ink-secondary">
+      <div data-version-tag class="flex items-center gap-[8px] px-[14px] py-[7px] rounded-full bg-bg-subtle border border-border text-[13px] text-ink-secondary">
         <span class="w-[6px] h-[6px] rounded-full bg-[#34C759]"></span>
-        ${LATEST_VERSION_TAG} 정식 출시 · 100% 무료 및 오픈 소스
+        v0.1.8 정식 출시 · 100% 무료 및 오픈 소스
       </div>
       <h1 class="font-display text-[52px] sm:text-[64px] font-bold leading-[1.1] tracking-[-1.5px] text-ink text-center max-[768px]:text-[38px]"><span class="block text-[20px] sm:text-[26px] font-semibold text-accent tracking-normal mb-2">Taleno — In-Place WYSIWYG</span>생각을 그대로, 아름다운 글이 되도록.</h1>
       <p class="max-w-[720px] text-center text-[18px] leading-[30px] text-ink-secondary">
@@ -451,7 +451,7 @@
         <div class="bg-bg border border-border rounded-[12px] p-[28px] flex flex-col gap-[14px]">
           <div class="flex items-center justify-between">
             <h3 class="text-[16px] font-semibold text-ink">최신 버전 변경 사항</h3>
-            <span data-version-tag class="px-[8px] py-[3px] rounded-full bg-bg-tag text-[12px] text-accent font-semibold">${LATEST_VERSION_TAG}</span>
+            <span data-version-tag class="px-[8px] py-[3px] rounded-full bg-bg-tag text-[12px] text-accent font-semibold">v0.1.8</span>
           </div>
           <div class="flex items-center gap-[10px]"><span class="w-[5px] h-[5px] rounded-full bg-accent"></span><span class="text-[14px] text-ink-secondary">저장되지 않은 문서 닫기 시 확인 알림창 추가 (실수 방지)</span></div>
           <div class="flex items-center gap-[10px]"><span class="w-[5px] h-[5px] rounded-full bg-accent"></span><span class="text-[14px] text-ink-secondary">제목 표시줄에 플러그인, 테마, 언어 빠른 설정 버튼 추가</span></div>
@@ -545,7 +545,7 @@
       function applyVersion(tag) {
         const clean = tag.replace(/^v/, '');
         document.querySelectorAll('[data-version-tag]').forEach(el => {
-          el.textContent = el.textContent.replace(/v?\d+\.\d+\.\d+/g, tag);
+          el.textContent = el.textContent.replace(/(?:\$\{LATEST_VERSION_TAG\}|v?\d+\.\d+\.\d+)/g, tag);
         });
       }
     })();

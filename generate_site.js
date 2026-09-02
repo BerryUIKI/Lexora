@@ -16,7 +16,7 @@ const languages = {
     nav: { features: 'Features', download: 'Download', architecture: 'Why Taleno', shortcuts: 'Shortcuts', faq: 'FAQ', github: 'GitHub' },
     selectLang: 'Select display language',
     hero: {
-      badge: '${LATEST_VERSION_TAG} Released · 100% Free & Open Source',
+      badge: 'v0.1.8 Released · 100% Free & Open Source',
       title: 'Markdown, beautifully simple.',
       subtitle: 'Type directly into the finished page with zero clunky split screens. Taleno opens in the blink of an eye, keeps all your files strictly private on your computer, and lets you focus entirely on your thoughts.',
       downloadBtn: 'Download Taleno',
@@ -107,7 +107,7 @@ const languages = {
       title: 'Everything you need to know',
       subtitle: 'Need help or want to suggest an idea? Join our friendly community on GitHub.',
       changelogTitle: 'Latest Version',
-      changelogVer: '${LATEST_VERSION_TAG}',
+      changelogVer: 'v0.1.8',
       changelogItems: [
         'Unsaved changes prompt to prevent accidental data loss',
         'Quick title bar access for plugins, themes, and languages',
@@ -140,7 +140,7 @@ const languages = {
     downloadPage: {
       title: 'Download Taleno — Clean In-Place Markdown Editor',
       metaDesc: 'Download Taleno for Windows, macOS, and Linux. Free, lightweight in-place WYSIWYG Markdown editor with instant launch and complete privacy.',
-      tag: '${LATEST_VERSION_TAG} · Latest Official Release',
+      tag: 'v0.1.8 · Latest Official Release',
       heading: 'Download Taleno',
       subheading: 'Direct links straight from GitHub Releases. Choose your platform below and start writing in seconds.',
       backHome: '← Back to Overview',
@@ -160,7 +160,7 @@ const languages = {
     nav: { features: '功能特色', download: '免费下载', architecture: '为什么轻快', shortcuts: '快捷键', faq: '常见问答', github: 'GitHub' },
     selectLang: '选择界面显示语言',
     hero: {
-      badge: '${LATEST_VERSION_TAG} 正式发布 · 100% 免费开源',
+      badge: 'v0.1.8 正式发布 · 100% 免费开源',
       title: '所见即所得，落笔即成文。',
       subtitle: '专为纯粹创作打造的原位 Markdown 编辑器。告别“左边写代码、右边看预览”的传统分屏，打字即时排版。秒速开启、不占内存、文档完全保存在本地磁盘，更有丰富主题与实用扩展，让记录成为一种享受。',
       downloadBtn: '免费下载 Taleno',
@@ -251,7 +251,7 @@ const languages = {
       title: '你关心的都在这里',
       subtitle: '有任何疑问或改进建议？欢迎随时前往 GitHub 与我们交流。',
       changelogTitle: '最新版本动态',
-      changelogVer: '${LATEST_VERSION_TAG}',
+      changelogVer: 'v0.1.8',
       changelogItems: [
         '新增未保存文档关闭确认弹窗，全方位防止误关丢字',
         '标题栏新增插件市场、主题换肤与多语言快捷入口',
@@ -284,7 +284,7 @@ const languages = {
     downloadPage: {
       title: '下载 Taleno — 极速沉浸原位 Markdown 编辑器',
       metaDesc: '免费下载适用于 Windows、macOS 和 Linux 的 Taleno 官方正式安装包。纯本地无上传、毫秒级秒开、原位所见即所得。',
-      tag: '${LATEST_VERSION_TAG} · 最新官方正式版',
+      tag: 'v0.1.8 · 最新官方正式版',
       heading: '免费下载 Taleno',
       subheading: '官方直连 GitHub Releases 镜像，点击即刻高速下载，几秒钟内开启顺畅写作。',
       backHome: '← 返回首页概览',
@@ -304,7 +304,7 @@ const languages = {
     nav: { features: '功能特色', download: '免費下載', architecture: '為何輕快', shortcuts: '快捷鍵', faq: '常見問答', github: 'GitHub' },
     selectLang: '選擇介面顯示語言',
     hero: {
-      badge: '${LATEST_VERSION_TAG} 正式發布 · 100% 免費開源',
+      badge: 'v0.1.8 正式發布 · 100% 免費開源',
       title: '所見即所得，落筆即成文。',
       subtitle: '專為純粹創作打造的原位 Markdown 編輯器。告別「左邊寫代碼、右邊看預覽」的傳統分屏，打字即時排版。秒速開啟、不佔記憶體、文件完全儲存於本地磁碟，更有豐富主題與實用擴充，讓記錄成為一種享受。',
       downloadBtn: '免費下載 Taleno',
@@ -395,7 +395,7 @@ const languages = {
       title: '你關心的都在這裡',
       subtitle: '有任何疑問或改進建議？歡迎隨時前往 GitHub 與我們交流。',
       changelogTitle: '最新版本動態',
-      changelogVer: '${LATEST_VERSION_TAG}',
+      changelogVer: 'v0.1.8',
       changelogItems: [
         '新增未儲存文件關閉確認視窗，全方位防止誤關丟字',
         '標題列新增外掛市場、主題換膚與多語言快捷入口',
@@ -428,7 +428,7 @@ const languages = {
     downloadPage: {
       title: '下載 Taleno — 極速沉浸原位 Markdown 編輯器',
       metaDesc: '免費下載適用於 Windows、macOS 和 Linux 的 Taleno 官方正式安裝套件。純本地無上傳、毫秒級秒開、原位所見即所得。',
-      tag: '${LATEST_VERSION_TAG} · 最新官方正式版',
+      tag: 'v0.1.8 · 最新官方正式版',
       heading: '免費下載 Taleno',
       subheading: '官方直連 GitHub Releases 鏡像，點擊即刻高速下載，幾秒鐘內開啟順暢寫作。',
       backHome: '← 返回首頁概覽',
@@ -448,7 +448,7 @@ const languages = {
     nav: { features: '機能と特徴', download: 'ダウンロード', architecture: '軽快さの秘密', shortcuts: 'ショートカット', faq: 'よくある質問', github: 'GitHub' },
     selectLang: '表示言語を選択',
     hero: {
-      badge: '${LATEST_VERSION_TAG} リリース · 100% 無料・オープンソース',
+      badge: 'v0.1.8 リリース · 100% 無料・オープンソース',
       title: '思考をそのまま、美しい文章に。',
       subtitle: '左右の2画面分割に別れを告げましょう。Taleno は入力と同時にその場で組版される、シンプルで軽快な Markdown エディタです。一瞬で起動し、すべての文書はローカルに安全に保存されます。',
       downloadBtn: 'Taleno をダウンロード',
@@ -539,7 +539,7 @@ const languages = {
       title: '疑問にお答えします',
       subtitle: 'ご質問や機能のリクエストは、お気軽に GitHub リポジトリまでお寄せください。',
       changelogTitle: '最新リリースの変更点',
-      changelogVer: '${LATEST_VERSION_TAG}',
+      changelogVer: 'v0.1.8',
       changelogItems: [
         '未保存ドキュメントを閉じる際の安全確認ダイアログを追加',
         'タイトルバーにプラグイン・テーマ・言語のクイックボタンを新設',
@@ -572,7 +572,7 @@ const languages = {
     downloadPage: {
       title: 'Taleno のダウンロード — 軽快なその場 Markdown エディタ',
       metaDesc: 'Windows、macOS、Linux 向けの Taleno 公式インストーラーをダウンロード。完全ローカル、瞬時起動、その場 WYSIWYG。',
-      tag: '${LATEST_VERSION_TAG} · 最新公式リリース',
+      tag: 'v0.1.8 · 最新公式リリース',
       heading: 'Taleno をダウンロード',
       subheading: 'GitHub Releases の公式直接リンクです。プラットフォームを選択して、快適な執筆を始めましょう。',
       backHome: '← ホームへ戻る',
@@ -592,7 +592,7 @@ const languages = {
     nav: { features: '주요 기능', download: '다운로드', architecture: '가벼운 이유', shortcuts: '단축키', faq: '자주 묻는 질문', github: 'GitHub' },
     selectLang: '표시 언어 선택',
     hero: {
-      badge: '${LATEST_VERSION_TAG} 정식 출시 · 100% 무료 및 오픈 소스',
+      badge: 'v0.1.8 정식 출시 · 100% 무료 및 오픈 소스',
       title: '생각을 그대로, 아름다운 글이 되도록.',
       subtitle: '번거로운 좌우 2분할 화면 없이 입력과 동시에 그 자리에서 깔끔하게 정돈되는 미니멀 마크다운 에디터입니다. 눈 깜짝할 사이에 켜지고, 모든 문서는 컴퓨터에 안전하게 보관됩니다.',
       downloadBtn: 'Taleno 무료 다운로드',
@@ -683,7 +683,7 @@ const languages = {
       title: '궁금한 점을 확인해 보세요',
       subtitle: '문의 사항이나 새로운 기능 제안은 GitHub 저장소에 언제든 남겨주세요.',
       changelogTitle: '최신 버전 변경 사항',
-      changelogVer: '${LATEST_VERSION_TAG}',
+      changelogVer: 'v0.1.8',
       changelogItems: [
         '저장되지 않은 문서 닫기 시 확인 알림창 추가 (실수 방지)',
         '제목 표시줄에 플러그인, 테마, 언어 빠른 설정 버튼 추가',
@@ -716,7 +716,7 @@ const languages = {
     downloadPage: {
       title: 'Taleno 다운로드 — 가볍고 쾌적한 마크다운 에디터',
       metaDesc: 'Windows, macOS, Linux용 Taleno 공식 버전을 다운로드하세요. 완전 로컬 저장, 순식간에 실행, 분할 없는 인플레이스 WYSIWYG.',
-      tag: '${LATEST_VERSION_TAG} · 최신 공식 정식 버전',
+      tag: 'v0.1.8 · 최신 공식 정식 버전',
       heading: 'Taleno 무료 다운로드',
       subheading: 'GitHub Releases 공식 직접 링크입니다. 플랫폼을 선택하여 가볍고 편안한 글쓰기를 시작하세요.',
       backHome: '← 메인 화면으로 돌아가기',
@@ -736,7 +736,7 @@ const languages = {
     nav: { features: 'Funktionen', download: 'Download', architecture: 'Warum so schnell', shortcuts: 'Tastenkombinationen', faq: 'FAQ', github: 'GitHub' },
     selectLang: 'Anzeigesprache wählen',
     hero: {
-      badge: '${LATEST_VERSION_TAG} veröffentlicht · 100% Kostenlos & Open Source',
+      badge: 'v0.1.8 veröffentlicht · 100% Kostenlos & Open Source',
       title: 'Markdown, wunderbar einfach.',
       subtitle: 'Schreibe direkt im formatierten Dokument – ganz ohne unübersichtliche geteilte Fenster. Taleno öffnet blitzschnell, speichert alle Notizen sicher auf deinem Computer und lässt dich ungestört schreiben.',
       downloadBtn: 'Taleno herunterladen',
@@ -827,7 +827,7 @@ const languages = {
       title: 'Häufig gestellte Fragen',
       subtitle: 'Hast du Fragen oder Vorschläge? Besuche unser Repository auf GitHub.',
       changelogTitle: 'Neuerungen der Version',
-      changelogVer: '${LATEST_VERSION_TAG}',
+      changelogVer: 'v0.1.8',
       changelogItems: [
         'Sicherheitsabfrage beim Schließen ungespeicherter Dokumente',
         'Schnellzugriff in der Titelleiste für Plugins, Themes und Sprachen',
@@ -860,7 +860,7 @@ const languages = {
     downloadPage: {
       title: 'Taleno herunterladen — Schneller In-Place Markdown-Editor',
       metaDesc: 'Lade Taleno für Windows, macOS und Linux herunter. Schnell, unkompliziert, komplett offline und ohne geteilte Fenster.',
-      tag: '${LATEST_VERSION_TAG} · Neueste offizielle Version',
+      tag: 'v0.1.8 · Neueste offizielle Version',
       heading: 'Taleno kostenlos herunterladen',
       subheading: 'Direkte Download-Links von GitHub Releases. Wähle dein System und fange in wenigen Augenblicken an zu schreiben.',
       backHome: '← Zurück zur Übersicht',
@@ -880,7 +880,7 @@ const languages = {
     nav: { features: 'Fonctionnalités', download: 'Télécharger', architecture: 'Performances', shortcuts: 'Raccourcis', faq: 'FAQ', github: 'GitHub' },
     selectLang: 'Choisir la langue',
     hero: {
-      badge: '${LATEST_VERSION_TAG} disponible · 100% Gratuit et Open Source',
+      badge: 'v0.1.8 disponible · 100% Gratuit et Open Source',
       title: 'Le Markdown, en toute simplicité.',
       subtitle: 'Écrivez directement dans votre document mis en forme, sans écran séparé. Taleno s’ouvre en un éclair, conserve tous vos écrits en sécurité sur votre ordinateur et vous offre un espace d’écriture fluide et apaisant.',
       downloadBtn: 'Télécharger Taleno',
@@ -971,7 +971,7 @@ const languages = {
       title: 'Tout ce que vous voulez savoir',
       subtitle: 'Une question ou une suggestion ? Venez échanger avec nous sur GitHub.',
       changelogTitle: 'Nouveautés de la version',
-      changelogVer: '${LATEST_VERSION_TAG}',
+      changelogVer: 'v0.1.8',
       changelogItems: [
         'Alerte de confirmation à la fermeture de documents non enregistrés',
         'Boutons d’accès direct aux extensions, thèmes et langues en barre de titre',
@@ -1004,7 +1004,7 @@ const languages = {
     downloadPage: {
       title: 'Télécharger Taleno — Éditeur Markdown Rapide et Épuré',
       metaDesc: 'Téléchargez Taleno pour Windows, macOS et Linux. Léger, sécurisé, 100% hors ligne et sans écran séparé.',
-      tag: '${LATEST_VERSION_TAG} · Dernière version officielle',
+      tag: 'v0.1.8 · Dernière version officielle',
       heading: 'Télécharger Taleno',
       subheading: 'Liens directs depuis GitHub Releases. Choisissez votre plateforme et commencez à écrire en quelques secondes.',
       backHome: '← Retour à l’accueil',
@@ -1024,7 +1024,7 @@ const languages = {
     nav: { features: 'Características', download: 'Descargar', architecture: 'Rendimiento', shortcuts: 'Atajos', faq: 'Preguntas', github: 'GitHub' },
     selectLang: 'Seleccionar idioma',
     hero: {
-      badge: '${LATEST_VERSION_TAG} disponible · 100% Libre y Código Abierto',
+      badge: 'v0.1.8 disponible · 100% Libre y Código Abierto',
       title: 'Markdown, natural y sencillo.',
       subtitle: 'Escribe directamente sobre el texto maquetado sin ventanas divididas. Taleno se abre al instante, mantiene todas tus notas seguras en tu ordenador y te ofrece un espacio despejado para pensar y crear.',
       downloadBtn: 'Descargar Taleno',
@@ -1115,7 +1115,7 @@ const languages = {
       title: 'Respuestas a tus dudas',
       subtitle: '¿Tienes preguntas o sugerencias? Te esperamos en GitHub para conversar.',
       changelogTitle: 'Novedades de la versión',
-      changelogVer: '${LATEST_VERSION_TAG}',
+      changelogVer: 'v0.1.8',
       changelogItems: [
         'Aviso de confirmación al cerrar documentos sin guardar',
         'Botones de acceso rápido en la barra de título para plugins, temas e idiomas',
@@ -1148,7 +1148,7 @@ const languages = {
     downloadPage: {
       title: 'Descargar Taleno — Editor Markdown Rápido e In-Place',
       metaDesc: 'Descarga Taleno para Windows, macOS y Linux. Ligero, privado, sin ventanas divididas y listo en segundos.',
-      tag: '${LATEST_VERSION_TAG} · Última versión oficial',
+      tag: 'v0.1.8 · Última versión oficial',
       heading: 'Descargar Taleno',
       subheading: 'Descarga directa desde GitHub Releases. Selecciona tu sistema operativo y empieza a redactar en instantes.',
       backHome: '← Volver al inicio',
@@ -1168,7 +1168,7 @@ const languages = {
     nav: { features: 'Возможности', download: 'Скачать', architecture: 'Скорость', shortcuts: 'Горячие клавиши', faq: 'Вопросы', github: 'GitHub' },
     selectLang: 'Выбрать язык',
     hero: {
-      badge: '${LATEST_VERSION_TAG} релиз · 100% Бесплатно и Open Source',
+      badge: 'v0.1.8 релиз · 100% Бесплатно и Open Source',
       title: 'Markdown, легко и естественно.',
       subtitle: 'Пишите сразу в красиво оформленном тексте без громоздких раздельных окон. Taleno открывается за доли секунды, надежно хранит все файлы на вашем компьютере и помогает сосредоточиться на творчестве.',
       downloadBtn: 'Скачать Taleno',
@@ -1259,7 +1259,7 @@ const languages = {
       title: 'Часто задаваемые вопросы',
       subtitle: 'Есть вопросы или предложения? Ждем вас в нашем сообществе на GitHub.',
       changelogTitle: 'Что нового в этой версии',
-      changelogVer: '${LATEST_VERSION_TAG}',
+      changelogVer: 'v0.1.8',
       changelogItems: [
         'Диалог подтверждения при закрытии несохраненных заметок',
         'Кнопки быстрого доступа к плагинам, темам и языкам в заголовке',
@@ -1292,7 +1292,7 @@ const languages = {
     downloadPage: {
       title: 'Скачать Taleno — Быстрый и удобный Markdown-редактор',
       metaDesc: 'Скачайте Taleno для Windows, macOS и Linux. Легковесный, без разделения экрана, 100% офлайн и с мгновенным стартом.',
-      tag: '${LATEST_VERSION_TAG} · Последний официальный релиз',
+      tag: 'v0.1.8 · Последний официальный релиз',
       heading: 'Скачать Taleno',
       subheading: 'Прямые ссылки из официальных релизов GitHub. Выберите вашу платформу и начните писать с комфортом.',
       backHome: '← Вернуться на главную',
@@ -1606,7 +1606,7 @@ ${langOptionsHtml}
   <main>
     <!-- ═══════════ Hero ═══════════ -->
     <section class="bg-bg pt-[88px] pb-[72px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex flex-col items-center gap-[28px]">
-      <div class="flex items-center gap-[8px] px-[14px] py-[7px] rounded-full bg-bg-subtle border border-border text-[13px] text-ink-secondary">
+      <div data-version-tag class="flex items-center gap-[8px] px-[14px] py-[7px] rounded-full bg-bg-subtle border border-border text-[13px] text-ink-secondary">
         <span class="w-[6px] h-[6px] rounded-full bg-[#34C759]"></span>
         ${lang.hero.badge}
       </div>
@@ -1992,7 +1992,7 @@ ${langOptionsHtml}
       function applyVersion(tag) {
         const clean = tag.replace(/^v/, '');
         document.querySelectorAll('[data-version-tag]').forEach(el => {
-          el.textContent = el.textContent.replace(/v?\\d+\\.\\d+\\.\\d+/g, tag);
+          el.textContent = el.textContent.replace(/(?:\\$\\{LATEST_VERSION_TAG\\}|v?\\d+\\.\\d+\\.\\d+)/g, tag);
         });
       }
     })();
@@ -2128,7 +2128,7 @@ ${langOptionsHtml}
 
   <main>
     <section class="bg-bg pt-[72px] pb-[64px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex flex-col items-center gap-[20px]">
-      <div class="flex items-center gap-[8px] px-[14px] py-[7px] rounded-full bg-bg-subtle border border-border text-[13px] text-ink-secondary">
+      <div data-version-tag class="flex items-center gap-[8px] px-[14px] py-[7px] rounded-full bg-bg-subtle border border-border text-[13px] text-ink-secondary">
         <span class="w-[6px] h-[6px] rounded-full bg-[#34C759]"></span>
         ${lang.downloadPage.tag}
       </div>
@@ -2267,7 +2267,7 @@ ${langOptionsHtml}
 
       function applyVersion(tag) {
         document.querySelectorAll('[data-version-tag]').forEach(el => {
-          el.textContent = el.textContent.replace(/v?\\d+\\.\\d+\\.\\d+/g, tag);
+          el.textContent = el.textContent.replace(/(?:\\$\\{LATEST_VERSION_TAG\\}|v?\\d+\\.\\d+\\.\\d+)/g, tag);
         });
       }
     })();

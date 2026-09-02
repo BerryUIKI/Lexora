@@ -140,9 +140,9 @@
 
   <main>
     <section class="bg-bg pt-[72px] pb-[64px] px-[140px] max-[1200px]:px-10 max-[768px]:px-6 flex flex-col items-center gap-[20px]">
-      <div class="flex items-center gap-[8px] px-[14px] py-[7px] rounded-full bg-bg-subtle border border-border text-[13px] text-ink-secondary">
+      <div data-version-tag class="flex items-center gap-[8px] px-[14px] py-[7px] rounded-full bg-bg-subtle border border-border text-[13px] text-ink-secondary">
         <span class="w-[6px] h-[6px] rounded-full bg-[#34C759]"></span>
-        ${LATEST_VERSION_TAG} · 最新公式リリース
+        v0.1.8 · 最新公式リリース
       </div>
       <h1 class="font-display text-[48px] font-bold text-ink text-center max-[768px]:text-[32px]">Taleno をダウンロード</h1>
       <p class="max-w-[640px] text-center text-[16px] leading-[26px] text-ink-secondary">
@@ -282,7 +282,7 @@
 
       function applyVersion(tag) {
         document.querySelectorAll('[data-version-tag]').forEach(el => {
-          el.textContent = el.textContent.replace(/v?\d+\.\d+\.\d+/g, tag);
+          el.textContent = el.textContent.replace(/(?:\$\{LATEST_VERSION_TAG\}|v?\d+\.\d+\.\d+)/g, tag);
         });
       }
     })();
