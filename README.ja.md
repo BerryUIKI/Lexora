@@ -97,6 +97,7 @@ OS とパッケージを選択してください：
 | 📊 **Mermaid & 数式** | フローチャート、シーケンス図、クラス図、KaTeX 数式レンダリング | ✅ 完了 |
 | 🔍 **Ripgrep 全文検索** | ワークスペース全体の高速全文検索 (<kbd>Ctrl+Shift+F</kbd>) とドキュメント内検索・置換 (<kbd>Ctrl+F</kbd> / <kbd>Ctrl+H</kbd>) | ✅ 完了 |
 | 📤 **単体 HTML エクスポート** | 自己完結のオフライン HTML にワンクリックエクスポート (<kbd>Ctrl+E</kbd>) | ✅ 完了 |
+| 🧩 **プラグインシステムと拡張性** | モジュール式プラグインエンジン、`%APPDATA%` ディレクトリ検出、ホットリロード、JS サンドボックス実行環境と設定サブメニュー (<kbd>Ctrl+Shift+X</kbd>) | ✅ 完了 |
 
 *今後の計画は[ロードマップ](docs/ROADMAP.md)をご覧ください。*
 
@@ -146,6 +147,8 @@ Lexora はドキュメントを **ディスク上の純粋な Markdown** とし�
 | | <kbd>F11</kbd> / <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Z</kbd> | 禅モード (全画面) |
 | | <kbd>Ctrl</kbd> + <kbd>+</kbd> / <kbd>-</kbd> | フォントサイズ拡大 / 縮小 |
 | | <kbd>Ctrl</kbd> + <kbd>0</kbd> (テンキー) | フォントサイズをリセット (16px) |
+| **設定とプラグイン** | <kbd>Ctrl</kbd> + <kbd>,</kbd> | 設定・環境設定を開く |
+| | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd> | プラグイン管理パネルを開く |
 
 *(macOS では <kbd>Ctrl</kbd> を <kbd>Cmd</kbd> に置き換えてください)*
 

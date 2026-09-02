@@ -2,4 +2,5 @@ pub mod export;
 pub mod fs_service;
 pub mod highlighter;
 pub mod parser;
+pub mod plugin_service;
 pub mod watcher;

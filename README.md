@@ -97,6 +97,7 @@ Built on **Tauri 2** and **Rust** with a fine-grained reactive **SolidJS** front
 | 📊 **Mermaid Diagrams & Math** | Rich interactive flowchart, sequence, class diagrams, and LaTeX math formatting | ✅ Complete |
 | 🔍 **Full-Text Ripgrep Search** | Instant whole-workspace full-text search (<kbd>Ctrl+Shift+F</kbd>) and in-document Find & Replace (<kbd>Ctrl+F</kbd> / <kbd>Ctrl+H</kbd>) | ✅ Complete |
 | 📤 **Standalone HTML Export** | Export any document to self-contained, offline-styled HTML (<kbd>Ctrl+E</kbd>) | ✅ Complete |
+| 🧩 **Plugin System & Extensibility** | Modular extension engine with `%APPDATA%` directory scanning, hot-reload, JS sandbox runtime, and Preferences sub-menu (<kbd>Ctrl+Shift+X</kbd>) | ✅ Complete |
 
 *See the [Roadmap](docs/ROADMAP.md) for what's planned next.*
 
@@ -146,6 +147,8 @@ Lexora keeps your documents as **pure Markdown on disk** — portable, diffable,
 | | <kbd>F11</kbd> / <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Z</kbd> | Toggle Zen Mode (Full-Screen) |
 | | <kbd>Ctrl</kbd> + <kbd>+</kbd> / <kbd>-</kbd> | Zoom In / Zoom Out Font Size |
 | | <kbd>Ctrl</kbd> + <kbd>0</kbd> (NumPad) | Reset Font Size (16px) |
+| **Preferences & Plugins** | <kbd>Ctrl</kbd> + <kbd>,</kbd> | Open Preferences / Settings |
+| | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd> | Open Plugins Management Tab |
 
 *(On macOS, replace <kbd>Ctrl</kbd> with <kbd>Cmd</kbd>)*
 
@@ -226,6 +229,7 @@ pnpm tauri build
 | [ROADMAP.md](docs/ROADMAP.md) | Phased feature roadmap & MoSCoW |
 | [MILESTONES.md](docs/MILESTONES.md) | Milestones & schedule |
 | [NEXT_STEPS.md](docs/NEXT_STEPS.md) | Phase 2 implementation blueprint |
+| [PLUGIN_DEVELOPMENT.md](docs/PLUGIN_DEVELOPMENT.md) | Plugin developer guide, APIs & standards |
 
 ---
 

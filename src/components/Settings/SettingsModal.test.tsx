@@ -9,6 +9,7 @@ import {
   setMarkdownTheme,
   setTheme,
 } from "../../store/settings";
+import { plugins, setPluginFilterQuery, pluginSubTab, setPluginSubTab } from "../../store/plugins";
 import { SettingsModal } from "./SettingsModal";
 
 describe("SettingsModal", () => {
@@ -20,6 +21,8 @@ describe("SettingsModal", () => {
     dispose = undefined;
     container?.remove();
     container = undefined;
+    setPluginFilterQuery("");
+    setPluginSubTab("installed");
   });
 
   it("selects themes and keeps element shadows opt-in", () => {
@@ -73,4 +76,91 @@ describe("SettingsModal", () => {
     updateSwitch?.click();
     expect(automaticUpdateChecks()).toBe(false);
   });
+
+  it("renders plugins tab with initialTab prop and toggles plugin state", () => {
+    container = document.createElement("div");
+    document.body.append(container);
+
+    dispose = render(
+      () => (
+        <SettingsModal
+          isOpen={true}
+          initialTab="plugins"
+          onClose={() => undefined}
+        />
+      ),
+      container
+    );
+
+    // Verify plugins tab content is visible
+    expect(container.textContent).toContain("Word Count Pro");
+    expect(container.textContent).toContain("KaTeX Math Macros");
+
+    // Find the toggle button for Word Count Pro
+    const switches = Array.from(
+      container.querySelectorAll<HTMLButtonElement>('[role="switch"]')
+    );
+    expect(switches.length).toBeGreaterThan(0);
+
+    const firstSwitch = switches[0];
+    const initialChecked = firstSwitch.getAttribute("aria-checked") === "true";
+
+    firstSwitch.click();
+
+    const updatedPlugin = plugins()[0];
+    expect(updatedPlugin.enabled).toBe(!initialChecked);
+  });
+
+  it("filters plugins via search input", () => {
+    container = document.createElement("div");
+    document.body.append(container);
+
+    dispose = render(
+      () => (
+        <SettingsModal
+          isOpen={true}
+          initialTab="plugins"
+          onClose={() => undefined}
+        />
+      ),
+      container
+    );
+
+    const searchInput = container.querySelector<HTMLInputElement>("input[type='text']");
+    expect(searchInput).toBeTruthy();
+
+    // Type query matching only KaTeX
+    searchInput!.value = "KaTeX";
+    searchInput!.dispatchEvent(new Event("input", { bubbles: true }));
+
+    expect(container.textContent).toContain("KaTeX Math Macros");
+    expect(container.textContent).not.toContain("Word Count Pro");
+  });
+
+  it("switches to marketplace tab and renders remote catalog", () => {
+    container = document.createElement("div");
+    document.body.append(container);
+
+    dispose = render(
+      () => (
+        <SettingsModal
+          isOpen={true}
+          initialTab="plugins"
+          onClose={() => undefined}
+        />
+      ),
+      container
+    );
+
+    const buttons = Array.from(container.querySelectorAll("button"));
+    const marketplaceTabBtn = buttons.find((btn) =>
+      btn.textContent?.includes("Marketplace")
+    );
+    expect(marketplaceTabBtn).toBeTruthy();
+    marketplaceTabBtn?.click();
+
+    // Verify sub-tab state switched
+    expect(pluginSubTab()).toBe("marketplace");
+  });
 });
+

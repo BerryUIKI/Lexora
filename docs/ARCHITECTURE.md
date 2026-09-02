@@ -82,6 +82,7 @@ flowchart TB
             HighlightService["Highlighter Service\n(syntect Engine)"]
             SearchService["Search & Index Service\n(Workspace Scanning)"]
             ExportService["Export Service\n(HTML / PDF Generation)"]
+            PluginService["Plugin Service\n(Directory Scanning & Sandbox)"]
         end
 
         CmdRouter --> Services
@@ -216,18 +217,24 @@ src-tauri/
     │   ├── editor.rs         # Markdown processing and parsing commands
     │   ├── file.rs           # File I/O, open, save, exists commands
     │   ├── highlight.rs      # Syntect syntax highlighting commands
+    │   ├── plugin.rs         # Plugin listing, source reading, directory opener
     │   └── workspace.rs      # Directory traversal and file tree commands
     ├── models/               # Domain data structures (Serde-enabled)
     │   ├── mod.rs
+    │   ├── document.rs       # FileEntry, DocumentMeta
     │   ├── file_item.rs      # File tree node representation
     │   ├── payload.rs        # IPC response/request wrappers
+    │   ├── plugin.rs         # PluginManifest and metadata models
     │   └── settings.rs       # Editor and app settings schema
     └── services/             # Core business logic
         ├── mod.rs
         ├── atomic_writer.rs  # Safe file write implementation
         ├── exporter.rs       # Markdown to HTML/PDF transformation
+        ├── fs_service.rs     # Safe file system operations
         ├── highlighter.rs    # Syntect theme and syntax manager
-        └── parser.rs         # pulldown-cmark wrapper
+        ├── parser.rs         # pulldown-cmark wrapper
+        ├── plugin_service.rs # Plugin scanner, starter templates & explorer opener
+        └── watcher.rs        # Background file change watcher
 ```
 
 ### 5.2. Frontend (`src/`)
@@ -255,6 +262,8 @@ src/
 │       ├── Dialog.tsx
 │       └── Tooltip.tsx
 ├── lib/                      # Utilities and backend bridges
+│   ├── plugins/
+│   │   └── runtime.ts        # Plugin execution sandbox & Context API
 │   ├── tauri/
 │   │   ├── commands.ts       # Typed Tauri invoke wrappers
 │   │   ├── events.ts         # Typed Tauri event listeners
@@ -267,6 +276,7 @@ src/
 │       └── shortcuts.ts      # Keyboard shortcut manager
 ├── store/                    # SolidJS reactive stores & signals
 │   ├── editorStore.ts        # Active file, dirty flag, cursor position
+│   ├── plugins.ts            # Reactive plugin list and toggle signals
 │   ├── workspaceStore.ts     # Workspace directory, expanded nodes
 │   └── settingsStore.ts      # Theme, font size, auto-save settings
 ├── styles/                   # Stylesheets
@@ -276,6 +286,7 @@ src/
 └── types/                    # Shared TypeScript interfaces
     ├── file.ts               # FileItem, FilePayload, DirectoryTree
     ├── ipc.ts                # Command names and payload types
+    ├── plugin.ts             # PluginManifest and SettingsTabId types
     └── settings.ts           # User preference types
 ```
 
@@ -297,6 +308,9 @@ Used for explicit user-initiated actions that require a direct response.
 | `parse_markdown` | `{ content: string }` | `string` | Parses Markdown to sanitized HTML via `pulldown-cmark`. |
 | `get_app_settings` | `None` | `AppSettings` | Retrieves current application configuration. |
 | `save_app_settings` | `{ settings: AppSettings }` | `void` | Persists updated application configuration. |
+| `list_plugins` | `None` | `PluginManifest[]` | Scans user plugins directory and returns manifests. |
+| `open_plugins_folder` | `None` | `void` | Launches native OS file manager at plugins directory. |
+| `read_plugin_source` | `{ pluginId: string }` | `string` | Reads JavaScript source code of a specified plugin. |
 
 ### 6.2. Events (Asynchronous Notifications)
 Used for broadcasting state changes or background system events.
@@ -334,3 +348,64 @@ Lexora adheres to strict **least-privilege** security practices enabled by Tauri
 | **Keystroke Latency** | `< 16ms` (60fps) | Time from keyboard event to ProseMirror DOM flush. |
 | **File Open (1MB Markdown)** | `< 200ms` | Read from disk, IPC transfer, AST generation, and DOM paint. |
 | **Memory Footprint (Idle)** | `< 90MB` | Total working set across WebView and Rust backend processes. |
+
+---
+
+## 9. Plugin & Extensibility Architecture
+
+Lexora provides a local-first, sandboxed plugin system enabling users and developers to extend editor capabilities, register custom commands, and add workspace tooling without altering core binaries.
+
+### 9.1 Storage & Discovery
+Plugins are stored in the platform-standard application data directory:
+- **Windows**: `%APPDATA%/Lexora/plugins/<plugin-id>/`
+- **macOS**: `~/Library/Application Support/Lexora/plugins/<plugin-id>/`
+- **Linux**: `~/.config/lexora/plugins/<plugin-id>/`
+
+On startup, the Rust backend `plugin_service` verifies this directory exists and automatically writes a documented starter plugin (`sample-timestamp`) if empty.
+
+### 9.2 Plugin Manifest (`manifest.json`)
+```json
+{
+  "id": "my-custom-plugin",
+  "name": "My Custom Plugin",
+  "version": "1.0.0",
+  "description": "Demonstrates custom command registration and editor interaction.",
+  "author": "Author Name",
+  "enabled": true,
+  "main": "main.js",
+  "tags": ["sample", "utility"],
+  "permissions": ["editor:write"]
+}
+```
+
+### 9.3 Runtime Sandbox & Context API (`LexoraPluginContext`)
+Plugins export an `onload(ctx)` and optional `onunload()` lifecycle hook:
+
+```javascript
+export default {
+  onload(ctx) {
+    ctx.commands.registerCommand({
+      id: "insert-greeting",
+      title: "Insert Greeting",
+      run() {
+        ctx.editor.insertText("\n> Hello from custom plugin!\n");
+      }
+    });
+  },
+  onunload() {
+    // Cleanup hooks
+  }
+};
+```
+
+All commands, UI elements, and event listeners registered through `ctx` are tracked in a disposal bag and cleaned up when the plugin is toggled off or reloaded.
+
+### 9.4 Entry Points & Management UI
+- **Top Menu Bar**: `File ➔ Preferences ➔ Plugins...` (<kbd>Ctrl+Shift+X</kbd> / <kbd>Cmd+Shift+X</kbd>).
+- **Settings Modal**: Dedicated `Plugins` tab with real-time text filter, "Open Plugins Folder" button, "Reload Plugins" button, and on/off switches.
+
+### 9.5 Developer Standards & Registry
+- For comprehensive plugin developer instructions, see [Plugin Development Handbook](PLUGIN_DEVELOPMENT.md).
+- Official plugin registry and community submission hub: [BerryUIKI/Lexora-Plugins](https://github.com/BerryUIKI/Lexora-Plugins).
+
+

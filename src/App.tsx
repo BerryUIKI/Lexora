@@ -15,6 +15,8 @@ import { StatusBar } from "./components/StatusBar/StatusBar";
 import { WelcomeHub } from "./components/Home/WelcomeHub";
 import { UpdateModal } from "./components/Updater/UpdateModal";
 import { SettingsModal } from "./components/Settings/SettingsModal";
+import type { SettingsTabId } from "./types/plugin";
+import { syncPlugins } from "./store/plugins";
 import { scheduleAutomaticUpdateCheck } from "./lib/updater";
 import {
   currentDocument,
@@ -57,6 +59,7 @@ const App: Component = () => {
   const [findReplaceOpen, setFindReplaceOpen] = createSignal(false);
   const [searchModalOpen, setSearchModalOpen] = createSignal(false);
   const [settingsOpen, setSettingsOpen] = createSignal(false);
+  const [settingsTab, setSettingsTab] = createSignal<SettingsTabId>("theme");
   const [homeVisible, setHomeVisible] = createSignal(false);
   const [dragHoverTarget, setDragHoverTarget] = createSignal<
     "window" | "tabbar" | "editor" | null
@@ -215,6 +218,7 @@ const App: Component = () => {
     }
 
     cancelAutomaticUpdateCheck = scheduleAutomaticUpdateCheck();
+    syncPlugins().catch((err) => console.warn("Plugin sync error:", err));
   });
 
   // Set up auto-save interval (every 30 seconds for dirty files with path)
@@ -379,10 +383,21 @@ const App: Component = () => {
     } else if (isCmd && (e.key === "f" || e.key === "h")) {
       e.preventDefault();
       setFindReplaceOpen((prev) => !prev);
+    } else if (isCmd && e.shiftKey && (e.key === "X" || e.key === "x")) {
+      e.preventDefault();
+      handleOpenSettings("plugins");
+    } else if (isCmd && e.key === ",") {
+      e.preventDefault();
+      handleOpenSettings("theme");
     } else if (isCmd && e.key === "/") {
       e.preventDefault();
       cycleDisplayMode();
     }
+  };
+
+  const handleOpenSettings = (tab: SettingsTabId = "theme") => {
+    setSettingsTab(tab);
+    setSettingsOpen(true);
   };
 
   onMount(() => {
@@ -417,7 +432,8 @@ const App: Component = () => {
           onOpenQuickSwitcher={() => setQuickSwitcherOpen(true)}
           onOpenSearchModal={() => setSearchModalOpen(true)}
           onOpenFindReplace={() => setFindReplaceOpen(true)}
-          onOpenThemeSettings={() => setSettingsOpen(true)}
+          onOpenThemeSettings={() => handleOpenSettings("theme")}
+          onOpenSettings={handleOpenSettings}
           onOpenRecent={loadFile}
         />
       </Show>
@@ -457,6 +473,7 @@ const App: Component = () => {
 
       <SettingsModal
         isOpen={settingsOpen()}
+        initialTab={settingsTab()}
         onClose={() => setSettingsOpen(false)}
       />
 
