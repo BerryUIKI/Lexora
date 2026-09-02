@@ -1,6 +1,8 @@
 import { displayMode } from "../store/editor";
 
 export type FormatAction =
+  | "undo"
+  | "redo"
   | "bold"
   | "italic"
   | "strikethrough"

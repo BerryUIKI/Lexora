@@ -3,7 +3,7 @@ import { open, save } from "@tauri-apps/plugin-dialog";
 import { getCurrentWebview } from "@tauri-apps/api/webview";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { MenuBar } from "./components/MenuBar/MenuBar";
-import { MobileHeader } from "./components/Header/MobileHeader";
+import { MobileShell } from "./components/Mobile/MobileShell";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { TabBar } from "./components/Tabs/TabBar";
 import { QuickSwitcher } from "./components/QuickSwitcher/QuickSwitcher";
@@ -547,85 +547,163 @@ const App: Component = () => {
   const hasDocument = () =>
     doc().path !== null || doc().content.length > 0 || openTabs().length > 0;
 
+  // Shared Viewport Content (WelcomeHub or Tri-State Reading/Writing/Code View)
+  const renderViewport = () => (
+    <Show
+      when={hasDocument() && !homeVisible()}
+      fallback={
+        <WelcomeHub
+          onNewDocument={handleNewDocument}
+          onOpenFile={handleOpenFile}
+          onOpenRecent={loadFile}
+        />
+      }
+    >
+      <Show when={displayMode() === "reading"}>
+        <MarkdownView
+          content={doc().content}
+          renderedContent={doc().renderedContent}
+          html={doc().html}
+          externallyModified={doc().externallyModified}
+          onReload={reloadCurrentFile}
+          onRendered={(sourceContent, result) => {
+            updateDocumentRendering(sourceContent, result);
+            syncCurrentDocumentToTab();
+          }}
+        />
+      </Show>
+
+      <Show when={displayMode() === "writing"}>
+        <Editor />
+      </Show>
+
+      <Show when={displayMode() === "code"}>
+        <CodeView />
+      </Show>
+    </Show>
+  );
+
   return (
     <div
       class={`flex flex-col h-screen relative ${zenMode() ? "zen-mode" : ""} ${focusMode() ? "focus-mode" : ""}`}
       style={{ background: "var(--color-bg-primary)", color: "var(--color-text-primary)" }}
     >
-      {/* Top VS Code-Style Menu Bar (Desktop) or Mobile Header (Mobile/iOS) */}
-      <Show when={!zenMode()}>
-        <Show
-          when={isMobileViewport()}
-          fallback={
-            <MenuBar
-              homeVisible={homeVisible()}
-              sidebarOpen={sidebarOpen()}
-              onGoHome={() => setHomeVisible(true)}
-              onNewDocument={handleNewDocument}
-              onOpenFile={handleOpenFile}
-              onOpenFolder={handleOpenFolder}
-              onSaveFile={handleSaveFile}
-              onExport={handleExport}
-              onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
-              onOpenQuickSwitcher={() => setQuickSwitcherOpen(true)}
-              onOpenSearchModal={() => setSearchModalOpen(true)}
-              onOpenFindReplace={() => setFindReplaceOpen(true)}
-              onOpenThemeSettings={() => handleOpenSettings("theme")}
-              onOpenSettings={handleOpenSettings}
-              onOpenRecent={loadFile}
-              onCloseTab={() => requestCloseTab()}
-              onCloseWindow={handleRequestCloseWindow}
-            />
-          }
+      {/* 1. MOBILE PORTRAIT LAYOUT */}
+      <Show when={isMobileViewport()}>
+        <MobileShell
+          onOpenFile={loadFile}
+          onNewDocument={handleNewDocument}
+          onOpenQuickSwitcher={() => setQuickSwitcherOpen(true)}
         >
-          <MobileHeader
+          {renderViewport()}
+        </MobileShell>
+      </Show>
+
+      {/* 2. DESKTOP WIDE LAYOUT */}
+      <Show when={!isMobileViewport()}>
+        {/* Top VS Code-Style Menu Bar */}
+        <Show when={!zenMode()}>
+          <MenuBar
+            homeVisible={homeVisible()}
             sidebarOpen={sidebarOpen()}
-            onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
-            onNewDocument={handleNewDocument}
-            onOpenQuickSwitcher={() => setQuickSwitcherOpen(true)}
-            onOpenSettings={handleOpenSettings}
             onGoHome={() => setHomeVisible(true)}
+            onNewDocument={handleNewDocument}
+            onOpenFile={handleOpenFile}
+            onOpenFolder={handleOpenFolder}
+            onSaveFile={handleSaveFile}
+            onExport={handleExport}
+            onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
+            onOpenQuickSwitcher={() => setQuickSwitcherOpen(true)}
+            onOpenSearchModal={() => setSearchModalOpen(true)}
+            onOpenFindReplace={() => setFindReplaceOpen(true)}
+            onOpenThemeSettings={() => handleOpenSettings("theme")}
+            onOpenSettings={handleOpenSettings}
+            onOpenRecent={loadFile}
+            onCloseTab={() => requestCloseTab()}
+            onCloseWindow={handleRequestCloseWindow}
           />
         </Show>
-      </Show>
 
-      {/* Mobile Slide-Over Sidebar Drawer */}
-      <Show when={isMobileViewport() && sidebarOpen() && !zenMode()}>
-        {/* Backdrop */}
+        {/* Full-width document tab bar */}
+        <Show when={openTabs().length > 0 && !zenMode()}>
+          <TabBar
+            ref={(el) => (tabBarElement = el)}
+            isDragOver={dragHoverTarget() === "tabbar"}
+            onNewTab={handleNewDocument}
+            onSelectTab={() => setHomeVisible(false)}
+            onCloseTab={(id) => requestCloseTab(id)}
+          />
+        </Show>
+
+        {/* Main Desktop Workspace Area */}
         <div
-          class="fixed inset-0 z-40 bg-black/50 backdrop-blur-xs transition-opacity"
-          onClick={() => setSidebarOpen(false)}
-        />
-        {/* Drawer Panel */}
-        <div
-          class="fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] flex flex-col shadow-2xl safe-area-left safe-area-top safe-area-bottom"
-          style={{
-            background: "var(--color-sidebar-bg)",
-            "border-right": "1px solid var(--color-border)",
-          }}
+          class="flex flex-1 overflow-hidden"
+          style={{ cursor: isResizing() ? "col-resize" : "default" }}
         >
-          <div class="h-11 px-3 flex items-center justify-between border-b border-[var(--color-border)]">
-            <span class="font-semibold text-xs text-[var(--color-text-primary)]">Taleno</span>
-            <button
-              class="p-2 rounded-lg hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] text-sm touch-target"
-              onClick={() => setSidebarOpen(false)}
-              aria-label="Close Sidebar"
-            >
-              ✕
-            </button>
-          </div>
-          <div class="flex-1 overflow-hidden">
-            <Sidebar
-              onSelectFile={(path) => {
-                setSidebarOpen(false);
-                loadFile(path);
+          {/* Workspace & Outline Sidebar */}
+          <Show when={sidebarOpen() && !zenMode()}>
+            <div
+              class="flex-shrink-0 overflow-hidden flex flex-col no-select"
+              style={{
+                width: `${sidebarWidth()}px`,
+                background: "var(--color-sidebar-bg)",
+                "border-right": "1px solid var(--color-border)",
               }}
+            >
+              <Sidebar onSelectFile={loadFile} />
+            </div>
+
+            {/* Resize handle */}
+            <div
+              class="w-1 cursor-col-resize hover:bg-[var(--color-accent)] transition-colors flex-shrink-0"
+              style={{ background: isResizing() ? "var(--color-accent)" : "transparent" }}
+              onMouseDown={startResize}
             />
+          </Show>
+
+          {/* Center Panel (Toolbar + Viewport) */}
+          <div class="flex-1 flex flex-col overflow-hidden relative">
+            {/* Editor Quick Format Toolbar (Writing / Code modes) */}
+            <Show
+              when={
+                hasDocument() &&
+                !homeVisible() &&
+                (displayMode() === "writing" || displayMode() === "code") &&
+                !zenMode()
+              }
+            >
+              <EditorToolbar />
+            </Show>
+
+            {/* Viewport Area */}
+            <main class="flex-1 overflow-hidden relative">
+              {/* Editor drop overlay to insert link */}
+              <Show when={dragHoverTarget() === "editor"}>
+                <div class="absolute inset-0 z-40 bg-[var(--color-bg-primary)]/80 backdrop-blur-xs flex items-center justify-center border-3 border-dashed border-[var(--color-accent)] m-3 rounded-xl pointer-events-none animate-in fade-in">
+                  <div class="text-center space-y-1.5">
+                    <svg class="w-10 h-10 mx-auto text-[var(--color-accent)] animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                    </svg>
+                    <p class="text-sm font-bold text-[var(--color-accent)]">
+                      Drop file here to insert link
+                    </p>
+                    <p class="text-xs text-[var(--color-text-secondary)] opacity-70">Images render as ![](...) and docs as [](..)</p>
+                  </div>
+                </div>
+              </Show>
+
+              {renderViewport()}
+            </main>
           </div>
         </div>
+
+        {/* Persistent Status Bar (Desktop) */}
+        <StatusBar />
       </Show>
 
-      {/* Full-window drop overlay when no file is open (Monochrome SVG) */}
+      {/* 3. SHARED MODALS & OVERLAYS */}
+      {/* Full-window drop overlay when no file is open */}
       <Show when={dragHoverTarget() === "window"}>
         <div class="fixed inset-0 z-50 bg-[var(--color-bg-primary)]/85 backdrop-blur-xs flex items-center justify-center border-3 border-dashed border-[var(--color-accent)] m-4 rounded-2xl pointer-events-none transition-all animate-in fade-in">
           <div class="text-center space-y-2">
@@ -658,6 +736,7 @@ const App: Component = () => {
         onClose={() => setFindReplaceOpen(false)}
       />
 
+      {/* Settings Modal */}
       <SettingsModal
         isOpen={settingsOpen()}
         initialTab={settingsTab()}
@@ -672,115 +751,6 @@ const App: Component = () => {
         onDiscard={handleConfirmCloseDiscard}
         onCancel={handleConfirmCloseCancel}
       />
-
-      {/* Full-width document tab bar below the title/menu bar */}
-      <Show when={openTabs().length > 0 && !zenMode()}>
-        <TabBar
-          ref={(el) => (tabBarElement = el)}
-          isDragOver={dragHoverTarget() === "tabbar"}
-          onNewTab={handleNewDocument}
-          onSelectTab={() => setHomeVisible(false)}
-          onCloseTab={(id) => requestCloseTab(id)}
-        />
-      </Show>
-
-      {/* Main content area */}
-      <div
-        class="flex flex-1 overflow-hidden"
-        style={{ cursor: isResizing() ? "col-resize" : "default" }}
-      >
-        {/* Workspace & Outline Sidebar (Desktop side-by-side) */}
-        <Show when={!isMobileViewport() && sidebarOpen() && !zenMode()}>
-          <div
-            class="flex-shrink-0 overflow-hidden flex flex-col no-select"
-            style={{
-              width: `${sidebarWidth()}px`,
-              background: "var(--color-sidebar-bg)",
-              "border-right": "1px solid var(--color-border)",
-            }}
-          >
-            <Sidebar onSelectFile={loadFile} />
-          </div>
-
-          {/* Resize handle */}
-          <div
-            class="w-1 cursor-col-resize hover:bg-[var(--color-accent)] transition-colors flex-shrink-0"
-            style={{ background: isResizing() ? "var(--color-accent)" : "transparent" }}
-            onMouseDown={startResize}
-          />
-        </Show>
-
-        {/* Center Panel (Toolbar + Viewport) */}
-        <div class="flex-1 flex flex-col overflow-hidden relative">
-          {/* Editor Quick Format Toolbar (Writing / Code modes) */}
-          <Show
-            when={
-              hasDocument() &&
-              !homeVisible() &&
-              (displayMode() === "writing" || displayMode() === "code") &&
-              !zenMode()
-            }
-          >
-            <EditorToolbar />
-          </Show>
-
-          {/* Viewport: Reading / Writing / Code Modes or Welcome Hub */}
-          <main class="flex-1 overflow-hidden relative">
-            {/* Editor drop overlay to insert link */}
-            <Show when={dragHoverTarget() === "editor"}>
-              <div class="absolute inset-0 z-40 bg-[var(--color-bg-primary)]/80 backdrop-blur-xs flex items-center justify-center border-3 border-dashed border-[var(--color-accent)] m-3 rounded-xl pointer-events-none animate-in fade-in">
-                <div class="text-center space-y-1.5">
-                  <svg class="w-10 h-10 mx-auto text-[var(--color-accent)] animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-                  </svg>
-                  <p class="text-sm font-bold text-[var(--color-accent)]">
-                    Drop file here to insert link
-                  </p>
-                  <p class="text-xs text-[var(--color-text-secondary)] opacity-70">Images render as ![](...) and docs as [](..)</p>
-                </div>
-              </div>
-            </Show>
-
-            <Show
-              when={hasDocument() && !homeVisible()}
-              fallback={
-                <WelcomeHub
-                  onNewDocument={handleNewDocument}
-                  onOpenFile={handleOpenFile}
-                  onOpenRecent={loadFile}
-                />
-              }
-            >
-              {/* Tri-State Viewport */}
-              <Show when={displayMode() === "reading"}>
-                <MarkdownView
-                  content={doc().content}
-                  renderedContent={doc().renderedContent}
-                  html={doc().html}
-                  externallyModified={doc().externallyModified}
-                  onReload={reloadCurrentFile}
-                  onRendered={(sourceContent, result) => {
-                    updateDocumentRendering(sourceContent, result);
-                    syncCurrentDocumentToTab();
-                  }}
-                />
-              </Show>
-
-              <Show when={displayMode() === "writing"}>
-                <Editor />
-              </Show>
-
-              <Show when={displayMode() === "code"}>
-                <CodeView />
-              </Show>
-            </Show>
-          </main>
-        </div>
-      </div>
-
-      {/* Persistent Status Bar */}
-      <StatusBar />
 
       {/* GitHub Releases Update Modal */}
       <UpdateModal />
