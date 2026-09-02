@@ -1,14 +1,6 @@
 import { Component, Show, createMemo } from "solid-js";
 import { currentDocument, displayMode, setDisplayMode } from "../../store/editor";
 import { theme, cycleTheme } from "../../store/settings";
-import {
-  appVersion,
-  inPlaceCheckStatus,
-  isUpdateAvailable,
-  checkForUpdatesInPlace,
-  setUpdateModalOpen,
-  updateInfo,
-} from "../../lib/updater";
 import { t } from "../../i18n";
 
 const DisplayModeSwitcher: Component = () => (
@@ -75,72 +67,6 @@ const DisplayModeSwitcher: Component = () => (
     </button>
   </div>
 );
-
-const VersionIndicator: Component = () => {
-  const version = () => appVersion();
-  const status = () => inPlaceCheckStatus();
-  const hasUpdate = () => isUpdateAvailable();
-  const info = () => updateInfo();
-
-  const handleClick = () => {
-    if (hasUpdate()) {
-      setUpdateModalOpen(true);
-    } else {
-      void checkForUpdatesInPlace();
-    }
-  };
-
-  const label = () => {
-    if (status() === "checking") return t("statusBar.checkingUpdates");
-    if (status() === "up_to_date") return t("statusBar.upToDate");
-    if (hasUpdate()) return `↑ v${info()?.latestVersion || version()}`;
-    return `v${version()}`;
-  };
-
-  const titleTooltip = () => {
-    if (hasUpdate()) {
-      return `${t("statusBar.updateAvailable")}: v${info()?.latestVersion} (${t("update.downloadUpdate")})`;
-    }
-    if (status() === "checking") return t("statusBar.checkingUpdates");
-    if (status() === "up_to_date") return t("statusBar.upToDate");
-    return `Taleno v${version()} — ${t("help.checkForUpdates")}`;
-  };
-
-  return (
-    <button
-      class={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-mono transition-all select-none ${
-        hasUpdate()
-          ? "bg-[var(--color-accent)] text-white font-semibold shadow-xs animate-pulse hover:opacity-90 cursor-pointer"
-          : status() === "up_to_date"
-          ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-medium"
-          : "hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] cursor-pointer"
-      }`}
-      onClick={handleClick}
-      title={titleTooltip()}
-      aria-label={titleTooltip()}
-      data-status-section="version"
-    >
-      <Show when={status() === "checking"}>
-        <svg class="w-3 h-3 animate-spin flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-          <circle cx="12" cy="12" r="10" stroke-opacity="0.25" />
-          <path d="M12 2a10 10 0 0 1 10 10" />
-        </svg>
-      </Show>
-      <Show when={status() === "up_to_date"}>
-        <svg class="w-3 h-3 text-emerald-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-          <polyline points="20 6 9 17 4 12" />
-        </svg>
-      </Show>
-      <Show when={hasUpdate() && status() !== "checking"}>
-        <svg class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <line x1="12" y1="19" x2="12" y2="5" />
-          <polyline points="5 12 12 5 19 12" />
-        </svg>
-      </Show>
-      <span>{label()}</span>
-    </button>
-  );
-};
 
 export const StatusBar: Component = () => {
   const doc = () => currentDocument();
@@ -254,10 +180,6 @@ export const StatusBar: Component = () => {
             </svg>
           </Show>
         </button>
-
-        <span class="text-[var(--color-border)] select-none">|</span>
-
-        <VersionIndicator />
       </div>
     </footer>
   );

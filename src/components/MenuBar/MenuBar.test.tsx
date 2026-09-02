@@ -58,15 +58,23 @@ describe("MenuBar Title Bar Quick Access", () => {
     const pluginsBtn = container.querySelector<HTMLButtonElement>('[data-menu-quick="plugins"]');
     const themesBtn = container.querySelector<HTMLButtonElement>('[data-menu-quick="theme"]');
     const langBtn = container.querySelector<HTMLButtonElement>('[data-menu-quick="language"]');
+    const versionBtn = container.querySelector<HTMLButtonElement>('[data-menu-quick="version"]');
 
     expect(pluginsBtn).toBeTruthy();
     expect(themesBtn).toBeTruthy();
     expect(langBtn).toBeTruthy();
+    expect(versionBtn).toBeTruthy();
+    expect(versionBtn?.textContent).toContain("v0.1.7");
 
     pluginsBtn?.click();
     expect(onOpenSettings).toHaveBeenCalledWith("plugins");
 
     themesBtn?.click();
     expect(onOpenSettings).toHaveBeenCalledWith("theme");
+
+    // Verify website and github buttons are not rendered in the title bar
+    const allButtons = Array.from(container.querySelectorAll("button"));
+    const hasWebsite = allButtons.some(b => b.title?.includes("BerryUIKI") || b.title?.includes("website") || b.title?.includes("官网"));
+    expect(hasWebsite).toBe(false);
   });
 });

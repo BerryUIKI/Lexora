@@ -157,7 +157,7 @@ export const SettingsModal: Component<SettingsModalProps> = (props) => {
         }}
       >
         <div
-          class="w-full max-w-3xl max-h-[82vh] mx-4 overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] shadow-2xl flex flex-col"
+          class="w-full max-w-3xl h-[620px] max-h-[85vh] mx-4 overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] shadow-2xl flex flex-col"
           role="dialog"
           aria-modal="true"
           aria-label={t("settings.title")}

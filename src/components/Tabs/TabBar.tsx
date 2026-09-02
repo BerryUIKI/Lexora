@@ -28,12 +28,19 @@ export const TabBar: Component<TabBarProps> = (props) => {
         "outline": props.isDragOver ? "2px dashed var(--color-accent)" : "none",
         "outline-offset": "-2px",
       }}
+      onDblClick={(e) => {
+        const target = e.target as HTMLElement;
+        if (!target.closest("[data-tab-item]") && !target.closest("button")) {
+          props.onNewTab();
+        }
+      }}
     >
       <For each={openTabs()}>
         {(tab) => {
           const isActive = () => activeTabId() === tab.id;
           return (
             <div
+              data-tab-item="true"
               class="h-full flex items-center px-3 gap-2 border-r border-[var(--color-border)] text-xs font-medium cursor-pointer transition-colors max-w-44 truncate group"
               style={{
                 background: isActive() ? "var(--color-bg-primary)" : "transparent",
