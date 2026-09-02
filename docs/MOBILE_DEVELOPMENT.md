@@ -259,3 +259,26 @@ Before submitting a pull request for mobile features, verify the following:
 - [ ] **Keyboard Ergonomics**: Typing and scrolling in WYSIWYG, Reading, and Code modes remain responsive with the virtual keyboard active.
 - [ ] **File Integrity**: Creating, reading, editing, and saving Markdown documents within the mobile document container succeeds without data loss.
 - [ ] **Battery & Memory Efficiency**: Inactive timers and background file watchers pause when the mobile app is sent to the background (`visibilitychange` / `app:paused`).
+
+---
+
+## 9. Platform-Split Release Track & Git Tag Conventions
+
+Taleno adopts a unified single-repository architecture with **independent platform release tags** to enable decoupled release schedules across desktop and mobile app stores:
+
+| Platform Target | Git Tag Format | Example Tag | Output Package | Distribution Channel |
+| :--- | :--- | :--- | :--- | :--- |
+| **Desktop / PC** | `vX.Y.Z` | `v0.2.0` | `.dmg`, `.msi`, `.exe`, `.deb` | GitHub Releases / Direct Download |
+| **Android** | `vX.Y.Z-android` | `v0.1.9-android` | `app-universal-release.aab`, `.apk` | Google Play Store / GitHub Releases |
+| **iOS** | `vX.Y.Z-ios` | `v0.1.9-ios` | `.ipa`, Archive | Apple App Store / TestFlight |
+
+### Build & Release Commands
+
+```bash
+# 1. Android Release Packaging (Google Play AAB & Direct APK)
+pnpm tauri android build --aab
+pnpm tauri android build --apk --target aarch64
+
+# 2. iOS Release Packaging (App Store / TestFlight Archive)
+pnpm tauri ios build
+```

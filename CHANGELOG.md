@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.9] - 2026-09-03
+
+### Added
+- **Cross-Platform Mobile Support (iOS & Android)**:
+  - Full mobile build toolchains configured for iOS (Xcode, Simulator, Device targets `aarch64-apple-ios`, `aarch64-apple-ios-sim`, `x86_64-apple-ios`) and Android (Gradle, NDK, Platform 34, `aarch64-linux-android`, `x86_64-linux-android`, `armv7-linux-androideabi`, `i686-linux-android`).
+  - Mobile platform detection in [`src/lib/platform.ts`](src/lib/platform.ts) supporting iPhones, iPads, and Android smartphones.
+  - Rust backend mobile compatibility with `#[cfg(desktop)]` guarded window controls and mobile no-op fallbacks.
+- **Dedicated Vertical Smartphone Portrait GUI**:
+  - **`MobileShell`**: Fluid root layout container adapting to mobile portrait viewports with virtual keyboard height tracking via `window.visualViewport`.
+  - **`MobileTopBar`**: Compact 44px top navigation supporting notches, Dynamic Island (`safe-area-top`), breadcrumb folder/tab navigation, and 1-tap mode switcher.
+  - **`MobileBottomNav`**: Thumb-zone bottom navigation bar (`safe-area-bottom`) providing instant access to Files, Outline, Display Mode, Search, and Settings.
+  - **`MobileFormatBar`**: Soft-keyboard attached horizontal scrolling Markdown formatting toolbelt (Undo, Redo, H1~H3, Bold, Italic, Strikethrough, Code, Lists, Blockquote, Table, Keyboard Dismiss).
+  - **`MobileDrawerSheet`**: Native-feeling bottom sheet modal for workspace file browsing, active document tabs, live TOC outline navigation, and theme/font preferences.
+- **Platform-Split Release Track**:
+  - Independent release tag conventions established for Desktop (`vX.Y.Z`), Android (`vX.Y.Z-android`), and iOS (`vX.Y.Z-ios`).
+  - Android Release packages generated: optimized universal Google Play AAB (`Taleno-v0.1.8-GooglePlay.aab`, 31 MB) and signed direct-install ARM64 APK (`Taleno-v0.1.8-arm64.apk`, 25 MB).
+- **Mobile Documentation**:
+  - Published comprehensive [`docs/MOBILE_DEVELOPMENT.md`](docs/MOBILE_DEVELOPMENT.md) and updated architecture, roadmap, and collaboration guidelines.
+
 ## [0.1.8] - 2026-09-02
 
 ### Added

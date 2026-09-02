@@ -164,6 +164,10 @@ pnpm tauri build
      - `docs(agents): add AGENTS.md workflow and constraints handbook`
 3. **Commit Granularity**:
    - Break large features into logical, independently compilable chunks with descriptive commit messages.
+4. **Platform-Split Release Tags**:
+   - Desktop releases: `vX.Y.Z` (e.g. `v0.2.0`)
+   - Android releases: `vX.Y.Z-android` (e.g. `v0.1.9-android`)
+   - iOS releases: `vX.Y.Z-ios` (e.g. `v0.1.9-ios`)
 
 ---
 
