@@ -440,3 +440,39 @@ body,
 .markdown-body .code-container pre code {
   font-size: inherit;
 }
+
+/* ===== Mobile & iOS Safe-Area & Touch Utilities ===== */
+.safe-area-top {
+  padding-top: max(env(safe-area-inset-top, 0px), 0px);
+}
+
+.safe-area-bottom {
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 0px);
+}
+
+.safe-area-left {
+  padding-left: max(env(safe-area-inset-left, 0px), 0px);
+}
+
+.safe-area-right {
+  padding-right: max(env(safe-area-inset-right, 0px), 0px);
+}
+
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (pointer: coarse) {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button, a, input, select {
+    touch-action: manipulation;
+  }
+}
+

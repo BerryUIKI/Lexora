@@ -214,6 +214,11 @@ pub async fn open_plugins_folder(app_handle: &tauri::AppHandle) -> Result<(), St
             .map_err(|e| format!("Failed to open file manager: {}", e))?;
     }
 
+    #[cfg(not(any(target_os = "windows", target_os = "macos", target_os = "linux")))]
+    {
+        let _ = path_str;
+    }
+
     Ok(())
 }
 

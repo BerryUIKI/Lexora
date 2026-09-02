@@ -45,7 +45,10 @@
         "description": "Markdown Document (Taleno)",
         "role": "Editor"
       }
-    ]
+    ],
+    "iOS": {
+      "developmentTeam": "MUY7JPS2RL"
+    }
   },
   "plugins": {
     "updater": {

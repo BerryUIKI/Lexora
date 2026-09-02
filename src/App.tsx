@@ -3,6 +3,7 @@ import { open, save } from "@tauri-apps/plugin-dialog";
 import { getCurrentWebview } from "@tauri-apps/api/webview";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { MenuBar } from "./components/MenuBar/MenuBar";
+import { MobileHeader } from "./components/Header/MobileHeader";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { TabBar } from "./components/Tabs/TabBar";
 import { QuickSwitcher } from "./components/QuickSwitcher/QuickSwitcher";
@@ -21,6 +22,7 @@ import type { SettingsTabId } from "./types/plugin";
 import { syncPlugins } from "./store/plugins";
 import { syncCustomThemes } from "./store/customThemes";
 import { scheduleAutomaticUpdateCheck } from "./lib/updater";
+import { isMobile } from "./lib/platform";
 import {
   currentDocument,
   setCurrentDocument,
@@ -60,9 +62,14 @@ import { dispatchFormat, type FormatAction } from "./lib/formatter";
 import { createSingleFlight } from "./lib/singleFlight";
 
 const App: Component = () => {
-  const [sidebarOpen, setSidebarOpen] = createSignal(true);
+  const [sidebarOpen, setSidebarOpen] = createSignal(
+    typeof window !== "undefined" ? window.innerWidth >= 768 && !isMobile : true
+  );
   const [sidebarWidth, setSidebarWidth] = createSignal(240);
   const [isResizing, setIsResizing] = createSignal(false);
+  const [isMobileViewport, setIsMobileViewport] = createSignal(
+    typeof window !== "undefined" ? window.innerWidth < 768 || isMobile : false
+  );
   const [findReplaceOpen, setFindReplaceOpen] = createSignal(false);
   const [searchModalOpen, setSearchModalOpen] = createSignal(false);
   const [settingsOpen, setSettingsOpen] = createSignal(false);
@@ -522,12 +529,18 @@ const App: Component = () => {
     setSettingsOpen(true);
   };
 
+  const handleResize = () => {
+    setIsMobileViewport(window.innerWidth < 768 || isMobile);
+  };
+
   onMount(() => {
     window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("resize", handleResize);
   });
 
   onCleanup(() => {
     window.removeEventListener("keydown", handleKeyDown);
+    window.removeEventListener("resize", handleResize);
   });
 
   const doc = () => currentDocument();
@@ -539,27 +552,77 @@ const App: Component = () => {
       class={`flex flex-col h-screen relative ${zenMode() ? "zen-mode" : ""} ${focusMode() ? "focus-mode" : ""}`}
       style={{ background: "var(--color-bg-primary)", color: "var(--color-text-primary)" }}
     >
-      {/* Top VS Code-Style Menu Bar */}
+      {/* Top VS Code-Style Menu Bar (Desktop) or Mobile Header (Mobile/iOS) */}
       <Show when={!zenMode()}>
-        <MenuBar
-          homeVisible={homeVisible()}
-          sidebarOpen={sidebarOpen()}
-          onGoHome={() => setHomeVisible(true)}
-          onNewDocument={handleNewDocument}
-          onOpenFile={handleOpenFile}
-          onOpenFolder={handleOpenFolder}
-          onSaveFile={handleSaveFile}
-          onExport={handleExport}
-          onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
-          onOpenQuickSwitcher={() => setQuickSwitcherOpen(true)}
-          onOpenSearchModal={() => setSearchModalOpen(true)}
-          onOpenFindReplace={() => setFindReplaceOpen(true)}
-          onOpenThemeSettings={() => handleOpenSettings("theme")}
-          onOpenSettings={handleOpenSettings}
-          onOpenRecent={loadFile}
-          onCloseTab={() => requestCloseTab()}
-          onCloseWindow={handleRequestCloseWindow}
+        <Show
+          when={isMobileViewport()}
+          fallback={
+            <MenuBar
+              homeVisible={homeVisible()}
+              sidebarOpen={sidebarOpen()}
+              onGoHome={() => setHomeVisible(true)}
+              onNewDocument={handleNewDocument}
+              onOpenFile={handleOpenFile}
+              onOpenFolder={handleOpenFolder}
+              onSaveFile={handleSaveFile}
+              onExport={handleExport}
+              onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
+              onOpenQuickSwitcher={() => setQuickSwitcherOpen(true)}
+              onOpenSearchModal={() => setSearchModalOpen(true)}
+              onOpenFindReplace={() => setFindReplaceOpen(true)}
+              onOpenThemeSettings={() => handleOpenSettings("theme")}
+              onOpenSettings={handleOpenSettings}
+              onOpenRecent={loadFile}
+              onCloseTab={() => requestCloseTab()}
+              onCloseWindow={handleRequestCloseWindow}
+            />
+          }
+        >
+          <MobileHeader
+            sidebarOpen={sidebarOpen()}
+            onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
+            onNewDocument={handleNewDocument}
+            onOpenQuickSwitcher={() => setQuickSwitcherOpen(true)}
+            onOpenSettings={handleOpenSettings}
+            onGoHome={() => setHomeVisible(true)}
+          />
+        </Show>
+      </Show>
+
+      {/* Mobile Slide-Over Sidebar Drawer */}
+      <Show when={isMobileViewport() && sidebarOpen() && !zenMode()}>
+        {/* Backdrop */}
+        <div
+          class="fixed inset-0 z-40 bg-black/50 backdrop-blur-xs transition-opacity"
+          onClick={() => setSidebarOpen(false)}
         />
+        {/* Drawer Panel */}
+        <div
+          class="fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] flex flex-col shadow-2xl safe-area-left safe-area-top safe-area-bottom"
+          style={{
+            background: "var(--color-sidebar-bg)",
+            "border-right": "1px solid var(--color-border)",
+          }}
+        >
+          <div class="h-11 px-3 flex items-center justify-between border-b border-[var(--color-border)]">
+            <span class="font-semibold text-xs text-[var(--color-text-primary)]">Taleno</span>
+            <button
+              class="p-2 rounded-lg hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] text-sm touch-target"
+              onClick={() => setSidebarOpen(false)}
+              aria-label="Close Sidebar"
+            >
+              ✕
+            </button>
+          </div>
+          <div class="flex-1 overflow-hidden">
+            <Sidebar
+              onSelectFile={(path) => {
+                setSidebarOpen(false);
+                loadFile(path);
+              }}
+            />
+          </div>
+        </div>
       </Show>
 
       {/* Full-window drop overlay when no file is open (Monochrome SVG) */}
@@ -626,8 +689,8 @@ const App: Component = () => {
         class="flex flex-1 overflow-hidden"
         style={{ cursor: isResizing() ? "col-resize" : "default" }}
       >
-        {/* Workspace & Outline Sidebar */}
-        <Show when={sidebarOpen() && !zenMode()}>
+        {/* Workspace & Outline Sidebar (Desktop side-by-side) */}
+        <Show when={!isMobileViewport() && sidebarOpen() && !zenMode()}>
           <div
             class="flex-shrink-0 overflow-hidden flex flex-col no-select"
             style={{

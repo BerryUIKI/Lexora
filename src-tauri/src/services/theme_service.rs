@@ -131,6 +131,11 @@ pub async fn open_themes_folder(app_handle: &AppHandle) -> Result<(), String> {
             .map_err(|e| format!("Failed to open file manager: {}", e))?;
     }
 
+    #[cfg(not(any(target_os = "windows", target_os = "macos", target_os = "linux")))]
+    {
+        let _ = themes_dir;
+    }
+
     Ok(())
 }
 
