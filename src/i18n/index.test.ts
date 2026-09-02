@@ -39,7 +39,7 @@ describe("i18n Internationalization Engine", () => {
   it("should have complete dictionary coverage for all languages", () => {
     const dicts = [en, zhCN, zhTW, ja, ko, de, fr, es, ru];
     dicts.forEach((d) => {
-      expect(d.app.name).toBe("Lexora");
+      expect(d.app.name).toBe("Taleno");
       expect(d.menu.file).toBeTruthy();
       expect(d.menu.edit).toBeTruthy();
       expect(d.menu.view).toBeTruthy();

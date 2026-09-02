@@ -20,9 +20,9 @@ describe("StatusBar", () => {
     setCurrentDocument({
       path: "/tmp/example.md",
       filename: "example.md",
-      content: "Hello Lexora",
-      renderedContent: "Hello Lexora",
-      html: "<p>Hello Lexora</p>",
+      content: "Hello Taleno",
+      renderedContent: "Hello Taleno",
+      html: "<p>Hello Taleno</p>",
       toc: [],
       wordCount: 2,
       isDirty: false,

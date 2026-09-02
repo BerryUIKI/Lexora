@@ -1,5 +1,5 @@
 /**
- * Utility functions for handling Drag and Drop of files in Lexora.
+ * Utility functions for handling Drag and Drop of files in Taleno.
  */
 
 export const IMAGE_EXTENSIONS = new Set([

@@ -1,6 +1,6 @@
-# Lexora — Collaboration & Engineering Handbook
+# Taleno — Collaboration & Engineering Handbook
 
-This guide outlines our engineering standards, Git workflow, review protocols, and collaboration processes for the **Lexora** project.
+This guide outlines our engineering standards, Git workflow, review protocols, and collaboration processes for the **Taleno** project.
 
 ---
 
@@ -46,17 +46,17 @@ gitGraph
 
 ---
 
-## 🌐 Ecosystem Separation: Lexora vs Lexora-Plugins
+## 🌐 Ecosystem Separation: Taleno vs Taleno-Plugins
 
-Lexora maintains a strict separation of concerns across two official repositories:
+Taleno maintains a strict separation of concerns across two official repositories:
 
-1. **[`BerryUIKI/Lexora`](https://github.com/BerryUIKI/Lexora)** (This Repository):
+1. **[`BerryUIKI/Taleno`](https://github.com/BerryUIKI/Taleno)** (This Repository):
    - Reserved strictly for core desktop software development, native backend services, UI components, and built-in features.
-   - Houses **Built-in Themes** (e.g. `Lexora`, `GitHub`, `Solarized`), which require zero installation and cannot be uninstalled via the GUI.
-2. **[`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins)**:
+   - Houses **Built-in Themes** (e.g. `Taleno`, `GitHub`, `Solarized`), which require zero installation and cannot be uninstalled via the GUI.
+2. **[`BerryUIKI/Taleno-Plugins`](https://github.com/BerryUIKI/Taleno-Plugins)**:
    - Dedicated community hub for **External Plugins** and **External Themes/Skins**.
    - External themes and plugins can be freely installed, applied, or uninstalled by users via options in the GUI.
-   - All third-party plugins and external themes **MUST** be submitted as Pull Requests to `BerryUIKI/Lexora-Plugins`, never to this repository.
+   - All third-party plugins and external themes **MUST** be submitted as Pull Requests to `BerryUIKI/Taleno-Plugins`, never to this repository.
 
 ---
 
@@ -115,7 +115,7 @@ Reviewers evaluate PRs based on:
 
 ## 🏷️ Release Management & SemVer
 
-Lexora follows **Semantic Versioning (SemVer 2.0.0)**: `MAJOR.MINOR.PATCH`
+Taleno follows **Semantic Versioning (SemVer 2.0.0)**: `MAJOR.MINOR.PATCH`
 
 - **MAJOR**: Breaking changes to document format, configuration, or core APIs.
 - **MINOR**: Backward-compatible new features (e.g. M1 -> M2 -> M3).

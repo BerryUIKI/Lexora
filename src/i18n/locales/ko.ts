@@ -2,10 +2,10 @@ import { TranslationDictionary } from "../types";
 
 export const ko: TranslationDictionary = {
   app: {
-    name: "Lexora",
+    name: "Taleno",
     tagline: "미니멀 인플레이스 마크다운 뷰어 & 에디터",
     description: "Tauri 2, Rust, SolidJS로 제작된 로컬 우선 미니멀 마크다운 뷰어 및 실시간 WYSIWYG 에디터.",
-    copyright: "저작권 © 2026 Lexora Contributors",
+    copyright: "저작권 © 2026 Taleno Contributors",
     licenseNotice: "GNU AGPL-3.0 라이선스",
   },
   menu: {
@@ -79,7 +79,7 @@ export const ko: TranslationDictionary = {
     pluginsTab: "플러그인",
     updatesTab: "업데이트",
     markdownTheme: "테마",
-    markdownThemeDescription: "Lexora 전체와 Markdown 렌더링에 사용할 시각 스타일을 선택합니다.",
+    markdownThemeDescription: "Taleno 전체와 Markdown 렌더링에 사용할 시각 스타일을 선택합니다.",
     colorMode: "색상 모드",
     colorModeDescription: "라이트, 다크 및 시스템 모드는 모든 테마에 적용됩니다.",
     elementShadows: "요소 그림자 사용",
@@ -87,7 +87,7 @@ export const ko: TranslationDictionary = {
     automaticUpdateChecks: "업데이트 자동 확인",
     automaticUpdateChecksDescription: "하루에 한 번 안정 버전을 확인하고 설치 전에 알려줍니다.",
     stableChannelDescription: "확인한 후에만 업데이트를 다운로드하고 설치합니다.",
-    pluginsDescription: "커뮤니티 도구 및 확장 기능으로 Lexora를 확장하세요.",
+    pluginsDescription: "커뮤니티 도구 및 확장 기능으로 Taleno를 확장하세요.",
     searchPlugins: "설치된 플러그인 검색...",
     openPluginsFolder: "플러그인 폴더 열기",
     reloadPlugins: "플러그인 다시 로드",
@@ -138,10 +138,10 @@ export const ko: TranslationDictionary = {
     website: "공식 웹사이트",
     checkForUpdates: "업데이트 확인...",
     reportIssue: "문제 보고",
-    about: "Lexora 정보",
+    about: "Taleno 정보",
   },
   welcome: {
-    title: "Lexora",
+    title: "Taleno",
     subtitle: "미니멀 인플레이스 마크다운 뷰어 & 에디터",
     newDocument: "새 문서",
     openFile: "파일 열기",
@@ -199,7 +199,7 @@ export const ko: TranslationDictionary = {
     updateErrorTitle: "업데이트 실패",
     updateErrorDesc: "업데이트를 다운로드하거나 설치하지 못했습니다. 다시 시도하세요.",
     unsavedTitle: "저장되지 않은 문서",
-    unsavedMessage: "업데이트를 설치하면 Lexora가 종료됩니다. 먼저 문서를 저장하거나 저장하지 않고 계속할 것을 명시적으로 선택하세요.",
+    unsavedMessage: "업데이트를 설치하면 Taleno가 종료됩니다. 먼저 문서를 저장하거나 저장하지 않고 계속할 것을 명시적으로 선택하세요.",
     discardAndInstall: "변경 사항 버리고 설치",
   },
   dialogs: {

@@ -78,7 +78,7 @@ export const WelcomeHub: Component<WelcomeHubProps> = (props) => {
           </button>
 
           <a
-            href="https://github.com/BerryUIKI/Lexora"
+            href="https://github.com/BerryUIKI/Taleno"
             target="_blank"
             rel="noopener noreferrer"
             class="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-[var(--color-border)] hover:bg-[var(--color-hover)] text-[var(--color-text-primary)] font-semibold text-xs transition-all active:scale-95"

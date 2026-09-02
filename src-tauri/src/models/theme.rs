@@ -42,12 +42,13 @@ pub struct RemoteTheme {
     #[serde(default = "default_entry_file")]
     pub entry_file: String,
     pub raw_base_url: String,
-    pub min_lexora_version: Option<String>,
+    #[serde(alias = "minLexoraVersion", alias = "min_lexora_version")]
+    pub min_taleno_version: Option<String>,
     #[serde(default)]
     pub tags: Vec<String>,
 }
 
-/// Payload returned by `BerryUIKI/Lexora-Plugins/themes.json`.
+/// Payload returned by `BerryUIKI/Taleno-Plugins/themes.json`.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ThemeRegistryResponse {

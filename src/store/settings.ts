@@ -1,13 +1,13 @@
 import { createSignal, createEffect } from "solid-js";
 
 export type Theme = "light" | "dark" | "system";
-export type MarkdownTheme = "lexora" | "github" | "solarized";
+export type MarkdownTheme = "Taleno" | "github" | "solarized";
 
 export const MARKDOWN_THEME_OPTIONS: ReadonlyArray<{
   id: MarkdownTheme;
   name: string;
 }> = [
-  { id: "lexora", name: "Lexora" },
+  { id: "Taleno", name: "Taleno" },
   { id: "github", name: "GitHub" },
   { id: "solarized", name: "Solarized" },
 ];
@@ -23,7 +23,7 @@ function getSystemTheme(): "light" | "dark" {
 
 function getInitialTheme(): Theme {
   if (typeof localStorage !== "undefined") {
-    const stored = localStorage.getItem("lexora-theme");
+    const stored = localStorage.getItem("Taleno-theme");
     if (stored === "light" || stored === "dark" || stored === "system") {
       return stored;
     }
@@ -33,25 +33,25 @@ function getInitialTheme(): Theme {
 
 function getInitialMarkdownTheme(): MarkdownTheme {
   if (typeof localStorage !== "undefined") {
-    const stored = localStorage.getItem("lexora-markdown-theme");
-    if (stored === "lexora" || stored === "github" || stored === "solarized") {
+    const stored = localStorage.getItem("Taleno-markdown-theme");
+    if (stored === "Taleno" || stored === "github" || stored === "solarized") {
       return stored;
     }
   }
-  return "lexora";
+  return "Taleno";
 }
 
 function getInitialElementShadows(): boolean {
   return (
     typeof localStorage !== "undefined" &&
-    localStorage.getItem("lexora-element-shadows") === "true"
+    localStorage.getItem("Taleno-element-shadows") === "true"
   );
 }
 
 function getInitialAutomaticUpdateChecks(): boolean {
   return (
     typeof localStorage === "undefined" ||
-    localStorage.getItem("lexora-automatic-update-checks") !== "false"
+    localStorage.getItem("Taleno-automatic-update-checks") !== "false"
   );
 }
 
@@ -73,7 +73,7 @@ const [resolvedTheme, setResolvedTheme] = createSignal<"light" | "dark">(
 createEffect(() => {
   const current = theme();
   if (typeof localStorage !== "undefined") {
-    localStorage.setItem("lexora-theme", current);
+    localStorage.setItem("Taleno-theme", current);
   }
 
   const resolved = current === "system" ? getSystemTheme() : current;
@@ -86,7 +86,7 @@ createEffect(() => {
 createEffect(() => {
   const current = markdownTheme();
   if (typeof localStorage !== "undefined") {
-    localStorage.setItem("lexora-markdown-theme", current);
+    localStorage.setItem("Taleno-markdown-theme", current);
   }
   if (typeof document !== "undefined") {
     document.documentElement.setAttribute("data-markdown-theme", current);
@@ -96,7 +96,7 @@ createEffect(() => {
 createEffect(() => {
   const enabled = elementShadows();
   if (typeof localStorage !== "undefined") {
-    localStorage.setItem("lexora-element-shadows", String(enabled));
+    localStorage.setItem("Taleno-element-shadows", String(enabled));
   }
   if (typeof document !== "undefined") {
     document.documentElement.setAttribute(
@@ -109,7 +109,7 @@ createEffect(() => {
 createEffect(() => {
   const enabled = automaticUpdateChecks();
   if (typeof localStorage !== "undefined") {
-    localStorage.setItem("lexora-automatic-update-checks", String(enabled));
+    localStorage.setItem("Taleno-automatic-update-checks", String(enabled));
   }
 });
 

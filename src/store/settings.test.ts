@@ -16,7 +16,7 @@ import {
 describe("Settings Store", () => {
   beforeEach(() => {
     setTheme("light");
-    setMarkdownTheme("lexora");
+    setMarkdownTheme("Taleno");
     setElementShadows(false);
     setAutomaticUpdateChecks(true);
     setFontSize(16);
@@ -75,6 +75,6 @@ describe("Settings Store", () => {
     expect(automaticUpdateChecks()).toBe(true);
     setAutomaticUpdateChecks(false);
     expect(automaticUpdateChecks()).toBe(false);
-    expect(localStorage.getItem("lexora-automatic-update-checks")).toBe("false");
+    expect(localStorage.getItem("Taleno-automatic-update-checks")).toBe("false");
   });
 });

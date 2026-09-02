@@ -63,7 +63,7 @@ export function detectSystemLocale(): SupportedLocale {
   return "en-US";
 }
 
-const STORAGE_KEY = "lexora_locale_setting";
+const STORAGE_KEY = "Taleno_locale_setting";
 
 function getInitialSetting(): LocaleSetting {
   try {

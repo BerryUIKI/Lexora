@@ -23,7 +23,7 @@ pub async fn read_plugin_source(
     plugin_service::read_plugin_source(&app_handle, &plugin_id).await
 }
 
-/// Fetch available plugins from the remote BerryUIKI/Lexora-Plugins registry.
+/// Fetch available plugins from the remote BerryUIKI/Taleno-Plugins registry.
 #[tauri::command]
 pub async fn fetch_marketplace_plugins(app_handle: AppHandle) -> Result<Vec<RemotePlugin>, String> {
     plugin_service::fetch_marketplace_plugins(&app_handle).await

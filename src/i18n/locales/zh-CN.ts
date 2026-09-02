@@ -2,10 +2,10 @@ import { TranslationDictionary } from "../types";
 
 export const zhCN: TranslationDictionary = {
   app: {
-    name: "Lexora",
+    name: "Taleno",
     tagline: "极简 Markdown 阅读与原位编辑器",
     description: "基于 Tauri 2、Rust 与 SolidJS 构建的极简本地优先 Markdown 阅读与即时所见即所得编辑器。",
-    copyright: "版权所有 © 2026 Lexora Contributors",
+    copyright: "版权所有 © 2026 Taleno Contributors",
     licenseNotice: "GNU AGPL-3.0 开源协议",
   },
   menu: {
@@ -79,7 +79,7 @@ export const zhCN: TranslationDictionary = {
     pluginsTab: "插件",
     updatesTab: "更新",
     markdownTheme: "主题",
-    markdownThemeDescription: "选择 Lexora 界面和 Markdown 渲染所使用的视觉风格。",
+    markdownThemeDescription: "选择 Taleno 界面和 Markdown 渲染所使用的视觉风格。",
     colorMode: "颜色模式",
     colorModeDescription: "浅色、深色和跟随系统模式适用于所有主题。",
     elementShadows: "启用元素阴影",
@@ -87,7 +87,7 @@ export const zhCN: TranslationDictionary = {
     automaticUpdateChecks: "自动检查更新",
     automaticUpdateChecksDescription: "每天检查一次稳定版更新，并在安装前通知你。",
     stableChannelDescription: "仅在你确认后下载并安装更新。",
-    pluginsDescription: "使用社区工具、编辑器扩展和 UI 增强功能扩展 Lexora。",
+    pluginsDescription: "使用社区工具、编辑器扩展和 UI 增强功能扩展 Taleno。",
     searchPlugins: "搜索已安装的插件...",
     openPluginsFolder: "打开插件文件夹",
     reloadPlugins: "重新加载插件",
@@ -138,10 +138,10 @@ export const zhCN: TranslationDictionary = {
     website: "官方网站",
     checkForUpdates: "检查更新...",
     reportIssue: "反馈问题",
-    about: "关于 Lexora",
+    about: "关于 Taleno",
   },
   welcome: {
-    title: "Lexora",
+    title: "Taleno",
     subtitle: "极简 Markdown 阅读与原位编辑器",
     newDocument: "新建文档",
     openFile: "打开文件",
@@ -197,9 +197,9 @@ export const zhCN: TranslationDictionary = {
     installAndRestart: "安装并重启",
     retry: "重试",
     updateErrorTitle: "更新失败",
-    updateErrorDesc: "Lexora 无法下载或安装更新，请重试。",
+    updateErrorDesc: "Taleno 无法下载或安装更新，请重试。",
     unsavedTitle: "存在未保存的文档",
-    unsavedMessage: "安装更新将关闭 Lexora。请先保存文档，或明确选择不保存并继续。",
+    unsavedMessage: "安装更新将关闭 Taleno。请先保存文档，或明确选择不保存并继续。",
     discardAndInstall: "放弃更改并安装",
   },
   dialogs: {

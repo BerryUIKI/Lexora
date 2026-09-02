@@ -9,7 +9,7 @@ export interface PluginCommand {
   run: () => void;
 }
 
-export interface LexoraPluginContext {
+export interface TalenoPluginContext {
   commands: {
     registerCommand: (command: PluginCommand) => () => void;
   };
@@ -24,13 +24,13 @@ export interface LexoraPluginContext {
   };
 }
 
-export interface LexoraPluginModule {
-  onload?: (ctx: LexoraPluginContext) => void | Promise<void>;
+export interface TalenoPluginModule {
+  onload?: (ctx: TalenoPluginContext) => void | Promise<void>;
   onunload?: () => void | Promise<void>;
 }
 
 class PluginRuntimeManager {
-  private activeModules = new Map<string, LexoraPluginModule>();
+  private activeModules = new Map<string, TalenoPluginModule>();
   private disposables = new Map<string, Array<() => void>>();
   private registeredCommands = new Map<string, PluginCommand>();
 
@@ -38,7 +38,7 @@ class PluginRuntimeManager {
     return Array.from(this.registeredCommands.values());
   }
 
-  public createContext(pluginId: string): LexoraPluginContext {
+  public createContext(pluginId: string): TalenoPluginContext {
     return {
       commands: {
         registerCommand: (cmd: PluginCommand) => {
@@ -69,14 +69,14 @@ class PluginRuntimeManager {
       storage: {
         getItem: (key: string) => {
           try {
-            return localStorage.getItem(`lexora_plugin_${pluginId}_${key}`);
+            return localStorage.getItem(`Taleno_plugin_${pluginId}_${key}`);
           } catch {
             return null;
           }
         },
         setItem: (key: string, value: string) => {
           try {
-            localStorage.setItem(`lexora_plugin_${pluginId}_${key}`, value);
+            localStorage.setItem(`Taleno_plugin_${pluginId}_${key}`, value);
           } catch (err) {
             console.warn(`[Plugin ${pluginId}] Storage write failed:`, err);
           }
@@ -99,7 +99,7 @@ class PluginRuntimeManager {
         source = `export default { onload(ctx) {}, onunload() {} };`;
       }
 
-      const mod: LexoraPluginModule = this.evaluatePluginSource(source);
+      const mod: TalenoPluginModule = this.evaluatePluginSource(source);
       this.activeModules.set(manifest.id, mod);
       this.disposables.set(manifest.id, []);
 
@@ -138,7 +138,7 @@ class PluginRuntimeManager {
     this.activeModules.delete(pluginId);
   }
 
-  private evaluatePluginSource(source: string): LexoraPluginModule {
+  private evaluatePluginSource(source: string): TalenoPluginModule {
     try {
       // Strip 'export default' or 'module.exports' for safe functional wrap
       const cleanSource = source

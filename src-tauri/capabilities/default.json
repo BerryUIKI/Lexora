@@ -1,7 +1,7 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
-  "description": "Default capability set for Lexora",
+  "description": "Default capability set for Taleno",
   "windows": ["main"],
   "permissions": [
     "core:default",

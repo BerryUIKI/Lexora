@@ -1,6 +1,6 @@
 # Architecture Decision Records (ADR)
 
-This document records the foundational architectural decisions made during the design and development of Lexora. Each record follows the Context, Decision, Rationale, and Consequences format.
+This document records the foundational architectural decisions made during the design and development of Taleno. Each record follows the Context, Decision, Rationale, and Consequences format.
 
 ---
 
@@ -37,7 +37,7 @@ Use **SolidJS** instead of React as the primary frontend UI framework.
 ## ADR-002: Milkdown over TipTap for Editor Core
 
 ### Context
-Lexora aims to deliver a seamless in-place WYSIWYG experience where users edit Markdown natively without switching between raw code and split-pane preview modes. Most rich text editors (such as TipTap, Slate, or Quill) model their document state internally as JSON/HTML and rely on lossy serialization layers to convert back and forth to Markdown.
+Taleno aims to deliver a seamless in-place WYSIWYG experience where users edit Markdown natively without switching between raw code and split-pane preview modes. Most rich text editors (such as TipTap, Slate, or Quill) model their document state internally as JSON/HTML and rely on lossy serialization layers to convert back and forth to Markdown.
 
 ### Decision
 Adopt **Milkdown** (built on top of ProseMirror) as the core editor engine rather than TipTap.
@@ -79,7 +79,7 @@ In a desktop document editor, unexpected power loss, application crashes, or ope
 Implement all document saves through an **Atomic File Write** service in Rust.
 
 ### Rationale
-- **Crash Resilience**: The file is first written to a temporary sibling file (`<filename>.tmp.lexora`). Only after the write buffer is fully flushed and synced to disk does the OS atomically rename and replace the target file (`std::fs::rename`).
+- **Crash Resilience**: The file is first written to a temporary sibling file (`<filename>.tmp.Taleno`). Only after the write buffer is fully flushed and synced to disk does the OS atomically rename and replace the target file (`std::fs::rename`).
 - **Data Integrity**: If a failure occurs mid-write, the original document remains completely untouched and undamaged on disk.
 
 ### Consequences & Trade-offs
@@ -112,14 +112,14 @@ Utilize **Tauri v2's Capability-Based Security System** with least-privilege per
 Modern desktop apps often choose between standard OS-provided window decorations (native title bar) and custom client-side window frames (frameless window with custom close/minimize buttons and embedded menu bars).
 
 ### Decision
-Use platform-appropriate window chrome. Windows and Linux retain Lexora's
+Use platform-appropriate window chrome. Windows and Linux retain Taleno's
 frameless, theme-matched title bar. macOS uses native window decorations with
 an overlay title bar, native traffic-light controls, and spacing in the in-app
 menu row that respects those controls.
 
 ### Rationale
 - **macOS Consistency & Accessibility**: Native traffic-light controls preserve familiar window management and accessibility behavior.
-- **Cross-Platform Fit**: Windows and Linux keep the compact custom controls designed for Lexora's menu bar.
+- **Cross-Platform Fit**: Windows and Linux keep the compact custom controls designed for Taleno's menu bar.
 - **Maintainability**: Tauri's macOS-specific configuration owns the native window behavior while the frontend only adjusts layout and control visibility.
 
 ### Consequences & Trade-offs

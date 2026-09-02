@@ -1,6 +1,6 @@
-# Lexora — Project Milestones & Release Schedule
+# Taleno — Project Milestones & Release Schedule
 
-This document tracks the strategic milestones, deliverables, acceptance criteria, and progress for **Lexora** — the seamless in-place Markdown reader-editor built on **Tauri 2 + Rust + SolidJS**.
+This document tracks the strategic milestones, deliverables, acceptance criteria, and progress for **Taleno** — the seamless in-place Markdown reader-editor built on **Tauri 2 + Rust + SolidJS**.
 
 ---
 
@@ -8,7 +8,7 @@ This document tracks the strategic milestones, deliverables, acceptance criteria
 
 ```mermaid
 gantt
-    title Lexora Engineering Roadmap
+    title Taleno Engineering Roadmap
     dateFormat  YYYY-MM-DD
     section Core Reader
     M0 - Project Scaffolding       :done, m0, 2026-08-20, 2026-08-22
@@ -130,7 +130,7 @@ gantt
   - [x] Global workspace full-text search (<kbd>Ctrl+Shift+F</kbd>).
   - [x] VS Code-style top in-app Menu Bar with File, Edit, View, Window, Help menus.
   - [x] Windows default `.md` file associations and CLI startup argument opening.
-  - [x] Official GitHub repository integration ([BerryUIKI/Lexora](https://github.com/BerryUIKI/Lexora)).
+  - [x] Official GitHub repository integration ([BerryUIKI/Taleno](https://github.com/BerryUIKI/Taleno)).
 
 ---
 

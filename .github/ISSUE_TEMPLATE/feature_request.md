@@ -1,6 +1,6 @@
 ---
 name: Feature Request
-about: Suggest an idea or capability for Lexora
+about: Suggest an idea or capability for Taleno
 title: '[FEAT] '
 labels: 'enhancement'
 assignees: ''

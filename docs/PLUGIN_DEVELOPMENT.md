@@ -1,19 +1,19 @@
-# 🧩 Lexora Plugin Developer Handbook
+# 🧩 Taleno Plugin Developer Handbook
 
-This document provides a comprehensive guide for designing, developing, testing, and distributing plugins for **Lexora**.
+This document provides a comprehensive guide for designing, developing, testing, and distributing plugins for **Taleno**.
 
 ---
 
 ## 1. Architectural Overview
 
-Lexora uses a **local-first, sandboxed extensibility model** designed to keep editor keystroke latency strictly under 16ms (60 FPS) while ensuring user data integrity.
+Taleno uses a **local-first, sandboxed extensibility model** designed to keep editor keystroke latency strictly under 16ms (60 FPS) while ensuring user data integrity.
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
 │                        SolidJS Frontend Layer                          │
 │                                                                        │
 │   [Plugin Runtime Sandbox (src/lib/plugins/runtime.ts)]                │
-│   ├── Provides `LexoraPluginContext` bridge                            │
+│   ├── Provides `TalenoPluginContext` bridge                            │
 │   ├── Tracks registered commands & disposables                         │
 │   └── Invokes `onload(ctx)` and `onunload()` on toggle                 │
 └───────────────────────────────────▲────────────────────────────────────┘
@@ -22,9 +22,9 @@ Lexora uses a **local-first, sandboxed extensibility model** designed to keep ed
 │                        Rust Native Backend Core                        │
 │                                                                        │
 │   [Plugin Service (src-tauri/src/services/plugin_service.rs)]          │
-│   ├── Resolves `%APPDATA%/Lexora/plugins/` directory                   │
+│   ├── Resolves `%APPDATA%/Taleno/plugins/` directory                   │
 │   ├── Validates `manifest.json` schemas & reads scripts                │
-│   ├── Fetches online registry from `BerryUIKI/Lexora-Plugins`          │
+│   ├── Fetches online registry from `BerryUIKI/Taleno-Plugins`          │
 │   └── Performs crash-resilient atomic downloads & installations        │
 └────────────────────────────────────────────────────────────────────────┘
 ```
@@ -35,9 +35,9 @@ Lexora uses a **local-first, sandboxed extensibility model** designed to keep ed
 
 Plugins live in individual folders inside the platform application data directory:
 
-- **Windows**: `%APPDATA%\Lexora\plugins\<plugin-id>\`
-- **macOS**: `~/Library/Application Support/Lexora/plugins/<plugin-id>/`
-- **Linux**: `~/.config/lexora/plugins/<plugin-id>/`
+- **Windows**: `%APPDATA%\Taleno\plugins\<plugin-id>\`
+- **macOS**: `~/Library/Application Support/Taleno/plugins/<plugin-id>/`
+- **Linux**: `~/.config/Taleno/plugins/<plugin-id>/`
 
 A standard plugin must contain at minimum:
 
@@ -52,7 +52,7 @@ A standard plugin must contain at minimum:
 
 ## 3. The Plugin Manifest (`manifest.json`)
 
-The manifest provides declarative metadata used by the Lexora settings interface and permission validator:
+The manifest provides declarative metadata used by the Taleno settings interface and permission validator:
 
 ```json
 {
@@ -65,7 +65,7 @@ The manifest provides declarative metadata used by the Lexora settings interface
   "enabled": true,
   "main": "main.js",
   "tags": ["utilities", "productivity"],
-  "minLexoraVersion": "0.1.6",
+  "minTalenoVersion": "0.1.6",
   "permissions": [
     "editor:write",
     "commands"
@@ -86,19 +86,19 @@ The manifest provides declarative metadata used by the Lexora settings interface
 | `enabled` | `boolean` | No | Default active state upon initial discovery (default: `true`). |
 | `tags` | `string[]` | No | Search categories (e.g. `["math", "analytics"]`). |
 | `permissions` | `string[]` | **Yes** | Array of required permission tokens. |
-| `minLexoraVersion` | `string` | No | Minimum core Lexora version required. |
+| `minTalenoVersion` | `string` | No | Minimum core Taleno version required. |
 
 ---
 
-## 4. Script Lifecycle & The `LexoraPluginContext` API
+## 4. Script Lifecycle & The `TalenoPluginContext` API
 
-Your plugin's entry script (`main.js`) exports lifecycle functions that receive a sandboxed `LexoraPluginContext` instance:
+Your plugin's entry script (`main.js`) exports lifecycle functions that receive a sandboxed `TalenoPluginContext` instance:
 
 ```javascript
 export default {
   /**
-   * Invoked when the plugin is enabled, installed, or upon Lexora launch.
-   * @param {LexoraPluginContext} ctx - Sandboxed runtime interface.
+   * Invoked when the plugin is enabled, installed, or upon Taleno launch.
+   * @param {TalenoPluginContext} ctx - Sandboxed runtime interface.
    */
   onload(ctx) {
     console.log("My plugin loaded successfully!");
@@ -115,7 +115,7 @@ export default {
 
 ### 4.1 Commands API (`ctx.commands`)
 
-Allows registering custom actions and keyboard shortcuts into Lexora:
+Allows registering custom actions and keyboard shortcuts into Taleno:
 
 ```javascript
 const unregister = ctx.commands.registerCommand({
@@ -123,7 +123,7 @@ const unregister = ctx.commands.registerCommand({
   title: "Insert Friendly Greeting",
   shortcut: "Ctrl+Shift+G", // Optional keyboard hint
   run() {
-    ctx.editor.insertText("\n> **Hello from Lexora Plugin!**\n");
+    ctx.editor.insertText("\n> **Hello from Taleno Plugin!**\n");
   },
 });
 
@@ -162,7 +162,7 @@ const pref = ctx.storage.getItem("userPreference");
 
 ## 5. Security & Sandbox Constraints
 
-Lexora's architecture prioritizes user data protection and stability:
+Taleno's architecture prioritizes user data protection and stability:
 
 1. **Least-Privilege Scopes**:
    - `commands`: Ability to register actions into the command palette.
@@ -178,26 +178,26 @@ Lexora's architecture prioritizes user data protection and stability:
 
 ## 6. Local Development & Testing Workflow
 
-1. Open Lexora.
+1. Open Taleno.
 2. Navigate to **File ➔ Preferences ➔ Plugins** (<kbd>Ctrl+Shift+X</kbd>).
-3. Click the **"Open Plugins Folder"** button to reveal `%APPDATA%/Lexora/plugins/`.
+3. Click the **"Open Plugins Folder"** button to reveal `%APPDATA%/Taleno/plugins/`.
 4. Create a new folder (e.g. `my-awesome-plugin`) and add `manifest.json` and `main.js`.
-5. Return to Lexora and click **"Reload Plugins"**.
+5. Return to Taleno and click **"Reload Plugins"**.
 6. Your new plugin will immediately appear in the list! Toggle it on and verify execution in DevTools (<kbd>Ctrl+Shift+I</kbd>).
 
 ---
 
 ## 7. Publishing to the Official Registry
 
-To make your plugin discoverable in Lexora's built-in **Marketplace**:
+To make your plugin discoverable in Taleno's built-in **Marketplace**:
 
 > [!IMPORTANT]
 > **Repository Submission Rule**:
-> All external plugins must be submitted to the [**BerryUIKI/Lexora-Plugins**](https://github.com/BerryUIKI/Lexora-Plugins) repository. Do **not** submit third-party plugins as Pull Requests to the core `Lexora` repository.
+> All external plugins must be submitted to the [**BerryUIKI/Taleno-Plugins**](https://github.com/BerryUIKI/Taleno-Plugins) repository. Do **not** submit third-party plugins as Pull Requests to the core `Taleno` repository.
 
-1. Fork the official [**BerryUIKI/Lexora-Plugins**](https://github.com/BerryUIKI/Lexora-Plugins) repository.
+1. Fork the official [**BerryUIKI/Taleno-Plugins**](https://github.com/BerryUIKI/Taleno-Plugins) repository.
 2. Add your plugin under `plugins/<plugin-id>/`.
 3. Register your plugin in `plugins.json`.
-4. Submit a Pull Request targeting the **`dev`** branch of `BerryUIKI/Lexora-Plugins`.
+4. Submit a Pull Request targeting the **`dev`** branch of `BerryUIKI/Taleno-Plugins`.
 
-See the [Lexora-Plugins Submission Guidelines](https://github.com/BerryUIKI/Lexora-Plugins/blob/dev/SUBMISSION_GUIDELINES.md) for full review requirements.
+See the [Taleno-Plugins Submission Guidelines](https://github.com/BerryUIKI/Taleno-Plugins/blob/dev/SUBMISSION_GUIDELINES.md) for full review requirements.

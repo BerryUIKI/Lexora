@@ -1,6 +1,6 @@
 # macOS Release Signing (Optional Notarization)
 
-Lexora's GitHub Release workflow builds separate Intel and Apple Silicon macOS packages. The two macOS jobs use a `Developer ID Application` certificate to sign the packages. The signing secrets are scoped to macOS jobs only; Windows and Linux jobs do not use them.
+Taleno's GitHub Release workflow builds separate Intel and Apple Silicon macOS packages. The two macOS jobs use a `Developer ID Application` certificate to sign the packages. The signing secrets are scoped to macOS jobs only; Windows and Linux jobs do not use them.
 
 If App Store Connect API credentials are also configured, the workflow notarizes the macOS packages automatically. Developer ID signing fixes invalid or ad-hoc signatures, while notarization is required for a normal first-launch experience on current macOS releases. Gatekeeper may still block a signed but unnotarized download.
 
@@ -35,7 +35,7 @@ The workflow infers the signing identity from the imported certificate, so no se
 Convert the exported `.p12` file to a single-line Base64 string and copy it to the clipboard:
 
 ```bash
-openssl base64 -A -in "$HOME/Downloads/Lexora-DeveloperID.p12" | pbcopy
+openssl base64 -A -in "$HOME/Downloads/Taleno-DeveloperID.p12" | pbcopy
 ```
 
 ## 3. Configure GitHub Secrets

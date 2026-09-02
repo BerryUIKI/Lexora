@@ -2,10 +2,10 @@ import { TranslationDictionary } from "../types";
 
 export const zhTW: TranslationDictionary = {
   app: {
-    name: "Lexora",
+    name: "Taleno",
     tagline: "極簡 Markdown 閱讀與原位編輯器",
     description: "基於 Tauri 2、Rust 與 SolidJS 構建的極簡本地優先 Markdown 閱讀與即時所見即所得編輯器。",
-    copyright: "版權所有 © 2026 Lexora Contributors",
+    copyright: "版權所有 © 2026 Taleno Contributors",
     licenseNotice: "GNU AGPL-3.0 開源協議",
   },
   menu: {
@@ -79,7 +79,7 @@ export const zhTW: TranslationDictionary = {
     pluginsTab: "外掛模組",
     updatesTab: "更新",
     markdownTheme: "主題",
-    markdownThemeDescription: "選擇 Lexora 介面與 Markdown 轉譯使用的視覺風格。",
+    markdownThemeDescription: "選擇 Taleno 介面與 Markdown 轉譯使用的視覺風格。",
     colorMode: "色彩模式",
     colorModeDescription: "亮色、深色與跟隨系統模式適用於所有主題。",
     elementShadows: "啟用元素陰影",
@@ -87,7 +87,7 @@ export const zhTW: TranslationDictionary = {
     automaticUpdateChecks: "自動檢查更新",
     automaticUpdateChecksDescription: "每天檢查一次穩定版更新，並在安裝前通知你。",
     stableChannelDescription: "只有在你確認後才會下載並安裝更新。",
-    pluginsDescription: "使用社群工具、編輯器擴充與 UI 增強功能擴充 Lexora。",
+    pluginsDescription: "使用社群工具、編輯器擴充與 UI 增強功能擴充 Taleno。",
     searchPlugins: "搜尋已安裝的外掛模組...",
     openPluginsFolder: "開啟外掛資料夾",
     reloadPlugins: "重新載入外掛模組",
@@ -138,10 +138,10 @@ export const zhTW: TranslationDictionary = {
     website: "官方網站",
     checkForUpdates: "檢查更新...",
     reportIssue: "回報問題",
-    about: "關於 Lexora",
+    about: "關於 Taleno",
   },
   welcome: {
-    title: "Lexora",
+    title: "Taleno",
     subtitle: "極簡 Markdown 閱讀與原位編輯器",
     newDocument: "新增文件",
     openFile: "開啟檔案",
@@ -197,9 +197,9 @@ export const zhTW: TranslationDictionary = {
     installAndRestart: "安裝並重新啟動",
     retry: "重試",
     updateErrorTitle: "更新失敗",
-    updateErrorDesc: "Lexora 無法下載或安裝更新，請再試一次。",
+    updateErrorDesc: "Taleno 無法下載或安裝更新，請再試一次。",
     unsavedTitle: "有未儲存的文件",
-    unsavedMessage: "安裝更新將關閉 Lexora。請先儲存文件，或明確選擇不儲存並繼續。",
+    unsavedMessage: "安裝更新將關閉 Taleno。請先儲存文件，或明確選擇不儲存並繼續。",
     discardAndInstall: "放棄變更並安裝",
   },
   dialogs: {

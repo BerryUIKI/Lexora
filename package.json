@@ -1,5 +1,5 @@
 {
-  "name": "lexora",
+  "name": "taleno",
   "version": "0.1.7",
   "description": "A seamless in-place WYSIWYG Markdown reader-editor built on Tauri + Rust",
   "type": "module",

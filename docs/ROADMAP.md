@@ -1,6 +1,6 @@
-# Lexora Project Roadmap
+# Taleno Project Roadmap
 
-This document outlines the phased development roadmap and milestone deliverables for Lexora, from the initial scaffold through the production MVP and future internationalized releases.
+This document outlines the phased development roadmap and milestone deliverables for Taleno, from the initial scaffold through the production MVP and future internationalized releases.
 
 ---
 
@@ -8,7 +8,7 @@ This document outlines the phased development roadmap and milestone deliverables
 
 ```mermaid
 gantt
-    title Lexora Development Timeline
+    title Taleno Development Timeline
     dateFormat  YYYY-MM-DD
     section MVP
     Phase 0 - Scaffold             :done, p0, 2026-08-01, 1d
@@ -84,7 +84,7 @@ gantt
 - [x] Full Rust unit test coverage for atomic writer, directory scanner, syntect highlighter, and parser.
 - [x] Tauri v2 capability lockdown (minimal required filesystem and dialog scopes).
 - [x] Cross-platform release builds & GitHub Actions packaging workflows configured.
-- [x] **Lexora v1.0.0 Public MVP Release Ready**.
+- [x] **Taleno v1.0.0 Public MVP Release Ready**.
 
 ---
 
@@ -104,7 +104,7 @@ gantt
 - [x] Global workspace-wide full-text search indexing & result jumping modal (<kbd>Ctrl+Shift+F</kbd>).
 - [x] VS Code-style top in-app Menu Bar with full File, Edit, View, Window, Help menus.
 - [x] Windows default `.md` file associations and CLI startup document loading.
-- [x] Official GitHub repository integration ([BerryUIKI/Lexora](https://github.com/BerryUIKI/Lexora)).
+- [x] Official GitHub repository integration ([BerryUIKI/Taleno](https://github.com/BerryUIKI/Taleno)).
 
 ---
 
@@ -126,8 +126,8 @@ gantt
 ---
 
 ### Phase 9 — Plugin System & Extensibility (~1–2 weeks) :white_check_mark: Completed
-- [x] **Rust Plugin Service**: Directory resolution (`%APPDATA%/Lexora/plugins/`), directory scanning, manifest validation, starter template initialization.
-- [x] **Frontend Runtime Engine**: Sandboxed `LexoraPluginContext` providing command registration, editor content hooks, and isolated local storage.
+- [x] **Rust Plugin Service**: Directory resolution (`%APPDATA%/Taleno/plugins/`), directory scanning, manifest validation, starter template initialization.
+- [x] **Frontend Runtime Engine**: Sandboxed `TalenoPluginContext` providing command registration, editor content hooks, and isolated local storage.
 - [x] **Settings UI & Navigation**: Dedicated `Plugins` tab in `SettingsModal` with search filter, reload action, directory opener, and enable/disable toggle switches.
 - [x] **Menu Integration**: `File ➔ Preferences ➔ Plugins...` sub-menu with global shortcut <kbd>Ctrl+Shift+X</kbd> (or <kbd>Cmd+Shift+X</kbd> on macOS).
 
@@ -141,4 +141,4 @@ gantt
 | **Must Have**<br>*(Critical for MVP)* | - In-place WYSIWYG editor via Milkdown<br>- Atomic file open / save operations<br>- Tabbed interface & dirty state tracking<br>- Workspace folder navigation & file tree<br>- Dark / Light mode switching<br>- Status bar (word count, line/column)<br>- Strict security capabilities & local-only storage<br>- Custom top Menu Bar (VS Code style)<br>- Windows `.md` default file associations | Phase 0–5 |
 | **Should Have**<br>*(Important for v1.1)* | - Find and Replace toolbar<br>- HTML export engine<br>- Interactive table insertion<br>- Document outline / TOC sidebar with smooth scrolling<br>- Auto-save timer<br>- Multi-language i18n localization | Phase 6, 8 |
 | **Could Have**<br>*(Desirable for v1.2+)* | - KaTeX math rendering<br>- Mermaid diagram rendering<br>- Typewriter mode & Zen mode<br>- Custom user themes & CSS overrides<br>- Global workspace full-text search<br>- Vim keybinding mode | Phase 7 |
-| **Won't Have**<br>*(Out of Scope)* | - Cloud sync backend / proprietary account login (Lexora remains 100% local-first)<br>- Multi-user real-time collaborative editing (CRDTs)<br>- Heavy IDE extensions / LSP debugging | Out of Scope |
+| **Won't Have**<br>*(Out of Scope)* | - Cloud sync backend / proprietary account login (Taleno remains 100% local-first)<br>- Multi-user real-time collaborative editing (CRDTs)<br>- Heavy IDE extensions / LSP debugging | Out of Scope |

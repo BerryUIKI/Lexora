@@ -1,12 +1,12 @@
 # AGENTS.md — AI Agent & Automation Guidelines
 
-This document provides context, architectural constraints, project conventions, and operational instructions for AI coding agents and autonomous assistants contributing to the **Lexora** codebase.
+This document provides context, architectural constraints, project conventions, and operational instructions for AI coding agents and autonomous assistants contributing to the **Taleno** codebase.
 
 ---
 
 ## 🧠 Architectural Mental Model
 
-Lexora is a **local-first, in-place WYSIWYG Markdown reader & editor** built on **Tauri 2 + Rust + SolidJS**.
+Taleno is a **local-first, in-place WYSIWYG Markdown reader & editor** built on **Tauri 2 + Rust + SolidJS**.
 
 ```
 ┌────────────────────────────────────────────────────────┐
@@ -41,38 +41,38 @@ When implementing features or refactoring:
 3. **Tauri v2 Least-Privilege Capabilities**:
    - Permissions are defined strictly in `src-tauri/capabilities/default.json`. Do not introduce wildcard permissions (`fs:allow-all` or `shell:allow-all`). Scope permissions precisely.
 4. **Pure Markdown Source of Truth**:
-   - Lexora's on-disk and in-memory representation is pure Markdown. Avoid introducing proprietary metadata, custom frontmatter, or incompatible AST wrappers that could break roundtripping.
+   - Taleno's on-disk and in-memory representation is pure Markdown. Avoid introducing proprietary metadata, custom frontmatter, or incompatible AST wrappers that could break roundtripping.
 5. **DOM Performance Budget**:
    - Keystroke latency must remain under 16ms (60 FPS).
    - Use SolidJS fine-grained reactivity (`createSignal`, `createMemo`, `<Show>`, `<For>`) rather than recreating entire DOM trees.
 
 ---
 
-## 🌐 Ecosystem Separation: Lexora vs Lexora-Plugins
+## 🌐 Ecosystem Separation: Taleno vs Taleno-Plugins
 
-Lexora operates as a multi-repository ecosystem with clear boundaries:
+Taleno operates as a multi-repository ecosystem with clear boundaries:
 
 | Concern | Target Repository | Submission / Workflow |
 | :--- | :--- | :--- |
-| **Core Application** | [`BerryUIKI/Lexora`](https://github.com/BerryUIKI/Lexora) | PR against `dev` branch |
-| **External Plugins** | [`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins) | PR against `dev` branch under `plugins/<id>/` |
-| **External Themes & Skins** | [`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins) | PR against `dev` branch under `themes/<id>/` |
+| **Core Application** | [`BerryUIKI/Taleno`](https://github.com/BerryUIKI/Taleno) | PR against `dev` branch |
+| **External Plugins** | [`BerryUIKI/Taleno-Plugins`](https://github.com/BerryUIKI/Taleno-Plugins) | PR against `dev` branch under `plugins/<id>/` |
+| **External Themes & Skins** | [`BerryUIKI/Taleno-Plugins`](https://github.com/BerryUIKI/Taleno-Plugins) | PR against `dev` branch under `themes/<id>/` |
 
 ### ⛔ Critical Contribution Rule
-- **NEVER submit external plugins or community themes to the `Lexora` repository.**
-- All third-party plugins and external themes **MUST** be submitted to the [`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins) repository.
-- The `Lexora` repository is reserved exclusively for the core application codebase, runtime engine, native commands, and official documentation.
+- **NEVER submit external plugins or community themes to the `Taleno` repository.**
+- All third-party plugins and external themes **MUST** be submitted to the [`BerryUIKI/Taleno-Plugins`](https://github.com/BerryUIKI/Taleno-Plugins) repository.
+- The `Taleno` repository is reserved exclusively for the core application codebase, runtime engine, native commands, and official documentation.
 
 ### 🎨 Theme Categorization & Taxonomy
-Themes in Lexora are strictly divided into two categories:
+Themes in Taleno are strictly divided into two categories:
 
 1. **Built-in Themes (Core Presets)**:
-   - Included by default with the software (e.g., `Lexora`, `GitHub`, `Solarized`).
+   - Included by default with the software (e.g., `Taleno`, `GitHub`, `Solarized`).
    - Configured within the core CSS tokens and settings store (`src/styles/` & `src/store/settings.ts`).
    - Require **no installation** and **cannot be uninstalled** via the GUI.
 2. **External Themes (Community Skins)**:
-   - Hosted in the [`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins) repository and cataloged in `themes.json`.
-   - Stored in `%APPDATA%/Lexora/themes/<theme-id>/` on the user's disk.
+   - Hosted in the [`BerryUIKI/Taleno-Plugins`](https://github.com/BerryUIKI/Taleno-Plugins) repository and cataloged in `themes.json`.
+   - Stored in `%APPDATA%/Taleno/themes/<theme-id>/` on the user's disk.
    - Users can freely choose to **install**, **apply**, or **uninstall** them at any time directly through the theme settings interface.
 
 
@@ -81,7 +81,7 @@ Themes in Lexora are strictly divided into two categories:
 ## 📁 Repository Directory Structure
 
 ```
-Lexora/
+Taleno/
 ├── .github/                      # GitHub issue & PR templates
 ├── docs/                         # Project documentation suite
 │   ├── ARCHITECTURE.md           # System design & data flow

@@ -9,7 +9,7 @@ import {
 } from "../lib/tauri/commands";
 import { pluginRuntime } from "../lib/plugins/runtime";
 
-const STORAGE_KEY_PLUGINS = "lexora_plugins_state";
+const STORAGE_KEY_PLUGINS = "Taleno_plugins_state";
 
 const BUILTIN_FALLBACK_PLUGINS: PluginManifest[] = [
   {
@@ -18,7 +18,7 @@ const BUILTIN_FALLBACK_PLUGINS: PluginManifest[] = [
     version: "1.0.0",
     description:
       "Inserts the current ISO 8601 timestamp at cursor position with a single command.",
-    author: "Lexora Team",
+    author: "Taleno Team",
     enabled: true,
     tags: ["utilities", "editor", "official"],
     permissions: ["editor:write", "commands"],
@@ -29,7 +29,7 @@ const BUILTIN_FALLBACK_PLUGINS: PluginManifest[] = [
     version: "1.2.0",
     description:
       "Advanced real-time document statistics, reading time estimates, and character breakdowns.",
-    author: "Lexora Team",
+    author: "Taleno Team",
     enabled: true,
     tags: ["analytics", "statusbar", "official"],
     permissions: ["editor:read", "commands"],
@@ -169,7 +169,7 @@ export const reloadPlugins = async () => {
 };
 
 /**
- * Fetch remote catalog from BerryUIKI/Lexora-Plugins.
+ * Fetch remote catalog from BerryUIKI/Taleno-Plugins.
  */
 export const fetchMarketplace = async () => {
   setIsFetchingMarketplace(true);

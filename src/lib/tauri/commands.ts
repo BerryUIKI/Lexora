@@ -248,7 +248,7 @@ export async function readPluginSource(pluginId: string): Promise<string> {
 }
 
 /**
- * Fetch the list of available plugins from BerryUIKI/Lexora-Plugins registry.
+ * Fetch the list of available plugins from BerryUIKI/Taleno-Plugins registry.
  */
 export async function fetchMarketplacePlugins(): Promise<any[]> {
   return invoke<any[]>("fetch_marketplace_plugins");

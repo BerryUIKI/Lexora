@@ -109,7 +109,7 @@ mod tests {
     #[tokio::test]
     async fn test_export_to_html() {
         let temp_dir = std::env::temp_dir();
-        let target = temp_dir.join("lexora_export_test.html");
+        let target = temp_dir.join("Taleno_export_test.html");
         let path = target.to_string_lossy().to_string();
 
         let md = "# Export Title\n\nThis is a paragraph.";

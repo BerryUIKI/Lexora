@@ -2,10 +2,10 @@ import { TranslationDictionary } from "../types";
 
 export const de: TranslationDictionary = {
   app: {
-    name: "Lexora",
+    name: "Taleno",
     tagline: "Minimalistischer Markdown-Reader & In-Place-Editor",
     description: "Ein minimalistischer, lokal orientierter Markdown-Reader und In-Place-WYSIWYG-Editor, entwickelt mit Tauri 2, Rust und SolidJS.",
-    copyright: "Copyright © 2026 Lexora Contributors",
+    copyright: "Copyright © 2026 Taleno Contributors",
     licenseNotice: "GNU AGPL-3.0-Lizenz",
   },
   menu: {
@@ -79,7 +79,7 @@ export const de: TranslationDictionary = {
     pluginsTab: "Plugins",
     updatesTab: "Updates",
     markdownTheme: "Design",
-    markdownThemeDescription: "Wähle den visuellen Stil für Lexora und gerendertes Markdown.",
+    markdownThemeDescription: "Wähle den visuellen Stil für Taleno und gerendertes Markdown.",
     colorMode: "Farbmodus",
     colorModeDescription: "Hell, Dunkel und System gelten für jedes Design.",
     elementShadows: "Elementschatten aktivieren",
@@ -87,7 +87,7 @@ export const de: TranslationDictionary = {
     automaticUpdateChecks: "Automatisch nach Updates suchen",
     automaticUpdateChecksDescription: "Einmal täglich den stabilen Kanal prüfen und vor der Installation benachrichtigen.",
     stableChannelDescription: "Updates werden erst nach deiner Bestätigung heruntergeladen und installiert.",
-    pluginsDescription: "Erweitere Lexora mit Community-Tools, Editor-Erweiterungen und UI-Verbesserungen.",
+    pluginsDescription: "Erweitere Taleno mit Community-Tools, Editor-Erweiterungen und UI-Verbesserungen.",
     searchPlugins: "Installierte Plugins suchen...",
     openPluginsFolder: "Plugin-Ordner öffnen",
     reloadPlugins: "Plugins neu laden",
@@ -138,10 +138,10 @@ export const de: TranslationDictionary = {
     website: "Offizielle Website",
     checkForUpdates: "Nach Updates suchen...",
     reportIssue: "Problem melden",
-    about: "Über Lexora",
+    about: "Über Taleno",
   },
   welcome: {
-    title: "Lexora",
+    title: "Taleno",
     subtitle: "Minimalistischer Markdown-Reader & In-Place-Editor",
     newDocument: "Neues Dokument",
     openFile: "Datei öffnen",
@@ -197,9 +197,9 @@ export const de: TranslationDictionary = {
     installAndRestart: "Installieren und neu starten",
     retry: "Erneut versuchen",
     updateErrorTitle: "Update fehlgeschlagen",
-    updateErrorDesc: "Lexora konnte das Update nicht herunterladen oder installieren. Bitte erneut versuchen.",
+    updateErrorDesc: "Taleno konnte das Update nicht herunterladen oder installieren. Bitte erneut versuchen.",
     unsavedTitle: "Nicht gespeicherte Dokumente",
-    unsavedMessage: "Lexora wird für die Installation geschlossen. Speichere zuerst deine Dokumente oder fahre ausdrücklich ohne Speichern fort.",
+    unsavedMessage: "Taleno wird für die Installation geschlossen. Speichere zuerst deine Dokumente oder fahre ausdrücklich ohne Speichern fort.",
     discardAndInstall: "Verwerfen und installieren",
   },
   dialogs: {

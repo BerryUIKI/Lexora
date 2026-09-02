@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Create a report to help us improve Lexora
+about: Create a report to help us improve Taleno
 title: '[BUG] '
 labels: 'bug'
 assignees: ''
@@ -24,7 +24,7 @@ If applicable, add screenshots or recordings to help explain your problem.
 
 **Environment Information:**
  - OS: [e.g. Windows 11, macOS Sequoia, Ubuntu 24.04]
- - Lexora Version: [e.g. 0.1.0]
+ - Taleno Version: [e.g. 0.1.0]
  - Node/pnpm Version (if building from source): [e.g. Node 22, pnpm 10]
 
 **Additional context**

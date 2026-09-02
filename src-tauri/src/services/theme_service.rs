@@ -4,9 +4,9 @@ use std::path::{Path, PathBuf};
 use tauri::{AppHandle, Manager};
 
 const GITHUB_THEMES_DEV_URL: &str =
-    "https://raw.githubusercontent.com/BerryUIKI/Lexora-Plugins/dev/themes.json";
+    "https://raw.githubusercontent.com/BerryUIKI/Taleno-Plugins/dev/themes.json";
 const GITHUB_THEMES_MAIN_URL: &str =
-    "https://raw.githubusercontent.com/BerryUIKI/Lexora-Plugins/main/themes.json";
+    "https://raw.githubusercontent.com/BerryUIKI/Taleno-Plugins/main/themes.json";
 
 /// Ensure the user's custom themes directory exists.
 pub fn ensure_themes_dir(app_handle: &AppHandle) -> Result<PathBuf, String> {
@@ -315,7 +315,7 @@ mod tests {
 
     #[test]
     fn test_scan_themes_dir_empty() {
-        let temp_dir = std::env::temp_dir().join("lexora_test_themes_empty_dir");
+        let temp_dir = std::env::temp_dir().join("Taleno_test_themes_empty_dir");
         let _ = fs::remove_dir_all(&temp_dir);
         let _ = fs::create_dir_all(&temp_dir);
         let list = scan_themes_dir(&temp_dir).unwrap();

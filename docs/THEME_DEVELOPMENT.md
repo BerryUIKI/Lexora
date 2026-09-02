@@ -1,35 +1,35 @@
 # Theme & Skin Development Guide
 
-This guide explains how to design, package, test, and publish custom themes and skins for **Lexora**.
+This guide explains how to design, package, test, and publish custom themes and skins for **Taleno**.
 
 ---
 
 ## 🎨 Theme Categories: Built-in vs External Themes
 
-Themes in Lexora are divided into two distinct categories:
+Themes in Taleno are divided into two distinct categories:
 
 1. **Built-in Themes**:
-   - Included by default with the software (e.g., `Lexora`, `GitHub`, `Solarized`).
+   - Included by default with the software (e.g., `Taleno`, `GitHub`, `Solarized`).
    - Require no installation, ship bundled with the app binary, and **cannot be uninstalled** via the GUI.
    - Serve as reliable, offline fallback presets.
 2. **External Themes (Community Skins)**:
-   - Developed by the community and hosted exclusively in the [`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins) repository.
+   - Developed by the community and hosted exclusively in the [`BerryUIKI/Taleno-Plugins`](https://github.com/BerryUIKI/Taleno-Plugins) repository.
    - Users can freely choose to **install**, **apply**, or **uninstall** them on demand via options within the theme settings GUI.
-   - Stored in `%APPDATA%/Lexora/themes/<theme-id>/` on the user's machine.
+   - Stored in `%APPDATA%/Taleno/themes/<theme-id>/` on the user's machine.
 
 > [!IMPORTANT]
-> All external themes and community skins must be submitted to the [`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins) repository. Please **do not** submit external themes to the core `Lexora` software repository.
+> All external themes and community skins must be submitted to the [`BerryUIKI/Taleno-Plugins`](https://github.com/BerryUIKI/Taleno-Plugins) repository. Please **do not** submit external themes to the core `Taleno` software repository.
 
 ---
 
 ## 🏗️ Theme Architecture
 
-Lexora uses a design-token-driven CSS architecture. When an active theme is applied, Lexora dynamically overrides design tokens without restarting the app, modifying configuration files, or triggering full DOM reconstructs.
+Taleno uses a design-token-driven CSS architecture. When an active theme is applied, Taleno dynamically overrides design tokens without restarting the app, modifying configuration files, or triggering full DOM reconstructs.
 
 Themes are stored in the user application data directory:
-- **Windows**: `%APPDATA%/Lexora/themes/<theme-id>/`
-- **macOS**: `~/Library/Application Support/Lexora/themes/<theme-id>/`
-- **Linux**: `~/.config/lexora/themes/<theme-id>/`
+- **Windows**: `%APPDATA%/Taleno/themes/<theme-id>/`
+- **macOS**: `~/Library/Application Support/Taleno/themes/<theme-id>/`
+- **Linux**: `~/.config/Taleno/themes/<theme-id>/`
 
 ---
 
@@ -48,7 +48,7 @@ themes/my-custom-theme/
 
 ## 1. `theme.json` Specification
 
-`theme.json` defines the theme metadata displayed in the Lexora Theme settings and marketplace browser.
+`theme.json` defines the theme metadata displayed in the Taleno Theme settings and marketplace browser.
 
 ```json
 {
@@ -129,19 +129,19 @@ body {
 
 ## 3. Local Development & Testing
 
-1. In Lexora, navigate to **File ➔ Preferences ➔ Settings** (<kbd>Ctrl+,</kbd>) and select the **Theme** tab.
+1. In Taleno, navigate to **File ➔ Preferences ➔ Settings** (<kbd>Ctrl+,</kbd>) and select the **Theme** tab.
 2. Scroll to the **Custom & Community Themes** section and click **"Open Themes Folder"**.
 3. Create a folder matching your theme ID (e.g. `my-custom-theme/`).
 4. Place your `theme.json` and `theme.css` in that folder.
-5. In Lexora, your theme will immediately appear under **Installed Themes**. Click **"Apply"** to test your styles in real time.
+5. In Taleno, your theme will immediately appear under **Installed Themes**. Click **"Apply"** to test your styles in real time.
 
 ---
 
 ## 4. Publishing to the Official Registry
 
-To make your theme discoverable in Lexora's in-app marketplace:
+To make your theme discoverable in Taleno's in-app marketplace:
 
-1. Fork the official extension hub: [`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins).
+1. Fork the official extension hub: [`BerryUIKI/Taleno-Plugins`](https://github.com/BerryUIKI/Taleno-Plugins).
 2. Add your theme folder under `themes/<your-theme-id>/`.
 3. Add your entry into `themes.json`.
-4. Open a Pull Request targeting the **`dev`** branch of `BerryUIKI/Lexora-Plugins`.
+4. Open a Pull Request targeting the **`dev`** branch of `BerryUIKI/Taleno-Plugins`.

@@ -9,7 +9,7 @@ import { getVersion } from "@tauri-apps/api/app";
 import { automaticUpdateChecks } from "../store/settings";
 import { t } from "../i18n";
 
-const LAST_CHECK_KEY = "lexora_last_update_check";
+const LAST_CHECK_KEY = "Taleno_last_update_check";
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 const MAX_STARTUP_JITTER_MS = 60 * 1000;
 

@@ -20,7 +20,7 @@ pub struct PluginManifest {
     pub main: Option<String>,
 }
 
-/// Represents a remote plugin available in the BerryUIKI/Lexora-Plugins registry.
+/// Represents a remote plugin available in the BerryUIKI/Taleno-Plugins registry.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct RemotePlugin {
@@ -36,8 +36,8 @@ pub struct RemotePlugin {
     #[serde(default = "default_entry_file")]
     pub entry_file: String,
     pub raw_base_url: String,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub min_lexora_version: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none", alias = "minLexoraVersion", alias = "min_lexora_version")]
+    pub min_taleno_version: Option<String>,
     #[serde(default)]
     pub tags: Vec<String>,
     #[serde(default)]

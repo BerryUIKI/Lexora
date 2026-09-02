@@ -2,19 +2,19 @@
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md) · [**日本語**](README.ja.md) · [한국어](README.ko.md) · [Deutsch](README.de.md) · [Français](README.fr.md) · [Español](README.es.md) · [Русский](README.ru.md)
 
-<img src="app-icon.svg" alt="Lexora" width="96" height="96">
+<img src="app-icon.svg" alt="Taleno" width="96" height="96">
 
-# ✨ Lexora
+# ✨ Taleno
 
 **Typora スタイルのローカルファースト、超高速 Markdown リーダー & インプレース WYSIWYG エディター。**
 
 <span style="font-size: 13px;">v0.1.6 リリース · AGPL-3.0 オープンソース</span>
 
-[![Website](https://img.shields.io/badge/website-berryuiki.github.io%2FLexora-4895ef.svg?style=for-the-badge)](https://berryuiki.github.io/Lexora/)
-[![Release](https://img.shields.io/badge/release-latest-4361ee.svg?style=for-the-badge)](https://github.com/BerryUIKI/Lexora/releases/latest)
+[![Website](https://img.shields.io/badge/website-berryuiki.github.io%2FTaleno-4895ef.svg?style=for-the-badge)](https://berryuiki.github.io/Taleno/)
+[![Release](https://img.shields.io/badge/release-latest-4361ee.svg?style=for-the-badge)](https://github.com/BerryUIKI/Taleno/releases/latest)
 [![License: AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-10b981.svg?style=for-the-badge)](LICENSE)
-[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-6366f1.svg?style=for-the-badge)](https://github.com/BerryUIKI/Lexora/releases)
-[![CI](https://img.shields.io/github/actions/workflow/status/BerryUIKI/Lexora/ci.yml?style=for-the-badge&label=CI&logo=githubactions&logoColor=white&color=3a0ca3)](https://github.com/BerryUIKI/Lexora/actions)
+[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-6366f1.svg?style=for-the-badge)](https://github.com/BerryUIKI/Taleno/releases)
+[![CI](https://img.shields.io/github/actions/workflow/status/BerryUIKI/Taleno/ci.yml?style=for-the-badge&label=CI&logo=githubactions&logoColor=white&color=3a0ca3)](https://github.com/BerryUIKI/Taleno/actions)
 [![Tauri 2](https://img.shields.io/badge/Tauri-2.0-FFC131?style=for-the-badge&logo=tauri&logoColor=white)](https://tauri.app)
 [![Rust](https://img.shields.io/badge/Rust-1.85+-DEA584?style=for-the-badge&logo=rust&logoColor=white)](https://www.rust-lang.org/)
 [![SolidJS](https://img.shields.io/badge/SolidJS-1.9+-2C4F7C?style=for-the-badge&logo=solid&logoColor=white)](https://www.solidjs.com/)
@@ -23,7 +23,7 @@
   <b>🚀 ローカルファースト</b> • <b>⚡ 超高速起動 (&lt;400ms)</b> • <b>📝 画面分割なしの即時レンダリング</b> • <b>🌐 9言語対応</b> • <b>📦 軽量 (~3.6 MB)</b>
 </p>
 
-[**📥 ダウンロード**](#-ダイレクトダウンロード) · [**🖥️ インターフェースプレビュー**](#-インターフェースプレビュー) · [**🌟 主な機能**](#-主な機能) · [**⌨️ ショートカット**](#-ショートカット一覧) · [**📚 ドキュメント**](#-ドキュメント) · [**🌐 ウェブサイト**](https://berryuiki.github.io/Lexora/)
+[**📥 ダウンロード**](#-ダイレクトダウンロード) · [**🖥️ インターフェースプレビュー**](#-インターフェースプレビュー) · [**🌟 主な機能**](#-主な機能) · [**⌨️ ショートカット**](#-ショートカット一覧) · [**📚 ドキュメント**](#-ドキュメント) · [**🌐 ウェブサイト**](https://berryuiki.github.io/Taleno/)
 
 </div>
 
@@ -34,7 +34,7 @@
 - [🖥️ インターフェースプレビュー](#-インターフェースプレビュー)
 - [📥 ダイレクトダウンロード](#-ダイレクトダウンロード)
 - [🌟 主な機能](#-主な機能)
-- [💡 なぜ Lexora なのか](#-なぜ-lexora-なのか)
+- [💡 なぜ Taleno なのか](#-なぜ-Taleno-なのか)
 - [⌨️ ショートカット一覧](#-ショートカット一覧)
 - [🛠️ アーキテクチャと技術スタック](#-アーキテクチャと技術スタック)
 - [💻 開発者ガイド](#-開発者ガイド)
@@ -48,10 +48,10 @@
 
 ## 🖥️ インターフェースプレビュー
 
-Lexora の実際の姿 — メニューバー、複数タブ、アウトラインサイドバー、インプレース WYSIWYG 編集をすべて 1 つのウィンドウに統合。分割画面もプレビューも不要、ノイズゼロ。
+Taleno の実際の姿 — メニューバー、複数タブ、アウトラインサイドバー、インプレース WYSIWYG 編集をすべて 1 つのウィンドウに統合。分割画面もプレビューも不要、ノイズゼロ。
 
 <p align="center">
-  <img src="assets/lexora-ui.svg" alt="Lexora インプレース WYSIWYG Markdown エディター" width="85%">
+  <img src="assets/Taleno-ui.svg" alt="Taleno インプレース WYSIWYG Markdown エディター" width="85%">
 </p>
 
 > **閲覧** · **編集** · **コード** — 3 つの表示モードをワンキー（`Ctrl+/`）で切り替え。
@@ -62,18 +62,18 @@ Lexora の実際の姿 — メニューバー、複数タブ、アウトライ�
 
 OS とパッケージを選択してください：
 
-- **Windows x86_64:** [インストーラー (`.exe`)](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Windows_x86_64.exe) · [MSI](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Windows_x86_64.msi)
-- **macOS Apple Silicon:** [DMG](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_aarch64.dmg)
-- **macOS Intel:** [DMG](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_x86_64.dmg)
-- **Linux x86_64:** [AppImage](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.AppImage) · [Debian/Ubuntu (`.deb`)](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.deb) · [Fedora/RHEL (`.rpm`)](https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.rpm)
+- **Windows x86_64:** [インストーラー (`.exe`)](https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Windows_x86_64.exe) · [MSI](https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Windows_x86_64.msi)
+- **macOS Apple Silicon:** [DMG](https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_macOS_aarch64.dmg)
+- **macOS Intel:** [DMG](https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_macOS_x86_64.dmg)
+- **Linux x86_64:** [AppImage](https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Linux_x86_64.AppImage) · [Debian/Ubuntu (`.deb`)](https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Linux_x86_64.deb) · [Fedora/RHEL (`.rpm`)](https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Linux_x86_64.rpm)
 
-[すべてのリリースとソースアーカイブを表示](https://github.com/BerryUIKI/Lexora/releases/latest)。
+[すべてのリリースとソースアーカイブを表示](https://github.com/BerryUIKI/Taleno/releases/latest)。
 
 ---
 
 ## 📖 はじめに
 
-**Lexora** は、ライター・開発者・研究者のために作られたオープンソースの Markdown エディターです。「左にコード、右にプレビュー」という従来の分割画面を廃し、Typora のように入力した場所にそのままレンダリングします。
+**Taleno** は、ライター・開発者・研究者のために作られたオープンソースの Markdown エディターです。「左にコード、右にプレビュー」という従来の分割画面を廃し、Typora のように入力した場所にそのままレンダリングします。
 
 **Tauri 2 + Rust + SolidJS** というモダンな技術スタックにより、ネイティブに近いデスクトップパフォーマンスと、ミニマルで没入感のある執筆体験を両立しています。
 
@@ -103,9 +103,9 @@ OS とパッケージを選択してください：
 
 ---
 
-## 💡 なぜ Lexora なのか
+## 💡 なぜ Taleno なのか
 
-| | Lexora | 分割画面プレビュー | オンラインノート |
+| | Taleno | 分割画面プレビュー | オンラインノート |
 |---|---|---|---|
 | **レンダリング** | インプレース WYSIWYG、分割なし | 左右分割プレビュー | ブラウザタブの行き来 |
 | **起動速度** | < 400 ms ネイティブ起動 | Electron 依存 | ページ読み込み + 同期待ち |
@@ -114,7 +114,7 @@ OS とパッケージを選択してください：
 | **オフライン** | 完全オフライン | 完全オフライン | ネットワーク必須 |
 | **保存形式** | 純粋な Markdown | 独自形式の可能性 | ベンダーロックイン |
 
-Lexora はドキュメントを **ディスク上の純粋な Markdown** として保持します — ポータブル、差分可能、そして永遠にあなたのもの。クラウドアカウントも同期エンジンもロックインも不要です。
+Taleno はドキュメントを **ディスク上の純粋な Markdown** として保持します — ポータブル、差分可能、そして永遠にあなたのもの。クラウドアカウントも同期エンジンもロックインも不要です。
 
 ---
 
@@ -187,8 +187,8 @@ Lexora はドキュメントを **ディスク上の純粋な Markdown** とし�
 
 ### クローンして実行
 ```bash
-git clone https://github.com/BerryUIKI/Lexora.git
-cd Lexora
+git clone https://github.com/BerryUIKI/Taleno.git
+cd Taleno
 
 # フロントエンドの依存関係をインストール
 pnpm install
@@ -247,17 +247,17 @@ pnpm tauri build
 
 ## 💬 コミュニティとサポート
 
-- 🐛 [バグ報告 / 機能リクエスト](https://github.com/BerryUIKI/Lexora/issues)
-- 🌐 [ウェブサイト](https://berryuiki.github.io/Lexora/)
-- 💡 [ディスカッションを開始](https://github.com/BerryUIKI/Lexora/discussions)
-- 🔒 [セキュリティポリシー](https://github.com/BerryUIKI/Lexora/security)
-- 📦 [すべてのリリース](https://github.com/BerryUIKI/Lexora/releases)
+- 🐛 [バグ報告 / 機能リクエスト](https://github.com/BerryUIKI/Taleno/issues)
+- 🌐 [ウェブサイト](https://berryuiki.github.io/Taleno/)
+- 💡 [ディスカッションを開始](https://github.com/BerryUIKI/Taleno/discussions)
+- 🔒 [セキュリティポリシー](https://github.com/BerryUIKI/Taleno/security)
+- 📦 [すべてのリリース](https://github.com/BerryUIKI/Taleno/releases)
 
 ---
 
 ## ❤️ 謝辞
 
-Lexora は以下の素晴らしいオープンソースプロジェクトの上に成り立っています：
+Taleno は以下の素晴らしいオープンソースプロジェクトの上に成り立っています：
 
 - [Tauri 2](https://tauri.app) — 軽量で安全なデスクトップシェル
 - [Rust](https://www.rust-lang.org/) — メモリ安全なネイティブバックエンド
@@ -277,4 +277,4 @@ Lexora は以下の素晴らしいオープンソースプロジェクトの上�
 
 本プロジェクトは **GNU Affero General Public License v3.0 (AGPL-3.0)** のもとで公開されています。詳細は [LICENSE](LICENSE) ファイルをご覧ください。
 
-Lexora を改変してネットワークサービスとして運用する場合、AGPL-3.0 はその利用者に改変後のソースコードを提供することを要求します。
+Taleno を改変してネットワークサービスとして運用する場合、AGPL-3.0 はその利用者に改変後のソースコードを提供することを要求します。

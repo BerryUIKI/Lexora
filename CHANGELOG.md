@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to Lexora will be documented in this file.
+All notable changes to Taleno will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -12,13 +12,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - **Plugin System & Extensibility Sandbox**:
   - Full-stack plugin runtime connecting SolidJS frontend and Tauri 2 Rust backend.
-  - Rust Plugin Service managing `%APPDATA%/Lexora/plugins/`, directory scanning, schema validation, and automatic starter plugin initialization (`sample-timestamp`).
+  - Rust Plugin Service managing `%APPDATA%/Taleno/plugins/`, directory scanning, schema validation, and automatic starter plugin initialization (`sample-timestamp`).
   - Native IPC commands: `list_plugins`, `open_plugins_folder`, and `read_plugin_source`.
-  - Frontend execution sandbox (`runtime.ts`) exposing `LexoraPluginContext` with command registration, active editor content manipulation, and persistent key-value storage.
-  - In-app Plugin Marketplace connecting to `BerryUIKI/Lexora-Plugins` with offline caching, search filtering, and one-click install/uninstall.
+  - Frontend execution sandbox (`runtime.ts`) exposing `TalenoPluginContext` with command registration, active editor content manipulation, and persistent key-value storage.
+  - In-app Plugin Marketplace connecting to `BerryUIKI/Taleno-Plugins` with offline caching, search filtering, and one-click install/uninstall.
 - **Custom Themes & Community Skins Engine**:
   - Pure CSS design-token engine dynamically overriding editor, reader, and chrome tokens without app reload or DOM reconstruction.
-  - Rust Theme Service managing `%APPDATA%/Lexora/themes/`, theme manifest parsing, atomic downloads, path traversal protection, and offline registry caching.
+  - Rust Theme Service managing `%APPDATA%/Taleno/themes/`, theme manifest parsing, atomic downloads, path traversal protection, and offline registry caching.
   - Community Theme Marketplace browser in Settings Modal featuring live 3-color palette swatches (Background, Accent, Text) and one-click install/uninstall.
   - Explicit theme taxonomy separating Built-in Themes (bundled, permanent presets) from External Themes (community skins installable/uninstallable via GUI).
 - **Preferences & Menu Integrations**:
@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Modern tabbed Settings Modal organizing Theme (Built-in + Custom Marketplace), Plugins (Installed + Marketplace), and Updates channels.
 - **Documentation & Ecosystem Standards**:
   - Published [`PLUGIN_DEVELOPMENT.md`](docs/PLUGIN_DEVELOPMENT.md) and [`THEME_DEVELOPMENT.md`](docs/THEME_DEVELOPMENT.md) developer handbooks.
-  - Official starter plugins (`sample-timestamp`, `wordcount-pro`, `callout-boxes`, `katex-macros`) and community themes (`dracula`, `nord`, `catppuccin-macchiato`) published to the [`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins) repository.
+  - Official starter plugins (`sample-timestamp`, `wordcount-pro`, `callout-boxes`, `katex-macros`) and community themes (`dracula`, `nord`, `catppuccin-macchiato`) published to the [`BerryUIKI/Taleno-Plugins`](https://github.com/BerryUIKI/Taleno-Plugins) repository.
   - Full localization support for custom themes and plugins across all 9 interface languages.
 
 ## [0.1.6] - 2026-08-31
@@ -44,12 +44,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Official website links in the title bar, Help menu, and About dialog.
-- Non-destructive home navigation from the Lexora title-bar icon.
+- Non-destructive home navigation from the Taleno title-bar icon.
 - Raw block and inline HTML formatting in rendered Markdown, including HTML inside headings.
 
 ### Changed
 - Manual update checks now display an immediate progress state and keep the About dialog open.
-- In-app update notes now come from Lexora's nine-language translation dictionaries; GitHub release descriptions remain English-only.
+- In-app update notes now come from Taleno's nine-language translation dictionaries; GitHub release descriptions remain English-only.
 - The latest-version result now displays a green confirmation checkmark.
 - The sidebar toggle now sits at the far left of the title bar, while the display-mode switcher anchors the bottom-left status area; redundant bottom Open and Save buttons were removed.
 
@@ -61,14 +61,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Localized in-app release notes for all nine supported interface languages.
 
 ### Changed
-- Update installation now warns when any open tab has unsaved changes before Lexora exits or restarts.
+- Update installation now warns when any open tab has unsaved changes before Taleno exits or restarts.
 - Application versioning now derives from `package.json` and is validated against Cargo and the release tag in CI.
 
 ## [0.1.3] - 2026-08-26
 
 ### Changed
-- macOS now uses native traffic-light window controls and overlay title-bar styling while Windows and Linux retain Lexora's custom window controls.
-- Release assets now use stable `Lexora_<OS>_<architecture>` names without embedded app versions, and README download lists have been simplified.
+- macOS now uses native traffic-light window controls and overlay title-bar styling while Windows and Linux retain Taleno's custom window controls.
+- Release assets now use stable `Taleno_<OS>_<architecture>` names without embedded app versions, and README download lists have been simplified.
 - Markdown tables no longer apply header, row, or column background fills, improving text contrast across platforms and themes.
 
 ## [0.1.2] - 2026-08-25
@@ -84,7 +84,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Explicit rate-limit detection (HTTP 403 / 429), strict repository format validation, and draft/prerelease release filtering.
   - Added "🌟 领先于官方发行版 (Ahead of Public Release)" state with full 9-language localization.
 - **Apple Silicon Native Artifact Naming & Permanent Latest Aliases**:
-  - Automated aliasing in CI to generate `Lexora_Apple-Silicon.dmg`, `Lexora_x64-setup.exe`, `Lexora_amd64.AppImage`, etc.
+  - Automated aliasing in CI to generate `Taleno_Apple-Silicon.dmg`, `Taleno_x64-setup.exe`, `Taleno_amd64.AppImage`, etc.
 - **9-Language Localized READMEs & Instant Direct Downloads**:
   - Added dedicated READMEs for all 9 supported languages with top navigation switcher.
   - Embedded permanent 1-click latest direct download matrix (`/releases/latest/download/...`).
@@ -106,7 +106,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Spanish (`es-ES` - Español)
     - Russian (`ru-RU` - Русский)
   - Automatic system language detection on initial launch (`navigator.language`) with English fallback.
-  - Persistent user preference stored in `localStorage` under `lexora_locale_setting`.
+  - Persistent user preference stored in `localStorage` under `Taleno_locale_setting`.
   - Type-safe reactive translation function `t(key, params)` providing seamless, instant UI updates without page reload.
 - **Top MenuBar Language Switcher (`Help -> Language`)**:
   - Added dedicated `Language (语言)` submenu under the `Help` menu with native language labels and active checkmark indicators.
@@ -129,8 +129,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Configured installer bundle file associations registering `.md`, `.markdown`, `.mdx`, and `.txt` with the Windows shell.
   - Implemented `get_cli_args` command in Rust backend and initial startup resolver to automatically open documents when double-clicked in Windows Explorer.
 - **Official GitHub Repository Integration**:
-  - Integrated [BerryUIKI/Lexora](https://github.com/BerryUIKI/Lexora) repository links in the Help menu, Top Menu Bar, Welcome Hub, and About dialog.
-  - Added About Lexora dialog detailing version, open-source MIT license, author contributors, and technology stack.
+  - Integrated [BerryUIKI/Taleno](https://github.com/BerryUIKI/Taleno) repository links in the Help menu, Top Menu Bar, Welcome Hub, and About dialog.
+  - Added About Taleno dialog detailing version, open-source MIT license, author contributors, and technology stack.
 - **Multi-Language Internationalization (i18n) Roadmap**:
   - Added Phase 8 / Milestone 8 roadmap plan to support English, Simplified Chinese, Traditional Chinese, Japanese, German, French, and Spanish.
 
@@ -285,7 +285,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Status Bar Footer**:
   - Live status indicators for filename, word count, theme cycle button, and external modification badge.
 - **Production Build & Packaging**:
-  - Standalone executable (`lexora.exe`).
+  - Standalone executable (`Taleno.exe`).
   - Lightweight NSIS Windows installer (3.38 MB).
   - WiX MSI Windows installer (4.92 MB).
 - **Documentation Suite**:

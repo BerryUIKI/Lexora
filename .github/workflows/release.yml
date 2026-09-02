@@ -13,7 +13,7 @@ on:
       release_name:
         description: 'Release title'
         required: false
-        default: 'Lexora v0.1.6'
+        default: 'Taleno v0.1.6'
 
 jobs:
   build-tauri:
@@ -27,17 +27,17 @@ jobs:
           - platform: 'macos-latest'
             args: '--target aarch64-apple-darwin'
             target: 'aarch64-apple-darwin'
-            asset_name: 'Lexora_macOS_aarch64[ext]'
+            asset_name: 'Taleno_macOS_aarch64[ext]'
           - platform: 'macos-latest'
             args: '--target x86_64-apple-darwin'
             target: 'x86_64-apple-darwin'
-            asset_name: 'Lexora_macOS_x86_64[ext]'
+            asset_name: 'Taleno_macOS_x86_64[ext]'
           - platform: 'ubuntu-22.04'
             args: ''
-            asset_name: 'Lexora_Linux_x86_64[ext]'
+            asset_name: 'Taleno_Linux_x86_64[ext]'
           - platform: 'windows-latest'
             args: ''
-            asset_name: 'Lexora_Windows_x86_64[ext]'
+            asset_name: 'Taleno_Windows_x86_64[ext]'
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -147,10 +147,10 @@ jobs:
           APPLE_API_KEY_PATH: ${{ steps.prepare_apple_notarization_key.outputs.path }}
         with:
           tagName: ${{ github.event_name == 'workflow_dispatch' && inputs.tag_name || github.ref_name }}
-          releaseName: ${{ github.event_name == 'workflow_dispatch' && inputs.release_name || format('Lexora {0}', github.ref_name) }}
+          releaseName: ${{ github.event_name == 'workflow_dispatch' && inputs.release_name || format('Taleno {0}', github.ref_name) }}
           releaseBody: |
             ### What's new
-            - See [CHANGELOG.md](https://github.com/BerryUIKI/Lexora/blob/main/CHANGELOG.md) for release details.
+            - See [CHANGELOG.md](https://github.com/BerryUIKI/Taleno/blob/main/CHANGELOG.md) for release details.
 
             The in-app updater presents update notes in the selected interface language.
           releaseDraft: true
@@ -165,7 +165,7 @@ jobs:
       - name: Verify macOS Developer ID signature
         if: matrix.platform == 'macos-latest'
         env:
-          APP_PATH: src-tauri/target/${{ matrix.target }}/release/bundle/macos/Lexora.app
+          APP_PATH: src-tauri/target/${{ matrix.target }}/release/bundle/macos/Taleno.app
           DMG_DIRECTORY: src-tauri/target/${{ matrix.target }}/release/bundle/dmg
         run: |
           set -euo pipefail
@@ -201,7 +201,7 @@ jobs:
       - name: Verify macOS Gatekeeper assessment
         if: matrix.platform == 'macos-latest' && steps.prepare_apple_notarization_key.outputs.enabled == 'true'
         env:
-          APP_PATH: src-tauri/target/${{ matrix.target }}/release/bundle/macos/Lexora.app
+          APP_PATH: src-tauri/target/${{ matrix.target }}/release/bundle/macos/Taleno.app
         run: spctl --assess --type execute --verbose=4 "$APP_PATH"
 
   publish-release:

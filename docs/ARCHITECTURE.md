@@ -1,12 +1,12 @@
-# Lexora Architecture
+# Taleno Architecture
 
-Lexora is a high-performance, seamless in-place WYSIWYG Markdown reader-editor built on **Tauri 2**, **Rust**, **SolidJS**, and **Milkdown**. This document outlines the technical architecture, component boundaries, data flows, security constraints, and performance goals of the application.
+Taleno is a high-performance, seamless in-place WYSIWYG Markdown reader-editor built on **Tauri 2**, **Rust**, **SolidJS**, and **Milkdown**. This document outlines the technical architecture, component boundaries, data flows, security constraints, and performance goals of the application.
 
 ---
 
 ## 1. System Overview
 
-Lexora utilizes a desktop application architecture separating user interface rendering and systems-level operations:
+Taleno utilizes a desktop application architecture separating user interface rendering and systems-level operations:
 
 - **Frontend (WebView)**: Built with **SolidJS** and **Milkdown** (ProseMirror-based). Runs within the platform's native WebView (WebView2 on Windows, WebKit on macOS, WebKitGTK on Linux). Responsible for immediate user input handling, WYSIWYG Markdown rendering, editor state management, and user interface controls.
 - **Backend (Rust Process)**: Built on the **Tauri 2** core. Responsible for native operating system interactions, secure file system access (atomic reads/writes), Markdown parsing/transformation for export, high-speed syntax highlighting with `syntect`, workspace indexing, and application configuration persistence.
@@ -152,7 +152,7 @@ sequenceDiagram
     Editor-->>UI: Markdown text string
     UI->>IPC: invoke("save_file_atomic", { path, content })
     IPC->>Rust: Handle save_file_atomic command
-    Rust->>FS: Write content to temporary file (path + ".tmp.lexora")
+    Rust->>FS: Write content to temporary file (path + ".tmp.Taleno")
     FS-->>Rust: Temporary write successful
     Rust->>FS: Atomic rename/replace tmp file -> target file
     FS-->>Rust: Rename successful
@@ -317,15 +317,15 @@ Used for broadcasting state changes or background system events.
 
 | Event Channel | Payload Type | Description |
 | :--- | :--- | :--- |
-| `lexora://file-changed` | `{ path: string, kind: string }` | Notifies when open file is modified externally. |
-| `lexora://theme-changed` | `{ theme: "light" \| "dark" }` | Emitted on OS system theme transition. |
-| `lexora://menu-action` | `{ action: string }` | Emitted when native application menu item is clicked. |
+| `Taleno://file-changed` | `{ path: string, kind: string }` | Notifies when open file is modified externally. |
+| `Taleno://theme-changed` | `{ theme: "light" \| "dark" }` | Emitted on OS system theme transition. |
+| `Taleno://menu-action` | `{ action: string }` | Emitted when native application menu item is clicked. |
 
 ---
 
 ## 7. Security Model
 
-Lexora adheres to strict **least-privilege** security practices enabled by Tauri v2:
+Taleno adheres to strict **least-privilege** security practices enabled by Tauri v2:
 
 1. **Capability Scopes**:
    - Explicit permissions defined in `src-tauri/capabilities/default.json`.
@@ -353,13 +353,13 @@ Lexora adheres to strict **least-privilege** security practices enabled by Tauri
 
 ## 9. Plugin & Extensibility Architecture
 
-Lexora provides a local-first, sandboxed plugin system enabling users and developers to extend editor capabilities, register custom commands, and add workspace tooling without altering core binaries.
+Taleno provides a local-first, sandboxed plugin system enabling users and developers to extend editor capabilities, register custom commands, and add workspace tooling without altering core binaries.
 
 ### 9.1 Storage & Discovery
 Plugins are stored in the platform-standard application data directory:
-- **Windows**: `%APPDATA%/Lexora/plugins/<plugin-id>/`
-- **macOS**: `~/Library/Application Support/Lexora/plugins/<plugin-id>/`
-- **Linux**: `~/.config/lexora/plugins/<plugin-id>/`
+- **Windows**: `%APPDATA%/Taleno/plugins/<plugin-id>/`
+- **macOS**: `~/Library/Application Support/Taleno/plugins/<plugin-id>/`
+- **Linux**: `~/.config/Taleno/plugins/<plugin-id>/`
 
 On startup, the Rust backend `plugin_service` verifies this directory exists and automatically writes a documented starter plugin (`sample-timestamp`) if empty.
 
@@ -378,7 +378,7 @@ On startup, the Rust backend `plugin_service` verifies this directory exists and
 }
 ```
 
-### 9.3 Runtime Sandbox & Context API (`LexoraPluginContext`)
+### 9.3 Runtime Sandbox & Context API (`TalenoPluginContext`)
 Plugins export an `onload(ctx)` and optional `onunload()` lifecycle hook:
 
 ```javascript
@@ -406,10 +406,10 @@ All commands, UI elements, and event listeners registered through `ctx` are trac
 
 ### 9.5 Developer Standards & Registry
 - For comprehensive plugin developer instructions, see [Plugin Development Handbook](PLUGIN_DEVELOPMENT.md).
-- Official plugin registry and community submission hub: [BerryUIKI/Lexora-Plugins](https://github.com/BerryUIKI/Lexora-Plugins).
+- Official plugin registry and community submission hub: [BerryUIKI/Taleno-Plugins](https://github.com/BerryUIKI/Taleno-Plugins).
 
 ### 9.6 Custom Themes & Skins Architecture
-- Custom themes are managed under `%APPDATA%/Lexora/themes/<theme-id>/`.
+- Custom themes are managed under `%APPDATA%/Taleno/themes/<theme-id>/`.
 - Themes provide a `theme.json` metadata file and a `theme.css` token override stylesheet that dynamically configures the CSS variables on `:root` without full DOM re-renders or application restarts.
 - For complete theme styling instructions and palette references, see [Theme Development Handbook](THEME_DEVELOPMENT.md).
 

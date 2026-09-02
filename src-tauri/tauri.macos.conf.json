@@ -3,7 +3,7 @@
   "app": {
     "windows": [
       {
-        "title": "Lexora",
+        "title": "Taleno",
         "width": 1200,
         "height": 800,
         "resizable": true,

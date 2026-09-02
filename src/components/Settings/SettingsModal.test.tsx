@@ -34,7 +34,7 @@ describe("SettingsModal", () => {
 
   it("selects themes and keeps element shadows opt-in", () => {
     setTheme("light");
-    setMarkdownTheme("lexora");
+    setMarkdownTheme("Taleno");
     setElementShadows(false);
     container = document.createElement("div");
     document.body.append(container);

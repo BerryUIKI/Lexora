@@ -1,4 +1,4 @@
-# Lexora — Next Steps: Phase 2 Execution Plan
+# Taleno — Next Steps: Phase 2 Execution Plan
 
 This document outlines the concrete technical strategy, task breakdown, risk assessment, and implementation plan for **Phase 2 — In-Place WYSIWYG Editor & Tri-State Display Modes**.
 
@@ -6,7 +6,7 @@ This document outlines the concrete technical strategy, task breakdown, risk ass
 
 ## 🎯 Phase 2 Objectives
 
-Transform Lexora from a Markdown reader into a full-featured **seamless in-place Markdown environment with Three Display Modes**:
+Transform Taleno from a Markdown reader into a full-featured **seamless in-place Markdown environment with Three Display Modes**:
 1. **Three Display Modes** (rapidly toggled via status bar or shortcuts):
    - 📖 **Reading Mode**: Clean, read-only rendered Markdown view for distraction-free reading and review.
    - ✍️ **Writing Mode**: In-place WYSIWYG editing where Markdown syntax renders live as you type, and raw delimiters reveal only on cursor focus.

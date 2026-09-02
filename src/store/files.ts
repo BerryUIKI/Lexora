@@ -14,7 +14,7 @@ export interface RecentFile {
   lastOpened: number;
 }
 
-const STORAGE_KEY_RECENT = "lexora_recent_files";
+const STORAGE_KEY_RECENT = "Taleno_recent_files";
 
 function loadRecentFiles(): RecentFile[] {
   try {

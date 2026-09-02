@@ -1794,28 +1794,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "lexora"
-version = "0.1.7"
-dependencies = [
- "notify",
- "notify-debouncer-mini",
- "pulldown-cmark",
- "reqwest 0.12.28",
- "serde",
- "serde_json",
- "syntect",
- "tauri",
- "tauri-build",
- "tauri-plugin-dialog",
- "tauri-plugin-fs",
- "tauri-plugin-process",
- "tauri-plugin-shell",
- "tauri-plugin-updater",
- "thiserror 2.0.20",
- "tokio",
-]
-
-[[package]]
 name = "libappindicator"
 version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3648,6 +3626,28 @@ dependencies = [
  "pkg-config",
  "toml 0.8.2",
  "version-compare",
+]
+
+[[package]]
+name = "taleno"
+version = "0.1.7"
+dependencies = [
+ "notify",
+ "notify-debouncer-mini",
+ "pulldown-cmark",
+ "reqwest 0.12.28",
+ "serde",
+ "serde_json",
+ "syntect",
+ "tauri",
+ "tauri-build",
+ "tauri-plugin-dialog",
+ "tauri-plugin-fs",
+ "tauri-plugin-process",
+ "tauri-plugin-shell",
+ "tauri-plugin-updater",
+ "thiserror 2.0.20",
+ "tokio",
 ]
 
 [[package]]

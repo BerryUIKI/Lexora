@@ -36,7 +36,7 @@ describe("native updater", () => {
 
   it("checks daily unless the user opts out", () => {
     expect(isAutomaticCheckDue(100_000_000)).toBe(true);
-    localStorage.setItem("lexora_last_update_check", "99999999");
+    localStorage.setItem("Taleno_last_update_check", "99999999");
     expect(isAutomaticCheckDue(100_000_000)).toBe(false);
     setAutomaticUpdateChecks(false);
     expect(isAutomaticCheckDue(200_000_000)).toBe(false);

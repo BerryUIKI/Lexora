@@ -158,10 +158,10 @@ mod tests {
     #[tokio::test]
     async fn test_atomic_write_and_read() {
         let temp_dir = std::env::temp_dir();
-        let test_file = temp_dir.join("lexora_test_atomic.md");
+        let test_file = temp_dir.join("Taleno_test_atomic.md");
         let test_path = test_file.to_string_lossy().to_string();
 
-        let content = "# Hello Lexora Atomic Write";
+        let content = "# Hello Taleno Atomic Write";
         let res = write_file_atomic(&test_path, content).await;
         assert!(res.is_ok());
 
@@ -175,7 +175,7 @@ mod tests {
 
     #[tokio::test]
     async fn test_read_dir_tree() {
-        let temp_dir = std::env::temp_dir().join("lexora_test_tree");
+        let temp_dir = std::env::temp_dir().join("Taleno_test_tree");
         let temp_path = temp_dir.to_string_lossy().to_string();
 
         let _ = fs::create_dir_all(&temp_dir).await;

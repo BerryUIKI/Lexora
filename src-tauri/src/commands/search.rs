@@ -88,7 +88,7 @@ mod tests {
 
     #[tokio::test]
     async fn test_workspace_search() {
-        let temp_dir = std::env::temp_dir().join("lexora_search_test");
+        let temp_dir = std::env::temp_dir().join("Taleno_search_test");
         let _ = fs::create_dir_all(&temp_dir).await;
 
         let file1 = temp_dir.join("note1.md");

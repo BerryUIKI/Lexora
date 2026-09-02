@@ -10,14 +10,14 @@ const SAMPLE_PLUGIN_MANIFEST: &str = r#"{
   "name": "Timestamp Inserter",
   "version": "1.0.0",
   "description": "Inserts the current ISO 8601 timestamp at the cursor or document end with a single command.",
-  "author": "Lexora Team",
+  "author": "Taleno Team",
   "enabled": true,
   "main": "main.js",
   "tags": ["utilities", "editor", "official"],
   "permissions": ["editor:write", "commands"]
 }"#;
 
-const SAMPLE_PLUGIN_SCRIPT: &str = r#"// Lexora Sample Plugin: Timestamp Inserter
+const SAMPLE_PLUGIN_SCRIPT: &str = r#"// Taleno Sample Plugin: Timestamp Inserter
 export default {
   onload(ctx) {
     console.log("[Sample Plugin] Loaded Timestamp Inserter");
@@ -37,9 +37,9 @@ export default {
 "#;
 
 const REGISTRY_PRIMARY_URL: &str =
-    "https://raw.githubusercontent.com/BerryUIKI/Lexora-Plugins/dev/plugins.json";
+    "https://raw.githubusercontent.com/BerryUIKI/Taleno-Plugins/dev/plugins.json";
 const REGISTRY_FALLBACK_URL: &str =
-    "https://raw.githubusercontent.com/BerryUIKI/Lexora-Plugins/main/plugins.json";
+    "https://raw.githubusercontent.com/BerryUIKI/Taleno-Plugins/main/plugins.json";
 
 /// Validates that a plugin ID contains only safe alphanumeric, dash, and underscore characters.
 pub fn validate_plugin_id(id: &str) -> Result<(), String> {
@@ -221,7 +221,7 @@ pub async fn open_plugins_folder(app_handle: &tauri::AppHandle) -> Result<(), St
 async fn download_text(client: &reqwest::Client, url: &str) -> Result<String, String> {
     let resp = client
         .get(url)
-        .header("User-Agent", "Lexora-Client")
+        .header("User-Agent", "Taleno-Client")
         .send()
         .await
         .map_err(|e| format!("Request failed for {}: {}", url, e))?;
@@ -235,7 +235,7 @@ async fn download_text(client: &reqwest::Client, url: &str) -> Result<String, St
         .map_err(|e| format!("Failed to read response from {}: {}", url, e))
 }
 
-/// Fetch the list of available plugins from the remote BerryUIKI/Lexora-Plugins registry.
+/// Fetch the list of available plugins from the remote BerryUIKI/Taleno-Plugins registry.
 pub async fn fetch_marketplace_plugins(
     app_handle: &tauri::AppHandle,
 ) -> Result<Vec<RemotePlugin>, String> {
@@ -365,7 +365,7 @@ mod tests {
 
     #[tokio::test]
     async fn test_scan_and_read_plugins_in_temp_dir() {
-        let temp_dir = std::env::temp_dir().join("lexora_test_plugins_dir");
+        let temp_dir = std::env::temp_dir().join("Taleno_test_plugins_dir");
         let root = temp_dir.as_path();
         let _ = fs::remove_dir_all(&temp_dir).await;
         fs::create_dir_all(&temp_dir).await.unwrap();

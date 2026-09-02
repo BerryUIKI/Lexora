@@ -2,10 +2,10 @@ import { TranslationDictionary } from "../types";
 
 export const ja: TranslationDictionary = {
   app: {
-    name: "Lexora",
+    name: "Taleno",
     tagline: "ミニマリストなMarkdownリーダー＆インプレースエディター",
     description: "Tauri 2、Rust、SolidJSで構築された、ローカルファーストのMarkdownリーダー＆インプレースWYSIWYGエディター。",
-    copyright: "著作権 © 2026 Lexora Contributors",
+    copyright: "著作権 © 2026 Taleno Contributors",
     licenseNotice: "GNU AGPL-3.0 ライセンス",
   },
   menu: {
@@ -79,7 +79,7 @@ export const ja: TranslationDictionary = {
     pluginsTab: "プラグイン",
     updatesTab: "アップデート",
     markdownTheme: "テーマ",
-    markdownThemeDescription: "Lexora 全体と Markdown 表示に使用する外観を選択します。",
+    markdownThemeDescription: "Taleno 全体と Markdown 表示に使用する外観を選択します。",
     colorMode: "カラーモード",
     colorModeDescription: "ライト、ダーク、システム設定はすべてのテーマに適用されます。",
     elementShadows: "要素の影を有効にする",
@@ -87,7 +87,7 @@ export const ja: TranslationDictionary = {
     automaticUpdateChecks: "アップデートを自動確認",
     automaticUpdateChecksDescription: "安定版を1日1回確認し、インストール前に通知します。",
     stableChannelDescription: "確認後にのみアップデートをダウンロードしてインストールします。",
-    pluginsDescription: "コミュニティ製ツールやエディタ拡張機能で Lexora をカスタマイズします。",
+    pluginsDescription: "コミュニティ製ツールやエディタ拡張機能で Taleno をカスタマイズします。",
     searchPlugins: "インストール済みプラグインを検索...",
     openPluginsFolder: "プラグインフォルダーを開く",
     reloadPlugins: "プラグインを再読み込み",
@@ -138,10 +138,10 @@ export const ja: TranslationDictionary = {
     website: "公式サイト",
     checkForUpdates: "アップデートを確認...",
     reportIssue: "問題を報告",
-    about: "Lexora について",
+    about: "Taleno について",
   },
   welcome: {
-    title: "Lexora",
+    title: "Taleno",
     subtitle: "ミニマリストなMarkdownリーダー＆インプレースエディター",
     newDocument: "新規ドキュメント",
     openFile: "ファイルを開く",
@@ -199,7 +199,7 @@ export const ja: TranslationDictionary = {
     updateErrorTitle: "アップデートに失敗しました",
     updateErrorDesc: "アップデートをダウンロードまたはインストールできませんでした。もう一度お試しください。",
     unsavedTitle: "未保存のドキュメント",
-    unsavedMessage: "アップデートをインストールすると Lexora が終了します。先に保存するか、保存せず続行することを明示的に選択してください。",
+    unsavedMessage: "アップデートをインストールすると Taleno が終了します。先に保存するか、保存せず続行することを明示的に選択してください。",
     discardAndInstall: "破棄してインストール",
   },
   dialogs: {

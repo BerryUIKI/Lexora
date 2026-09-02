@@ -473,7 +473,7 @@ export const SettingsModal: Component<SettingsModalProps> = (props) => {
                               </Show>
                             </div>
                             <p class="text-[11px] text-[var(--color-text-secondary)]">
-                              Use native Lexora theme styling without custom CSS overrides.
+                              Use native Taleno theme styling without custom CSS overrides.
                             </p>
                           </div>
                           <Show when={activeCustomThemeId() !== null}>

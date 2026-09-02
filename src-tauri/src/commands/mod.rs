@@ -8,5 +8,5 @@ pub mod window;
 /// A simple greet command to verify IPC round-trip.
 #[tauri::command]
 pub fn greet(name: &str) -> String {
-    format!("Hello, {}! Welcome to Lexora.", name)
+    format!("Hello, {}! Welcome to Taleno.", name)
 }

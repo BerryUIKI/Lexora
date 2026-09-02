@@ -25,6 +25,6 @@ export interface RemoteTheme {
   textColor: string;
   entryFile: string;
   rawBaseUrl: string;
-  minLexoraVersion?: string;
+  minTalenoVersion?: string;
   tags?: string[];
 }

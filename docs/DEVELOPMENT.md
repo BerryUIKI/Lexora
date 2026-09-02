@@ -1,12 +1,12 @@
-# Lexora Development Guide
+# Taleno Development Guide
 
-Welcome to the Lexora developer documentation! This guide covers the prerequisites, setup instructions, development workflows, project conventions, and debugging tips needed to build and contribute to Lexora.
+Welcome to the Taleno developer documentation! This guide covers the prerequisites, setup instructions, development workflows, project conventions, and debugging tips needed to build and contribute to Taleno.
 
 ---
 
 ## 1. Prerequisites
 
-Before setting up Lexora locally, ensure your environment meets the following requirements:
+Before setting up Taleno locally, ensure your environment meets the following requirements:
 
 - **Node.js**: `v20.0.0` or higher (LTS recommended)
 - **Package Manager**: `pnpm` `v9.0.0` or higher (`corepack enable && corepack prepare pnpm@latest --activate`)
@@ -26,8 +26,8 @@ Before setting up Lexora locally, ensure your environment meets the following re
 
 ```bash
 # Clone repository
-git clone https://github.com/your-username/lexora.git
-cd lexora
+git clone https://github.com/your-username/Taleno.git
+cd Taleno
 
 # Install frontend dependencies
 pnpm install
@@ -48,7 +48,7 @@ This starts the Vite HMR server on `http://localhost:1420` and compiles the Rust
 ## 3. Project Structure Overview
 
 ```
-Lexora/
+Taleno/
 ├── .github/                  # CI/CD workflows and issue templates
 ├── docs/                     # Project architecture and technical guides
 ├── src/                      # SolidJS Frontend Application
@@ -106,7 +106,7 @@ Lexora/
 ## 5. Frontend Development
 
 ### 5.1. SolidJS Components
-- Lexora leverages SolidJS's fine-grained reactivity. Use `createSignal`, `createMemo`, and `createEffect` deliberately.
+- Taleno leverages SolidJS's fine-grained reactivity. Use `createSignal`, `createMemo`, and `createEffect` deliberately.
 - Avoid wrapping UI in heavy lifecycle abstractions. Solid components execute only **once** during setup; reactive JSX bindings update specific DOM nodes directly.
 - Maintain isolated component state in `src/store/` using Solid's `createStore` or modular signals.
 
@@ -227,11 +227,11 @@ export async function calculateStats(content: string): Promise<WordCountResult> 
 - Alternatively, toggle DevTools programmatically or press `F12` (on Windows/Linux) or `Option+Cmd+I` (on macOS).
 
 ### 9.2. Rust Backend Logging
-- Lexora includes structured logging via the `tracing` or `log` crate.
+- Taleno includes structured logging via the `tracing` or `log` crate.
 - View real-time backend logs directly in your terminal where `pnpm tauri dev` is running.
 - Set log level via environment variables:
   ```bash
-  RUST_LOG=lexora=debug,tauri=info pnpm tauri dev
+  RUST_LOG=Taleno=debug,tauri=info pnpm tauri dev
   ```
 
 ### 9.3. Tauri IPC Debugging

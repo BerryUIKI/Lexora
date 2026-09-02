@@ -20,7 +20,7 @@ export interface RemotePlugin {
   homepage?: string;
   entryFile: string;
   rawBaseUrl: string;
-  minLexoraVersion?: string;
+  minTalenoVersion?: string;
   tags: string[];
   permissions: string[];
 }

@@ -59,7 +59,7 @@ pub fn run() {
             stop_watching_file,
         ])
         .run(tauri::generate_context!())
-        .expect("error while running Lexora");
+        .expect("error while running Taleno");
 }
 
 /// Retrieve command line file arguments passed when opening files from Windows Explorer.

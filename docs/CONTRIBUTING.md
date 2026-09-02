@@ -1,32 +1,32 @@
-# Contributing to Lexora
+# Contributing to Taleno
 
-Thank you for your interest in contributing to **Lexora**! 🎉 We welcome contributions from developers, technical writers, and designers of all skill levels. Whether you are fixing a bug, proposing a new feature, writing documentation, or enhancing performance, your help makes Lexora better for everyone.
+Thank you for your interest in contributing to **Taleno**! 🎉 We welcome contributions from developers, technical writers, and designers of all skill levels. Whether you are fixing a bug, proposing a new feature, writing documentation, or enhancing performance, your help makes Taleno better for everyone.
 
 ---
 
 ## 1. Code of Conduct
 
-All contributors and maintainers are expected to adhere to our Code of Conduct. Please be welcoming, constructive, respectful, and considerate of fellow community members during all interactions within the Lexora ecosystem.
+All contributors and maintainers are expected to adhere to our Code of Conduct. Please be welcoming, constructive, respectful, and considerate of fellow community members during all interactions within the Taleno ecosystem.
 
 ---
 
 ## 2. Where Should I Submit My Contribution?
 
-Lexora divides responsibilities across two dedicated repositories:
+Taleno divides responsibilities across two dedicated repositories:
 
 | What You Are Contributing | Target Repository | Guidelines |
 | :--- | :--- | :--- |
-| **Core Desktop App** (Rust, Tauri, SolidJS, built-in features) | [`BerryUIKI/Lexora`](https://github.com/BerryUIKI/Lexora) | See below & [COLLABORATION.md](COLLABORATION.md) |
-| **External Plugins** | [`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins) | [Plugin Standards](PLUGIN_DEVELOPMENT.md) |
-| **External Themes & Skins** | [`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins) | [Theme Standards](THEME_DEVELOPMENT.md) |
+| **Core Desktop App** (Rust, Tauri, SolidJS, built-in features) | [`BerryUIKI/Taleno`](https://github.com/BerryUIKI/Taleno) | See below & [COLLABORATION.md](COLLABORATION.md) |
+| **External Plugins** | [`BerryUIKI/Taleno-Plugins`](https://github.com/BerryUIKI/Taleno-Plugins) | [Plugin Standards](PLUGIN_DEVELOPMENT.md) |
+| **External Themes & Skins** | [`BerryUIKI/Taleno-Plugins`](https://github.com/BerryUIKI/Taleno-Plugins) | [Theme Standards](THEME_DEVELOPMENT.md) |
 
 > [!IMPORTANT]
 > **Developing an External Theme or Plugin?**
-> Please **DO NOT** open Pull Requests for external themes or plugins in this `Lexora` repository. All third-party plugins and community themes belong in the [`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins) repository.
+> Please **DO NOT** open Pull Requests for external themes or plugins in this `Taleno` repository. All third-party plugins and community themes belong in the [`BerryUIKI/Taleno-Plugins`](https://github.com/BerryUIKI/Taleno-Plugins) repository.
 
 ### 🎨 Theme Categorization
-- **Built-in Themes**: Bundled by default with the software (e.g. `Lexora`, `GitHub`, `Solarized`). They require zero installation, work offline out of the box, and **cannot be uninstalled** via the GUI.
-- **External Themes**: Hosted in the `Lexora-Plugins` repository and cataloged in `themes.json`. Users can freely choose to **install**, **apply**, or **uninstall** them on demand via options within the theme settings GUI.
+- **Built-in Themes**: Bundled by default with the software (e.g. `Taleno`, `GitHub`, `Solarized`). They require zero installation, work offline out of the box, and **cannot be uninstalled** via the GUI.
+- **External Themes**: Hosted in the `Taleno-Plugins` repository and cataloged in `themes.json`. Users can freely choose to **install**, **apply**, or **uninstall** them on demand via options within the theme settings GUI.
 
 ---
 
@@ -41,11 +41,11 @@ Before making any changes, please review our comprehensive [Development Guide](D
 
 ## 3. Reporting Bugs
 
-If you encounter an issue while using or developing Lexora, please submit a bug report via GitHub Issues:
+If you encounter an issue while using or developing Taleno, please submit a bug report via GitHub Issues:
 
 1. **Search Existing Issues**: Verify that the bug has not already been reported or resolved.
 2. **Use the Bug Report Template**: Include the following details:
-   - **Environment**: Operating System, OS version, Lexora version, Rust version, and Node version.
+   - **Environment**: Operating System, OS version, Taleno version, Rust version, and Node version.
    - **Steps to Reproduce**: Clear, numbered steps to trigger the bug.
    - **Expected vs. Actual Behavior**: What you expected to happen vs. what actually happened.
    - **Screenshots / Video / Logs**: Attach relevant terminal logs or console outputs if applicable.
@@ -55,11 +55,11 @@ If you encounter an issue while using or developing Lexora, please submit a bug 
 
 ## 4. Suggesting Features & Enhancements
 
-We are eager to hear ideas for improving Lexora:
+We are eager to hear ideas for improving Taleno:
 
 1. Open a **Feature Request** on GitHub Issues.
 2. Clearly explain the motivation and use case for the proposed feature.
-3. Detail how the feature should behave and how it aligns with Lexora's seamless in-place WYSIWYG philosophy.
+3. Detail how the feature should behave and how it aligns with Taleno's seamless in-place WYSIWYG philosophy.
 4. Discuss architectural considerations (e.g., frontend SolidJS vs. backend Rust implementation) before beginning work on a large pull request.
 
 ---
@@ -78,7 +78,7 @@ When creating branches for your work, use the following prefix conventions:
 
 ## 6. Commit Message Guidelines
 
-Lexora follows the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification. This allows automated changelog generation and clear versioning:
+Taleno follows the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification. This allows automated changelog generation and clear versioning:
 
 ```
 <type>(<optional scope>): <description>
@@ -132,4 +132,4 @@ During code reviews, maintainers evaluate:
 - **Type Safety**: Are TypeScript and Rust types strict, avoiding `any` or unchecked unwrap operations?
 - **User Experience**: Does the UI match the clean, minimalist aesthetic?
 
-Thank you for helping make Lexora great!
+Thank you for helping make Taleno great!

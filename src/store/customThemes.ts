@@ -9,8 +9,8 @@ import {
   uninstallTheme,
 } from "../lib/tauri/commands";
 
-const STORAGE_KEY_ACTIVE_THEME = "lexora_active_custom_theme";
-const STYLE_ELEMENT_ID = "lexora-custom-theme-style";
+const STORAGE_KEY_ACTIVE_THEME = "Taleno_active_custom_theme";
+const STYLE_ELEMENT_ID = "Taleno-custom-theme-style";
 
 export type ThemeSubTabId = "installed" | "marketplace";
 
