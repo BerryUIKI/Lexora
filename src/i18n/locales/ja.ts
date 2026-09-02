@@ -215,5 +215,7 @@ export const ja: TranslationDictionary = {
     delete: "削除",
     save: "保存",
     dontSave: "保存しない",
+    unsavedCloseTitle: "\"{filename}\" への変更を保存しますか？",
+    unsavedCloseMessage: "保存しない場合、変更内容は失われます。",
   },
 };

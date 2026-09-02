@@ -215,5 +215,7 @@ export const es: TranslationDictionary = {
     delete: "Eliminar",
     save: "Guardar",
     dontSave: "No guardar",
+    unsavedCloseTitle: "¿Desea guardar los cambios realizados en «{filename}»?",
+    unsavedCloseMessage: "Los cambios se perderán si no los guarda.",
   },
 };

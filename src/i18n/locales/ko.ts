@@ -215,5 +215,7 @@ export const ko: TranslationDictionary = {
     delete: "삭제",
     save: "저장",
     dontSave: "저장 안 함",
+    unsavedCloseTitle: "\"{filename}\"의 변경 내용을 저장하시겠습니까?",
+    unsavedCloseMessage: "저장하지 않으면 변경 내용이 손실됩니다.",
   },
 };

@@ -46,6 +46,8 @@ export interface MenuBarProps {
   onOpenThemeSettings: () => void;
   onOpenSettings?: (tab?: "theme" | "plugins" | "updates") => void;
   onOpenRecent: (path: string) => void;
+  onCloseTab?: () => void;
+  onCloseWindow?: () => void;
 }
 
 export type MenuId = "file" | "edit" | "view" | "window" | "help" | null;
@@ -141,8 +143,12 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
 
   const handleCloseActiveTab = () => {
     closeMenus();
-    const id = activeTabId();
-    if (id) closeTab(id);
+    if (props.onCloseTab) {
+      props.onCloseTab();
+    } else {
+      const id = activeTabId();
+      if (id) closeTab(id);
+    }
   };
 
   const handleMinimize = async () => {
@@ -164,7 +170,11 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
 
   const handleClose = async () => {
     try {
-      await closeWindow();
+      if (props.onCloseWindow) {
+        props.onCloseWindow();
+      } else {
+        await closeWindow();
+      }
     } catch (e) {
       console.warn("Close window error:", e);
     }

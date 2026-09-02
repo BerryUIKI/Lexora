@@ -215,5 +215,7 @@ export const ru: TranslationDictionary = {
     delete: "Удалить",
     save: "Сохранить",
     dontSave: "Не сохранять",
+    unsavedCloseTitle: "Сохранить изменения в «{filename}»?",
+    unsavedCloseMessage: "Если не сохранить, все изменения будут утеряны.",
   },
 };

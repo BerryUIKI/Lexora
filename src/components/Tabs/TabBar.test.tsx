@@ -85,4 +85,29 @@ describe("TabBar", () => {
     newTabBtn?.dispatchEvent(new MouseEvent("dblclick", { bubbles: true }));
     expect(onNewTab).not.toHaveBeenCalled();
   });
+
+  it("calls onCloseTab when close tab button is clicked", () => {
+    const onCloseTab = vi.fn();
+    addOrSwitchTab({
+      path: null,
+      filename: "TestTab.md",
+      content: "Sample",
+      renderedContent: "",
+      html: "",
+      toc: [],
+      wordCount: 1,
+      isDirty: true,
+      externallyModified: false,
+    });
+
+    container = document.createElement("div");
+    document.body.append(container);
+
+    dispose = render(() => <TabBar onNewTab={vi.fn()} onCloseTab={onCloseTab} />, container);
+
+    const closeBtn = container.querySelector<HTMLButtonElement>('button[title="Close Tab"]');
+    expect(closeBtn).toBeTruthy();
+    closeBtn?.click();
+    expect(onCloseTab).toHaveBeenCalled();
+  });
 });

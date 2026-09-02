@@ -230,5 +230,7 @@ export interface TranslationDictionary {
     delete: string;
     save: string;
     dontSave: string;
+    unsavedCloseTitle: string;
+    unsavedCloseMessage: string;
   };
 }

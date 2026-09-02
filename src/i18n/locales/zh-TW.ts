@@ -215,5 +215,7 @@ export const zhTW: TranslationDictionary = {
     delete: "刪除",
     save: "儲存",
     dontSave: "不儲存",
+    unsavedCloseTitle: "是否儲存對 \"{filename}\" 的變更？",
+    unsavedCloseMessage: "如果不儲存，您所做的變更將會遺失。",
   },
 };

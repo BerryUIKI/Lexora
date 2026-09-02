@@ -215,5 +215,7 @@ export const zhCN: TranslationDictionary = {
     delete: "删除",
     save: "保存",
     dontSave: "不保存",
+    unsavedCloseTitle: "是否保存对 \"{filename}\" 的更改？",
+    unsavedCloseMessage: "如果不保存，您所做的更改将会丢失。",
   },
 };

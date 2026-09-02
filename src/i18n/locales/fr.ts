@@ -215,5 +215,7 @@ export const fr: TranslationDictionary = {
     delete: "Supprimer",
     save: "Enregistrer",
     dontSave: "Ne pas enregistrer",
+    unsavedCloseTitle: "Voulez-vous enregistrer les modifications apportées à « {filename} » ?",
+    unsavedCloseMessage: "Vos modifications seront perdues si vous ne les enregistrez pas.",
   },
 };

@@ -1,6 +1,7 @@
 import { Component, createSignal, Show, onMount, onCleanup } from "solid-js";
 import { open, save } from "@tauri-apps/plugin-dialog";
 import { getCurrentWebview } from "@tauri-apps/api/webview";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import { MenuBar } from "./components/MenuBar/MenuBar";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { TabBar } from "./components/Tabs/TabBar";
@@ -15,6 +16,7 @@ import { StatusBar } from "./components/StatusBar/StatusBar";
 import { WelcomeHub } from "./components/Home/WelcomeHub";
 import { UpdateModal } from "./components/Updater/UpdateModal";
 import { SettingsModal } from "./components/Settings/SettingsModal";
+import { CloseConfirmModal } from "./components/Tabs/CloseConfirmModal";
 import type { SettingsTabId } from "./types/plugin";
 import { syncPlugins } from "./store/plugins";
 import { syncCustomThemes } from "./store/customThemes";
@@ -34,6 +36,9 @@ import {
 import {
   addOrSwitchTab,
   openTabs,
+  closeTab,
+  selectTab,
+  activeTabId,
   setQuickSwitcherOpen,
   syncCurrentDocumentToTab,
   setWorkspaceTree,
@@ -47,6 +52,7 @@ import {
   exportDocument,
   listDirectoryTree,
   getCliArgs,
+  closeWindow,
 } from "./lib/tauri/commands";
 import { onFileChanged } from "./lib/tauri/events";
 import { isDropOverTabBar, processFileDrop } from "./lib/dnd";
@@ -65,10 +71,16 @@ const App: Component = () => {
   const [dragHoverTarget, setDragHoverTarget] = createSignal<
     "window" | "tabbar" | "editor" | null
   >(null);
+  const [confirmCloseTab, setConfirmCloseTab] = createSignal<{
+    tabId: string;
+    filename: string;
+  } | null>(null);
+  let pendingWindowClose = false;
 
   let tabBarElement: HTMLDivElement | undefined;
   let unlistenFileChanged: (() => void) | null = null;
   let unlistenDragDrop: (() => void) | null = null;
+  let unlistenCloseRequested: (() => void) | null = null;
   let autoSaveTimer: number | null = null;
   let cancelAutomaticUpdateCheck: (() => void) | null = null;
 
@@ -134,13 +146,14 @@ const App: Component = () => {
   };
 
   // Handle saving the current file (atomic write)
-  const saveCurrentFile = async () => {
+  const saveCurrentFile = async (): Promise<boolean> => {
     const doc = currentDocument();
     try {
       if (doc.path) {
         const result = await saveFile(doc.path, doc.content);
         markSaved(result);
         syncCurrentDocumentToTab();
+        return true;
       } else {
         const selected = await save({
           defaultPath: doc.filename.endsWith(".md")
@@ -156,13 +169,101 @@ const App: Component = () => {
           markSaved(result);
           syncCurrentDocumentToTab();
           await startWatchingFile(selected);
+          return true;
         }
+        return false;
       }
     } catch (err) {
       console.error("Failed to save file:", err);
+      return false;
     }
   };
   const handleSaveFile = createSingleFlight(saveCurrentFile);
+
+  // Request closing a tab, prompting if it has unsaved changes
+  const requestCloseTab = (targetTabId?: string, onComplete?: () => void) => {
+    syncCurrentDocumentToTab();
+    const id = targetTabId || activeTabId();
+    if (!id) return;
+
+    const tabs = openTabs();
+    const tab = tabs.find((t) => t.id === id);
+    if (!tab) return;
+
+    const isDirty =
+      (id === activeTabId() ? currentDocument().isDirty : false) ||
+      tab.document.isDirty;
+
+    if (!isDirty) {
+      closeTab(id);
+      onComplete?.();
+      return;
+    }
+
+    // Switch to tab so the user can inspect the document they are about to close
+    if (activeTabId() !== id) {
+      selectTab(id);
+    }
+
+    setConfirmCloseTab({
+      tabId: id,
+      filename: tab.document.filename,
+    });
+  };
+
+  const handleConfirmCloseSave = async () => {
+    const item = confirmCloseTab();
+    if (!item) return;
+
+    const saved = await handleSaveFile();
+    if (saved !== false && !currentDocument().isDirty) {
+      closeTab(item.tabId);
+      setConfirmCloseTab(null);
+      if (pendingWindowClose) {
+        void checkNextWindowClose();
+      }
+    }
+  };
+
+  const handleConfirmCloseDiscard = () => {
+    const item = confirmCloseTab();
+    if (!item) return;
+
+    closeTab(item.tabId);
+    setConfirmCloseTab(null);
+    if (pendingWindowClose) {
+      void checkNextWindowClose();
+    }
+  };
+
+  const handleConfirmCloseCancel = () => {
+    setConfirmCloseTab(null);
+    pendingWindowClose = false;
+  };
+
+  const checkNextWindowClose = async () => {
+    syncCurrentDocumentToTab();
+    const dirtyTab = openTabs().find(
+      (t) =>
+        t.document.isDirty ||
+        (t.id === activeTabId() && currentDocument().isDirty)
+    );
+    if (dirtyTab) {
+      pendingWindowClose = true;
+      requestCloseTab(dirtyTab.id);
+    } else {
+      pendingWindowClose = false;
+      try {
+        await closeWindow();
+      } catch (e) {
+        console.warn("Close window error:", e);
+      }
+    }
+  };
+
+  const handleRequestCloseWindow = () => {
+    void checkNextWindowClose();
+  };
 
   // Handle exporting the current document to standalone HTML
   const handleExport = async () => {
@@ -290,11 +391,27 @@ const App: Component = () => {
     } catch (err) {
       console.warn("Drag and drop listener setup:", err);
     }
+
+    try {
+      unlistenCloseRequested = await getCurrentWindow().onCloseRequested((event) => {
+        syncCurrentDocumentToTab();
+        const hasDirty = openTabs().some(
+          (t) => t.document.isDirty || (t.id === activeTabId() && currentDocument().isDirty)
+        );
+        if (hasDirty) {
+          event.preventDefault();
+          handleRequestCloseWindow();
+        }
+      });
+    } catch {
+      // In web/test environment
+    }
   });
 
   onCleanup(() => {
     unlistenFileChanged?.();
     unlistenDragDrop?.();
+    unlistenCloseRequested?.();
     cancelAutomaticUpdateCheck?.();
     if (autoSaveTimer !== null) {
       clearInterval(autoSaveTimer);
@@ -379,6 +496,9 @@ const App: Component = () => {
     } else if (isCmd && e.key === "n") {
       e.preventDefault();
       handleNewDocument();
+    } else if (isCmd && (e.key === "w" || e.key === "W")) {
+      e.preventDefault();
+      requestCloseTab();
     } else if (isCmd && e.key === "p") {
       e.preventDefault();
       setQuickSwitcherOpen((prev) => !prev);
@@ -437,6 +557,8 @@ const App: Component = () => {
           onOpenThemeSettings={() => handleOpenSettings("theme")}
           onOpenSettings={handleOpenSettings}
           onOpenRecent={loadFile}
+          onCloseTab={() => requestCloseTab()}
+          onCloseWindow={handleRequestCloseWindow}
         />
       </Show>
 
@@ -479,6 +601,15 @@ const App: Component = () => {
         onClose={() => setSettingsOpen(false)}
       />
 
+      {/* Unsaved Changes Close Confirmation Dialog */}
+      <CloseConfirmModal
+        isOpen={confirmCloseTab() !== null}
+        filename={confirmCloseTab()?.filename || ""}
+        onSave={handleConfirmCloseSave}
+        onDiscard={handleConfirmCloseDiscard}
+        onCancel={handleConfirmCloseCancel}
+      />
+
       {/* Full-width document tab bar below the title/menu bar */}
       <Show when={openTabs().length > 0 && !zenMode()}>
         <TabBar
@@ -486,6 +617,7 @@ const App: Component = () => {
           isDragOver={dragHoverTarget() === "tabbar"}
           onNewTab={handleNewDocument}
           onSelectTab={() => setHomeVisible(false)}
+          onCloseTab={(id) => requestCloseTab(id)}
         />
       </Show>
 

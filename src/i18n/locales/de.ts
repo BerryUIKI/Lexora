@@ -215,5 +215,7 @@ export const de: TranslationDictionary = {
     delete: "Löschen",
     save: "Speichern",
     dontSave: "Nicht speichern",
+    unsavedCloseTitle: "Möchten Sie die Änderungen an „{filename}“ speichern?",
+    unsavedCloseMessage: "Ihre Änderungen gehen verloren, wenn Sie diese nicht speichern.",
   },
 };

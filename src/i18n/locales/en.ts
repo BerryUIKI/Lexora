@@ -215,5 +215,7 @@ export const en: TranslationDictionary = {
     delete: "Delete",
     save: "Save",
     dontSave: "Don't Save",
+    unsavedCloseTitle: "Do you want to save the changes made to \"{filename}\"?",
+    unsavedCloseMessage: "Your changes will be lost if you don't save them.",
   },
 };

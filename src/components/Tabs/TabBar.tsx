@@ -4,6 +4,7 @@ import { openTabs, activeTabId, closeTab, selectTab } from "../../store/files";
 export interface TabBarProps {
   onNewTab: () => void;
   onSelectTab?: () => void;
+  onCloseTab?: (tabId: string) => void;
   isDragOver?: boolean;
   ref?: HTMLDivElement | ((el: HTMLDivElement) => void);
 }
@@ -73,7 +74,11 @@ export const TabBar: Component<TabBarProps> = (props) => {
                 class="p-0.5 rounded opacity-0 group-hover:opacity-100 hover:bg-[var(--color-hover)] text-xs"
                 onClick={(e) => {
                   e.stopPropagation();
-                  closeTab(tab.id);
+                  if (props.onCloseTab) {
+                    props.onCloseTab(tab.id);
+                  } else {
+                    closeTab(tab.id);
+                  }
                 }}
                 title="Close Tab"
               >
