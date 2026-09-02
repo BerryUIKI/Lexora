@@ -34,13 +34,20 @@ describe("StatusBar", () => {
     dispose = render(() => <StatusBar />, container);
 
     const footer = container.querySelector("footer");
+    const versionBtn = container.querySelector<HTMLButtonElement>('[data-status-section="version"]');
     const documentInfo = container.querySelector('[data-status-section="document-info"]');
     const displayMode = container.querySelector('[data-status-section="display-mode"]');
     const themeButton = container.querySelector<HTMLButtonElement>('[data-status-section="theme"]');
 
+    expect(versionBtn).toBeTruthy();
+    expect(versionBtn?.textContent).toContain("v0.1.7");
+    expect(footer?.firstElementChild).toBe(versionBtn);
     expect(displayMode).toBeTruthy();
     expect(themeButton).toBeTruthy();
-    expect(footer?.firstElementChild).toBe(documentInfo);
+    expect(
+      documentInfo!.compareDocumentPosition(displayMode!) &
+        Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
     expect(
       displayMode!.compareDocumentPosition(themeButton!) &
         Node.DOCUMENT_POSITION_FOLLOWING

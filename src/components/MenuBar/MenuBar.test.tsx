@@ -63,13 +63,7 @@ describe("MenuBar Title Bar Quick Access", () => {
     expect(pluginsBtn).toBeTruthy();
     expect(themesBtn).toBeTruthy();
     expect(langBtn).toBeTruthy();
-    expect(versionBtn).toBeTruthy();
-    expect(versionBtn?.textContent).toContain("v0.1.7");
-
-    // Verify versionBtn is rendered next to the central title
-    const centerRegion = container.querySelector<HTMLDivElement>('div[data-tauri-drag-region] > div.pointer-events-auto');
-    expect(centerRegion).toBeTruthy();
-    expect(centerRegion?.contains(versionBtn)).toBe(true);
+    expect(versionBtn).toBeNull();
 
     pluginsBtn?.click();
     expect(onOpenSettings).toHaveBeenCalledWith("plugins");

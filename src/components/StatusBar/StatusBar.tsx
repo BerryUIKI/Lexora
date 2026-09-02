@@ -1,6 +1,14 @@
 import { Component, Show, createMemo } from "solid-js";
 import { currentDocument, displayMode, setDisplayMode } from "../../store/editor";
 import { theme, cycleTheme } from "../../store/settings";
+import {
+  checkForUpdatesInPlace,
+  appVersion,
+  inPlaceCheckStatus,
+  isUpdateAvailable,
+  setUpdateModalOpen,
+  updateInfo,
+} from "../../lib/updater";
 import { t } from "../../i18n";
 
 const DisplayModeSwitcher: Component = () => (
@@ -90,7 +98,70 @@ export const StatusBar: Component = () => {
         "border-top": "1px solid var(--color-border)",
       }}
     >
-      {/* Document details stay anchored to the far left. */}
+      {/* Far Left: Software Version & In-Place Update Check */}
+      <button
+        class={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-mono transition-all select-none cursor-pointer flex-shrink-0 ${
+          isUpdateAvailable()
+            ? "bg-[var(--color-accent)] text-white font-semibold shadow-xs animate-pulse hover:opacity-90"
+            : inPlaceCheckStatus() === "up_to_date"
+            ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-medium"
+            : "hover:bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
+        }`}
+        onClick={(e) => {
+          e.stopPropagation();
+          if (isUpdateAvailable()) {
+            setUpdateModalOpen(true);
+          } else {
+            void checkForUpdatesInPlace();
+          }
+        }}
+        title={
+          isUpdateAvailable()
+            ? `${t("statusBar.updateAvailable")}: v${updateInfo()?.latestVersion} (${t("update.downloadUpdate")})`
+            : inPlaceCheckStatus() === "checking"
+            ? t("statusBar.checkingUpdates")
+            : inPlaceCheckStatus() === "up_to_date"
+            ? t("statusBar.upToDate")
+            : `Taleno v${appVersion()} — ${t("help.checkForUpdates")}`
+        }
+        aria-label={
+          isUpdateAvailable()
+            ? `${t("statusBar.updateAvailable")}: v${updateInfo()?.latestVersion}`
+            : `Taleno v${appVersion()}`
+        }
+        data-status-section="version"
+      >
+        <Show when={inPlaceCheckStatus() === "checking"}>
+          <svg class="w-3 h-3 animate-spin flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" stroke-opacity="0.25" />
+            <path d="M12 2a10 10 0 0 1 10 10" />
+          </svg>
+        </Show>
+        <Show when={inPlaceCheckStatus() === "up_to_date"}>
+          <svg class="w-3 h-3 text-emerald-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+        </Show>
+        <Show when={isUpdateAvailable() && inPlaceCheckStatus() !== "checking"}>
+          <svg class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="12" y1="19" x2="12" y2="5" />
+            <polyline points="5 12 12 5 19 12" />
+          </svg>
+        </Show>
+        <span>
+          {inPlaceCheckStatus() === "checking"
+            ? t("statusBar.checkingUpdates")
+            : inPlaceCheckStatus() === "up_to_date"
+            ? t("statusBar.upToDate")
+            : isUpdateAvailable()
+            ? `↑ v${updateInfo()?.latestVersion || appVersion()}`
+            : `v${appVersion()}`}
+        </span>
+      </button>
+
+      <span class="text-[var(--color-border)] flex-shrink-0">|</span>
+
+      {/* Document details stay anchored to the left. */}
       <div
         class="flex items-center gap-2 min-w-0 overflow-hidden"
         data-status-section="document-info"
