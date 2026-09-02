@@ -8,25 +8,25 @@ const languages = {
     dir: '',
     name: 'English',
     htmlLang: 'en',
-    title: 'Lexora — In-Place WYSIWYG Markdown Reader & Editor',
+    title: 'Taleno — In-Place WYSIWYG Markdown Reader & Editor',
     metaDesc: 'A minimalist in-place WYSIWYG Markdown reader & editor. Render-as-you-type with zero split panes — built on Tauri 2 + Rust + SolidJS for instant response.',
     nav: { features: 'Features', download: 'Download', architecture: 'Architecture', shortcuts: 'Shortcuts', faq: 'FAQ & Notes', github: 'GitHub' },
     selectLang: 'Select display language',
     hero: {
-      badge: 'v0.1.3 Released · AGPL-3.0 Open Source',
+      badge: 'v0.1.7 Released · AGPL-3.0 Open Source',
       title: 'Markdown, in&nbsp;place.',
       subtitle: 'A minimalist, high-performance in-place WYSIWYG Markdown reader & editor. Render-as-you-type with zero split panes — built on Tauri 2 + Rust + SolidJS for instant response.',
       downloadBtn: 'Download Now',
       githubBtn: 'View on GitHub',
-      chips: ['<400ms cold start', 'Zero split panes', '9 languages', 'Fully offline']
+      chips: ['<400ms cold start', 'Zero split panes', 'Plugins & Themes', '9 languages']
     },
     mockup: {
       menu: ['File', 'Edit', 'View', 'Window', 'Help'],
-      title: 'Lexora — README.md',
+      title: 'Taleno — README.md',
       outline: 'Outline',
       workspace: 'Workspace',
       introTitle: '# Introduction',
-      introP1: 'Lexora eliminates split-screen previews by rendering Markdown directly in place with pure typography.',
+      introP1: 'Taleno eliminates split-screen previews by rendering Markdown directly in place with pure typography.',
       introP2: 'Zero split-panes · In-place WYSIWYG · Full-text ripgrep search.',
       metrics: ['Startup Time', '< 400 ms', 'Instant Cold Start', 'Full-text Search', 'ripgrep', 'Whole Workspace'],
       modes: ['Reading', 'Writing', 'Code'],
@@ -38,6 +38,8 @@ const languages = {
       subtitle: 'Render-as-you-type. From outline and multi-tabs to ripgrep search, everything is tuned for clean, productive writing.',
       items: [
         { title: 'Tri-State Display Modes', desc: 'Reading / Writing / Code modes with synchronized line numbers and hotkey switching.' },
+        { title: 'In-App Plugin Ecosystem', desc: 'Browse, install, and update plugins directly from the BerryUIKI/Taleno-Plugins hub with a sandboxed JS runtime.' },
+        { title: 'Custom & Community Themes', desc: 'Built-in presets plus external community themes marketplace with live color swatches and instant styling.' },
         { title: '9-Language i18n', desc: 'UI auto-detects system locale across 9 native languages with instant runtime switching.' },
         { title: 'Syntax Highlighting', desc: 'Syntect-powered syntax highlighting with language tags and one-click code copy button.' },
         { title: 'Mermaid & LaTeX', desc: 'Live interactive flowcharts, sequence diagrams, class diagrams, and KaTeX math formulas.' },
@@ -64,13 +66,13 @@ const languages = {
       subtitle: 'Tauri 2 bridges a memory-safe Rust backend with a fine-grained reactive SolidJS webview — zero GC pauses and under 16ms input latency.',
       frontend: 'FRONTEND',
       frontendTitle: 'SolidJS + Webview',
-      frontendChips: ['Reactive UI Signals', 'Milkdown / ProseMirror', '9-Locale i18n', 'Typed IPC Wrappers'],
+      frontendChips: ['Reactive UI Signals', 'Milkdown / ProseMirror', '9-Locale i18n', 'Plugin Sandbox & Themes'],
       ipc: 'IPC BRIDGE',
       ipcTitle: 'Tauri 2 Core',
       ipcChips: ['Zero-Copy Commands', 'Event Channel Bus', 'Scoped Capabilities'],
       rust: 'RUST BACKEND',
       rustTitle: 'Native Engine',
-      rustChips: ['pulldown-cmark AST', 'syntect Highlight', 'notify File Watcher', 'Atomic Write I/O']
+      rustChips: ['pulldown-cmark AST', 'syntect Highlight', 'Atomic Write I/O', 'Marketplace Services']
     },
     shortcuts: {
       tag: 'SHORTCUTS',
@@ -102,28 +104,28 @@ const languages = {
       title: 'Frequently asked questions',
       subtitle: 'Have a question or feedback? Open an issue or start a discussion on our GitHub repository.',
       changelogTitle: 'Latest Release',
-      changelogVer: 'v0.1.3',
+      changelogVer: 'v0.1.7',
       changelogItems: [
-        'Native macOS window chrome controls',
-        'Standardized release asset filenames',
-        '9-language localized documentation',
-        'Improved table contrast across all themes'
+        'In-app Plugin Marketplace (BerryUIKI/Taleno-Plugins)',
+        'Custom & Community Themes engine with live swatches',
+        'Integrated background auto-updater with localized notes',
+        'Full rebranding to Taleno with performance polish'
       ],
       items: [
-        { q: 'What makes Lexora unique?', a: 'Lexora provides true in-place WYSIWYG editing with zero split panes. Markdown renders live as you type, and raw syntax reveals seamlessly under your cursor. Powered by Rust and Tauri 2, it delivers native speed without Electron bulk.' },
+        { q: 'What makes Taleno unique?', a: 'Taleno provides true in-place WYSIWYG editing with zero split panes. Markdown renders live as you type, and raw syntax reveals seamlessly under your cursor. Powered by Rust and Tauri 2, it delivers native speed without Electron bulk.' },
         { q: 'Is my data private and secure?', a: '100% local-first. All documents stay strictly on your local device with zero cloud telemetry. Atomic writes ensure you never lose work even during unexpected system shutdowns.' },
-        { q: 'Which Markdown extensions are supported?', a: 'Lexora supports full GitHub Flavored Markdown (GFM), tables, task lists, code block syntax highlighting, Mermaid diagrams (flowcharts, sequence, class diagrams), and KaTeX math formulas.' },
-        { q: 'Is Lexora free and open source?', a: 'Yes. Lexora is free and open-source under the GNU AGPL-3.0 license. Community contributions, bug reports, and translations are warmly welcome.' }
+        { q: 'Which Markdown extensions are supported?', a: 'Taleno supports full GitHub Flavored Markdown (GFM), tables, task lists, code block syntax highlighting, Mermaid diagrams (flowcharts, sequence, class diagrams), and KaTeX math formulas.' },
+        { q: 'Is Taleno free and open source?', a: 'Yes. Taleno is free and open-source under the GNU AGPL-3.0 license. Community contributions, bug reports, and translations are warmly welcome.' }
       ]
     },
     downloadPage: {
-      title: 'Download Lexora — All Platforms',
-      metaDesc: 'Download Lexora for Windows, macOS and Linux. Direct links to release assets — no redirects.',
-      tag: 'v0.1.3 · Latest release',
-      heading: 'Download Lexora',
+      title: 'Download Taleno — All Platforms',
+      metaDesc: 'Download Taleno for Windows, macOS and Linux. Direct links to release assets — no redirects.',
+      tag: 'v0.1.7 · Latest release',
+      heading: 'Download Taleno',
       subheading: 'Every button links straight to the release asset — the download starts immediately, no redirects. We auto-detect your OS on the homepage.',
       backHome: '← Back to home',
-      note: 'Asset naming follows <span class="font-medium text-ink-secondary">Lexora_&lt;OS&gt;_&lt;architecture&gt;</span> without embedded versions — <span class="font-mono">releases/latest/download</span> links always point to the newest build.',
+      note: 'Asset naming follows <span class="font-medium text-ink-secondary">Taleno_&lt;OS&gt;_&lt;architecture&gt;</span> without embedded versions — <span class="font-mono">releases/latest/download</span> links always point to the newest build.',
       allReleases: 'All releases & source archives',
       viewGh: 'View on GitHub'
     }
@@ -134,25 +136,25 @@ const languages = {
     dir: 'zh-CN',
     name: '简体中文',
     htmlLang: 'zh-CN',
-    title: 'Lexora — 原位所见即所得 Markdown 阅读与编辑器',
+    title: 'Taleno — 原位所见即所得 Markdown 阅读与编辑器',
     metaDesc: '基于 Tauri 2 + Rust + SolidJS 构建的极简本地优先 Markdown 阅读与即时所见即所得编辑器。告别分屏，原位即时渲染排版。',
     nav: { features: '核心特性', download: '下载安装', architecture: '技术架构', shortcuts: '快捷键', faq: '常见问题', github: 'GitHub' },
     selectLang: '选择界面显示语言',
     hero: {
-      badge: 'v0.1.3 正式发布 · AGPL-3.0 开源协议',
+      badge: 'v0.1.7 正式发布 · AGPL-3.0 开源协议',
       title: '原位排版，所见即所得。',
       subtitle: '极简、极速的本地优先 Markdown 原位所见即所得阅读与编辑器。告别传统双栏分屏，打字即时排版——基于 Tauri 2 + Rust + SolidJS 打造毫秒级流畅响应。',
       downloadBtn: '立即下载',
       githubBtn: 'GitHub 开源仓库',
-      chips: ['<400ms 极速冷启动', '无需分屏原位渲染', '9 种原生语言', '100% 本地离线']
+      chips: ['<400ms 极速冷启动', '无需分屏原位渲染', '插件与主题生态', '9 种原生语言']
     },
     mockup: {
       menu: ['文件', '编辑', '视图', '窗口', '帮助'],
-      title: 'Lexora — README.md',
+      title: 'Taleno — README.md',
       outline: '大纲目录',
       workspace: '工作区',
       introTitle: '# 项目简介',
-      introP1: 'Lexora 彻底摒弃了传统“左边写代码、右边看预览”的分屏模式，采用极简沉浸的原位即时排版。',
+      introP1: 'Taleno 彻底摒弃了传统“左边写代码、右边看预览”的分屏模式，采用极简沉浸的原位即时排版。',
       introP2: '零分屏 · 原位所见即所得 · Ripgrep 全局全文本搜索。',
       metrics: ['冷启动耗时', '< 400 毫秒', '毫秒级极速就绪', '全文搜索', 'ripgrep', '工作区全局秒搜'],
       modes: ['阅读', '写作', '源码'],
@@ -164,6 +166,8 @@ const languages = {
       subtitle: '所见即所得打字排版。从文档大纲、多标签页到工作区全文搜索，所有设计皆为高效沉浸的写作体验而生。',
       items: [
         { title: '三态模式自由切换', desc: '一键无缝切换阅读模式（只读浏览）、写作模式（原位所见即所得）与源码模式（行号同步）。' },
+        { title: '插件生态市场', desc: '内置官方 Taleno-Plugins 扩展市场，一键获取、安装与更新，安全沙箱运行时，自由定制快捷命令与状态栏。' },
+        { title: '社区主题与换肤', desc: '内置经典配色并支持一键安装 Dracula、Nord、Catppuccin 等社区皮肤，实时色块预览并原位即时生效。' },
         { title: '9 种语言国际化支持', desc: '内置 9 国本地化语言，根据系统环境全自动识别，随时在菜单中即时无缝切换。' },
         { title: '高性能代码高亮', desc: '基于 syntect 原生引擎打造，支持上百种编程语言高亮、语言徽标与一键复制功能。' },
         { title: 'Mermaid 图表与 LaTeX 数学', desc: '原生支持流程图、时序图、类图等 Mermaid 图表实时渲染，以及 KaTeX 行内/多行数学公式。' },
@@ -190,13 +194,13 @@ const languages = {
       subtitle: '基于 Tauri 2 构建，Rust 原生后端与 SolidJS 细粒度响应式前端深度协作——内存安全、零垃圾回收卡顿、击键延迟低于 16ms。',
       frontend: '前端层',
       frontendTitle: 'SolidJS + Webview',
-      frontendChips: ['细粒度响应式 Signals', 'Milkdown / ProseMirror', '9 语言 i18n 引擎', '类型安全 IPC 封装'],
+      frontendChips: ['细粒度响应式 Signals', 'Milkdown / ProseMirror', '9 语言 i18n 引擎', '插件沙箱与主题引擎'],
       ipc: 'IPC 通信桥',
       ipcTitle: 'Tauri 2 核心桥接',
       ipcChips: ['零拷贝 Commands', '异步 Event 事件总线', '最小权限安全能力管控'],
       rust: '系统内核',
       rustTitle: 'Rust 原生引擎',
-      rustChips: ['pulldown-cmark AST 解析', 'syntect 语法高亮', 'notify 文件系统监听', '原子级文件 I/O 写入']
+      rustChips: ['pulldown-cmark AST 解析', 'syntect 语法高亮', '原子级文件 I/O 写入', '扩展市场本地服务']
     },
     shortcuts: {
       tag: '常用快捷键',
@@ -228,28 +232,28 @@ const languages = {
       title: '常见问题解答',
       subtitle: '有疑问或建议？欢迎前往 GitHub 提交 Issue 或参与讨论交流。',
       changelogTitle: '最新版本',
-      changelogVer: 'v0.1.3',
+      changelogVer: 'v0.1.7',
       changelogItems: [
-        'macOS 原生红绿灯窗口控制按钮适配',
-        '统一标准化发布安装包命名规范',
-        '9 种语言本地化文档与下载矩阵',
-        '全面优化表格对比度与暗黑主题显示'
+        '内置插件扩展市场（Taleno-Plugins 官方源）',
+        '社区主题换肤引擎与实时调色板预览',
+        '全自动后台更新检测与本地化更新日志',
+        '全面品牌升级为 Taleno 与性能调优'
       ],
       items: [
-        { q: 'Lexora 与传统 Markdown 编辑器有何不同？', a: 'Lexora 采用彻底的原位所见即所得渲染，告别左右分屏。打字时光标所在处即时排版，无 Electron 的笨重包袱，冷启动仅需数百毫秒，带来极致轻快的原生桌面体验。' },
+        { q: 'Taleno 与传统 Markdown 编辑器有何不同？', a: 'Taleno 采用彻底的原位所见即所得渲染，告别左右分屏。打字时光标所在处即时排版，无 Electron 的笨重包袱，冷启动仅需数百毫秒，带来极致轻快的原生桌面体验。' },
         { q: '我的文档数据安全吗？', a: '100% 本地优先。所有文档均完整保存在您的本地磁盘中，不上传任何云端服务器。配合底层原子写入机制，即便电脑突发断电也不会损坏文件。' },
         { q: '支持哪些 Markdown 扩展语法？', a: '完整支持 GitHub Flavored Markdown (GFM)、表格、任务列表、代码高亮、Mermaid 图表（流程图、时序图、类图等）以及 KaTeX 数学公式渲染。' },
-        { q: 'Lexora 是否免费开源？如何参与贡献？', a: '是的，Lexora 基于 GNU AGPL-3.0 协议完全免费且开源。欢迎提交 Issue 反馈缺陷、参与多语言翻译或发起 Pull Request。' }
+        { q: 'Taleno 是否免费开源？如何参与贡献？', a: '是的，Taleno 基于 GNU AGPL-3.0 协议完全免费且开源。欢迎提交 Issue 反馈缺陷、参与多语言翻译或发起 Pull Request。' }
       ]
     },
     downloadPage: {
-      title: '下载 Lexora — 全平台安装包',
-      metaDesc: '下载适用于 Windows、macOS 和 Linux 的 Lexora。官方直链下载，无跳转极速就绪。',
-      tag: 'v0.1.3 · 最新正式版',
-      heading: '下载 Lexora',
+      title: '下载 Taleno — 全平台安装包',
+      metaDesc: '下载适用于 Windows、macOS 和 Linux 的 Taleno。官方直链下载，无跳转极速就绪。',
+      tag: 'v0.1.7 · 最新正式版',
+      heading: '下载 Taleno',
       subheading: '所有下载按钮均直接指向 GitHub Releases 最新安装包资源，点击即刻开始下载。',
       backHome: '← 返回首页',
-      note: '安装包命名遵循 <span class="font-medium text-ink-secondary">Lexora_&lt;系统&gt;_&lt;架构&gt;</span> 规范，<span class="font-mono">releases/latest/download</span> 链接将始终指向最新构建版本。',
+      note: '安装包命名遵循 <span class="font-medium text-ink-secondary">Taleno_&lt;系统&gt;_&lt;架构&gt;</span> 规范，<span class="font-mono">releases/latest/download</span> 链接将始终指向最新构建版本。',
       allReleases: '查看历史版本与源码归档',
       viewGh: 'GitHub 开源仓库'
     }
@@ -260,25 +264,25 @@ const languages = {
     dir: 'zh-TW',
     name: '繁體中文',
     htmlLang: 'zh-TW',
-    title: 'Lexora — 原位所見即所得 Markdown 閱讀與編輯器',
+    title: 'Taleno — 原位所見即所得 Markdown 閱讀與編輯器',
     metaDesc: '基於 Tauri 2 + Rust + SolidJS 構建的極簡本機優先 Markdown 閱讀與即時所見即所得編輯器。告別分割視窗，原位即時排版渲染。',
     nav: { features: '核心特色', download: '下載安裝', architecture: '技術架構', shortcuts: '快捷鍵', faq: '常見問題', github: 'GitHub' },
     selectLang: '選擇介面顯示語言',
     hero: {
-      badge: 'v0.1.3 正式發布 · AGPL-3.0 開源協議',
+      badge: 'v0.1.7 正式發布 · AGPL-3.0 開源協議',
       title: '原位排版，所見即所得。',
       subtitle: '極簡、極速的本機優先 Markdown 原位所見即所得閱讀與編輯器。徹底摒棄傳統雙欄分割視窗，打字即時排版——基於 Tauri 2 + Rust + SolidJS 打造毫秒級流暢響應。',
       downloadBtn: '立即下載',
       githubBtn: 'GitHub 開源儲存庫',
-      chips: ['<400ms 毫秒級冷啟動', '無需分割視窗原位渲染', '9 種原生語言', '100% 本機離線']
+      chips: ['<400ms 極速冷啟動', '無需分屏原位渲染', '外掛與主題生態', '9 種原生語言']
     },
     mockup: {
       menu: ['檔案', '編輯', '檢視', '視窗', '說明'],
-      title: 'Lexora — README.md',
+      title: 'Taleno — README.md',
       outline: '大綱目錄',
       workspace: '工作區',
       introTitle: '# 專案簡介',
-      introP1: 'Lexora 徹底摒棄了傳統“左邊寫程式碼、右邊看預覽”的分割視窗模式，採用極簡沉浸的原位即時排版。',
+      introP1: 'Taleno 徹底摒棄了傳統“左邊寫程式碼、右邊看預覽”的分割視窗模式，採用極簡沉浸的原位即時排版。',
       introP2: '零分割視窗 · 原位所見即所得 · Ripgrep 全域全文本搜尋。',
       metrics: ['冷啟動耗時', '< 400 毫秒', '毫秒級極速就緒', '全文搜尋', 'ripgrep', '工作區全域秒搜'],
       modes: ['閱讀', '寫作', '源碼'],
@@ -290,6 +294,8 @@ const languages = {
       subtitle: '所見即所得打字排版。從文件大綱、多分頁到工作區全文搜尋，所有設計皆為高效沉浸的寫作體驗而生。',
       items: [
         { title: '三態模式自由切換', desc: '一鍵無縫切換閱讀模式（唯讀瀏覽）、寫作模式（原位所見即所得）與源碼模式（行號同步）。' },
+        { title: '外掛生態市場', desc: '內建官方 Taleno-Plugins 擴充市場，一鍵取得、安裝與更新，安全沙箱執行環境，自由自訂命令與狀態列。' },
+        { title: '社群佈景與外觀', desc: '內建經典配色並支援安裝 Dracula、Nord、Catppuccin 等社群佈景，即時色塊預覽並原位即時套用。' },
         { title: '9 種語言國際化支援', desc: '內建 9 國在地化語言，依據系統環境全自動辨識，隨時在選單中即時無縫切換。' },
         { title: '高效能程式碼高亮', desc: '基於 syntect 原生引擎打造，支援上百種程式語言高亮、語言標籤與一鍵複製功能。' },
         { title: 'Mermaid 圖表與 LaTeX 數學', desc: '原生支援流程圖、循序圖、類別圖等 Mermaid 圖表即時渲染，以及 KaTeX 行內/多行數學公式。' },
@@ -316,7 +322,7 @@ const languages = {
       subtitle: '基於 Tauri 2 構建，Rust 原生後端與 SolidJS 細粒度響應式前端深度協作——記憶體安全、零垃圾回收卡頓、按鍵延遲低於 16ms。',
       frontend: '前端層',
       frontendTitle: 'SolidJS + Webview',
-      frontendChips: ['細粒度響應式 Signals', 'Milkdown / ProseMirror', '9 語言 i18n 引擎', '型別安全 IPC 封裝'],
+      frontendChips: ['細粒度響應式 Signals', 'Milkdown / ProseMirror', '9 語言 i18n 引擎', '外掛沙箱與佈景引擎'],
       ipc: 'IPC 通訊橋',
       ipcTitle: 'Tauri 2 核心橋接',
       ipcChips: ['零複製 Commands', '非同步 Event 事件匯流排', '最小權限安全能力管控'],
@@ -354,28 +360,28 @@ const languages = {
       title: '常見問題解答',
       subtitle: '有疑問或建議？歡迎前往 GitHub 提交 Issue 或參與討論交流。',
       changelogTitle: '最新版本',
-      changelogVer: 'v0.1.3',
+      changelogVer: 'v0.1.7',
       changelogItems: [
-        'macOS 原生紅綠燈視窗控制按鈕適配',
-        '統一標準化發布安裝套件命名規範',
-        '9 種語言在地化文件與下載矩陣',
-        '全面最佳化表格對比度與暗黑主題顯示'
+        '內建外掛擴充市場（Taleno-Plugins 官方源）',
+        '社群佈景主題引擎與即時調色盤預覽',
+        '全自動後台更新偵測與在地化更新日誌',
+        '全面品牌升級為 Taleno 與效能調優'
       ],
       items: [
-        { q: 'Lexora 與傳統 Markdown 編輯器有何不同？', a: 'Lexora 採用徹底的原位所見即所得渲染，告別左右分割視窗。打字時游標所在處即時排版，無 Electron 的沉重包袱，冷啟動僅需數百毫秒，帶來極致輕快的原生桌面體驗。' },
+        { q: 'Taleno 與傳統 Markdown 編輯器有何不同？', a: 'Taleno 採用徹底的原位所見即所得渲染，告別左右分割視窗。打字時游標所在處即時排版，無 Electron 的沉重包袱，冷啟動僅需數百毫秒，帶來極致輕快的原生桌面體驗。' },
         { q: '我的文件資料安全嗎？', a: '100% 本機優先。所有文件均完整儲存在您的本機磁碟中，不傳送任何雲端伺服器。配合底層原子寫入機制，即便電腦突發斷電也不會損壞檔案。' },
         { q: '支援哪些 Markdown 擴充語法？', a: '完整支援 GitHub Flavored Markdown (GFM)、表格、任務清單、程式碼高亮、Mermaid 圖表（流程圖、循序圖、類別圖等）以及 KaTeX 數學公式渲染。' },
-        { q: 'Lexora 是否免費開源？如何參與貢獻？', a: '是的，Lexora 基於 GNU AGPL-3.0 協議完全免費且開源。歡迎提交 Issue 反饋缺陷、參與多語言翻譯或發起 Pull Request。' }
+        { q: 'Taleno 是否免費開源？如何參與貢獻？', a: '是的，Taleno 基於 GNU AGPL-3.0 協議完全免費且開源。歡迎提交 Issue 反饋缺陷、參與多語言翻譯或發起 Pull Request。' }
       ]
     },
     downloadPage: {
-      title: '下載 Lexora — 全平台安裝套件',
-      metaDesc: '下載適用於 Windows、macOS 和 Linux 的 Lexora。官方直鏈下載，無跳轉極速就緒。',
-      tag: 'v0.1.3 · 最新正式版',
-      heading: '下載 Lexora',
+      title: '下載 Taleno — 全平台安裝套件',
+      metaDesc: '下載適用於 Windows、macOS 和 Linux 的 Taleno。官方直鏈下載，無跳轉極速就緒。',
+      tag: 'v0.1.7 · 最新正式版',
+      heading: '下載 Taleno',
       subheading: '所有下載按鈕均直接指向 GitHub Releases 最新安裝套件資源，點擊即刻開始下載。',
       backHome: '← 返回首頁',
-      note: '安裝套件命名遵循 <span class="font-medium text-ink-secondary">Lexora_&lt;系統&gt;_&lt;架構&gt;</span> 規範，<span class="font-mono">releases/latest/download</span> 連結將始終指向最新建置版本。',
+      note: '安裝套件命名遵循 <span class="font-medium text-ink-secondary">Taleno_&lt;系統&gt;_&lt;架構&gt;</span> 規範，<span class="font-mono">releases/latest/download</span> 連結將始終指向最新建置版本。',
       allReleases: '查看歷史版本與原始碼歸檔',
       viewGh: 'GitHub 開源儲存庫'
     }
@@ -386,25 +392,25 @@ const languages = {
     dir: 'ja',
     name: '日本語',
     htmlLang: 'ja',
-    title: 'Lexora — インプレース WYSIWYG Markdown リーダー＆エディター',
+    title: 'Taleno — インプレース WYSIWYG Markdown リーダー＆エディター',
     metaDesc: 'Tauri 2、Rust、SolidJS で構築された、ローカルファーストのインプレース WYSIWYG Markdown リーダー＆エディター。2画面分割を廃止し、入力位置でそのまま美しくレンダリング。',
     nav: { features: '機能', download: 'ダウンロード', architecture: 'アーキテクチャ', shortcuts: 'ショートカット', faq: 'よくある質問', github: 'GitHub' },
     selectLang: '言語を選択',
     hero: {
-      badge: 'v0.1.3 リリース · AGPL-3.0 オープンソース',
+      badge: 'v0.1.7 リリース · AGPL-3.0 オープンソース',
       title: 'その場で整う、Markdown。',
       subtitle: 'ミニマリストで超高速なインプレース WYSIWYG Markdown リーダー＆エディター。左右分割プレビューを排除し、タイピングと同時にその場でレンダリング — Tauri 2 + Rust + SolidJS によるミリ秒単位の応答性。',
       downloadBtn: '今すぐダウンロード',
       githubBtn: 'GitHub で見る',
-      chips: ['<400ms 高速起動', '2画面分割なし', '9言語ネイティブ対応', '完全オフライン']
+      chips: ['<400ms 高速起動', '分割不要のインプレース', '拡張機能とテーマ', '9言語対応']
     },
     mockup: {
       menu: ['ファイル', '編集', '表示', 'ウィンドウ', 'ヘルプ'],
-      title: 'Lexora — README.md',
+      title: 'Taleno — README.md',
       outline: 'アウトライン',
       workspace: 'ワークスペース',
       introTitle: '# はじめに',
-      introP1: 'Lexora は画面分割プレビューを排除し、入力位置で直接リアルタイムにタイポグラフィを描画します。',
+      introP1: 'Taleno は画面分割プレビューを排除し、入力位置で直接リアルタイムにタイポグラフィを描画します。',
       introP2: '分割画面ゼロ · インプレース WYSIWYG · Ripgrep 全文検索。',
       metrics: ['起動時間', '< 400 ms', '瞬時のコールドスタート', '全文検索', 'ripgrep', 'ワークスペース全体秒速検索'],
       modes: ['閲覧', '執筆', 'ソース'],
@@ -416,6 +422,8 @@ const languages = {
       subtitle: 'タイピングと同時にレンダリング。目次アウトライン、マルチタブ、ワークスペース全文検索まで、すべてが快適な執筆のために設計されています。',
       items: [
         { title: '3つの表示モード切替', desc: '閲覧モード（読み取り専用）、執筆モード（インプレース WYSIWYG）、ソースモード（行番号同期）をワンクリック切替。' },
+        { title: 'プラグイン拡張機能', desc: '公式 Taleno-Plugins ハブと連携し、ワンクリックでインストール・更新。安全な JS サンドボックス環境。' },
+        { title: 'カスタム＆コミュニティテーマ', desc: '内蔵プリセットに加え、Dracula、Nord、Catppuccin などのコミュニティテーマをカラーパレットで即時適用。' },
         { title: '9言語ネイティブ対応', desc: 'OS設定に合わせて自動認識。英語、日本語、中国語、韓国語、ドイツ語など9言語を瞬時に切り替え可能。' },
         { title: '高速シンタックスハイライト', desc: 'syntect ネイティブエンジンにより、多数の言語に対応した高精度コードブロック描画とワンクリックコピーを提供。' },
         { title: 'Mermaid & LaTeX 数式', desc: 'フローチャート、シーケンス図、クラス図などの Mermaid 図表および KaTeX による数式をリアルタイム描画。' },
@@ -480,12 +488,12 @@ const languages = {
       title: 'よくある質問',
       subtitle: 'ご不明な点や改善要望がありましたら、GitHub の Issue や Discussion でお気軽にお知らせください。',
       changelogTitle: '最新リリース',
-      changelogVer: 'v0.1.3',
+      changelogVer: 'v0.1.7',
       changelogItems: [
-        'macOS ネイティブのウィンドウ操作ボタン対応',
-        'リリース配布ファイル命名規則の統一',
-        '9言語の多言語ドキュメント＆ダウンロード構成',
-        '全テーマにおけるテーブル表示のコントラスト向上'
+        'アプリ内プラグインマーケットプレイスの追加',
+        'カスタム＆コミュニティテーマエンジンとライブプレビュー',
+        '多言語対応の自動バックグラウンド更新',
+        'Taleno への全面リブランディングとパフォーマンス改善'
       ],
       items: [
         { q: '従来の Markdown エディターとの違いは何ですか？', a: '左右に分割されたプレビュー画面がなく、入力位置でそのままレンダリングされる真のインプレース WYSIWYG を提供します。Electron を使わず Rust と Tauri 2 で構築されているため、圧倒的に高速で軽量です。' },
@@ -495,13 +503,13 @@ const languages = {
       ]
     },
     downloadPage: {
-      title: 'Lexora ダウンロード — 全プラットフォーム',
-      metaDesc: 'Windows、macOS、Linux 用の Lexora をダウンロード。リダイレクトなしの公式ダイレクトリンク。',
-      tag: 'v0.1.3 · 最新リリース',
-      heading: 'Lexora のダウンロード',
+      title: 'Taleno ダウンロード — 全プラットフォーム',
+      metaDesc: 'Windows、macOS、Linux 用の Taleno をダウンロード。リダイレクトなしの公式ダイレクトリンク。',
+      tag: 'v0.1.7 · 最新リリース',
+      heading: 'Taleno のダウンロード',
       subheading: 'すべてのダウンロードボタンは GitHub Releases の最新アセットに直結しており、クリック後すぐにダウンロードが始まります。',
       backHome: '← トップページに戻る',
-      note: 'ファイル名は <span class="font-medium text-ink-secondary">Lexora_&lt;OS&gt;_&lt;アーキテクチャ&gt;</span> の命名規則に従い、<span class="font-mono">releases/latest/download</span> リンクから常に最新版を入手できます。',
+      note: 'ファイル名は <span class="font-medium text-ink-secondary">Taleno_&lt;OS&gt;_&lt;アーキテクチャ&gt;</span> の命名規則に従い、<span class="font-mono">releases/latest/download</span> リンクから常に最新版を入手できます。',
       allReleases: '過去のリリースとソースコード',
       viewGh: 'GitHub リポジトリ'
     }
@@ -512,25 +520,25 @@ const languages = {
     dir: 'ko',
     name: '한국어',
     htmlLang: 'ko',
-    title: 'Lexora — 인플레이스 WYSIWYG 마크다운 뷰어 & 에디터',
+    title: 'Taleno — 인플레이스 WYSIWYG 마크다운 뷰어 & 에디터',
     metaDesc: 'Tauri 2, Rust, SolidJS 로 제작된 로컬 우선 미니멀 마크다운 뷰어 및 실시간 WYSIWYG 에디터. 분할 화면 없이 입력한 위치에서 즉시 렌더링됩니다.',
     nav: { features: '주요 기능', download: '다운로드', architecture: '아키텍처', shortcuts: '단축키', faq: '자주 묻는 질문', github: 'GitHub' },
     selectLang: '언어 선택',
     hero: {
-      badge: 'v0.1.3 출시 · AGPL-3.0 오픈소스',
+      badge: 'v0.1.7 출시 · AGPL-3.0 오픈소스',
       title: '입력하는 그 자리에서, 마크다운.',
       subtitle: '미니멀하고 강력한 로컬 우선 인플레이스 WYSIWYG 마크다운 뷰어 & 에디터. 좌우 분할 창 없이 타이핑하는 즉시 아름답게 렌더링 — Tauri 2 + Rust + SolidJS 기반의 즉각적인 반응성.',
       downloadBtn: '지금 다운로드',
       githubBtn: 'GitHub 에서 보기',
-      chips: ['<400ms 초고속 실행', '화면 분할 없는 원위치 편집', '9개 언어 지원', '완전 오프라인']
+      chips: ['<400ms 초고속 콜드스타트', '분할 화면 없는 인플레이스', '플러그인 및 테마', '9개 언어 지원']
     },
     mockup: {
       menu: ['파일', '편집', '보기', '창', '도움말'],
-      title: 'Lexora — README.md',
+      title: 'Taleno — README.md',
       outline: '문서 개요',
       workspace: '워크스페이스',
       introTitle: '# 프로젝트 소개',
-      introP1: 'Lexora 는 번거로운 화면 분할 미리보기를 없애고, 입력한 위치에서 곧바로 깔끔하게 서식을 렌더링합니다.',
+      introP1: 'Taleno 는 번거로운 화면 분할 미리보기를 없애고, 입력한 위치에서 곧바로 깔끔하게 서식을 렌더링합니다.',
       introP2: '분할창 제로 · 인플레이스 WYSIWYG · Ripgrep 전체 텍스트 검색.',
       metrics: ['시작 시간', '< 400 ms', '초고속 실행', '전체 검색', 'ripgrep', '워크스페이스 전체 검색'],
       modes: ['읽기', '쓰기', '소스'],
@@ -542,6 +550,8 @@ const languages = {
       subtitle: '타이핑과 동시에 이뤄지는 실시간 서식 렌더링. 개요, 다중 탭부터 전체 텍스트 검색까지 오직 글쓰기 경험에 집중합니다.',
       items: [
         { title: '3가지 디스플레이 모드', desc: '읽기 모드(보기 전용), 쓰기 모드(인플레이스 WYSIWYG), 코드 모드(줄 번호 동기화)를 단축키로 자유롭게 전환.' },
+        { title: '플러그인 생태계 및 마켓', desc: '공식 Taleno-Plugins 허브에서 원클릭으로 플러그인을 탐색, 설치 및 업데이트하는 안전한 JS 샌드박스 런타임.' },
+        { title: '커스텀 및 커뮤니티 테마', desc: '내장 프리셋과 함께 Dracula, Nord, Catppuccin 등 커뮤니티 테마를 실시간 컬러 스와치로 즉시 전환.' },
         { title: '9개 국어 다국어 지원', desc: '운영체제 언어를 자동으로 감지하며 메뉴에서 언제든 9개 언어로 즉시 전환 가능합니다.' },
         { title: '고성능 코드 구문 강조', desc: 'syntect 엔진 기반으로 수백 가지 프로그래밍 언어의 코드 블록 강조 및 원클릭 복사를 지원합니다.' },
         { title: 'Mermaid 다이어그램 & LaTeX 수식', desc: '플로우차트, 시퀀스, 클래스 다이어그램 등 Mermaid 차트와 KaTeX 수학 수식을 실시간 렌더링.' },
@@ -606,28 +616,28 @@ const languages = {
       title: '자주 묻는 질문',
       subtitle: '궁금한 점이나 건의사항이 있으신가요? GitHub 저장소에서 이슈를 생성하거나 토론에 참여하세요.',
       changelogTitle: '최신 릴리스',
-      changelogVer: 'v0.1.3',
+      changelogVer: 'v0.1.7',
       changelogItems: [
-        'macOS 네이티브 창 제어 버튼 지원',
-        '릴리스 배포 파일명 표준화',
-        '9개 국어 다국어 문서 및 다운로드 구성',
-        '모든 테마에서 표(Table) 대비 및 가독성 개선'
+        '인앱 플러그인 마켓플레이스 탑재 (Taleno-Plugins)',
+        '커스텀 및 커뮤니티 테마 엔진과 실시간 색상 미리보기',
+        '다국어 릴리스 노트를 지원하는 자동 백그라운드 업데이트',
+        'Taleno 브랜드 전면 개편 및 성능 최적화'
       ],
       items: [
-        { q: '기존 마크다운 편집기와 무엇이 다른가요?', a: 'Lexora 는 화면 분할 없이 글을 쓰는 위치에서 즉시 서식이 완성되는 실시간 인플레이스 WYSIWYG 방식을 채택했습니다. Electron 없이 Rust 와 Tauri 2 로 개발되어 가볍고 빠릅니다.' },
+        { q: '기존 마크다운 편집기와 무엇이 다른가요?', a: 'Taleno 는 화면 분할 없이 글을 쓰는 위치에서 즉시 서식이 완성되는 실시간 인플레이스 WYSIWYG 방식을 채택했습니다. Electron 없이 Rust 와 Tauri 2 로 개발되어 가볍고 빠릅니다.' },
         { q: '내 데이터는 안전한가요?', a: '100% 로컬 우선입니다. 모든 문서는 사용자의 기기에만 보관되며 외부 서버로 전송되지 않습니다. 원자적 파일 저장 구조로 예기치 않은 종료 시에도 파일이 안전하게 보존됩니다.' },
         { q: '어떤 마크다운 확장 문법을 지원하나요?', a: 'GitHub Flavored Markdown (GFM), 표, 작업 목록, 코드 구문 강조, Mermaid 다이어그램(순서도, 시퀀스 등), KaTeX 수학 수식을 모두 지원합니다.' },
         { q: '무료인가요? 기여하려면 어떻게 해야 하나요?', a: '네, GNU AGPL-3.0 라이선스 기반의 완전 무료 오픈소스입니다. 버그 제보, 번역, Pull Request 등 다양한 기여를 환영합니다.' }
       ]
     },
     downloadPage: {
-      title: 'Lexora 다운로드 — 모든 플랫폼',
-      metaDesc: 'Windows, macOS, Linux 용 Lexora 다운로드. 리디렉션 없는 공식 직접 링크.',
-      tag: 'v0.1.3 · 최신 릴리스',
-      heading: 'Lexora 다운로드',
+      title: 'Taleno 다운로드 — 모든 플랫폼',
+      metaDesc: 'Windows, macOS, Linux 용 Taleno 다운로드. 리디렉션 없는 공식 직접 링크.',
+      tag: 'v0.1.7 · 최신 릴리스',
+      heading: 'Taleno 다운로드',
       subheading: '모든 다운로드 버튼은 GitHub Releases 최신 빌드 자산으로 직접 연결되어 즉시 다운로드가 시작됩니다.',
       backHome: '← 메인으로 돌아가기',
-      note: '배포 파일은 <span class="font-medium text-ink-secondary">Lexora_&lt;운영체제&gt;_&lt;아키텍처&gt;</span> 명명 규칙을 따르며, <span class="font-mono">releases/latest/download</span> 링크는 항상 최신 빌드를 제공합니다.',
+      note: '배포 파일은 <span class="font-medium text-ink-secondary">Taleno_&lt;운영체제&gt;_&lt;아키텍처&gt;</span> 명명 규칙을 따르며, <span class="font-mono">releases/latest/download</span> 링크는 항상 최신 빌드를 제공합니다.',
       allReleases: '이전 릴리스 및 소스코드 아카이브',
       viewGh: 'GitHub 저장소'
     }
@@ -638,25 +648,25 @@ const languages = {
     dir: 'de',
     name: 'Deutsch',
     htmlLang: 'de',
-    title: 'Lexora — Nahtloser In-Place WYSIWYG Markdown Reader & Editor',
+    title: 'Taleno — Nahtloser In-Place WYSIWYG Markdown Reader & Editor',
     metaDesc: 'Ein minimalistischer, lokal orientierter Markdown-Reader und nahtloser In-Place-WYSIWYG-Editor, entwickelt mit Tauri 2, Rust und SolidJS. Keine geteilten Ansichten — sofortige visuelle Darstellung beim Tippen.',
     nav: { features: 'Funktionen', download: 'Download', architecture: 'Architektur', shortcuts: 'Tastenkürzel', faq: 'FAQ & Hinweise', github: 'GitHub' },
     selectLang: 'Sprache auswählen',
     hero: {
-      badge: 'v0.1.3 veröffentlicht · AGPL-3.0 Open Source',
+      badge: 'v0.1.7 veröffentlicht · AGPL-3.0 Open Source',
       title: 'Markdown, direkt am Platz.',
       subtitle: 'Ein minimalistischer, blitzschneller In-Place WYSIWYG Markdown-Reader und Editor. Keine störenden Split-Panes — formatiert direkt beim Schreiben, angetrieben von Tauri 2 + Rust + SolidJS.',
       downloadBtn: 'Jetzt herunterladen',
       githubBtn: 'Auf GitHub ansehen',
-      chips: ['<400ms Kaltstart', 'Keine Split-Panes', '9 Sprachen', 'Vollständig offline']
+      chips: ['<400ms Kaltstart', 'Keine Split-Screens', 'Plugins & Themes', '9 Sprachen']
     },
     mockup: {
       menu: ['Datei', 'Bearbeiten', 'Ansicht', 'Fenster', 'Hilfe'],
-      title: 'Lexora — README.md',
+      title: 'Taleno — README.md',
       outline: 'Gliederung',
       workspace: 'Arbeitsbereich',
       introTitle: '# Einführung',
-      introP1: 'Lexora verzichtet vollständig auf geteilte Vorschaubildschirme und formatiert Markdown direkt am Cursor.',
+      introP1: 'Taleno verzichtet vollständig auf geteilte Vorschaubildschirme und formatiert Markdown direkt am Cursor.',
       introP2: 'Keine Split-Panes · In-Place WYSIWYG · Ripgrep-Volltextsuche.',
       metrics: ['Startzeit', '< 400 ms', 'Sofort einsatzbereit', 'Volltextsuche', 'ripgrep', 'Im gesamten Arbeitsbereich'],
       modes: ['Lesen', 'Schreiben', 'Quellcode'],
@@ -668,6 +678,8 @@ const languages = {
       subtitle: 'Echtzeit-Formatierung beim Tippen. Von Gliederung und Tabs bis hin zur Volltextsuche ist alles für ein sauberes Schreiberlebnis optimiert.',
       items: [
         { title: 'Drei Anzeigemodi', desc: 'Nahtloses Umschalten zwischen Lese-Modus, In-Place-Schreibmodus und synchronisiertem Quellcode-Modus.' },
+        { title: 'In-App Plugin-Marktplatz', desc: 'Erweiterungen aus dem offiziellen Taleno-Plugins-Hub mit einem Klick installieren und sicher in einer JS-Sandbox ausführen.' },
+        { title: 'Community-Themes & Design', desc: 'Integrierte Voreinstellungen plus externer Theme-Marktplatz (Dracula, Nord, Catppuccin) mit Live-Farbfeldvorschau.' },
         { title: '9 Sprachen (i18n)', desc: 'Erkennt automatisch Ihre Systemsprache und unterstützt 9 Sprachen mit sofortigem Wechsel.' },
         { title: 'Syntax-Hervorhebung', desc: 'Leistungsstarke syntect-Hervorhebung mit Sprach-Tags und Ein-Klick-Code-Kopierfunktion.' },
         { title: 'Mermaid & LaTeX', desc: 'Interaktive Flussdiagramme, Sequenzdiagramme und KaTeX-Mathematikformeln in Echtzeit.' },
@@ -732,28 +744,28 @@ const languages = {
       title: 'Häufig gestellte Fragen (FAQ)',
       subtitle: 'Haben Sie Fragen oder Anregungen? Eröffnen Sie gerne ein Issue oder eine Diskussion auf GitHub.',
       changelogTitle: 'Neueste Version',
-      changelogVer: 'v0.1.3',
+      changelogVer: 'v0.1.7',
       changelogItems: [
-        'Native macOS Fensterbedienelemente integriert',
-        'Standardisierte Namensgebung für Release-Dateien',
-        'Lokalisierte Dokumentation & Downloads in 9 Sprachen',
-        'Verbesserter Tabellenkontrast über alle Farbthemen'
+        'In-App Plugin-Marktplatz (Taleno-Plugins Hub)',
+        'Community-Themes-Engine mit Live-Farbpalettenvorschau',
+        'Automatische Hintergrund-Updates mit lokalisierten Hinweisen',
+        'Vollständiges Rebranding zu Taleno & Performance-Optimierung'
       ],
       items: [
-        { q: 'Was unterscheidet Lexora von anderen Markdown-Editoren?', a: 'Lexora bietet echtes In-Place-WYSIWYG ohne geteilte Bildschirme. Markdown formatiert sich direkt beim Tippen. Entwickelt mit Rust und Tauri 2 ist es blitzschnell und frei von Electron-Ballast.' },
+        { q: 'Was unterscheidet Taleno von anderen Markdown-Editoren?', a: 'Taleno bietet echtes In-Place-WYSIWYG ohne geteilte Bildschirme. Markdown formatiert sich direkt beim Tippen. Entwickelt mit Rust und Tauri 2 ist es blitzschnell und frei von Electron-Ballast.' },
         { q: 'Sind meine Daten sicher und privat?', a: '100% lokal zuerst. Alle Dateien verbleiben vollständig auf Ihrem Gerät. Atomare Schreibvorgänge schützen Ihre Texte zuverlässig vor Beschädigung.' },
         { q: 'Welche Markdown-Erweiterungen werden unterstützt?', a: 'GitHub Flavored Markdown (GFM), Tabellen, Aufgabenlisten, Quellcode-Hervorhebung, Mermaid-Diagramme und KaTeX-Mathematikformeln.' },
-        { q: 'Ist Lexora kostenlos und quelloffen?', a: 'Ja. Lexora ist unter der GNU AGPL-3.0 Lizenz frei und quelloffen verfügbar. Beiträge, Übersetzungen und Fehlerberichte sind jederzeit willkommen.' }
+        { q: 'Ist Taleno kostenlos und quelloffen?', a: 'Ja. Taleno ist unter der GNU AGPL-3.0 Lizenz frei und quelloffen verfügbar. Beiträge, Übersetzungen und Fehlerberichte sind jederzeit willkommen.' }
       ]
     },
     downloadPage: {
-      title: 'Lexora herunterladen — Alle Plattformen',
-      metaDesc: 'Laden Sie Lexora für Windows, macOS und Linux herunter. Direkte Download-Links ohne Weiterleitungen.',
-      tag: 'v0.1.3 · Neueste Version',
-      heading: 'Lexora herunterladen',
+      title: 'Taleno herunterladen — Alle Plattformen',
+      metaDesc: 'Laden Sie Taleno für Windows, macOS und Linux herunter. Direkte Download-Links ohne Weiterleitungen.',
+      tag: 'v0.1.7 · Neueste Version',
+      heading: 'Taleno herunterladen',
       subheading: 'Jeder Download-Link verweist direkt auf die Release-Dateien von GitHub — der Download startet sofort ohne Weiterleitungen.',
       backHome: '← Zurück zur Startseite',
-      note: 'Die Dateinamen folgen dem Muster <span class="font-medium text-ink-secondary">Lexora_&lt;OS&gt;_&lt;Architektur&gt;</span>, wodurch <span class="font-mono">releases/latest/download</span> stets auf die neueste Version verweist.',
+      note: 'Die Dateinamen folgen dem Muster <span class="font-medium text-ink-secondary">Taleno_&lt;OS&gt;_&lt;Architektur&gt;</span>, wodurch <span class="font-mono">releases/latest/download</span> stets auf die neueste Version verweist.',
       allReleases: 'Alle Versionen & Quellcode-Archive',
       viewGh: 'Auf GitHub ansehen'
     }
@@ -764,25 +776,25 @@ const languages = {
     dir: 'fr',
     name: 'Français',
     htmlLang: 'fr',
-    title: 'Lexora — Lecteur & Éditeur Markdown WYSIWYG In-Situ',
+    title: 'Taleno — Lecteur & Éditeur Markdown WYSIWYG In-Situ',
     metaDesc: 'Un lecteur et éditeur Markdown WYSIWYG local-first minimaliste conçu avec Tauri 2, Rust et SolidJS. Zéro panneau divisé — rendu instantané sur place pendant la frappe.',
     nav: { features: 'Fonctionnalités', download: 'Télécharger', architecture: 'Architecture', shortcuts: 'Raccourcis', faq: 'FAQ & Notes', github: 'GitHub' },
     selectLang: 'Choisir la langue',
     hero: {
-      badge: 'v0.1.3 disponible · Open Source AGPL-3.0',
+      badge: 'v0.1.7 disponible · Open Source AGPL-3.0',
       title: 'Le Markdown, directement sur place.',
       subtitle: 'Un lecteur et éditeur Markdown WYSIWYG in-situ ultra-rapide et épuré. Finis les doubles panneaux de prévisualisation : mise en page en direct au fil de la frappe avec Tauri 2 + Rust + SolidJS.',
       downloadBtn: 'Télécharger',
       githubBtn: 'Voir sur GitHub',
-      chips: ['Démarrage <400ms', 'Zéro écran partagé', '9 langues natives', '100% Hors-ligne']
+      chips: ['Démarrage <400ms', 'Sans panneau scindé', 'Plugins & Thèmes', '9 langues']
     },
     mockup: {
       menu: ['Fichier', 'Édition', 'Affichage', 'Fenêtre', 'Aide'],
-      title: 'Lexora — README.md',
+      title: 'Taleno — README.md',
       outline: 'Plan du document',
       workspace: 'Espace de travail',
       introTitle: '# Introduction',
-      introP1: 'Lexora élimine le double affichage en rendant le Markdown directement sur place avec une typographie soignée.',
+      introP1: 'Taleno élimine le double affichage en rendant le Markdown directement sur place avec une typographie soignée.',
       introP2: 'Zéro panneau divisé · WYSIWYG in-situ · Recherche textuelle ripgrep.',
       metrics: ['Temps de lancement', '< 400 ms', 'Démarrage instantané', 'Recherche textuelle', 'ripgrep', 'Espace entier'],
       modes: ['Lecture', 'Écriture', 'Code'],
@@ -794,6 +806,8 @@ const languages = {
       subtitle: 'Rendu instantané à la frappe. Du plan dynamique aux onglets multiples et à la recherche globale, tout est pensé pour le confort d\'écriture.',
       items: [
         { title: 'Trois modes d\'affichage', desc: 'Basculez d\'un clic entre le mode Lecture (lecture seule), Écriture (WYSIWYG direct) et Code (numéros de ligne synchronisés).' },
+        { title: 'Écosystème d\'extensions', desc: 'Parcourez, installez et mettez à jour des extensions depuis le hub officiel Taleno-Plugins dans un bac à sable JS sécurisé.' },
+        { title: 'Thèmes personnalisés & communauté', desc: 'Préréglages intégrés et marketplace de thèmes communautaires (Dracula, Nord, Catppuccin) avec aperçu immédiat.' },
         { title: 'Internationalisation (9 langues)', desc: 'Détection automatique de la langue système parmi 9 langues avec changement instantané en direct.' },
         { title: 'Coloration syntaxique', desc: 'Coloration ultra-rapide via syntect avec étiquettes de langage et bouton de copie en un clic.' },
         { title: 'Mermaid & Formules LaTeX', desc: 'Rendu en direct de diagrammes Mermaid (flux, séquence, classes) et de formules mathématiques KaTeX.' },
@@ -858,28 +872,28 @@ const languages = {
       title: 'Foire aux questions (FAQ)',
       subtitle: 'Une question ou une suggestion ? N\'hésitez pas à ouvrir un ticket ou à participer aux discussions sur GitHub.',
       changelogTitle: 'Dernière version',
-      changelogVer: 'v0.1.3',
+      changelogVer: 'v0.1.7',
       changelogItems: [
-        'Contrôles de fenêtre natifs pour macOS',
-        'Standardisation des noms de fichiers de release',
-        'Documentation et téléchargements traduits en 9 langues',
-        'Contraste et lisibilité des tableaux grandement améliorés'
+        'Marketplace de plugins intégrée (hub Taleno-Plugins)',
+        'Moteur de thèmes communautaires avec nuanciers en direct',
+        'Mises à jour automatiques en arrière-plan avec notes traduites',
+        'Nouveau nom Taleno et optimisations de performance'
       ],
       items: [
-        { q: 'En quoi Lexora est-il différent des autres éditeurs ?', a: 'Lexora offre un rendu WYSIWYG direct sans panneau divisé. Le texte se met en page au fur et à mesure que vous tapez. Construit en Rust et Tauri 2, il démarre en quelques millisecondes sans la lourdeur d\'Electron.' },
+        { q: 'En quoi Taleno est-il différent des autres éditeurs ?', a: 'Taleno offre un rendu WYSIWYG direct sans panneau divisé. Le texte se met en page au fur et à mesure que vous tapez. Construit en Rust et Tauri 2, il démarre en quelques millisecondes sans la lourdeur d\'Electron.' },
         { q: 'Mes données sont-elles protégées ?', a: '100% local-first. Tous vos documents restent sur votre machine sans aucune transmission dans le cloud. L\'écriture atomique protège vos textes contre toute corruption.' },
         { q: 'Quelles extensions Markdown sont supportées ?', a: 'GitHub Flavored Markdown (GFM), tableaux, listes de tâches, coloration de code, diagrammes Mermaid et formules mathématiques KaTeX.' },
-        { q: 'Lexora est-il gratuit et open source ?', a: 'Oui, Lexora est entièrement libre et gratuit sous licence GNU AGPL-3.0. Les retours de bugs, traductions et contributions sont les bienvenus.' }
+        { q: 'Taleno est-il gratuit et open source ?', a: 'Oui, Taleno est entièrement libre et gratuit sous licence GNU AGPL-3.0. Les retours de bugs, traductions et contributions sont les bienvenus.' }
       ]
     },
     downloadPage: {
-      title: 'Télécharger Lexora — Toutes plateformes',
-      metaDesc: 'Téléchargez Lexora pour Windows, macOS et Linux. Liens directs officiels sans redirection.',
-      tag: 'v0.1.3 · Dernière version',
-      heading: 'Télécharger Lexora',
+      title: 'Télécharger Taleno — Toutes plateformes',
+      metaDesc: 'Téléchargez Taleno pour Windows, macOS et Linux. Liens directs officiels sans redirection.',
+      tag: 'v0.1.7 · Dernière version',
+      heading: 'Télécharger Taleno',
       subheading: 'Chaque lien pointe directement vers les fichiers d\'installation de GitHub Releases. Le téléchargement démarre immédiatement.',
       backHome: '← Retour à l\'accueil',
-      note: 'Les fichiers sont nommés selon le schéma <span class="font-medium text-ink-secondary">Lexora_&lt;OS&gt;_&lt;Architecture&gt;</span> et le lien <span class="font-mono">releases/latest/download</span> pointe toujours vers la version la plus récente.',
+      note: 'Les fichiers sont nommés selon le schéma <span class="font-medium text-ink-secondary">Taleno_&lt;OS&gt;_&lt;Architecture&gt;</span> et le lien <span class="font-mono">releases/latest/download</span> pointe toujours vers la version la plus récente.',
       allReleases: 'Toutes les versions et sources',
       viewGh: 'Dépôt GitHub'
     }
@@ -890,25 +904,25 @@ const languages = {
     dir: 'es',
     name: 'Español',
     htmlLang: 'es',
-    title: 'Lexora — Lector y Editor Markdown WYSIWYG In-Situ',
+    title: 'Taleno — Lector y Editor Markdown WYSIWYG In-Situ',
     metaDesc: 'Un lector y editor Markdown WYSIWYG local-first minimalista creado con Tauri 2, Rust y SolidJS. Sin división de pantalla — renderizado en tiempo real mientras escribes.',
     nav: { features: 'Características', download: 'Descargar', architecture: 'Arquitectura', shortcuts: 'Atajos', faq: 'Preguntas Frecuentes', github: 'GitHub' },
     selectLang: 'Seleccionar idioma',
     hero: {
-      badge: 'v0.1.3 publicado · Código abierto AGPL-3.0',
+      badge: 'v0.1.7 publicado · Código abierto AGPL-3.0',
       title: 'Markdown, directamente en su lugar.',
       subtitle: 'Un lector y editor Markdown WYSIWYG in-situ rápido y minimalista. Olvídate de la doble pantalla: formateo instantáneo en tiempo real con Tauri 2 + Rust + SolidJS.',
       downloadBtn: 'Descargar Ahora',
       githubBtn: 'Ver en GitHub',
-      chips: ['Inicio <400ms', 'Sin panel dividido', '9 idiomas nativos', 'Totalmente offline']
+      chips: ['Inicio <400ms', 'Sin paneles divididos', 'Plugins y Temas', '9 idiomas']
     },
     mockup: {
       menu: ['Archivo', 'Editar', 'Ver', 'Ventana', 'Ayuda'],
-      title: 'Lexora — README.md',
+      title: 'Taleno — README.md',
       outline: 'Esquema',
       workspace: 'Espacio de trabajo',
       introTitle: '# Introducción',
-      introP1: 'Lexora elimina la doble pantalla al renderizar Markdown en el lugar exacto con una tipografía limpia.',
+      introP1: 'Taleno elimina la doble pantalla al renderizar Markdown en el lugar exacto con una tipografía limpia.',
       introP2: 'Sin división de pantalla · WYSIWYG in-situ · Búsqueda global ripgrep.',
       metrics: ['Tiempo de inicio', '< 400 ms', 'Arranque instantáneo', 'Búsqueda de texto', 'ripgrep', 'Todo el espacio'],
       modes: ['Lectura', 'Escritura', 'Código'],
@@ -920,6 +934,8 @@ const languages = {
       subtitle: 'Renderizado en tiempo real. Desde el esquema del documento y pestañas hasta la búsqueda ripgrep, todo está diseñado para una escritura fluida.',
       items: [
         { title: 'Tres modos de visualización', desc: 'Alterna al instante entre modo Lectura (solo lectura), Escritura (WYSIWYG in-situ) y Código (código fuente sincronizado).' },
+        { title: 'Ecosistema de plugins', desc: 'Explora, instala y actualiza extensiones desde el repositorio oficial Taleno-Plugins en un entorno JS aislado y seguro.' },
+        { title: 'Temas y personalización', desc: 'Ajustes predefinidos y catálogo de temas comunitarios (Dracula, Nord, Catppuccin) con previsualización en vivo.' },
         { title: 'Internacionalización (9 idiomas)', desc: 'Detecta automáticamente el idioma de tu sistema entre 9 lenguas con cambio instantáneo.' },
         { title: 'Resaltado de sintaxis', desc: 'Motor syntect de alto rendimiento con etiquetas de lenguaje y botón de copia con un clic.' },
         { title: 'Mermaid y fórmulas LaTeX', desc: 'Visualización interactiva de diagramas de flujo, secuencia y clases Mermaid, además de fórmulas KaTeX.' },
@@ -984,28 +1000,28 @@ const languages = {
       title: 'Preguntas frecuentes (FAQ)',
       subtitle: '¿Tienes alguna duda o sugerencia? Abre una incidencia o participa en las discusiones en GitHub.',
       changelogTitle: 'Última versión',
-      changelogVer: 'v0.1.3',
+      changelogVer: 'v0.1.7',
       changelogItems: [
-        'Controles de ventana nativos en macOS',
-        'Estandarización de nombres de instaladores',
-        'Documentación y descargas en 9 idiomas',
-        'Contraste y visibilidad de tablas mejorados'
+        'Mercado de extensiones integrado (Taleno-Plugins hub)',
+        'Motor de temas comunitarios con paletas en tiempo real',
+        'Actualizaciones automáticas con notas de versión localizadas',
+        'Rebranding completo a Taleno y mejoras de rendimiento'
       ],
       items: [
-        { q: '¿Qué hace diferente a Lexora de otros editores?', a: 'Lexora ofrece edición WYSIWYG real en el mismo lugar donde escribes, sin paneles divididos. Desarrollado en Rust y Tauri 2, es ligero, rápido y no depende del sobrepeso de Electron.' },
+        { q: '¿Qué hace diferente a Taleno de otros editores?', a: 'Taleno ofrece edición WYSIWYG real en el mismo lugar donde escribes, sin paneles divididos. Desarrollado en Rust y Tauri 2, es ligero, rápido y no depende del sobrepeso de Electron.' },
         { q: '¿Mis datos están seguros?', a: '100% local-first. Todos tus documentos se guardan exclusivamente en tu equipo sin envío a la nube. El guardado atómico protege tus textos de cierres inesperados.' },
         { q: '¿Qué funciones de Markdown están soportadas?', a: 'GitHub Flavored Markdown (GFM), tablas, listas de tareas, resaltado de código, diagramas Mermaid y fórmulas matemáticas KaTeX.' },
-        { q: '¿Es gratuito y de código abierto?', a: 'Sí, Lexora es software libre bajo licencia GNU AGPL-3.0. Agradecemos comentarios, traducciones y colaboraciones en GitHub.' }
+        { q: '¿Es gratuito y de código abierto?', a: 'Sí, Taleno es software libre bajo licencia GNU AGPL-3.0. Agradecemos comentarios, traducciones y colaboraciones en GitHub.' }
       ]
     },
     downloadPage: {
-      title: 'Descargar Lexora — Todas las plataformas',
-      metaDesc: 'Descarga Lexora para Windows, macOS y Linux. Enlaces directos oficiales sin redirecciones.',
-      tag: 'v0.1.3 · Última versión',
-      heading: 'Descargar Lexora',
+      title: 'Descargar Taleno — Todas las plataformas',
+      metaDesc: 'Descarga Taleno para Windows, macOS y Linux. Enlaces directos oficiales sin redirecciones.',
+      tag: 'v0.1.7 · Última versión',
+      heading: 'Descargar Taleno',
       subheading: 'Cada enlace descarga directamente el paquete oficial desde GitHub Releases sin esperas ni redirecciones.',
       backHome: '← Volver al inicio',
-      note: 'Los archivos siguen el formato <span class="font-medium text-ink-secondary">Lexora_&lt;OS&gt;_&lt;Arquitectura&gt;</span> y el enlace <span class="font-mono">releases/latest/download</span> siempre apunta a la versión más reciente.',
+      note: 'Los archivos siguen el formato <span class="font-medium text-ink-secondary">Taleno_&lt;OS&gt;_&lt;Arquitectura&gt;</span> y el enlace <span class="font-mono">releases/latest/download</span> siempre apunta a la versión más reciente.',
       allReleases: 'Ver todas las versiones y código fuente',
       viewGh: 'Repositorio en GitHub'
     }
@@ -1016,25 +1032,25 @@ const languages = {
     dir: 'ru',
     name: 'Русский',
     htmlLang: 'ru',
-    title: 'Lexora — Интерактивный WYSIWYG Markdown-ридер и редактор',
+    title: 'Taleno — Интерактивный WYSIWYG Markdown-ридер и редактор',
     metaDesc: 'Минималистичный локальный Markdown-ридер и интерактивный WYSIWYG-редактор на базе Tauri 2, Rust и SolidJS. Никаких раздельных панелей — мгновенное форматирование прямо по месту ввода.',
     nav: { features: 'Возможности', download: 'Скачать', architecture: 'Архитектура', shortcuts: 'Горячие клавиши', faq: 'Вопросы и ответы', github: 'GitHub' },
     selectLang: 'Выбрать язык',
     hero: {
-      badge: 'Релиз v0.1.3 · Open Source AGPL-3.0',
+      badge: 'Релиз v0.1.7 · Open Source AGPL-3.0',
       title: 'Markdown прямо на месте.',
       subtitle: 'Минималистичный, молниеносный локальный WYSIWYG Markdown-ридер и редактор. Без разделения экрана — мгновенное форматирование по мере ввода на базе Tauri 2 + Rust + SolidJS.',
       downloadBtn: 'Скачать сейчас',
       githubBtn: 'Открыть на GitHub',
-      chips: ['Запуск <400 мс', 'Без разделения экрана', '9 языков', '100% Офлайн']
+      chips: ['Старт <400мс', 'Без разделения экрана', 'Плагины и темы', '9 языков']
     },
     mockup: {
       menu: ['Файл', 'Правка', 'Вид', 'Окно', 'Справка'],
-      title: 'Lexora — README.md',
+      title: 'Taleno — README.md',
       outline: 'Оглавление',
       workspace: 'Рабочая область',
       introTitle: '# Введение',
-      introP1: 'Lexora избавляет от раздельного экрана, форматируя текст прямо по месту ввода с безупречной типографикой.',
+      introP1: 'Taleno избавляет от раздельного экрана, форматируя текст прямо по месту ввода с безупречной типографикой.',
       introP2: 'Без сплит-экрана · Интерактивный WYSIWYG · Полнотекстовый поиск ripgrep.',
       metrics: ['Время запуска', '< 400 мс', 'Мгновенный старт', 'Полнотекстовый поиск', 'ripgrep', 'По всей рабочей области'],
       modes: ['Чтение', 'Запись', 'Исходник'],
@@ -1046,6 +1062,8 @@ const languages = {
       subtitle: 'Форматирование в реальном времени. От структуры документа и вкладок до поиска ripgrep — всё подчинено идеальному процессу работы с текстом.',
       items: [
         { title: 'Три режима отображения', desc: 'Быстрое переключение между режимом Чтения (только чтение), Записи (интерактивный WYSIWYG) и Кода (с синхронизацией строк).' },
+        { title: 'Экосистема плагинов', desc: 'Установка и обновление плагинов в один клик из официального каталога Taleno-Plugins в безопасной JS-песочнице.' },
+        { title: 'Темы оформления', desc: 'Встроенные пресеты и каталог тем от сообщества (Dracula, Nord, Catppuccin) с живым предпросмотром палитр.' },
         { title: 'Локализация на 9 языков', desc: 'Автоматическое определение системного языка среди 9 доступных с возможностью мгновенной смены.' },
         { title: 'Подсветка синтаксиса', desc: 'Встроенный высокопроизводительный движок syntect с бейджами языков и копированием кода в один клик.' },
         { title: 'Диаграммы Mermaid и формулы LaTeX', desc: 'Прямой рендеринг блок-схем, диаграмм последовательностей Mermaid и математических формул KaTeX.' },
@@ -1110,28 +1128,28 @@ const languages = {
       title: 'Часто задаваемые вопросы',
       subtitle: 'Есть вопросы или предложения? Создайте Issue или присоединяйтесь к обсуждениям на GitHub.',
       changelogTitle: 'Последний релиз',
-      changelogVer: 'v0.1.3',
+      changelogVer: 'v0.1.7',
       changelogItems: [
-        'Нативные кнопки управления окном для macOS',
-        'Стандартизация имен файлов в релизах',
-        'Документация и загрузки на 9 языках',
-        'Улучшен контраст таблиц во всех темах'
+        'Встроенный каталог плагинов (хаб Taleno-Plugins)',
+        'Поддержка тем сообщества с живым предпросмотром палитр',
+        'Автоматические обновления в фоне с описанием на родном языке',
+        'Полный ребрендинг в Taleno и оптимизация скорости'
       ],
       items: [
-        { q: 'Чем Lexora отличается от других Markdown-редакторов?', a: 'Lexora форматирует текст непосредственно в месте ввода без разделения экрана на код и превью. Благодаря Rust и Tauri 2 приложение мгновенно запускается и не тратит лишнюю память.' },
+        { q: 'Чем Taleno отличается от других Markdown-редакторов?', a: 'Taleno форматирует текст непосредственно в месте ввода без разделения экрана на код и превью. Благодаря Rust и Tauri 2 приложение мгновенно запускается и не тратит лишнюю память.' },
         { q: 'Безопасны ли мои данные?', a: '100% локально. Все файлы сохраняются исключительно на вашем диске и не передаются в облако. Атомарная запись защитит документы от повреждения при сбоях.' },
         { q: 'Какие расширения Markdown поддерживаются?', a: 'GitHub Flavored Markdown (GFM), таблицы, списки задач, подсветка синтаксиса, диаграммы Mermaid и математические формулы KaTeX.' },
-        { q: 'Lexora бесплатна? Как я могу помочь?', a: 'Да, Lexora полностью бесплатна и открыта под лицензией GNU AGPL-3.0. Мы рады сообщениям об ошибках, переводам и Pull Request на GitHub.' }
+        { q: 'Taleno бесплатна? Как я могу помочь?', a: 'Да, Taleno полностью бесплатна и открыта под лицензией GNU AGPL-3.0. Мы рады сообщениям об ошибках, переводам и Pull Request на GitHub.' }
       ]
     },
     downloadPage: {
-      title: 'Скачать Lexora — Все платформы',
-      metaDesc: 'Скачайте Lexora для Windows, macOS и Linux. Прямые официальные ссылки без перенаправлений.',
-      tag: 'v0.1.3 · Последний релиз',
-      heading: 'Скачать Lexora',
+      title: 'Скачать Taleno — Все платформы',
+      metaDesc: 'Скачайте Taleno для Windows, macOS и Linux. Прямые официальные ссылки без перенаправлений.',
+      tag: 'v0.1.7 · Последний релиз',
+      heading: 'Скачать Taleno',
       subheading: 'Все ссылки ведут напрямую к файлам GitHub Releases. Загрузка начинается моментально без задержек.',
       backHome: '← На главную',
-      note: 'Файлы имеют имена <span class="font-medium text-ink-secondary">Lexora_&lt;ОС&gt;_&lt;Архитектура&gt;</span>, а ссылка <span class="font-mono">releases/latest/download</span> всегда скачивает свежую версию.',
+      note: 'Файлы имеют имена <span class="font-medium text-ink-secondary">Taleno_&lt;ОС&gt;_&lt;Архитектура&gt;</span>, а ссылка <span class="font-mono">releases/latest/download</span> всегда скачивает свежую версию.',
       allReleases: 'Все релизы и архивы исходного кода',
       viewGh: 'Репозиторий GitHub'
     }
@@ -1142,74 +1160,74 @@ const gatekeeperGuidance = {
   en: {
     link: 'Blocked by macOS Gatekeeper? Follow these steps →',
     tag: 'MACOS HELP',
-    title: 'Opening Lexora when macOS blocks it',
+    title: 'Opening Taleno when macOS blocks it',
     intro: 'Current macOS builds are not code-signed or notarized, so Gatekeeper may say that Apple cannot verify the developer or check the app for malicious software.',
-    sourceWarning: 'Only continue if you downloaded Lexora from the official GitHub Releases page and trust the file.',
+    sourceWarning: 'Only continue if you downloaded Taleno from the official GitHub Releases page and trust the file.',
     steps: [
-      'Move <strong>Lexora.app</strong> to <strong>Applications</strong>, then try to open it once.',
+      'Move <strong>Taleno.app</strong> to <strong>Applications</strong>, then try to open it once.',
       'Open <strong>Apple menu → System Settings → Privacy &amp; Security</strong>.',
       'Scroll to <strong>Security</strong> and click <strong>Open Anyway</strong>. The option remains available for about one hour after the blocked attempt.',
       'Authenticate when prompted, then click <strong>Open</strong>. Future launches will work normally.'
     ],
-    fallback: 'If Open Anyway does not appear and you trust the download, remove the quarantine attribute from Lexora only in Terminal:',
+    fallback: 'If Open Anyway does not appear and you trust the download, remove the quarantine attribute from Taleno only in Terminal:',
     safety: 'Do not disable Gatekeeper system-wide.',
     appleLink: 'Read Apple’s guidance for opening an app from an unknown developer →'
   },
   'zh-CN': {
-    link: '被 macOS Gatekeeper 阻止？查看解决步骤 →', tag: 'MACOS 帮助', title: 'macOS 阻止 Lexora 时如何打开',
+    link: '被 macOS Gatekeeper 阻止？查看解决步骤 →', tag: 'MACOS 帮助', title: 'macOS 阻止 Taleno 时如何打开',
     intro: '目前的 macOS 版本尚未进行代码签名或公证，因此 Gatekeeper 可能提示无法验证开发者或无法检查恶意软件。',
     sourceWarning: '请仅在从官方 GitHub Releases 页面下载且确认信任该文件时继续。',
-    steps: ['将 <strong>Lexora.app</strong> 移到<strong>应用程序</strong>文件夹，然后尝试打开一次。', '打开<strong>苹果菜单 → 系统设置 → 隐私与安全性</strong>。', '滚动到<strong>安全性</strong>，点击<strong>仍要打开</strong>。此选项会在被阻止后保留约一小时。', '按提示完成验证，然后点击<strong>打开</strong>。以后即可正常启动。'],
-    fallback: '如果未显示“仍要打开”且你信任该下载，请在终端中仅移除 Lexora 的隔离属性：', safety: '请勿在系统范围内禁用 Gatekeeper。', appleLink: '查看 Apple 关于打开未知开发者应用的说明 →'
+    steps: ['将 <strong>Taleno.app</strong> 移到<strong>应用程序</strong>文件夹，然后尝试打开一次。', '打开<strong>苹果菜单 → 系统设置 → 隐私与安全性</strong>。', '滚动到<strong>安全性</strong>，点击<strong>仍要打开</strong>。此选项会在被阻止后保留约一小时。', '按提示完成验证，然后点击<strong>打开</strong>。以后即可正常启动。'],
+    fallback: '如果未显示“仍要打开”且你信任该下载，请在终端中仅移除 Taleno 的隔离属性：', safety: '请勿在系统范围内禁用 Gatekeeper。', appleLink: '查看 Apple 关于打开未知开发者应用的说明 →'
   },
   'zh-TW': {
-    link: '遭 macOS Gatekeeper 阻擋？查看解決步驟 →', tag: 'MACOS 說明', title: 'macOS 阻擋 Lexora 時如何開啟',
+    link: '遭 macOS Gatekeeper 阻擋？查看解決步驟 →', tag: 'MACOS 說明', title: 'macOS 阻擋 Taleno 時如何開啟',
     intro: '目前的 macOS 版本尚未進行程式碼簽署或公證，因此 Gatekeeper 可能提示無法驗證開發者或檢查惡意軟體。',
     sourceWarning: '請只在從官方 GitHub Releases 頁面下載且信任該檔案時繼續。',
-    steps: ['將 <strong>Lexora.app</strong> 移到<strong>應用程式</strong>資料夾，然後嘗試開啟一次。', '開啟<strong>蘋果選單 → 系統設定 → 隱私權與安全性</strong>。', '捲動到<strong>安全性</strong>，按一下<strong>強制打開</strong>。此選項會在遭阻擋後保留約一小時。', '依提示完成驗證，然後按一下<strong>開啟</strong>。之後即可正常啟動。'],
-    fallback: '如果未顯示「強制打開」且你信任該下載，請在終端機中只移除 Lexora 的隔離屬性：', safety: '請勿在整個系統停用 Gatekeeper。', appleLink: '查看 Apple 關於開啟未知開發者 App 的說明 →'
+    steps: ['將 <strong>Taleno.app</strong> 移到<strong>應用程式</strong>資料夾，然後嘗試開啟一次。', '開啟<strong>蘋果選單 → 系統設定 → 隱私權與安全性</strong>。', '捲動到<strong>安全性</strong>，按一下<strong>強制打開</strong>。此選項會在遭阻擋後保留約一小時。', '依提示完成驗證，然後按一下<strong>開啟</strong>。之後即可正常啟動。'],
+    fallback: '如果未顯示「強制打開」且你信任該下載，請在終端機中只移除 Taleno 的隔離屬性：', safety: '請勿在整個系統停用 Gatekeeper。', appleLink: '查看 Apple 關於開啟未知開發者 App 的說明 →'
   },
   ja: {
-    link: 'macOS Gatekeeper にブロックされましたか？手順を見る →', tag: 'MACOS ヘルプ', title: 'macOS に Lexora がブロックされた場合',
+    link: 'macOS Gatekeeper にブロックされましたか？手順を見る →', tag: 'MACOS ヘルプ', title: 'macOS に Taleno がブロックされた場合',
     intro: '現在の macOS ビルドはコード署名および公証がされていないため、Gatekeeper が開発元や悪意のあるソフトウェアの有無を確認できない場合があります。',
     sourceWarning: '公式 GitHub Releases ページからダウンロードし、そのファイルを信頼できる場合にのみ続行してください。',
-    steps: ['<strong>Lexora.app</strong> を<strong>アプリケーション</strong>フォルダに移動し、一度開いてみます。', '<strong>Apple メニュー → システム設定 → プライバシーとセキュリティ</strong>を開きます。', '<strong>セキュリティ</strong>までスクロールし、<strong>このまま開く</strong>をクリックします。この項目はブロック後約1時間表示されます。', '求められたら認証し、<strong>開く</strong>をクリックします。次回からは通常どおり起動できます。'],
-    fallback: '「このまま開く」が表示されず、ダウンロードを信頼できる場合は、ターミナルで Lexora の隔離属性だけを削除します：', safety: 'Gatekeeper をシステム全体で無効にしないでください。', appleLink: '不明な開発元のアプリを開く方法（Apple）→'
+    steps: ['<strong>Taleno.app</strong> を<strong>アプリケーション</strong>フォルダに移動し、一度開いてみます。', '<strong>Apple メニュー → システム設定 → プライバシーとセキュリティ</strong>を開きます。', '<strong>セキュリティ</strong>までスクロールし、<strong>このまま開く</strong>をクリックします。この項目はブロック後約1時間表示されます。', '求められたら認証し、<strong>開く</strong>をクリックします。次回からは通常どおり起動できます。'],
+    fallback: '「このまま開く」が表示されず、ダウンロードを信頼できる場合は、ターミナルで Taleno の隔離属性だけを削除します：', safety: 'Gatekeeper をシステム全体で無効にしないでください。', appleLink: '不明な開発元のアプリを開く方法（Apple）→'
   },
   ko: {
-    link: 'macOS Gatekeeper가 차단하나요? 해결 방법 보기 →', tag: 'MACOS 도움말', title: 'macOS에서 Lexora가 차단될 때 여는 방법',
+    link: 'macOS Gatekeeper가 차단하나요? 해결 방법 보기 →', tag: 'MACOS 도움말', title: 'macOS에서 Taleno가 차단될 때 여는 방법',
     intro: '현재 macOS 빌드는 코드 서명 및 공증이 되어 있지 않아 Gatekeeper가 개발자 또는 악성 소프트웨어 여부를 확인할 수 없다고 표시할 수 있습니다.',
     sourceWarning: '공식 GitHub Releases 페이지에서 다운로드했고 파일을 신뢰하는 경우에만 계속하세요.',
-    steps: ['<strong>Lexora.app</strong>을 <strong>응용 프로그램</strong> 폴더로 옮긴 뒤 한 번 실행해 보세요.', '<strong>Apple 메뉴 → 시스템 설정 → 개인정보 보호 및 보안</strong>을 여세요.', '<strong>보안</strong>으로 스크롤하여 <strong>확인 없이 열기</strong>를 클릭하세요. 이 옵션은 차단 시도 후 약 한 시간 동안 표시됩니다.', '요청 시 인증하고 <strong>열기</strong>를 클릭하세요. 이후에는 정상적으로 실행됩니다.'],
-    fallback: '옵션이 표시되지 않고 다운로드를 신뢰한다면 터미널에서 Lexora에 대해서만 격리 속성을 제거하세요:', safety: 'Gatekeeper를 시스템 전체에서 비활성화하지 마세요.', appleLink: '확인되지 않은 개발자의 앱 열기에 관한 Apple 안내 →'
+    steps: ['<strong>Taleno.app</strong>을 <strong>응용 프로그램</strong> 폴더로 옮긴 뒤 한 번 실행해 보세요.', '<strong>Apple 메뉴 → 시스템 설정 → 개인정보 보호 및 보안</strong>을 여세요.', '<strong>보안</strong>으로 스크롤하여 <strong>확인 없이 열기</strong>를 클릭하세요. 이 옵션은 차단 시도 후 약 한 시간 동안 표시됩니다.', '요청 시 인증하고 <strong>열기</strong>를 클릭하세요. 이후에는 정상적으로 실행됩니다.'],
+    fallback: '옵션이 표시되지 않고 다운로드를 신뢰한다면 터미널에서 Taleno에 대해서만 격리 속성을 제거하세요:', safety: 'Gatekeeper를 시스템 전체에서 비활성화하지 마세요.', appleLink: '확인되지 않은 개발자의 앱 열기에 관한 Apple 안내 →'
   },
   de: {
-    link: 'Von macOS Gatekeeper blockiert? Anleitung ansehen →', tag: 'MACOS-HILFE', title: 'Lexora trotz macOS-Blockierung öffnen',
+    link: 'Von macOS Gatekeeper blockiert? Anleitung ansehen →', tag: 'MACOS-HILFE', title: 'Taleno trotz macOS-Blockierung öffnen',
     intro: 'Die aktuellen macOS-Builds sind nicht codesigniert oder notarisiert. Gatekeeper kann daher melden, dass der Entwickler oder die App nicht überprüft werden kann.',
-    sourceWarning: 'Fahre nur fort, wenn du Lexora von der offiziellen GitHub-Releases-Seite geladen hast und der Datei vertraust.',
-    steps: ['Verschiebe <strong>Lexora.app</strong> nach <strong>Programme</strong> und versuche einmal, die App zu öffnen.', 'Öffne <strong>Apple-Menü → Systemeinstellungen → Datenschutz &amp; Sicherheit</strong>.', 'Scrolle zu <strong>Sicherheit</strong> und klicke auf <strong>Dennoch öffnen</strong>. Die Option ist nach dem blockierten Versuch etwa eine Stunde verfügbar.', 'Authentifiziere dich und klicke auf <strong>Öffnen</strong>. Künftige Starts funktionieren normal.'],
-    fallback: 'Wenn die Option nicht erscheint und du dem Download vertraust, entferne im Terminal nur das Quarantäneattribut von Lexora:', safety: 'Deaktiviere Gatekeeper nicht systemweit.', appleLink: 'Apples Anleitung zum Öffnen von Apps unbekannter Entwickler →'
+    sourceWarning: 'Fahre nur fort, wenn du Taleno von der offiziellen GitHub-Releases-Seite geladen hast und der Datei vertraust.',
+    steps: ['Verschiebe <strong>Taleno.app</strong> nach <strong>Programme</strong> und versuche einmal, die App zu öffnen.', 'Öffne <strong>Apple-Menü → Systemeinstellungen → Datenschutz &amp; Sicherheit</strong>.', 'Scrolle zu <strong>Sicherheit</strong> und klicke auf <strong>Dennoch öffnen</strong>. Die Option ist nach dem blockierten Versuch etwa eine Stunde verfügbar.', 'Authentifiziere dich und klicke auf <strong>Öffnen</strong>. Künftige Starts funktionieren normal.'],
+    fallback: 'Wenn die Option nicht erscheint und du dem Download vertraust, entferne im Terminal nur das Quarantäneattribut von Taleno:', safety: 'Deaktiviere Gatekeeper nicht systemweit.', appleLink: 'Apples Anleitung zum Öffnen von Apps unbekannter Entwickler →'
   },
   fr: {
-    link: 'Bloqué par Gatekeeper sur macOS ? Voir la procédure →', tag: 'AIDE MACOS', title: 'Ouvrir Lexora lorsque macOS le bloque',
+    link: 'Bloqué par Gatekeeper sur macOS ? Voir la procédure →', tag: 'AIDE MACOS', title: 'Ouvrir Taleno lorsque macOS le bloque',
     intro: 'Les versions macOS actuelles ne sont ni signées ni notariées. Gatekeeper peut donc indiquer qu’Apple ne peut pas vérifier le développeur ou l’absence de logiciels malveillants.',
-    sourceWarning: 'Continuez uniquement si vous avez téléchargé Lexora depuis la page GitHub Releases officielle et si vous faites confiance au fichier.',
-    steps: ['Déplacez <strong>Lexora.app</strong> dans <strong>Applications</strong>, puis essayez de l’ouvrir une fois.', 'Ouvrez <strong>menu Pomme → Réglages Système → Confidentialité et sécurité</strong>.', 'Faites défiler jusqu’à <strong>Sécurité</strong>, puis cliquez sur <strong>Ouvrir quand même</strong>. Cette option reste disponible environ une heure après le blocage.', 'Authentifiez-vous, puis cliquez sur <strong>Ouvrir</strong>. Les prochains lancements fonctionneront normalement.'],
-    fallback: 'Si l’option n’apparaît pas et que vous faites confiance au téléchargement, supprimez uniquement l’attribut de quarantaine de Lexora dans Terminal :', safety: 'Ne désactivez pas Gatekeeper pour tout le système.', appleLink: 'Consulter les instructions d’Apple pour ouvrir une app d’un développeur inconnu →'
+    sourceWarning: 'Continuez uniquement si vous avez téléchargé Taleno depuis la page GitHub Releases officielle et si vous faites confiance au fichier.',
+    steps: ['Déplacez <strong>Taleno.app</strong> dans <strong>Applications</strong>, puis essayez de l’ouvrir une fois.', 'Ouvrez <strong>menu Pomme → Réglages Système → Confidentialité et sécurité</strong>.', 'Faites défiler jusqu’à <strong>Sécurité</strong>, puis cliquez sur <strong>Ouvrir quand même</strong>. Cette option reste disponible environ une heure après le blocage.', 'Authentifiez-vous, puis cliquez sur <strong>Ouvrir</strong>. Les prochains lancements fonctionneront normalement.'],
+    fallback: 'Si l’option n’apparaît pas et que vous faites confiance au téléchargement, supprimez uniquement l’attribut de quarantaine de Taleno dans Terminal :', safety: 'Ne désactivez pas Gatekeeper pour tout le système.', appleLink: 'Consulter les instructions d’Apple pour ouvrir une app d’un développeur inconnu →'
   },
   es: {
-    link: '¿Gatekeeper de macOS bloque la app? Ver instrucciones →', tag: 'AYUDA PARA MACOS', title: 'Cómo abrir Lexora si macOS lo bloquea',
+    link: '¿Gatekeeper de macOS bloque la app? Ver instrucciones →', tag: 'AYUDA PARA MACOS', title: 'Cómo abrir Taleno si macOS lo bloquea',
     intro: 'Las versiones actuales para macOS no están firmadas ni notarizadas, por lo que Gatekeeper puede indicar que Apple no puede verificar al desarrollador o comprobar si hay software malicioso.',
-    sourceWarning: 'Continúa solo si descargaste Lexora desde la página oficial de GitHub Releases y confías en el archivo.',
-    steps: ['Mueve <strong>Lexora.app</strong> a <strong>Aplicaciones</strong> e intenta abrirla una vez.', 'Abre <strong>menú Apple → Ajustes del Sistema → Privacidad y seguridad</strong>.', 'Desplázate hasta <strong>Seguridad</strong> y pulsa <strong>Abrir igualmente</strong>. La opción permanece disponible aproximadamente una hora después del bloqueo.', 'Autentícate y pulsa <strong>Abrir</strong>. Los próximos inicios funcionarán con normalidad.'],
-    fallback: 'Si la opción no aparece y confías en la descarga, elimina solo el atributo de cuarentena de Lexora desde Terminal:', safety: 'No desactives Gatekeeper en todo el sistema.', appleLink: 'Consulta la guía de Apple para abrir apps de desarrolladores desconocidos →'
+    sourceWarning: 'Continúa solo si descargaste Taleno desde la página oficial de GitHub Releases y confías en el archivo.',
+    steps: ['Mueve <strong>Taleno.app</strong> a <strong>Aplicaciones</strong> e intenta abrirla una vez.', 'Abre <strong>menú Apple → Ajustes del Sistema → Privacidad y seguridad</strong>.', 'Desplázate hasta <strong>Seguridad</strong> y pulsa <strong>Abrir igualmente</strong>. La opción permanece disponible aproximadamente una hora después del bloqueo.', 'Autentícate y pulsa <strong>Abrir</strong>. Los próximos inicios funcionarán con normalidad.'],
+    fallback: 'Si la opción no aparece y confías en la descarga, elimina solo el atributo de cuarentena de Taleno desde Terminal:', safety: 'No desactives Gatekeeper en todo el sistema.', appleLink: 'Consulta la guía de Apple para abrir apps de desarrolladores desconocidos →'
   },
   ru: {
-    link: 'macOS Gatekeeper блокирует приложение? Открыть инструкцию →', tag: 'ПОМОЩЬ ДЛЯ MACOS', title: 'Как открыть Lexora, если macOS его блокирует',
+    link: 'macOS Gatekeeper блокирует приложение? Открыть инструкцию →', tag: 'ПОМОЩЬ ДЛЯ MACOS', title: 'Как открыть Taleno, если macOS его блокирует',
     intro: 'Текущие сборки для macOS не подписаны и не нотарифицированы, поэтому Gatekeeper может сообщить, что Apple не может проверить разработчика или приложение на наличие вредоносного ПО.',
-    sourceWarning: 'Продолжайте, только если загрузили Lexora с официальной страницы GitHub Releases и доверяете файлу.',
-    steps: ['Переместите <strong>Lexora.app</strong> в папку <strong>Программы</strong> и один раз попробуйте открыть приложение.', 'Откройте <strong>меню Apple → Системные настройки → Конфиденциальность и безопасность</strong>.', 'Прокрутите до раздела <strong>Безопасность</strong> и нажмите <strong>Всё равно открыть</strong>. Кнопка доступна около часа после блокировки.', 'Подтвердите действие и нажмите <strong>Открыть</strong>. В дальнейшем приложение будет запускаться как обычно.'],
-    fallback: 'Если кнопка не появилась и вы доверяете загрузке, удалите в Терминале атрибут карантина только у Lexora:', safety: 'Не отключайте Gatekeeper для всей системы.', appleLink: 'Инструкция Apple по открытию приложений неизвестных разработчиков →'
+    sourceWarning: 'Продолжайте, только если загрузили Taleno с официальной страницы GitHub Releases и доверяете файлу.',
+    steps: ['Переместите <strong>Taleno.app</strong> в папку <strong>Программы</strong> и один раз попробуйте открыть приложение.', 'Откройте <strong>меню Apple → Системные настройки → Конфиденциальность и безопасность</strong>.', 'Прокрутите до раздела <strong>Безопасность</strong> и нажмите <strong>Всё равно открыть</strong>. Кнопка доступна около часа после блокировки.', 'Подтвердите действие и нажмите <strong>Открыть</strong>. В дальнейшем приложение будет запускаться как обычно.'],
+    fallback: 'Если кнопка не появилась и вы доверяете загрузке, удалите в Терминале атрибут карантина только у Taleno:', safety: 'Не отключайте Gatekeeper для всей системы.', appleLink: 'Инструкция Apple по открытию приложений неизвестных разработчиков →'
   }
 };
 
@@ -1295,7 +1313,7 @@ function buildIndex(lang) {
   <header class="fixed top-0 inset-x-0 z-50 h-[72px] px-[48px] bg-bg/95 backdrop-blur-md flex items-center justify-between border-b border-border/80 max-[768px]:px-4">
     <a href="${homePath}" class="flex items-center gap-[10px]">
       <svg width="28" height="28" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="lgH" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4361ee"/><stop offset="1" stop-color="#3a0ca3"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#lgH)"/><rect x="120" y="96" width="272" height="320" rx="20" fill="white" opacity="0.95"/><rect x="160" y="160" width="120" height="24" rx="6" fill="#4361ee"/><rect x="160" y="210" width="192" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="240" width="160" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="270" width="180" height="14" rx="4" fill="#6c757d" opacity="0.6"/><polygon points="310,380 390,300 420,330 340,410 300,420" fill="#4cc9f0"/></svg>
-      <span class="font-display text-[18px] font-bold text-ink">Lexora</span>
+      <span class="font-display text-[18px] font-bold text-ink">Taleno</span>
     </a>
     <nav class="hidden lg:flex items-center gap-[28px] text-[14px] text-ink-secondary">
       <a href="#features" class="hover:text-ink transition-colors">${lang.nav.features}</a>
@@ -1316,7 +1334,7 @@ function buildIndex(lang) {
 ${langOptionsHtml}
         </div>
       </div>
-      <a href="https://github.com/BerryUIKI/Lexora" target="_blank" rel="noopener" class="hidden sm:flex items-center px-[10px] py-[7px] rounded-[8px] border border-border text-ink-secondary hover:text-ink transition-colors" aria-label="GitHub">
+      <a href="https://github.com/BerryUIKI/Taleno" target="_blank" rel="noopener" class="hidden sm:flex items-center px-[10px] py-[7px] rounded-[8px] border border-border text-ink-secondary hover:text-ink transition-colors" aria-label="GitHub">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5 4-1.4 6.8-5.2 6.8-9.7C22 6.6 17.5 2 12 2z" fill="#636366"/></svg>
       </a>
       <a href="#download" class="flex items-center gap-[6px] px-[14px] py-[8px] rounded-[8px] bg-ink text-white text-[14px] font-semibold hover:opacity-85 transition-opacity">
@@ -1342,7 +1360,7 @@ ${langOptionsHtml}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           ${lang.hero.downloadBtn}
         </a>
-        <a href="https://github.com/BerryUIKI/Lexora" target="_blank" rel="noopener" class="flex items-center gap-[8px] px-[24px] py-[12px] rounded-[8px] bg-bg border border-border text-[16px] font-semibold text-ink hover:bg-bg-subtle transition-colors">
+        <a href="https://github.com/BerryUIKI/Taleno" target="_blank" rel="noopener" class="flex items-center gap-[8px] px-[24px] py-[12px] rounded-[8px] bg-bg border border-border text-[16px] font-semibold text-ink hover:bg-bg-subtle transition-colors">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5 4-1.4 6.8-5.2 6.8-9.7C22 6.6 17.5 2 12 2z" fill="#0D0D0F"/></svg>
           ${lang.hero.githubBtn}
         </a>
@@ -1425,10 +1443,12 @@ ${langOptionsHtml}
         <h2 class="text-[40px] font-bold text-ink max-[768px]:text-[28px]">${lang.features.title}</h2>
         <p class="max-w-[600px] text-center text-[16px] leading-[26px] text-ink-secondary">${lang.features.subtitle}</p>
       </div>
-      <div class="grid grid-cols-4 gap-[16px] w-full max-[1100px]:grid-cols-2 max-[640px]:grid-cols-1">
+      <div class="grid grid-cols-5 gap-[16px] w-full max-[1280px]:grid-cols-3 max-[860px]:grid-cols-2 max-[640px]:grid-cols-1">
         ${lang.features.items.map((item, i) => {
           const icons = [
             '<path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#0D0D0F" stroke-width="1.8" stroke-linejoin="round"/><path d="M2 12l10 5 10-5M2 17l10 5 10-5" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>',
+            '<path d="M9 3v4m6-4v4M5 7h14a2 2 0 0 1 2 2v7a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V9a2 2 0 0 1 2-2z" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 11v4m-2-2h4" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round"/>',
+            '<path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z" stroke="#0D0D0F" stroke-width="1.8"/><circle cx="7.5" cy="10.5" r="1.5" fill="#0D0D0F"/><circle cx="12" cy="7.5" r="1.5" fill="#0D0D0F"/><circle cx="16.5" cy="10.5" r="1.5" fill="#0D0D0F"/><circle cx="9" cy="15.5" r="1.5" fill="#0D0D0F"/>',
             '<circle cx="12" cy="12" r="9" stroke="#0D0D0F" stroke-width="1.8"/><path d="M3 12h18M12 3c2.5 2.4 3.8 5.5 3.8 9S14.5 18.6 12 21c-2.5-2.4-3.8-5.5-3.8-9S9.5 5.4 12 3z" stroke="#0D0D0F" stroke-width="1.8"/>',
             '<path d="M8 6l-6 6 6 6M16 6l6 6-6 6" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>',
             '<path d="M4 4h16M4 4l7 8-7 8M4 20h16" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>',
@@ -1457,13 +1477,13 @@ ${langOptionsHtml}
             <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5.5L10.5 4.3v7.2H3zM10.5 11.5v7.2L3 17.5v-6zM11.5 4.1L21 2.8v8.7h-9.5zM21 11.5v8.7l-9.5-1.3v-7.4z" fill="#0D0D0F"/></svg></div>
             <div><h3 class="font-display text-[20px] font-semibold text-ink">Windows</h3><p class="os-detected text-[12px] text-ink-tertiary">Windows x86_64</p></div>
           </div>
-          <a id="win-btn" href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Windows_x86_64.exe" class="flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-accent text-white text-[15px] font-semibold hover:opacity-90 transition-opacity">
+          <a id="win-btn" href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Windows_x86_64.exe" class="flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-accent text-white text-[15px] font-semibold hover:opacity-90 transition-opacity">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             ${lang.downloadSec.winBtn}
           </a>
           <div class="flex items-center justify-between text-[12px] text-ink-tertiary pt-1">
             <span>MSI:</span>
-            <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Windows_x86_64.msi" class="text-accent hover:underline font-mono text-[11px]">Lexora_Windows_x86_64.msi</a>
+            <a href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Windows_x86_64.msi" class="text-accent hover:underline font-mono text-[11px]">Taleno_Windows_x86_64.msi</a>
           </div>
         </div>
         <!-- macOS card -->
@@ -1473,13 +1493,13 @@ ${langOptionsHtml}
             <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.4 12.6c0-2.2 1.8-3.2 1.9-3.3-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.6.8-3.3.8-.7 0-1.7-.8-2.8-.8-1.5 0-2.8.8-3.6 2.1-1.5 2.7-.4 6.6 1.1 8.8.7 1 1.6 2.2 2.7 2.1 1.1 0 1.5-.7 2.8-.7s1.7.7 2.8.7c1.2 0 1.9-1 2.6-2 .8-1.2 1.2-2.4 1.2-2.4s-2.2-.9-2.2-3.6zM14.6 6.2c.6-.7 1-1.7.9-2.7-.9 0-1.9.6-2.5 1.3-.6.6-1 1.6-.9 2.6 1 .1 1.9-.5 2.5-1.2z" fill="#0D0D0F"/></svg></div>
             <div><h3 class="font-display text-[20px] font-semibold text-ink">macOS</h3><p class="os-detected text-[12px] text-ink-tertiary">Apple Silicon / Intel</p></div>
           </div>
-          <a id="mac-btn" href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_aarch64.dmg" class="flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-ink text-white text-[15px] font-semibold hover:opacity-85 transition-opacity">
+          <a id="mac-btn" href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_macOS_aarch64.dmg" class="flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-ink text-white text-[15px] font-semibold hover:opacity-85 transition-opacity">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             ${lang.downloadSec.macBtn}
           </a>
           <div class="flex items-center justify-between text-[12px] text-ink-tertiary pt-1">
             <span>Intel Mac:</span>
-            <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_x86_64.dmg" class="text-accent hover:underline font-mono text-[11px]">Lexora_macOS_x86_64.dmg</a>
+            <a href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_macOS_x86_64.dmg" class="text-accent hover:underline font-mono text-[11px]">Taleno_macOS_x86_64.dmg</a>
           </div>
           <a href="${dlPagePath}#macos-gatekeeper" class="text-[12px] leading-[18px] text-accent hover:underline">${gatekeeper.link}</a>
         </div>
@@ -1490,14 +1510,14 @@ ${langOptionsHtml}
             <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="16" rx="2" stroke="#0D0D0F" stroke-width="1.8"/><path d="M7 9l3 3-3 3M13 15h4" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div><h3 class="font-display text-[20px] font-semibold text-ink">Linux</h3><p class="os-detected text-[12px] text-ink-tertiary">x86_64</p></div>
           </div>
-          <a id="linux-btn" href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.AppImage" class="flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-ink text-white text-[15px] font-semibold hover:opacity-85 transition-opacity">
+          <a id="linux-btn" href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Linux_x86_64.AppImage" class="flex items-center justify-center gap-[8px] py-[12px] rounded-[8px] bg-ink text-white text-[15px] font-semibold hover:opacity-85 transition-opacity">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             ${lang.downloadSec.linuxBtn}
           </a>
           <div class="flex items-center justify-between text-[12px] text-ink-tertiary pt-1">
-            <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.deb" class="text-accent hover:underline">Debian (.deb)</a>
+            <a href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Linux_x86_64.deb" class="text-accent hover:underline">Debian (.deb)</a>
             <span>·</span>
-            <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.rpm" class="text-accent hover:underline">Fedora (.rpm)</a>
+            <a href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Linux_x86_64.rpm" class="text-accent hover:underline">Fedora (.rpm)</a>
           </div>
         </div>
       </div>
@@ -1583,7 +1603,7 @@ ${langOptionsHtml}
       <div class="w-[420px] max-[1000px]:w-full flex flex-col gap-[18px]">
         <div class="flex items-center gap-[10px]">
           <svg width="30" height="30" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="lgF" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4361ee"/><stop offset="1" stop-color="#3a0ca3"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#lgF)"/><rect x="120" y="96" width="272" height="320" rx="20" fill="white" opacity="0.95"/><rect x="160" y="160" width="120" height="24" rx="6" fill="#4361ee"/><rect x="160" y="210" width="192" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="240" width="160" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="270" width="180" height="14" rx="4" fill="#6c757d" opacity="0.6"/><polygon points="310,380 390,300 420,330 340,410 300,420" fill="#4cc9f0"/></svg>
-          <span class="font-display text-[20px] font-bold text-white">Lexora</span>
+          <span class="font-display text-[20px] font-bold text-white">Taleno</span>
         </div>
         <p class="text-[14px] leading-[24px] text-white/70">${lang.metaDesc}</p>
         <p class="text-[11px] leading-[18px] text-white/40 w-[380px] max-[1000px]:w-full">English · 简体中文 · 繁體中文 · 日本語 · 한국어 · Deutsch · Français · Español · Русский</p>
@@ -1597,29 +1617,30 @@ ${langOptionsHtml}
       </div>
       <div class="flex-1 flex flex-col gap-[12px]">
         <h4 class="text-[14px] font-semibold text-white">Resources</h4>
-        <a href="https://github.com/BerryUIKI/Lexora" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">GitHub Repository</a>
-        <a href="https://github.com/BerryUIKI/Lexora/tree/main/docs" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">Documentation</a>
-        <a href="https://github.com/BerryUIKI/Lexora/releases" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">Releases</a>
-        <a href="https://github.com/BerryUIKI/Lexora/blob/main/AGENTS.md" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">AGENTS.md</a>
+        <a href="https://github.com/BerryUIKI/Taleno" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">GitHub Repository</a>
+        <a href="https://github.com/BerryUIKI/Taleno-Plugins" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">Taleno-Plugins Hub</a>
+        <a href="https://github.com/BerryUIKI/Taleno/tree/main/docs" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">Documentation</a>
+        <a href="https://github.com/BerryUIKI/Taleno/releases" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">Releases</a>
+        <a href="https://github.com/BerryUIKI/Taleno/blob/main/AGENTS.md" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">AGENTS.md</a>
       </div>
       <div class="flex-1 flex flex-col gap-[12px]">
         <h4 class="text-[14px] font-semibold text-white">Open Source</h4>
-        <a href="https://github.com/BerryUIKI/Lexora/blob/main/LICENSE" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">AGPL-3.0 License</a>
-        <a href="https://github.com/BerryUIKI/Lexora/blob/main/docs/CONTRIBUTING.md" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">Contributing Guide</a>
-        <a href="https://github.com/BerryUIKI/Lexora/issues" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">Open an Issue</a>
-        <a href="https://github.com/BerryUIKI/Lexora/security" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">Security</a>
+        <a href="https://github.com/BerryUIKI/Taleno/blob/main/LICENSE" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">AGPL-3.0 License</a>
+        <a href="https://github.com/BerryUIKI/Taleno/blob/main/docs/CONTRIBUTING.md" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">Contributing Guide</a>
+        <a href="https://github.com/BerryUIKI/Taleno/issues" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">Open an Issue</a>
+        <a href="https://github.com/BerryUIKI/Taleno/security" target="_blank" rel="noopener" class="text-[13px] text-white/60 hover:text-white transition-colors">Security</a>
       </div>
     </div>
     <div class="h-px w-full bg-white/[0.12]"></div>
     <div class="flex items-center justify-between text-[12px] max-[768px]:flex-col max-[768px]:gap-[8px]">
-      <span class="text-white/50">Copyright © 2026 Lexora Contributors · Licensed under AGPL-3.0</span>
+      <span class="text-white/50">Copyright © 2026 Taleno Contributors · Licensed under AGPL-3.0</span>
       <span class="text-white/40">Built with Tauri 2 · Rust · SolidJS</span>
     </div>
   </footer>
 
   <script>
     function setLang(lang) {
-      localStorage.setItem('lexora_user_lang', lang);
+      localStorage.setItem('taleno_user_lang', lang);
     }
 
     const sw = document.getElementById('langSwitcher');
@@ -1637,18 +1658,18 @@ ${langOptionsHtml}
     // 2. Detect browser/system languages (navigator.languages / navigator.language)
     // 3. Fallback to English (no redirect) if undetected or unsupported
     (function detectLanguage() {
-      const savedLang = localStorage.getItem('lexora_user_lang');
+      const savedLang = localStorage.getItem('taleno_user_lang');
       if (savedLang) {
         // If user explicitly picked English, stay on root
-        if (savedLang !== 'en' && !sessionStorage.getItem('lexora_navigated')) {
-          sessionStorage.setItem('lexora_navigated', '1');
+        if (savedLang !== 'en' && !sessionStorage.getItem('taleno_navigated')) {
+          sessionStorage.setItem('taleno_navigated', '1');
           window.location.replace('./' + savedLang + '/');
         }
         return;
       }
 
       // First visit: inspect browser/system language preferences
-      if (sessionStorage.getItem('lexora_navigated')) return;
+      if (sessionStorage.getItem('taleno_navigated')) return;
 
       const candidateLangs = (navigator.languages && navigator.languages.length)
         ? navigator.languages
@@ -1689,7 +1710,7 @@ ${langOptionsHtml}
 
       // If detected non-English on first visit, redirect to corresponding localized path
       if (detected !== 'en') {
-        sessionStorage.setItem('lexora_navigated', '1');
+        sessionStorage.setItem('taleno_navigated', '1');
         window.location.replace('./' + detected + '/');
       }
     })();` : ''}
@@ -1763,7 +1784,7 @@ function buildDownload(lang) {
   <header class="h-[72px] px-[48px] max-[768px]:px-4 bg-bg flex items-center justify-between border-b border-border">
     <a href="${homePath}" class="flex items-center gap-[10px]">
       <svg width="28" height="28" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="lgD1" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4361ee"/><stop offset="1" stop-color="#3a0ca3"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#lgD1)"/><rect x="120" y="96" width="272" height="320" rx="20" fill="white" opacity="0.95"/><rect x="160" y="160" width="120" height="24" rx="6" fill="#4361ee"/><rect x="160" y="210" width="192" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="240" width="160" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="270" width="180" height="14" rx="4" fill="#6c757d" opacity="0.6"/><polygon points="310,380 390,300 420,330 340,410 300,420" fill="#4cc9f0"/></svg>
-      <span class="font-display text-[18px] font-bold text-ink">Lexora</span>
+      <span class="font-display text-[18px] font-bold text-ink">Taleno</span>
     </a>
     <div class="flex items-center gap-[14px]">
       <div class="relative" id="langSwitcher">
@@ -1799,11 +1820,11 @@ ${langOptionsHtml}
             <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5.5L10.5 4.3v7.2H3zM10.5 11.5v7.2L3 17.5v-6zM11.5 4.1L21 2.8v8.7h-9.5zM21 11.5v8.7l-9.5-1.3v-7.4z" fill="#0D0D0F"/></svg></div>
             <div><h2 class="font-display text-[20px] font-semibold text-ink">Windows</h2><p class="text-[12px] text-ink-tertiary">x86_64</p></div>
           </div>
-          <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Windows_x86_64.exe" class="flex items-center justify-between px-[14px] py-[11px] rounded-[8px] bg-bg-soft border border-border hover:border-accent hover:bg-bg-tag transition-colors">
-            <span class="text-[13px] font-medium text-ink">Setup (.exe)</span><span class="text-[10px] text-ink-tertiary font-mono">Lexora_Windows_x86_64.exe</span>
+          <a href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Windows_x86_64.exe" class="flex items-center justify-between px-[14px] py-[11px] rounded-[8px] bg-bg-soft border border-border hover:border-accent hover:bg-bg-tag transition-colors">
+            <span class="text-[13px] font-medium text-ink">Setup (.exe)</span><span class="text-[10px] text-ink-tertiary font-mono">Taleno_Windows_x86_64.exe</span>
           </a>
-          <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Windows_x86_64.msi" class="flex items-center justify-between px-[14px] py-[11px] rounded-[8px] bg-bg-soft border border-border hover:border-accent hover:bg-bg-tag transition-colors">
-            <span class="text-[13px] font-medium text-ink">MSI (.msi)</span><span class="text-[10px] text-ink-tertiary font-mono">Lexora_Windows_x86_64.msi</span>
+          <a href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Windows_x86_64.msi" class="flex items-center justify-between px-[14px] py-[11px] rounded-[8px] bg-bg-soft border border-border hover:border-accent hover:bg-bg-tag transition-colors">
+            <span class="text-[13px] font-medium text-ink">MSI (.msi)</span><span class="text-[10px] text-ink-tertiary font-mono">Taleno_Windows_x86_64.msi</span>
           </a>
         </div>
         <!-- macOS -->
@@ -1812,11 +1833,11 @@ ${langOptionsHtml}
             <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.4 12.6c0-2.2 1.8-3.2 1.9-3.3-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.6.8-3.3.8-.7 0-1.7-.8-2.8-.8-1.5 0-2.8.8-3.6 2.1-1.5 2.7-.4 6.6 1.1 8.8.7 1 1.6 2.2 2.7 2.1 1.1 0 1.5-.7 2.8-.7s1.7.7 2.8.7c1.2 0 1.9-1 2.6-2 .8-1.2 1.2-2.4 1.2-2.4s-2.2-.9-2.2-3.6zM14.6 6.2c.6-.7 1-1.7.9-2.7-.9 0-1.9.6-2.5 1.3-.6.6-1 1.6-.9 2.6 1 .1 1.9-.5 2.5-1.2z" fill="#0D0D0F"/></svg></div>
             <div><h2 class="font-display text-[20px] font-semibold text-ink">macOS</h2><p class="text-[12px] text-ink-tertiary">Apple Silicon / Intel</p></div>
           </div>
-          <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_aarch64.dmg" class="flex items-center justify-between px-[14px] py-[11px] rounded-[8px] bg-bg-soft border border-border hover:border-accent hover:bg-bg-tag transition-colors">
-            <span class="text-[13px] font-medium text-ink">Apple Silicon (DMG)</span><span class="text-[10px] text-ink-tertiary font-mono">Lexora_macOS_aarch64.dmg</span>
+          <a href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_macOS_aarch64.dmg" class="flex items-center justify-between px-[14px] py-[11px] rounded-[8px] bg-bg-soft border border-border hover:border-accent hover:bg-bg-tag transition-colors">
+            <span class="text-[13px] font-medium text-ink">Apple Silicon (DMG)</span><span class="text-[10px] text-ink-tertiary font-mono">Taleno_macOS_aarch64.dmg</span>
           </a>
-          <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_macOS_x86_64.dmg" class="flex items-center justify-between px-[14px] py-[11px] rounded-[8px] bg-bg-soft border border-border hover:border-accent hover:bg-bg-tag transition-colors">
-            <span class="text-[13px] font-medium text-ink">Intel (DMG)</span><span class="text-[10px] text-ink-tertiary font-mono">Lexora_macOS_x86_64.dmg</span>
+          <a href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_macOS_x86_64.dmg" class="flex items-center justify-between px-[14px] py-[11px] rounded-[8px] bg-bg-soft border border-border hover:border-accent hover:bg-bg-tag transition-colors">
+            <span class="text-[13px] font-medium text-ink">Intel (DMG)</span><span class="text-[10px] text-ink-tertiary font-mono">Taleno_macOS_x86_64.dmg</span>
           </a>
           <a href="#macos-gatekeeper" class="text-[12px] leading-[18px] text-accent hover:underline">${gatekeeper.link}</a>
         </div>
@@ -1826,14 +1847,14 @@ ${langOptionsHtml}
             <div class="w-[44px] h-[44px] rounded-[10px] bg-bg-soft flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="16" rx="2" stroke="#0D0D0F" stroke-width="1.8"/><path d="M7 9l3 3-3 3M13 15h4" stroke="#0D0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div><h2 class="font-display text-[20px] font-semibold text-ink">Linux</h2><p class="text-[12px] text-ink-tertiary">x86_64</p></div>
           </div>
-          <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.AppImage" class="flex items-center justify-between px-[14px] py-[11px] rounded-[8px] bg-bg-soft border border-border hover:border-accent hover:bg-bg-tag transition-colors">
-            <span class="text-[13px] font-medium text-ink">AppImage</span><span class="text-[10px] text-ink-tertiary font-mono">Lexora_Linux_x86_64.AppImage</span>
+          <a href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Linux_x86_64.AppImage" class="flex items-center justify-between px-[14px] py-[11px] rounded-[8px] bg-bg-soft border border-border hover:border-accent hover:bg-bg-tag transition-colors">
+            <span class="text-[13px] font-medium text-ink">AppImage</span><span class="text-[10px] text-ink-tertiary font-mono">Taleno_Linux_x86_64.AppImage</span>
           </a>
-          <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.deb" class="flex items-center justify-between px-[14px] py-[11px] rounded-[8px] bg-bg-soft border border-border hover:border-accent hover:bg-bg-tag transition-colors">
-            <span class="text-[13px] font-medium text-ink">Debian / Ubuntu (.deb)</span><span class="text-[10px] text-ink-tertiary font-mono">Lexora_Linux_x86_64.deb</span>
+          <a href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Linux_x86_64.deb" class="flex items-center justify-between px-[14px] py-[11px] rounded-[8px] bg-bg-soft border border-border hover:border-accent hover:bg-bg-tag transition-colors">
+            <span class="text-[13px] font-medium text-ink">Debian / Ubuntu (.deb)</span><span class="text-[10px] text-ink-tertiary font-mono">Taleno_Linux_x86_64.deb</span>
           </a>
-          <a href="https://github.com/BerryUIKI/Lexora/releases/latest/download/Lexora_Linux_x86_64.rpm" class="flex items-center justify-between px-[14px] py-[11px] rounded-[8px] bg-bg-soft border border-border hover:border-accent hover:bg-bg-tag transition-colors">
-            <span class="text-[13px] font-medium text-ink">Fedora / RHEL (.rpm)</span><span class="text-[10px] text-ink-tertiary font-mono">Lexora_Linux_x86_64.rpm</span>
+          <a href="https://github.com/BerryUIKI/Taleno/releases/latest/download/Taleno_Linux_x86_64.rpm" class="flex items-center justify-between px-[14px] py-[11px] rounded-[8px] bg-bg-soft border border-border hover:border-accent hover:bg-bg-tag transition-colors">
+            <span class="text-[13px] font-medium text-ink">Fedora / RHEL (.rpm)</span><span class="text-[10px] text-ink-tertiary font-mono">Taleno_Linux_x86_64.rpm</span>
           </a>
         </div>
       </div>
@@ -1843,8 +1864,8 @@ ${langOptionsHtml}
       </p>
 
       <div class="flex items-center gap-[16px] pt-[16px]">
-        <a href="https://github.com/BerryUIKI/Lexora/releases" target="_blank" rel="noopener" class="flex items-center gap-[8px] px-[20px] py-[12px] rounded-[8px] border border-border bg-bg text-[14px] font-medium text-ink hover:bg-bg-subtle transition-colors">${lang.downloadPage.allReleases}</a>
-        <a href="https://github.com/BerryUIKI/Lexora" target="_blank" rel="noopener" class="flex items-center gap-[8px] px-[20px] py-[12px] rounded-[8px] bg-ink text-white text-[14px] font-medium hover:opacity-85 transition-opacity">${lang.downloadPage.viewGh}</a>
+        <a href="https://github.com/BerryUIKI/Taleno/releases" target="_blank" rel="noopener" class="flex items-center gap-[8px] px-[20px] py-[12px] rounded-[8px] border border-border bg-bg text-[14px] font-medium text-ink hover:bg-bg-subtle transition-colors">${lang.downloadPage.allReleases}</a>
+        <a href="https://github.com/BerryUIKI/Taleno" target="_blank" rel="noopener" class="flex items-center gap-[8px] px-[20px] py-[12px] rounded-[8px] bg-ink text-white text-[14px] font-medium hover:opacity-85 transition-opacity">${lang.downloadPage.viewGh}</a>
       </div>
     </section>
 
@@ -1855,13 +1876,13 @@ ${langOptionsHtml}
           <h2 class="font-display text-[32px] font-bold text-ink max-[768px]:text-[26px]">${gatekeeper.title}</h2>
         </div>
         <p class="text-[15px] leading-[25px] text-ink-secondary">${gatekeeper.intro}</p>
-        <p class="text-[14px] leading-[23px] text-ink font-medium">${gatekeeper.sourceWarning} <a href="https://github.com/BerryUIKI/Lexora/releases/latest" target="_blank" rel="noopener" class="text-accent hover:underline">GitHub Releases</a></p>
+        <p class="text-[14px] leading-[23px] text-ink font-medium">${gatekeeper.sourceWarning} <a href="https://github.com/BerryUIKI/Taleno/releases/latest" target="_blank" rel="noopener" class="text-accent hover:underline">GitHub Releases</a></p>
         <ol class="flex flex-col gap-[12px] list-decimal pl-[22px] text-[14px] leading-[23px] text-ink-secondary">
           ${gatekeeper.steps.map(step => `<li class="pl-[4px]">${step}</li>`).join('\n          ')}
         </ol>
         <div class="rounded-[10px] bg-bg-soft border border-border p-[18px] flex flex-col gap-[10px]">
           <p class="text-[13px] leading-[21px] text-ink-secondary">${gatekeeper.fallback}</p>
-          <code class="block overflow-x-auto rounded-[7px] bg-[#0D0D0F] px-[14px] py-[12px] text-[12px] text-white">xattr -dr com.apple.quarantine /Applications/Lexora.app</code>
+          <code class="block overflow-x-auto rounded-[7px] bg-[#0D0D0F] px-[14px] py-[12px] text-[12px] text-white">xattr -dr com.apple.quarantine /Applications/Taleno.app</code>
         </div>
         <p class="text-[13px] leading-[21px] text-ink-secondary"><strong class="text-ink">${gatekeeper.safety}</strong> <a href="https://support.apple.com/guide/mac-help/mh40616/mac" target="_blank" rel="noopener" class="text-accent hover:underline">${gatekeeper.appleLink}</a></p>
       </div>
@@ -1872,20 +1893,20 @@ ${langOptionsHtml}
     <div class="flex items-center justify-between max-[1000px]:flex-col max-[1000px]:gap-[16px] max-[1000px]:items-start">
       <div class="flex items-center gap-[10px]">
         <svg width="26" height="26" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="lgD2" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4361ee"/><stop offset="1" stop-color="#3a0ca3"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#lgD2)"/><rect x="120" y="96" width="272" height="320" rx="20" fill="white" opacity="0.95"/><rect x="160" y="160" width="120" height="24" rx="6" fill="#4361ee"/><rect x="160" y="210" width="192" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="240" width="160" height="14" rx="4" fill="#6c757d" opacity="0.6"/><rect x="160" y="270" width="180" height="14" rx="4" fill="#6c757d" opacity="0.6"/><polygon points="310,380 390,300 420,330 340,410 300,420" fill="#4cc9f0"/></svg>
-        <span class="font-display text-[18px] font-bold text-white">Lexora</span>
+        <span class="font-display text-[18px] font-bold text-white">Taleno</span>
       </div>
       <span class="text-[11px] text-white/40">English · 简体中文 · 繁體中文 · 日本語 · 한국어 · Deutsch · Français · Español · Русский</span>
     </div>
     <div class="h-px w-full bg-white/[0.12]"></div>
     <div class="flex items-center justify-between text-[12px] max-[768px]:flex-col max-[768px]:gap-[8px]">
-      <span class="text-white/50">Copyright © 2026 Lexora Contributors · Licensed under AGPL-3.0</span>
+      <span class="text-white/50">Copyright © 2026 Taleno Contributors · Licensed under AGPL-3.0</span>
       <span class="text-white/40">Built with Tauri 2 · Rust · SolidJS</span>
     </div>
   </footer>
 
   <script>
     function setLang(lang) {
-      localStorage.setItem('lexora_user_lang', lang);
+      localStorage.setItem('taleno_user_lang', lang);
     }
     const btn = document.getElementById('langBtn');
     const menu = document.getElementById('langMenu');
