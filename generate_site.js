@@ -17,6 +17,7 @@ const languages = {
     selectLang: 'Select display language',
     hero: {
       badge: 'v0.1.8 Released · 100% Free & Open Source',
+      kicker: 'Taleno — Live Markdown Editor',
       title: 'Markdown, beautifully simple.',
       subtitle: 'Type directly into the finished page with zero clunky split screens. Taleno opens in the blink of an eye, keeps all your files strictly private on your computer, and lets you focus entirely on your thoughts.',
       downloadBtn: 'Download Taleno',
@@ -161,6 +162,7 @@ const languages = {
     selectLang: '选择界面显示语言',
     hero: {
       badge: 'v0.1.8 正式发布 · 100% 免费开源',
+      kicker: 'Taleno — 实时渲染 Markdown 编辑器',
       title: '所见即所得，落笔即成文。',
       subtitle: '专为纯粹创作打造的原位 Markdown 编辑器。告别“左边写代码、右边看预览”的传统分屏，打字即时排版。秒速开启、不占内存、文档完全保存在本地磁盘，更有丰富主题与实用扩展，让记录成为一种享受。',
       downloadBtn: '免费下载 Taleno',
@@ -305,6 +307,7 @@ const languages = {
     selectLang: '選擇介面顯示語言',
     hero: {
       badge: 'v0.1.8 正式發布 · 100% 免費開源',
+      kicker: 'Taleno — 即時渲染 Markdown 編輯器',
       title: '所見即所得，落筆即成文。',
       subtitle: '專為純粹創作打造的原位 Markdown 編輯器。告別「左邊寫代碼、右邊看預覽」的傳統分屏，打字即時排版。秒速開啟、不佔記憶體、文件完全儲存於本地磁碟，更有豐富主題與實用擴充，讓記錄成為一種享受。',
       downloadBtn: '免費下載 Taleno',
@@ -449,6 +452,7 @@ const languages = {
     selectLang: '表示言語を選択',
     hero: {
       badge: 'v0.1.8 リリース · 100% 無料・オープンソース',
+      kicker: 'Taleno — ライブ Markdown エディタ',
       title: '思考をそのまま、美しい文章に。',
       subtitle: '左右の2画面分割に別れを告げましょう。Taleno は入力と同時にその場で組版される、シンプルで軽快な Markdown エディタです。一瞬で起動し、すべての文書はローカルに安全に保存されます。',
       downloadBtn: 'Taleno をダウンロード',
@@ -593,6 +597,7 @@ const languages = {
     selectLang: '표시 언어 선택',
     hero: {
       badge: 'v0.1.8 정식 출시 · 100% 무료 및 오픈 소스',
+      kicker: 'Taleno — 실시간 마크다운 에디터',
       title: '생각을 그대로, 아름다운 글이 되도록.',
       subtitle: '번거로운 좌우 2분할 화면 없이 입력과 동시에 그 자리에서 깔끔하게 정돈되는 미니멀 마크다운 에디터입니다. 눈 깜짝할 사이에 켜지고, 모든 문서는 컴퓨터에 안전하게 보관됩니다.',
       downloadBtn: 'Taleno 무료 다운로드',
@@ -737,6 +742,7 @@ const languages = {
     selectLang: 'Anzeigesprache wählen',
     hero: {
       badge: 'v0.1.8 veröffentlicht · 100% Kostenlos & Open Source',
+      kicker: 'Taleno — Moderner Live-Markdown-Editor',
       title: 'Markdown, wunderbar einfach.',
       subtitle: 'Schreibe direkt im formatierten Dokument – ganz ohne unübersichtliche geteilte Fenster. Taleno öffnet blitzschnell, speichert alle Notizen sicher auf deinem Computer und lässt dich ungestört schreiben.',
       downloadBtn: 'Taleno herunterladen',
@@ -750,7 +756,7 @@ const languages = {
       workspace: 'Arbeitsbereich',
       introTitle: '# Konzentriere dich auf deine Gedanken',
       introP1: 'Vergiss unübersichtliche Editoren mit zwei Fenstern. In Taleno formatieren sich Überschriften, Listen und Fettschrift direkt unter deinem Cursor, während du tippst.',
-      introP2: 'In-Place WYSIWYG · Blitzschnelle Volltextsuche · Schutz vor Datenverlust.',
+      introP2: 'Echtzeit-Markdown-Editor · Blitzschnelle Volltextsuche · Schutz vor Datenverlust.',
       metrics: ['Startzeit', 'Unter 0,4 Sek.', 'Sofort einsatzbereit', 'Globale Suche', 'Reaktionsschnell', 'Gesamter Ordner'],
       modes: ['Lesen', 'Schreiben', 'Quellcode'],
       status: 'Zl 1, Sp 1  ·  1.420 Wörter  ·  UTF-8  ·  Gespeichert'
@@ -881,6 +887,7 @@ const languages = {
     selectLang: 'Choisir la langue',
     hero: {
       badge: 'v0.1.8 disponible · 100% Gratuit et Open Source',
+      kicker: 'Taleno — Éditeur Markdown en direct',
       title: 'Le Markdown, en toute simplicité.',
       subtitle: 'Écrivez directement dans votre document mis en forme, sans écran séparé. Taleno s’ouvre en un éclair, conserve tous vos écrits en sécurité sur votre ordinateur et vous offre un espace d’écriture fluide et apaisant.',
       downloadBtn: 'Télécharger Taleno',
@@ -1025,6 +1032,7 @@ const languages = {
     selectLang: 'Seleccionar idioma',
     hero: {
       badge: 'v0.1.8 disponible · 100% Libre y Código Abierto',
+      kicker: 'Taleno — Editor Markdown en tiempo real',
       title: 'Markdown, natural y sencillo.',
       subtitle: 'Escribe directamente sobre el texto maquetado sin ventanas divididas. Taleno se abre al instante, mantiene todas tus notas seguras en tu ordenador y te ofrece un espacio despejado para pensar y crear.',
       downloadBtn: 'Descargar Taleno',
@@ -1169,6 +1177,7 @@ const languages = {
     selectLang: 'Выбрать язык',
     hero: {
       badge: 'v0.1.8 релиз · 100% Бесплатно и Open Source',
+      kicker: 'Taleno — Удобный Markdown-редактор',
       title: 'Markdown, легко и естественно.',
       subtitle: 'Пишите сразу в красиво оформленном тексте без громоздких раздельных окон. Taleno открывается за доли секунды, надежно хранит все файлы на вашем компьютере и помогает сосредоточиться на творчестве.',
       downloadBtn: 'Скачать Taleno',
@@ -1448,7 +1457,7 @@ function renderJsonLd(lang, isDownload = false) {
         "url": "https://github.com/BerryUIKI"
       },
       "featureList": lang.features ? lang.features.items.map(i => i.title) : [
-        "In-Place WYSIWYG Editing",
+        "Live Markdown Editing",
         "Plugin Marketplace",
         "Community Themes",
         "Ripgrep Offline Search",
@@ -1610,7 +1619,7 @@ ${langOptionsHtml}
         <span class="w-[6px] h-[6px] rounded-full bg-[#34C759]"></span>
         ${lang.hero.badge}
       </div>
-      <h1 class="font-display text-[52px] sm:text-[64px] font-bold leading-[1.1] tracking-[-1.5px] text-ink text-center max-[768px]:text-[38px]"><span class="block text-[20px] sm:text-[26px] font-semibold text-accent tracking-normal mb-2">Taleno — In-Place WYSIWYG</span>${lang.hero.title}</h1>
+      <h1 class="font-display text-[52px] sm:text-[64px] font-bold leading-[1.1] tracking-[-1.5px] text-ink text-center max-[768px]:text-[38px]"><span class="block text-[20px] sm:text-[26px] font-semibold text-accent tracking-normal mb-2">${lang.hero.kicker || 'Taleno — Live Markdown Editor'}</span>${lang.hero.title}</h1>
       <p class="max-w-[720px] text-center text-[18px] leading-[30px] text-ink-secondary">
         ${lang.hero.subtitle}
       </p>
