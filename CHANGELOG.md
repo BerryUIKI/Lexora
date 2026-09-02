@@ -7,20 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.7] - 2026-09-02
+
 ### Added
-- **Plugin System & Extensibility Architecture**:
-  - Full-stack plugin engine connecting SolidJS frontend and Tauri 2 Rust backend.
-  - Rust Plugin Service managing `%APPDATA%/Lexora/plugins/`, directory scanning, manifest validation, and starter plugin initialization (`sample-timestamp`).
+- **Plugin System & Extensibility Sandbox**:
+  - Full-stack plugin runtime connecting SolidJS frontend and Tauri 2 Rust backend.
+  - Rust Plugin Service managing `%APPDATA%/Lexora/plugins/`, directory scanning, schema validation, and automatic starter plugin initialization (`sample-timestamp`).
   - Native IPC commands: `list_plugins`, `open_plugins_folder`, and `read_plugin_source`.
-  - Frontend execution sandbox (`runtime.ts`) providing `LexoraPluginContext` with command registration, editor manipulation, and isolated key-value storage.
-- **Preferences & Plugins Menu Integration**:
-  - Added `File ➔ Preferences ➔ Plugins...` sub-menu with global shortcut <kbd>Ctrl+Shift+X</kbd> (or <kbd>Cmd+Shift+X</kbd> on macOS).
-  - Added `File ➔ Preferences ➔ Settings...` (<kbd>Ctrl+,</kbd>).
-- **Plugins Tab in Settings Modal**:
-  - Interactive plugin cards with enable/disable switch toggles, version tags, and author attribution.
-  - Real-time search filter and hot-reload button with visual spinner.
-  - "Open Plugins Folder" action button launching the native operating system file manager.
-  - Full localization support across all 9 interface languages.
+  - Frontend execution sandbox (`runtime.ts`) exposing `LexoraPluginContext` with command registration, active editor content manipulation, and persistent key-value storage.
+  - In-app Plugin Marketplace connecting to `BerryUIKI/Lexora-Plugins` with offline caching, search filtering, and one-click install/uninstall.
+- **Custom Themes & Community Skins Engine**:
+  - Pure CSS design-token engine dynamically overriding editor, reader, and chrome tokens without app reload or DOM reconstruction.
+  - Rust Theme Service managing `%APPDATA%/Lexora/themes/`, theme manifest parsing, atomic downloads, path traversal protection, and offline registry caching.
+  - Community Theme Marketplace browser in Settings Modal featuring live 3-color palette swatches (Background, Accent, Text) and one-click install/uninstall.
+  - Explicit theme taxonomy separating Built-in Themes (bundled, permanent presets) from External Themes (community skins installable/uninstallable via GUI).
+- **Preferences & Menu Integrations**:
+  - Added `File ➔ Preferences ➔ Plugins...` (<kbd>Ctrl+Shift+X</kbd>) and `File ➔ Preferences ➔ Settings...` (<kbd>Ctrl+,</kbd>).
+  - Modern tabbed Settings Modal organizing Theme (Built-in + Custom Marketplace), Plugins (Installed + Marketplace), and Updates channels.
+- **Documentation & Ecosystem Standards**:
+  - Published [`PLUGIN_DEVELOPMENT.md`](docs/PLUGIN_DEVELOPMENT.md) and [`THEME_DEVELOPMENT.md`](docs/THEME_DEVELOPMENT.md) developer handbooks.
+  - Official starter plugins (`sample-timestamp`, `wordcount-pro`, `callout-boxes`, `katex-macros`) and community themes (`dracula`, `nord`, `catppuccin-macchiato`) published to the [`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins) repository.
+  - Full localization support for custom themes and plugins across all 9 interface languages.
 
 ## [0.1.6] - 2026-08-31
 
