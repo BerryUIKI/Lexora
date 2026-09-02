@@ -48,6 +48,36 @@ When implementing features or refactoring:
 
 ---
 
+## 🌐 Ecosystem Separation: Lexora vs Lexora-Plugins
+
+Lexora operates as a multi-repository ecosystem with clear boundaries:
+
+| Concern | Target Repository | Submission / Workflow |
+| :--- | :--- | :--- |
+| **Core Application** | [`BerryUIKI/Lexora`](https://github.com/BerryUIKI/Lexora) | PR against `dev` branch |
+| **External Plugins** | [`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins) | PR against `dev` branch under `plugins/<id>/` |
+| **External Themes & Skins** | [`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins) | PR against `dev` branch under `themes/<id>/` |
+
+### ⛔ Critical Contribution Rule
+- **NEVER submit external plugins or community themes to the `Lexora` repository.**
+- All third-party plugins and external themes **MUST** be submitted to the [`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins) repository.
+- The `Lexora` repository is reserved exclusively for the core application codebase, runtime engine, native commands, and official documentation.
+
+### 🎨 Theme Categorization & Taxonomy
+Themes in Lexora are strictly divided into two categories:
+
+1. **Built-in Themes (Core Presets)**:
+   - Included by default with the software (e.g., `Lexora`, `GitHub`, `Solarized`).
+   - Configured within the core CSS tokens and settings store (`src/styles/` & `src/store/settings.ts`).
+   - Require **no installation** and **cannot be uninstalled** via the GUI.
+2. **External Themes (Community Skins)**:
+   - Hosted in the [`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins) repository and cataloged in `themes.json`.
+   - Stored in `%APPDATA%/Lexora/themes/<theme-id>/` on the user's disk.
+   - Users can freely choose to **install**, **apply**, or **uninstall** them at any time directly through the theme settings interface.
+
+
+---
+
 ## 📁 Repository Directory Structure
 
 ```

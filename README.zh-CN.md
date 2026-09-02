@@ -97,6 +97,7 @@
 | 📊 **Mermaid 图表与数学公式** | 支持流程图、时序图、类图与 LaTeX / KaTeX 数学公式渲染 | ✅ 已就绪 |
 | 🔍 **Ripgrep 全局搜索** | 极速全工作区全文检索 (<kbd>Ctrl+Shift+F</kbd>) 与单文档查找替换 (<kbd>Ctrl+F</kbd> / <kbd>Ctrl+H</kbd>) | ✅ 已就绪 |
 | 📤 **独立 HTML 导出** | 一键将任意 Markdown 导出为自包含、离线样式的独立网页 (<kbd>Ctrl+E</kbd>) | ✅ 已就绪 |
+| 🧩 **插件系统与扩展能力** | 模块化插件引擎，支持 `%APPDATA%` 目录扫描、热重载、JS 安全沙箱运行时与首选项管理子菜单 (<kbd>Ctrl+Shift+X</kbd>) | ✅ 已就绪 |
 
 *后续规划详见 [路线图](docs/ROADMAP.md)。*
 
@@ -146,6 +147,8 @@ Lexora 让您的文档保持 **磁盘上的纯 Markdown** —— 可移植、可
 | | <kbd>F11</kbd> / <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Z</kbd> | 切换禅意模式 (全屏无干扰) |
 | | <kbd>Ctrl</kbd> + <kbd>+</kbd> / <kbd>-</kbd> | 放大 / 缩小字号 |
 | | <kbd>Ctrl</kbd> + <kbd>0</kbd> (数字键盘) | 恢复默认字号 (16px) |
+| **首选项与插件** | <kbd>Ctrl</kbd> + <kbd>,</kbd> | 打开首选项 / 设置面板 |
+| | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd> | 打开插件管理面板 |
 
 *(在 macOS 上，请将 <kbd>Ctrl</kbd> 替换为 <kbd>Cmd</kbd>)*
 

@@ -225,3 +225,121 @@ export async function searchWorkspace(
     rootPath,
   });
 }
+
+/**
+ * List all installed plugins from the user's plugins directory.
+ */
+export async function listPlugins(): Promise<any[]> {
+  return invoke<any[]>("list_plugins");
+}
+
+/**
+ * Open the native plugins directory in the OS file explorer.
+ */
+export async function openPluginsFolder(): Promise<void> {
+  return invoke<void>("open_plugins_folder");
+}
+
+/**
+ * Read the main JavaScript source of a specific plugin.
+ */
+export async function readPluginSource(pluginId: string): Promise<string> {
+  return invoke<string>("read_plugin_source", { pluginId });
+}
+
+/**
+ * Fetch the list of available plugins from BerryUIKI/Lexora-Plugins registry.
+ */
+export async function fetchMarketplacePlugins(): Promise<any[]> {
+  return invoke<any[]>("fetch_marketplace_plugins");
+}
+
+/**
+ * Install a remote plugin into the user's plugins directory.
+ */
+export async function installPlugin(
+  pluginId: string,
+  rawBaseUrl: string,
+  entryFile?: string
+): Promise<any> {
+  return invoke<any>("install_plugin", {
+    pluginId,
+    rawBaseUrl,
+    entryFile,
+  });
+}
+
+/**
+ * Uninstall a plugin from the user's plugins directory.
+ */
+export async function uninstallPlugin(pluginId: string): Promise<void> {
+  return invoke<void>("uninstall_plugin", { pluginId });
+}
+
+/**
+ * Update an existing plugin from the remote registry.
+ */
+export async function updatePlugin(
+  pluginId: string,
+  rawBaseUrl: string,
+  entryFile?: string
+): Promise<any> {
+  return invoke<any>("update_plugin", {
+    pluginId,
+    rawBaseUrl,
+    entryFile,
+  });
+}
+
+/**
+ * List all installed custom themes.
+ */
+export async function listThemes(): Promise<any[]> {
+  return invoke<any[]>("list_themes");
+}
+
+/**
+ * Read the CSS stylesheet of an installed theme.
+ */
+export async function readThemeCss(themeId: string): Promise<string> {
+  return invoke<string>("read_theme_css", { themeId });
+}
+
+/**
+ * Open the user's themes folder in the OS file explorer.
+ */
+export async function openThemesFolder(): Promise<void> {
+  return invoke<void>("open_themes_folder");
+}
+
+/**
+ * Fetch available themes from the remote registry.
+ */
+export async function fetchMarketplaceThemes(): Promise<any[]> {
+  return invoke<any[]>("fetch_marketplace_themes");
+}
+
+/**
+ * Install a remote theme into the user's themes directory.
+ */
+export async function installTheme(
+  themeId: string,
+  rawBaseUrl: string,
+  entryFile?: string
+): Promise<any> {
+  return invoke<any>("install_theme", {
+    themeId,
+    rawBaseUrl,
+    entryFile,
+  });
+}
+
+/**
+ * Uninstall a theme from the user's themes directory.
+ */
+export async function uninstallTheme(themeId: string): Promise<void> {
+  return invoke<void>("uninstall_theme", { themeId });
+}
+
+
+

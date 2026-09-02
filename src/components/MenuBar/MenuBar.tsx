@@ -36,6 +36,7 @@ export interface MenuBarProps {
   onOpenSearchModal: () => void;
   onOpenFindReplace: () => void;
   onOpenThemeSettings: () => void;
+  onOpenSettings?: (tab?: "theme" | "plugins" | "updates") => void;
   onOpenRecent: (path: string) => void;
 }
 
@@ -43,6 +44,7 @@ export type MenuId = "file" | "edit" | "view" | "window" | "help" | null;
 
 export const MenuBar: Component<MenuBarProps> = (props) => {
   const [activeMenu, setActiveMenu] = createSignal<MenuId>(null);
+  const [activeSubmenu, setActiveSubmenu] = createSignal<string | null>(null);
   const [aboutOpen, setAboutOpen] = createSignal(false);
   const [isMaximized, setIsMaximized] = createSignal(false);
   const [langModalOpen, setLangModalOpen] = createSignal(false);
@@ -53,6 +55,7 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
 
   const closeMenus = () => {
     setActiveMenu(null);
+    setActiveSubmenu(null);
   };
 
   const toggleMenu = (menu: MenuId) => {
@@ -278,6 +281,68 @@ export const MenuBar: Component<MenuBarProps> = (props) => {
                   <span>{t("file.exportHtml")}</span>
                   <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+E</kbd>
                 </button>
+
+                <div class="my-1 border-t border-[var(--color-border)]" />
+
+                {/* Preferences Submenu */}
+                <div
+                  class="relative"
+                  onMouseEnter={() => setActiveSubmenu("preferences")}
+                >
+                  <button
+                    class={`w-full flex items-center justify-between px-2.5 py-1.5 rounded transition-colors text-left ${
+                      activeSubmenu() === "preferences"
+                        ? "bg-[var(--color-hover)] text-[var(--color-text-primary)]"
+                        : "hover:bg-[var(--color-hover)]"
+                    }`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveSubmenu((prev) => (prev === "preferences" ? null : "preferences"));
+                    }}
+                  >
+                    <span>{t("menu.preferences")}</span>
+                    <span class="text-[10px] text-[var(--color-text-secondary)]">›</span>
+                  </button>
+
+                  <Show when={activeSubmenu() === "preferences"}>
+                    <div
+                      class="absolute left-full top-0 ml-1 w-56 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-1 shadow-xl text-[var(--color-text-primary)] text-xs z-50 animate-in fade-in zoom-in-95 duration-100"
+                      onMouseEnter={() => setActiveSubmenu("preferences")}
+                    >
+                      <button
+                        class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                        onClick={() => {
+                          closeMenus();
+                          if (props.onOpenSettings) props.onOpenSettings("theme");
+                          else props.onOpenThemeSettings();
+                        }}
+                      >
+                        <span>{t("settings.themeTab")}</span>
+                      </button>
+
+                      <button
+                        class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                        onClick={() => {
+                          closeMenus();
+                          if (props.onOpenSettings) props.onOpenSettings("plugins");
+                        }}
+                      >
+                        <span>{t("settings.pluginsTab")}</span>
+                        <kbd class="text-[10px] text-[var(--color-text-secondary)] font-mono">Ctrl+Shift+X</kbd>
+                      </button>
+
+                      <button
+                        class="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-[var(--color-hover)] transition-colors text-left"
+                        onClick={() => {
+                          closeMenus();
+                          if (props.onOpenSettings) props.onOpenSettings("updates");
+                        }}
+                      >
+                        <span>{t("settings.updatesTab")}</span>
+                      </button>
+                    </div>
+                  </Show>
+                </div>
 
                 <div class="my-1 border-t border-[var(--color-border)]" />
 

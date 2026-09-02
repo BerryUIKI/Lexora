@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Plugin System & Extensibility Architecture**:
+  - Full-stack plugin engine connecting SolidJS frontend and Tauri 2 Rust backend.
+  - Rust Plugin Service managing `%APPDATA%/Lexora/plugins/`, directory scanning, manifest validation, and starter plugin initialization (`sample-timestamp`).
+  - Native IPC commands: `list_plugins`, `open_plugins_folder`, and `read_plugin_source`.
+  - Frontend execution sandbox (`runtime.ts`) providing `LexoraPluginContext` with command registration, editor manipulation, and isolated key-value storage.
+- **Preferences & Plugins Menu Integration**:
+  - Added `File ➔ Preferences ➔ Plugins...` sub-menu with global shortcut <kbd>Ctrl+Shift+X</kbd> (or <kbd>Cmd+Shift+X</kbd> on macOS).
+  - Added `File ➔ Preferences ➔ Settings...` (<kbd>Ctrl+,</kbd>).
+- **Plugins Tab in Settings Modal**:
+  - Interactive plugin cards with enable/disable switch toggles, version tags, and author attribution.
+  - Real-time search filter and hot-reload button with visual spinner.
+  - "Open Plugins Folder" action button launching the native operating system file manager.
+  - Full localization support across all 9 interface languages.
+
 ## [0.1.6] - 2026-08-31
 
 ### Changed

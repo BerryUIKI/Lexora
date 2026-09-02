@@ -46,6 +46,20 @@ gitGraph
 
 ---
 
+## 🌐 Ecosystem Separation: Lexora vs Lexora-Plugins
+
+Lexora maintains a strict separation of concerns across two official repositories:
+
+1. **[`BerryUIKI/Lexora`](https://github.com/BerryUIKI/Lexora)** (This Repository):
+   - Reserved strictly for core desktop software development, native backend services, UI components, and built-in features.
+   - Houses **Built-in Themes** (e.g. `Lexora`, `GitHub`, `Solarized`), which require zero installation and cannot be uninstalled via the GUI.
+2. **[`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins)**:
+   - Dedicated community hub for **External Plugins** and **External Themes/Skins**.
+   - External themes and plugins can be freely installed, applied, or uninstalled by users via options in the GUI.
+   - All third-party plugins and external themes **MUST** be submitted as Pull Requests to `BerryUIKI/Lexora-Plugins`, never to this repository.
+
+---
+
 ## ✍️ Commit Conventions
 
 We strictly enforce the **Conventional Commits 1.0.0** specification:

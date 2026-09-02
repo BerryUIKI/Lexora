@@ -21,7 +21,9 @@ gantt
     Phase 6 - v1.1 Enhancements    :done, p6, after p5, 21d
     Phase 7 - v1.2+ Advanced       :done, p7, after p6, 30d
     section Localization & i18n
-    Phase 8 - Multi-Language i18n  :active, p8, after p7, 21d
+    Phase 8 - Multi-Language i18n  :done, p8, after p7, 21d
+    section Plugins & Extensibility
+    Phase 9 - Plugin System        :done, p9, after p8, 14d
 ```
 
 ---
@@ -106,18 +108,29 @@ gantt
 
 ---
 
-### Phase 8 — Multi-Language Internationalization (i18n) & Localization (~2–3 weeks) :arrows_counterclockwise: In Progress
-- [ ] **Reactive i18n Translation Engine**: Lightweight, zero-dependency translation dictionary store integrated into SolidJS signals.
-- [ ] **Supported Language Locales**:
+### Phase 8 — Multi-Language Internationalization (i18n) & Localization (~2–3 weeks) :white_check_mark: Completed
+- [x] **Reactive i18n Translation Engine**: Lightweight, zero-dependency translation dictionary store integrated into SolidJS signals.
+- [x] **Supported Language Locales**:
   - `en` (English - Default)
   - `zh-CN` (Simplified Chinese / 简体中文)
   - `zh-TW` (Traditional Chinese / 繁體中文)
   - `ja` (Japanese / 日本語)
+  - `ko` (Korean / 한국어)
   - `de` (German / Deutsch)
   - `fr` (French / Français)
   - `es` (Spanish / Español)
-- [ ] **Language Selection UI**: Settings menu language picker with automatic OS system locale detection and persistent `localStorage` preference.
-- [ ] **Full UI Translation Coverage**: Menu bar items, tooltips, status bar metadata, search modals, find & replace dialog, welcome hub, and about screen.
+  - `ru` (Russian / Русский)
+- [x] **Language Selection UI**: Settings menu language picker with automatic OS system locale detection and persistent `localStorage` preference.
+- [x] **Full UI Translation Coverage**: Menu bar items, tooltips, status bar metadata, search modals, find & replace dialog, welcome hub, and about screen.
+
+---
+
+### Phase 9 — Plugin System & Extensibility (~1–2 weeks) :white_check_mark: Completed
+- [x] **Rust Plugin Service**: Directory resolution (`%APPDATA%/Lexora/plugins/`), directory scanning, manifest validation, starter template initialization.
+- [x] **Frontend Runtime Engine**: Sandboxed `LexoraPluginContext` providing command registration, editor content hooks, and isolated local storage.
+- [x] **Settings UI & Navigation**: Dedicated `Plugins` tab in `SettingsModal` with search filter, reload action, directory opener, and enable/disable toggle switches.
+- [x] **Menu Integration**: `File ➔ Preferences ➔ Plugins...` sub-menu with global shortcut <kbd>Ctrl+Shift+X</kbd> (or <kbd>Cmd+Shift+X</kbd> on macOS).
+
 
 ---
 

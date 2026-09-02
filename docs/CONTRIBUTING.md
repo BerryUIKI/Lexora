@@ -10,7 +10,27 @@ All contributors and maintainers are expected to adhere to our Code of Conduct. 
 
 ---
 
-## 2. Getting Started & Development Setup
+## 2. Where Should I Submit My Contribution?
+
+Lexora divides responsibilities across two dedicated repositories:
+
+| What You Are Contributing | Target Repository | Guidelines |
+| :--- | :--- | :--- |
+| **Core Desktop App** (Rust, Tauri, SolidJS, built-in features) | [`BerryUIKI/Lexora`](https://github.com/BerryUIKI/Lexora) | See below & [COLLABORATION.md](COLLABORATION.md) |
+| **External Plugins** | [`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins) | [Plugin Standards](PLUGIN_DEVELOPMENT.md) |
+| **External Themes & Skins** | [`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins) | [Theme Standards](THEME_DEVELOPMENT.md) |
+
+> [!IMPORTANT]
+> **Developing an External Theme or Plugin?**
+> Please **DO NOT** open Pull Requests for external themes or plugins in this `Lexora` repository. All third-party plugins and community themes belong in the [`BerryUIKI/Lexora-Plugins`](https://github.com/BerryUIKI/Lexora-Plugins) repository.
+
+### 🎨 Theme Categorization
+- **Built-in Themes**: Bundled by default with the software (e.g. `Lexora`, `GitHub`, `Solarized`). They require zero installation, work offline out of the box, and **cannot be uninstalled** via the GUI.
+- **External Themes**: Hosted in the `Lexora-Plugins` repository and cataloged in `themes.json`. Users can freely choose to **install**, **apply**, or **uninstall** them on demand via options within the theme settings GUI.
+
+---
+
+## 3. Getting Started & Development Setup
 
 Before making any changes, please review our comprehensive [Development Guide](DEVELOPMENT.md) to ensure your local environment is configured with the required prerequisites:
 - Node.js 20+ & pnpm 9+

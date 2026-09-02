@@ -97,6 +97,7 @@
 | 📊 **Mermaid 圖表與數學公式** | 支援流程圖、循序圖、類別圖與 LaTeX / KaTeX 數學公式渲染 | ✅ 已就緒 |
 | 🔍 **Ripgrep 全域搜尋** | 極速全工作區全文檢索 (<kbd>Ctrl+Shift+F</kbd>) 與單文件搜尋取代 (<kbd>Ctrl+F</kbd> / <kbd>Ctrl+H</kbd>) | ✅ 已就緒 |
 | 📤 **獨立 HTML 匯出** | 一鍵將任意 Markdown 匯出為自包含、離線樣式的獨立網頁 (<kbd>Ctrl+E</kbd>) | ✅ 已就緒 |
+| 🧩 **外掛系統與擴充能力** | 模組化外掛引擎，支援 `%APPDATA%` 目錄掃描、熱重載、JS 安全沙箱執行階段與偏好設定管理子選單 (<kbd>Ctrl+Shift+X</kbd>) | ✅ 已就緒 |
 
 *後續規劃詳見[路線圖](docs/ROADMAP.md)。*
 
@@ -146,6 +147,8 @@ Lexora 讓您的文件保持 **磁碟上的純 Markdown** —— 可攜、可 di
 | | <kbd>F11</kbd> / <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Z</kbd> | 切換禪意模式 (全螢幕無干擾) |
 | | <kbd>Ctrl</kbd> + <kbd>+</kbd> / <kbd>-</kbd> | 放大 / 縮小字級 |
 | | <kbd>Ctrl</kbd> + <kbd>0</kbd> (數字鍵盤) | 重設預設字級 (16px) |
+| **偏好設定與外掛** | <kbd>Ctrl</kbd> + <kbd>,</kbd> | 開啟偏好設定 / 設定面板 |
+| | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd> | 開啟外掛模組管理面板 |
 
 *(在 macOS 上，請將 <kbd>Ctrl</kbd> 替換為 <kbd>Cmd</kbd>)*
 
