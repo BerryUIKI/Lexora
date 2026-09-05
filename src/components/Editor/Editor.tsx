@@ -26,7 +26,11 @@ import {
   toggleStrikethroughCommand,
   insertTableCommand,
 } from "@milkdown/preset-gfm";
-import { history } from "@milkdown/plugin-history";
+import {
+  history,
+  undoCommand,
+  redoCommand,
+} from "@milkdown/plugin-history";
 import { listener, listenerCtx } from "@milkdown/plugin-listener";
 import { nord } from "@milkdown/theme-nord";
 import "@milkdown/theme-nord/style.css";
@@ -43,6 +47,12 @@ export const Editor: Component = () => {
       editorInstance.action((ctx) => {
         const commands = ctx.get(commandsCtx);
         switch (action) {
+          case "undo":
+            commands.call(undoCommand.key);
+            break;
+          case "redo":
+            commands.call(redoCommand.key);
+            break;
           case "bold":
             commands.call(toggleStrongCommand.key);
             break;

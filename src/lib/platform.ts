@@ -1,23 +1,77 @@
 export type DesktopPlatform = "macos" | "windows" | "linux" | "unknown";
+export type AppPlatform = "ios" | "android" | "macos" | "windows" | "linux" | "unknown";
+
+/**
+ * Detect the host platform from WebView-provided browser metadata.
+ */
+export function detectPlatform(
+  platform = typeof navigator === "undefined" ? "" : navigator.platform,
+  userAgent = typeof navigator === "undefined" ? "" : navigator.userAgent,
+  maxTouchPoints = typeof navigator === "undefined" ? 0 : navigator.maxTouchPoints || 0,
+): AppPlatform {
+  const p = (platform || "").toLowerCase();
+  const ua = (userAgent || "").toLowerCase();
+
+  // iOS detection (iPhone, iPod, iPad including iPadOS which reports as MacIntel with touch points)
+  if (
+    ua.includes("iphone") ||
+    ua.includes("ipod") ||
+    ua.includes("ipad") ||
+    (p.includes("mac") && maxTouchPoints > 1)
+  ) {
+    return "ios";
+  }
+
+  // Android detection
+  if (ua.includes("android")) {
+    return "android";
+  }
+
+  // Desktop macOS
+  if (p.includes("mac") || ua.includes("macintosh")) {
+    return "macos";
+  }
+
+  // Desktop Windows
+  if (p.includes("win") || ua.includes("windows")) {
+    return "windows";
+  }
+
+  // Desktop Linux
+  if (p.includes("linux") || p.includes("x11") || ua.includes("linux")) {
+    return "linux";
+  }
+
+  return "unknown";
+}
 
 /**
  * Detect the host desktop platform from WebView-provided browser metadata.
- *
- * The optional arguments keep platform-specific chrome behavior deterministic
- * in unit tests without requiring an IPC round trip during initial render.
+ * Backward compatible with existing desktop checks.
  */
 export function detectDesktopPlatform(
   platform = typeof navigator === "undefined" ? "" : navigator.platform,
   userAgent = typeof navigator === "undefined" ? "" : navigator.userAgent,
 ): DesktopPlatform {
-  const value = `${platform} ${userAgent}`.toLowerCase();
-
-  if (value.includes("mac")) return "macos";
-  if (value.includes("win")) return "windows";
-  if (value.includes("linux") || value.includes("x11")) return "linux";
-
+  const resolved = detectPlatform(platform, userAgent, 0);
+  if (resolved === "macos" || resolved === "windows" || resolved === "linux") {
+    return resolved;
+  }
   return "unknown";
 }
 
+export function detectIsMobile(
+  platform = typeof navigator === "undefined" ? "" : navigator.platform,
+  userAgent = typeof navigator === "undefined" ? "" : navigator.userAgent,
+  maxTouchPoints = typeof navigator === "undefined" ? 0 : navigator.maxTouchPoints || 0,
+): boolean {
+  const p = detectPlatform(platform, userAgent, maxTouchPoints);
+  return p === "ios" || p === "android";
+}
+
+export const currentPlatform = detectPlatform();
+export const isMobile = detectIsMobile();
+export const isiOS = currentPlatform === "ios";
+export const isAndroid = currentPlatform === "android";
 export const desktopPlatform = detectDesktopPlatform();
-export const isMacOS = desktopPlatform === "macos";
+export const isMacOS = desktopPlatform === "macos" && !isiOS;

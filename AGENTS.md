@@ -45,6 +45,10 @@ When implementing features or refactoring:
 5. **DOM Performance Budget**:
    - Keystroke latency must remain under 16ms (60 FPS).
    - Use SolidJS fine-grained reactivity (`createSignal`, `createMemo`, `<Show>`, `<For>`) rather than recreating entire DOM trees.
+6. **Mobile Sandboxing & Viewport Ergonomics**:
+   - Mobile platforms (iOS and Android) enforce isolated application sandboxes and dynamic display geometries.
+   - UI layout must adapt responsively to touch targets, virtual keyboards (`visualViewport`), and display cutouts (`env(safe-area-inset-*)`).
+   - File I/O operations must resolve within sandboxed document roots or security-scoped container bookmarks.
 
 ---
 
@@ -89,8 +93,11 @@ Taleno/
 │   ├── DESIGN_DECISIONS.md       # ADRs (SolidJS, Milkdown, etc.)
 │   ├── DEVELOPMENT.md            # Developer setup & debug guide
 │   ├── MILESTONES.md             # Project milestones & schedule
+│   ├── MOBILE_DEVELOPMENT.md     # iOS & Android cross-platform guide
 │   ├── NEXT_STEPS.md             # Phase 2 implementation blueprint
-│   └── ROADMAP.md                # Phased feature roadmap & MoSCoW
+│   ├── PLUGIN_DEVELOPMENT.md     # Plugin developer handbook
+│   ├── ROADMAP.md                # Phased feature roadmap & MoSCoW
+│   └── THEME_DEVELOPMENT.md      # Theme developer handbook
 ├── src/                          # SolidJS Frontend
 │   ├── components/               # UI components
 │   │   ├── Editor/               # Milkdown editor integration
@@ -157,6 +164,10 @@ pnpm tauri build
      - `docs(agents): add AGENTS.md workflow and constraints handbook`
 3. **Commit Granularity**:
    - Break large features into logical, independently compilable chunks with descriptive commit messages.
+4. **Platform-Split Release Tags**:
+   - Desktop releases: `vX.Y.Z` (e.g. `v0.2.0`)
+   - Android releases: `vX.Y.Z-android` (e.g. `v0.1.9-android`)
+   - iOS releases: `vX.Y.Z-ios` (e.g. `v0.1.9-ios`)
 
 ---
 

@@ -115,19 +115,31 @@ Reviewers evaluate PRs based on:
 
 ## 🏷️ Release Management & SemVer
 
-Taleno follows **Semantic Versioning (SemVer 2.0.0)**: `MAJOR.MINOR.PATCH`
+Taleno follows **Semantic Versioning (SemVer 2.0.0)**: `MAJOR.MINOR.PATCH`.
 
-- **MAJOR**: Breaking changes to document format, configuration, or core APIs.
-- **MINOR**: Backward-compatible new features (e.g. M1 -> M2 -> M3).
-- **PATCH**: Backward-compatible bug fixes and security patches.
+### Multi-Platform Release Track & Git Tag Conventions
+
+To accommodate different release cadences, App Store review cycles, and platform-specific hotfixes without separating into multiple repositories, Taleno uses **Platform-Split Git Tags**:
+
+| Platform Target | Git Tag Format | Example | Target Artifacts |
+| :--- | :--- | :--- | :--- |
+| **PC / Desktop** (macOS, Windows, Linux) | `vX.Y.Z` | `v0.2.0` | `.dmg`, `.msi`, `.exe`, `.deb`, `.AppImage` |
+| **Android** (Google Play, Direct APK) | `vX.Y.Z-android` | `v0.1.9-android` | `app-universal-release.aab`, `.apk` |
+| **iOS** (App Store, TestFlight) | `vX.Y.Z-ios` | `v0.1.9-ios` | `.ipa`, TestFlight archive |
 
 ### Release Workflow
-1. Cut release branch from `dev` (`release/v0.2.0`).
-2. Bump versions in `package.json`, `src-tauri/Cargo.toml`, and `src-tauri/tauri.conf.json`.
-3. Update `CHANGELOG.md` with release notes under `## [vX.Y.Z] - YYYY-MM-DD`.
-4. Merge `release/v0.2.0` into `main` and tag: `git tag -a v0.2.0 -m "Release v0.2.0"`.
+1. Cut release branch from `dev` (e.g., `release/v0.2.0` or `release/v0.1.9-android`).
+2. Update versions:
+   - For Desktop: bump `package.json`, `src-tauri/Cargo.toml`, and `src-tauri/tauri.conf.json`.
+   - For Android: increment `versionCode` in Gradle / `bundle.android` and update version string.
+   - For iOS: increment `CFBundleVersion` in Xcode / `bundle.iOS` and update version string.
+3. Update `CHANGELOG.md` with release notes under `## [vX.Y.Z(-platform)] - YYYY-MM-DD`.
+4. Merge release branch into `main` and tag according to the platform convention:
+   - Desktop: `git tag -a v0.2.0 -m "Release v0.2.0"`
+   - Android: `git tag -a v0.1.9-android -m "Release Android v0.1.9"`
+   - iOS: `git tag -a v0.1.9-ios -m "Release iOS v0.1.9"`
 5. Merge `main` back into `dev` to keep history aligned.
-6. Push tag to GitHub to trigger the release build workflow.
+6. Push tag to GitHub to trigger the corresponding platform CI/CD release workflow.
 
 ---
 

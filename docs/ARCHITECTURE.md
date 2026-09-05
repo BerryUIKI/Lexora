@@ -6,10 +6,10 @@ Taleno is a high-performance, seamless in-place WYSIWYG Markdown reader-editor b
 
 ## 1. System Overview
 
-Taleno utilizes a desktop application architecture separating user interface rendering and systems-level operations:
+Taleno utilizes a cross-platform application architecture separating user interface rendering and systems-level operations across **Desktop** (Windows, macOS, Linux) and **Mobile** (iOS, Android):
 
-- **Frontend (WebView)**: Built with **SolidJS** and **Milkdown** (ProseMirror-based). Runs within the platform's native WebView (WebView2 on Windows, WebKit on macOS, WebKitGTK on Linux). Responsible for immediate user input handling, WYSIWYG Markdown rendering, editor state management, and user interface controls.
-- **Backend (Rust Process)**: Built on the **Tauri 2** core. Responsible for native operating system interactions, secure file system access (atomic reads/writes), Markdown parsing/transformation for export, high-speed syntax highlighting with `syntect`, workspace indexing, and application configuration persistence.
+- **Frontend (WebView)**: Built with **SolidJS** and **Milkdown** (ProseMirror-based). Runs within the host platform's native WebView (WebView2 on Windows, WebKit on macOS and iOS, WebKitGTK on Linux, Android System WebView on Android). Responsible for immediate user input handling, WYSIWYG Markdown rendering, responsive viewport management, editor state management, and touch/keyboard controls.
+- **Backend (Rust Process)**: Built on the **Tauri 2** core. Responsible for native operating system interactions, secure file system access (atomic reads/writes within platform sandboxes), Markdown parsing/transformation for export, high-speed syntax highlighting with `syntect`, workspace indexing, and application configuration persistence.
 - **Inter-Process Communication (IPC)**: Strongly typed communication layer utilizing Tauri Commands (invoke) for request-response interactions and Tauri Events (listen/emit) for asynchronous backend-driven notifications.
 
 ```
@@ -412,6 +412,36 @@ All commands, UI elements, and event listeners registered through `ctx` are trac
 - Custom themes are managed under `%APPDATA%/Taleno/themes/<theme-id>/`.
 - Themes provide a `theme.json` metadata file and a `theme.css` token override stylesheet that dynamically configures the CSS variables on `:root` without full DOM re-renders or application restarts.
 - For complete theme styling instructions and palette references, see [Theme Development Handbook](THEME_DEVELOPMENT.md).
+
+---
+
+## 10. Multi-Platform & Mobile Architecture (iOS & Android)
+
+Taleno extends its unified code base to mobile operating systems (iOS and Android) using Tauri 2's mobile toolchain and native runtime bindings.
+
+### 10.1 Platform Target Matrix
+
+| Layer | Desktop (macOS, Windows, Linux) | iOS | Android |
+| :--- | :--- | :--- | :--- |
+| **WebView Engine** | WebKit / WebView2 / WebKitGTK | WebKit (WKWebView) | Android System WebView (Chromium) |
+| **Rust Entry Point** | `src-tauri/src/main.rs` | `#[tauri::mobile_entry_point]` in `lib.rs` | `#[tauri::mobile_entry_point]` in `lib.rs` |
+| **Project Gen Directory** | Standard Cargo layout | `src-tauri/gen/apple/` | `src-tauri/gen/android/` |
+| **Primary File Root** | Arbitrary local filesystem paths | `NSDocumentDirectory` / Security-Scoped Bookmarks | `Context.getFilesDir()` / SAF Document Provider |
+| **UI Shell** | 3-pane resizable layout + VS Code Menu Bar | Single-column responsive shell + Navigation Drawer | Single-column responsive shell + Navigation Drawer |
+| **Input Mode** | Hardware keyboard + mouse hover | Touch gestures, virtual keyboard, Apple Pencil | Touch gestures, virtual keyboard, soft keys |
+
+### 10.2 Mobile UI Shell & Responsive Layout
+On mobile viewports (screen width < 768px):
+1. **Adaptive Navigation Drawer**: The desktop TOC and File Tree sidebars collapse into a modal slide-over drawer accessible via a top navigation bar hamburger icon or swipe-from-edge gesture.
+2. **Bottom Quick Actions Bar**: Frequently used editor actions (Undo, Redo, Heading, Bold, List, Image, Mode Switcher) are anchored above the virtual keyboard / home indicator for comfortable one-handed thumb interaction.
+3. **Safe-Area Insets**: The UI dynamically respects notch and home indicator bounds using CSS environment variables (`env(safe-area-inset-top)`, `env(safe-area-inset-bottom)`).
+4. **Virtual Keyboard Handling**: Dynamic viewport calculations leverage `window.visualViewport` to ensure focused ProseMirror cursor positions scroll into view automatically when the soft keyboard is presented.
+
+### 10.3 Mobile Storage & Sandboxing
+- **iOS Sandbox**: All user documents and assets default to the app container's `Documents/` folder. External documents accessed via the iOS Files app or iCloud Drive utilize security-scoped bookmark URLs.
+- **Android Storage Access Framework**: Scoped storage isolation is maintained via Android `content://` URIs and app-private internal storage directories.
+- **Atomic Operations**: The Rust `FileService` maintains crash-resilient atomic writes (`.tmp` write -> flush -> atomic rename) within resolved mobile sandbox directory boundaries.
+
 
 
 

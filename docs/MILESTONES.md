@@ -23,7 +23,11 @@ gantt
     section Advanced Features
     M7 - Search, Math & MenuBar    :done, m7, 2026-08-24, 2026-08-25
     section Localization & i18n
-    M8 - Multi-Language i18n       :active, m8, 2026-08-25, 2026-09-15
+    M8 - Multi-Language i18n       :done, m8, 2026-08-25, 2026-09-01
+    section Plugins & Extensibility
+    M9 - Plugin & Theme Engine     :done, m9, 2026-09-01, 2026-09-02
+    section Mobile Cross-Platform
+    M10 - iOS & Android Mobile Port:active, m10, 2026-09-02, 2026-09-30
 ```
 
 ---
@@ -135,11 +139,38 @@ gantt
 ---
 
 ### Milestone 8: Multi-Language Internationalization (i18n) (v1.3.0)
-- **Status**: 🔄 In Progress
-- **Target Date**: 2026-09-15
+- **Status**: ✅ Completed
+- **Target Date**: 2026-09-01
 - **Objective**: Provide comprehensive multi-lingual UI localization for global users.
 - **Key Deliverables**:
-  - [ ] SolidJS reactive i18n locale store with auto-detection and persistence.
-  - [ ] Complete language dictionaries for English (`en`), Simplified Chinese (`zh-CN`), Traditional Chinese (`zh-TW`), Japanese (`ja`), German (`de`), French (`fr`), and Spanish (`es`).
-  - [ ] In-app language switcher accessible via top Menu Bar and Settings.
-  - [ ] Localized shortcut tooltips, dialogs, error messages, and documentation references.
+  - [x] SolidJS reactive i18n locale store with auto-detection and persistence.
+  - [x] Complete language dictionaries for English (`en`), Simplified Chinese (`zh-CN`), Traditional Chinese (`zh-TW`), Japanese (`ja`), Korean (`ko`), German (`de`), French (`fr`), Spanish (`es`), and Russian (`ru`).
+  - [x] In-app language switcher accessible via top Menu Bar and Settings.
+  - [x] Localized shortcut tooltips, dialogs, error messages, and documentation references.
+
+---
+
+### Milestone 9: Extensibility, Plugins & Custom Themes (v1.4.0)
+- **Status**: ✅ Completed
+- **Target Date**: 2026-09-02
+- **Objective**: Provide a secure, local-first plugin and theme runtime engine and marketplace directory.
+- **Key Deliverables**:
+  - [x] Rust plugin discovery service (`%APPDATA%/Taleno/plugins/`) and manifest validator.
+  - [x] Sandboxed `TalenoPluginContext` runtime for command injection and editor hooks.
+  - [x] Community Theme engine (`theme.json` + `theme.css`) with hot live-reloading.
+  - [x] GitHub marketplace catalog integrations for remote plugin/theme discovery and 1-click installation.
+
+---
+
+### Milestone 10: Mobile Cross-Platform MVP (iOS & Android) (v1.5.0)
+- **Status**: 🔄 In Progress
+- **Target Date**: 2026-09-30
+- **Objective**: Deliver a unified, touch-first mobile experience on iOS and Android powered by Tauri 2 and SolidJS.
+- **Key Deliverables**:
+  - [ ] Native iOS Xcode project generation (`src-tauri/gen/apple/`) and Android Studio Gradle setup (`src-tauri/gen/android/`).
+  - [ ] Single-column mobile responsive layout with collapsible navigation drawer.
+  - [ ] Safe-area inset support (`env(safe-area-inset-top)` / `bottom`) across dynamic islands and home bars.
+  - [ ] Bottom action formatting toolbar for one-handed mobile Markdown editing.
+  - [ ] Virtual keyboard viewport dynamic resizing via `window.visualViewport`.
+  - [ ] Mobile sandboxed file storage integration (iOS Documents/iCloud and Android SAF content providers) with atomic crash-safe writes.
+  - [ ] Automated mobile test & packaging workflows (iOS IPA / TestFlight and Android APK / AAB).

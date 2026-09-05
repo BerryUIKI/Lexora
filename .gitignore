@@ -3,6 +3,10 @@ node_modules/
 
 # Build output
 dist/
+release/
+*.apk
+*.aab
+*.idsig
 
 # Tauri
 src-tauri/target/

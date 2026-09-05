@@ -75,6 +75,6 @@ describe("Settings Store", () => {
     expect(automaticUpdateChecks()).toBe(true);
     setAutomaticUpdateChecks(false);
     expect(automaticUpdateChecks()).toBe(false);
-    expect(localStorage.getItem("Taleno-automatic-update-checks")).toBe("false");
+    expect(window.localStorage.getItem("Taleno-automatic-update-checks")).toBe("false");
   });
 });

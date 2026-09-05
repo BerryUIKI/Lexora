@@ -16,6 +16,7 @@ Before setting up Taleno locally, ensure your environment meets the following re
   - **Windows**: Microsoft Visual Studio C++ Build Tools & WebView2 Runtime
   - **macOS**: Xcode Command Line Tools (`xcode-select --install`)
   - **Linux**: WebKitGTK, libsoup, and build essentials (e.g., `libwebkit2gtk-4.1-dev`, `build-essential`, `curl`, `libssl-dev`, `libayatana-appindicator3-dev`, `librsvg2-dev`)
+  - **Mobile (iOS & Android)**: Xcode 15+ / iOS simulator targets, Android Studio / NDK r26+ / Android SDK API 34+ / JDK 17+. See detailed [Mobile Development Guide](MOBILE_DEVELOPMENT.md).
   - Refer to the official [Tauri v2 Prerequisites Guide](https://v2.tauri.app/start/prerequisites/) for OS-specific instructions.
 
 ---
@@ -95,6 +96,13 @@ Taleno/
 | `pnpm tauri dev` | Launch full Tauri 2 desktop app in development mode with HMR. |
 | `pnpm build` | Type-check TypeScript and build production frontend assets. |
 | `pnpm tauri build` | Compile optimized production desktop binary and installers. |
+| `pnpm tauri ios init` | Scaffold native iOS project (`src-tauri/gen/apple/`). |
+| `pnpm tauri ios dev` | Run development build on connected iOS simulator or device with HMR. |
+| `pnpm tauri ios build` | Compile production iOS app bundle and archive. |
+| `pnpm tauri android init` | Scaffold native Android Studio project (`src-tauri/gen/android/`). |
+| `pnpm tauri android dev` | Run development build on connected Android emulator or device with HMR. |
+| `pnpm tauri android build --apk` | Build standalone production Android APK package. |
+| `pnpm tauri android build --aab` | Build Google Play production Android App Bundle (AAB). |
 | `pnpm test` | Run frontend unit and integration tests via **Vitest**. |
 | `pnpm test:e2e` | Run end-to-end desktop test suite via **Playwright**. |
 | `cargo test --manifest-path src-tauri/Cargo.toml` | Execute Rust unit and integration test suites. |

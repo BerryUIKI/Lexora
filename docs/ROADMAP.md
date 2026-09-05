@@ -24,6 +24,8 @@ gantt
     Phase 8 - Multi-Language i18n  :done, p8, after p7, 21d
     section Plugins & Extensibility
     Phase 9 - Plugin System        :done, p9, after p8, 14d
+    section Mobile & Cross-App
+    Phase 10 - iOS & Android Mobile:active, p10, after p9, 30d
 ```
 
 ---
@@ -131,6 +133,15 @@ gantt
 - [x] **Settings UI & Navigation**: Dedicated `Plugins` tab in `SettingsModal` with search filter, reload action, directory opener, and enable/disable toggle switches.
 - [x] **Menu Integration**: `File ➔ Preferences ➔ Plugins...` sub-menu with global shortcut <kbd>Ctrl+Shift+X</kbd> (or <kbd>Cmd+Shift+X</kbd> on macOS).
 
+---
+
+### Phase 10 — Mobile Cross-Platform Support (iOS & Android) (~3–4 weeks) :hammer_and_wrench: In Progress
+- [ ] **Mobile Toolchain & Initialization**: Tauri 2 mobile generator configs (`src-tauri/gen/apple/` and `src-tauri/gen/android/`), iOS/Android compilation targets.
+- [ ] **Responsive Mobile Shell**: Single-column viewport adapter, collapsible navigation drawer, safe-area inset management (`env(safe-area-inset-top)` / `bottom`).
+- [ ] **Touch-First Markdown Editing**: On-screen bottom quick-action formatting bar, mobile selection gestures, virtual keyboard height listener (`visualViewport`).
+- [ ] **Sandboxed File Operations**: Scoped mobile storage integration (iOS Documents/iCloud Drive and Android SAF content providers) preserving crash-safe atomic saves.
+- [ ] **Mobile Capabilities & Permissions**: Strict `capabilities/mobile.json` configuration for iOS and Android webviews.
+- [ ] **Packaging & Automated CI/CD**: iOS IPA build pipelines and Android APK / AAB artifact generation workflows.
 
 ---
 
@@ -138,7 +149,8 @@ gantt
 
 | Category | Features | Target Phase |
 | :--- | :--- | :--- |
-| **Must Have**<br>*(Critical for MVP)* | - In-place WYSIWYG editor via Milkdown<br>- Atomic file open / save operations<br>- Tabbed interface & dirty state tracking<br>- Workspace folder navigation & file tree<br>- Dark / Light mode switching<br>- Status bar (word count, line/column)<br>- Strict security capabilities & local-only storage<br>- Custom top Menu Bar (VS Code style)<br>- Windows `.md` default file associations | Phase 0–5 |
-| **Should Have**<br>*(Important for v1.1)* | - Find and Replace toolbar<br>- HTML export engine<br>- Interactive table insertion<br>- Document outline / TOC sidebar with smooth scrolling<br>- Auto-save timer<br>- Multi-language i18n localization | Phase 6, 8 |
-| **Could Have**<br>*(Desirable for v1.2+)* | - KaTeX math rendering<br>- Mermaid diagram rendering<br>- Typewriter mode & Zen mode<br>- Custom user themes & CSS overrides<br>- Global workspace full-text search<br>- Vim keybinding mode | Phase 7 |
+| **Must Have**<br>*(Critical for MVP & Mobile)* | - In-place WYSIWYG editor via Milkdown<br>- Atomic file open / save operations<br>- Tabbed interface & dirty state tracking<br>- Workspace folder navigation & file tree<br>- Dark / Light mode switching<br>- Status bar (word count, line/column)<br>- Strict security capabilities & local-only storage<br>- Custom top Menu Bar (VS Code style)<br>- Windows `.md` default file associations<br>- Mobile responsive drawer & safe-area support<br>- Mobile sandboxed document I/O | Phase 0–5, Phase 10 |
+| **Should Have**<br>*(Important for v1.1 & Mobile)* | - Find and Replace toolbar<br>- HTML export engine<br>- Interactive table insertion<br>- Document outline / TOC sidebar with smooth scrolling<br>- Auto-save timer<br>- Multi-language i18n localization<br>- Mobile bottom quick action formatting bar<br>- Virtual keyboard automatic cursor scrolling | Phase 6, 8, Phase 10 |
+| **Could Have**<br>*(Desirable for v1.2+)* | - KaTeX math rendering<br>- Mermaid diagram rendering<br>- Typewriter mode & Zen mode<br>- Custom user themes & CSS overrides<br>- Global workspace full-text search<br>- Mobile haptic feedback on editor formatting<br>- Vim keybinding mode | Phase 7, Phase 10 |
 | **Won't Have**<br>*(Out of Scope)* | - Cloud sync backend / proprietary account login (Taleno remains 100% local-first)<br>- Multi-user real-time collaborative editing (CRDTs)<br>- Heavy IDE extensions / LSP debugging | Out of Scope |
+

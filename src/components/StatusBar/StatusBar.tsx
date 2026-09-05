@@ -91,7 +91,7 @@ export const StatusBar: Component = () => {
 
   return (
     <footer
-      class="h-7 flex items-center gap-2 px-2.5 text-xs no-select flex-shrink-0 select-none"
+      class="min-h-7 py-0.5 flex items-center gap-2 px-2.5 text-xs no-select flex-shrink-0 select-none safe-area-bottom overflow-x-auto"
       style={{
         background: "var(--color-statusbar-bg)",
         color: "var(--color-text-secondary)",
